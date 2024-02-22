@@ -103,6 +103,7 @@ if(!isset($_SESSION['username']))
                                 <div class="card-body">
                                     <table class="table table-hover table-bordered table-condensed">
                                     <tr class="alert-primary text-center h5">
+                                        
                                         <th colspan="">Learner's Name</th>
                                         <th colspan="<?php $rowWW = $getactivitiesww->rowCount() >= 0 ? $getactivitiesww->rowCount()+4 : $getactivitiesww->rowCount()+3; echo $rowWW; ?>">Written Works (<?php echo $sdetails["percentww"]*100;?>%)</th>
                                         <th colspan="<?php $rowPT = $getactivitiespt->rowCount() >= 0 ? $getactivitiespt->rowCount()+4 : $getactivitiespt->rowCount()+3; echo $rowPT; ?>">Performance Task (<?php echo $sdetails["percentpt"]*100;?>%)</th>

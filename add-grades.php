@@ -31,6 +31,8 @@ if(!isset($_SESSION['username']))
                                     $subjects->execute(array(":actid"=>$_GET["actid"]));
                                     $result = $subjects->fetchAll();
 
+                                    var_dump($result);
+
                                     foreach($result as $row) {
                                     $getstudents = $DB_con->prepare("SELECT * FROM user WHERE section = :section ORDER BY lname ASC");
                                     $getstudents->execute(array(":section"=>$_GET["section"]));

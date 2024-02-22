@@ -59,8 +59,8 @@ if(!isset($_SESSION['username']))
                                                                     <h2 class="m-b-0">
                                                                         <?php
                                                                         // getting the section (Distinct) grade 
-                                                                            $sections = $DB_con->prepare("SELECT DISTINCT(section) FROM user WHERE grade = :grade ");
-                                                                            $sections->execute(array(":grade"=> $row["grade"]));
+                                                                            $sections = $DB_con->prepare("SELECT DISTINCT(section) FROM user WHERE grade = :grade AND section = :section ");
+                                                                            $sections->execute(array(":grade"=> $row["grade"], ":section" => $row["section"] ));
                                                                             $section = $sections->fetchAll();
 
                                                                     foreach($section as $sec) {
