@@ -104,7 +104,7 @@ if(!isset($_SESSION['username']))
                                     <table class="table table-hover table-bordered table-condensed">
                                     <tr class="alert-primary text-center h5">
                                         
-                                        <th colspan="">Learner's Name</th>
+                                        <td rowspan="20" style="width:250px!important;">Learner's Name</td>
                                         <th colspan="<?php $rowWW = $getactivitiesww->rowCount() >= 0 ? $getactivitiesww->rowCount()+4 : $getactivitiesww->rowCount()+3; echo $rowWW; ?>">Written Works (<?php echo $sdetails["percentww"]*100;?>%)</th>
                                         <th colspan="<?php $rowPT = $getactivitiespt->rowCount() >= 0 ? $getactivitiespt->rowCount()+4 : $getactivitiespt->rowCount()+3; echo $rowPT; ?>">Performance Task (<?php echo $sdetails["percentpt"]*100;?>%)</th>
                                         <th colspan="<?php $rowQA = $getactivitiesqa->rowCount() >= 0 ? $getactivitiesqa->rowCount()+4 : $getactivitiesqa->rowCount()+3; echo $rowQA; ?>">Quarterly Assessment (<?php echo $sdetails["percentqt"]*100;?>%)</th>
@@ -115,7 +115,7 @@ if(!isset($_SESSION['username']))
                                         <tbody>
                                         <tr>
                                             <!-- TABLE HEADING !-->
-                                            <td class="text-center">Male</td>
+                                            <td class="text-center" rowspan="2">Male</td>
                                             <?php
                                                 if (!empty($actdetailsww)) {
                                                     for ($ww = 1; $ww <= $WWcounter; $ww++) {

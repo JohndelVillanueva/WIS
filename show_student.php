@@ -13,6 +13,7 @@ if(!isset($_SESSION['username']))
 
 <?php include_once "includes/css.php"; ?>
 	
+<form>
 <?php
 $subjects = $DB_con->prepare("SELECT * FROM s_subjects WHERE code = :code");
 $subjects->execute(array(":code"=>$_GET["code"]));
@@ -61,6 +62,7 @@ foreach($result as $row) {
                                                 <a class="btn btn-primary btn-tone btn-rounded" href="#" onclick="confirmAction()"><i class="anticon anticon-lock"></i> Registrar Verification</a>
                                                 <?php
                                             }
+
                                         ?>
                                         <script>
                                             const confirmAction = () => {
@@ -80,84 +82,73 @@ foreach($result as $row) {
                                     </div>
                                     <br><br><br>
                                     <?php
-                                        // Prepare the SQL statement
-                                        $statement = "SELECT * FROM s_activities SA 
-                                                      LEFT JOIN s_scores SS ON SA.actid = SS.actid
-                                                      WHERE SA.actqtr = 1 AND SA.actlvl = :glevel AND SA.actsection = :section AND SA.actqtr = :qtr ";
+                                        $activity = $DB_con->prepare("SELECT * FROM s_activities INNER JOIN s_scores ON s_activities.actid = s_scores.actid WHERE s_activities.actqtr = 1 AND s_activities.actlvl = :glevel AND s_activities.actsection = :section AND s_activities.actid LIKE 'WW%' AND s_activities.actqtr = :qtr");
+                                        $activity->execute(array(":glevel"=>$row["subjlevel"], ":section"=>$_GET["section"], ":qtr"=>$_GET["qtr"]));
+                                        $act = $activity->fetchAll();
 
-                                        //for activities
-                                        $activity = $DB_con->prepare($statement . "AND SA.actid LIKE 'WW%'");
-                                        $activity->execute(array(":glevel" => $row["subjlevel"], ":section" => $_GET["section"], ":qtr" => $_GET["qtr"]));
-                                        $activities = $activity->fetchAll(PDO::FETCH_ASSOC);
+                                        $perftask = $DB_con->prepare("SELECT * FROM s_activities INNER JOIN s_scores ON s_activities.actid = s_scores.actid WHERE s_activities.actqtr = 1 AND s_activities.actlvl = :glevel AND s_activities.actsection = :section AND s_activities.actid LIKE 'PT%' AND s_activities.actqtr = :qtr");
+                                        $perftask->execute(array(":glevel"=>$row["subjlevel"], ":section"=>$_GET["section"], ":qtr"=>$_GET["qtr"]));
+                                        $ptask = $perftask->fetchAll();
 
-                                        //for performance tasks
-                                        $perftask = $DB_con->prepare($statement . "AND SA.actid LIKE 'PT%'");
-                                        $perftask->execute(array(":glevel" => $row["subjlevel"], ":section" => $_GET["section"], ":qtr" => $_GET["qtr"]));
-                                        $performanceTasks = $perftask->fetchAll(PDO::FETCH_ASSOC);
+                                        $qtrly = $DB_con->prepare("SELECT * FROM s_activities INNER JOIN s_scores ON s_activities.actid = s_scores.actid WHERE s_activities.actqtr = 1 AND s_activities.actlvl = :glevel AND s_activities.actsection = :section AND s_activities.actid LIKE 'QT%' AND s_activities.actqtr = :qtr");
+                                        $qtrly->execute(array(":glevel"=>$row["subjlevel"], ":section"=>$_GET["section"], ":qtr"=>$_GET["qtr"]));
+                                        $qass = $qtrly->fetchAll();
 
-                                        //for per quarter
-                                        $perQuarter = $DB_con->prepare($statement . "AND SA.actid LIKE 'QT%'");
-                                        $perQuarter->execute(array(":glevel" => $row["subjlevel"], ":section" => $_GET["section"], ":qtr" => $_GET["qtr"]));
-                                        $perQuarters = $perQuarter->fetchAll(PDO::FETCH_ASSOC);
+                                        $wwrows = $DB_con->prepare("SELECT DISTINCT s_scores.actid FROM s_scores INNER JOIN s_activities ON s_scores.actid = s_activities.actid WHERE s_activities.actsection = :section AND s_activities.actlvl = :glevel AND s_activities.actid LIKE 'WW%' AND s_activities.actqtr = :qtr");
+                                        $wwrows->execute(array(":glevel"=>$row["subjlevel"], ":section"=>$_GET["section"], ":qtr"=>$_GET["qtr"]));
 
+                                        $ptrows = $DB_con->prepare("SELECT DISTINCT s_scores.actid FROM s_scores INNER JOIN s_activities ON s_scores.actid = s_activities.actid 
+                                        WHERE s_activities.actsection = :section AND s_activities.actlvl = :glevel AND s_activities.actid LIKE 'PT%' AND s_activities.actqtr = :qtr");
+                                        $ptrows->execute(array(":glevel"=>$_GET["grade"], ":section"=>$_GET["section"], ":qtr"=>$_GET["qtr"]));
 
-                                        $statement1 = ("SELECT DISTINCT SS.actid FROM s_scores SS
-                                        INNER JOIN s_activities SA ON SS.actid = SA.actid WHERE SA.actqtr = 1 
-                                        AND SA.actsection = :section AND SA.actlvl = :glevel");
+                                        $qtrow = $DB_con->prepare("SELECT DISTINCT s_scores.actid FROM s_scores INNER JOIN s_activities ON s_scores.actid = s_activities.actid WHERE s_activities.actsection = :section  AND s_activities.actlvl = :glevel AND s_activities.actid LIKE 'QT%' AND s_activities.actqtr = :qtr");
+                                        $qtrow->execute(array(":glevel"=>$row["subjlevel"], ":section"=>$_GET["section"], ":qtr"=>$_GET["qtr"]));
 
-                                        $writtenWork = $DB_con->prepare($statement1 ." AND SA.actid LIKE 'WW%' AND SA.actqtr = :qtr");
-                                        $writtenWork->execute(array(":glevel" => $row["subjlevel"], ":section" => $_GET["section"], ":qtr" => $_GET["qtr"]));
+                                        $ww = $wwrows->rowCount()+3;
+                                        $pt = $ptrows->rowCount()+3;
+                                        $qa = $qtrow->rowCount()+2;
 
-                                        $performTask = $DB_con->prepare($statement1 ." AND SA.actid LIKE 'WW%' AND SA.actqtr = :qtr");
-                                        $performTask->execute(array(":glevel" => $row["subjlevel"], ":section" => $_GET["section"], ":qtr" => $_GET["qtr"]));
-
-                                        $quarter = $DB_con->prepare($statement1 ." AND SA.actid LIKE 'WW%' AND SA.actqtr = :qtr");
-                                        $quarter->execute(array(":glevel" => $row["subjlevel"], ":section" => $_GET["section"], ":qtr" => $_GET["qtr"]));
-
-                                        $activities = $writtenWork->rowCount()+3;//ww
-                                        $performanceTasks = $performTask->rowCount()+3;//pt
-                                        $perQuarters = $quarter->rowCount()+2;//qa
-                                    ?>
+                                        ?>
 
                                     <table class="table table-hover table-bordered table-condensed">
                                         <tbody>
                                         <tr>
                                             <td class="alert-success text-center font-size-20 bold" rowspan="2" style="width:250px!important;">Student<br>Name</td>
-                                            <td class="alert-success text-center font-size-20 bold" colspan="<?php echo $activities; ?>">Written Works (<?php echo $row["percentww"]*100;?>%)</td>
-                                            <td class="alert-success text-center font-size-20 bold" colspan="<?php echo $performanceTasks; ?>">Performance Tasks (<?php echo $row["percentpt"]*100;?>%)</td>
-                                            <td class="alert-success text-center font-size-20 bold" colspan="<?php echo $perQuarters; ?>">Quarterly Assessment (<?php echo $row["percentqt"]*100;?>%)</td>
+                                            <td class="alert-success text-center font-size-20 bold" colspan="<?php echo $ww; ?>">Written Works (<?php echo $row["percentww"]*100;?>%)</td>
+                                            <td class="alert-success text-center font-size-20 bold" colspan="<?php echo $pt; ?>">Performance Tasks (<?php echo $row["percentpt"]*100;?>%)</td>
+                                            <td class="alert-success text-center font-size-20 bold" colspan="<?php echo $qa; ?>">Quarterly Assessment (<?php echo $row["percentqt"]*100;?>%)</td>
                                             <td class="alert-success text-center font-size-20 bold" rowspan="2">Initial<br>Grade</td>
                                             <td class="alert-success text-center font-size-20 bold" rowspan="2">Final<br>Grade</td>
                                         </tr>
                                         <tr>
                                             <?php
-                                                for($actno = 1; $actno <= $writtenWork->rowCount(); $actno++) {
-                                                    echo "<td class='alert-secondary'>".$actno."</td>";
-                                                }
-                                                ?>
-                                                <td class='alert-secondary'>TOTAL</td>
-                                                <td class='alert-secondary'>PS</td>
-                                                <td class='alert-secondary'>WS</td>
-                                                <?php
-                                                for($ptno = 1; $ptno <= $performTask->rowCount(); $ptno++) {
-                                                    echo "<td class='alert-secondary'>".$ptno."</td>";
-                                                }
-                                                ?>
-                                                <td class='alert-secondary'>TOTAL</td>
-                                                <td class='alert-secondary'>PS</td>
-                                                <td class='alert-secondary'>WS</td>
-                                                <?php
-                                                for($qtno = 1; $qtno <= $quarter->rowCount(); $qtno++) {
-                                                    echo "<td class='alert-secondary'>".$qtno."</td>";
-                                                }
-                                                ?>
-                                                <td class='alert-secondary'>PS</td>
-                                                <td class='alert-secondary'>WS</td>
+                                            for($actno = 1; $actno <= $wwrows->rowCount(); $actno++) {
+                                                echo "<td class='alert-secondary'>".$actno."</td>";
+                                            }
+                                            ?>
+                                            <td class='alert-secondary'>TOTAL</td>
+                                            <td class='alert-secondary'>PS</td>
+                                            <td class='alert-secondary'>WS</td>
+                                            <?php
+                                            for($ptno = 1; $ptno <= $ptrows->rowCount(); $ptno++) {
+                                                echo "<td class='alert-secondary'>".$ptno."</td>";
+                                            }
+                                            ?>
+                                            <td class='alert-secondary'>TOTAL</td>
+                                            <td class='alert-secondary'>PS</td>
+                                            <td class='alert-secondary'>WS</td>
+                                            <?php
+                                            for($qtno = 1; $qtno <= $qtrow->rowCount(); $qtno++) {
+                                                echo "<td class='alert-secondary'>".$qtno."</td>";
+                                            }
+                                            ?>
+                                            <td class='alert-secondary'>PS</td>
+                                            <td class='alert-secondary'>WS</td>
                                         </tr>
                                         <?php
                                         echo "<tr><td>MALE</td></tr>";
                                             $student = $DB_con->prepare("SELECT * FROM user WHERE grade = :grade AND section = :section AND position = :position AND gender = 'M' ORDER BY lname ASC");
-                                            $student->execute(array(":grade" => $row["subjlevel"], ":section" => $_GET["section"], ":position" => "Student"));
+                                            $student->execute(array(":grade"=>$row["subjlevel"],":section"=>$_GET["section"], ":position"=>"Student"));
                                             $stud = $student->fetchAll();
                                             foreach($stud as $srow) {
                                                 ?><tr>
@@ -165,8 +156,8 @@ foreach($result as $row) {
                                                 <?php
 
                                                 // WRITTEN WORK
-                                                $wgrades = $DB_con->prepare("SELECT * FROM s_scores WHERE sid = :sid AND subjcode = :subjcode AND acttype = 1");
-                                                $wgrades->execute(array(":sid"=>$srow["username"],":subjcode"=>$_GET["code"]));
+                                                $wgrades = $DB_con->prepare("SELECT * FROM s_scores INNER JOIN s_activities ON s_scores.actid = s_activities.actid WHERE s_scores.sid = :sid AND s_scores.subjcode = :subjcode AND s_scores.acttype = 1 AND s_activities.actqtr = :actqtr");
+                                                $wgrades->execute(array(":sid"=>$srow["username"],":subjcode"=>$_GET["code"],":actqtr"=>$_GET["qtr"]));
                                                 $rwgrade = $wgrades->fetchAll();
                                                 $wgsum = 0;
                                                 $wgmax = 0;
@@ -207,7 +198,7 @@ foreach($result as $row) {
                                                     echo "<td class='text-center font-weight-bold'>".round($wgps,2 )."</td>";
                                                     echo "<td class='text-center font-weight-bold text-success'>".round(round($wgps,2 )*$row["percentww"],2)."</td>";
                                                 } else {
-                                                    echo "<td class='alert-warning text-center text-gray font-size-10' colspan='".$activities."'>*** NO DATA ***</td>";
+                                                    echo "<td class='alert-warning text-center text-gray font-size-10' colspan='".$ww."'>*** NO DATA ***</td>";
                                                 }
 
                                                 // END OF WRITTEN WORK
@@ -250,7 +241,7 @@ foreach($result as $row) {
                                                     echo "<td class='text-center font-weight-bold'>".round($pgps,2 )."</td>";
                                                     echo "<td class='text-center font-weight-bold text-success'>".round(round($pgps,2 )*$row["percentpt"],2)."</td>";
                                                 } else {
-                                                    echo "<td class='alert-warning text-center text-gray font-size-10' colspan='".$performanceTasks."'>*** NO DATA ***</td>";
+                                                    echo "<td class='alert-warning text-center text-gray font-size-10' colspan='".$pt."'>*** NO DATA ***</td>";
                                                 }
 
                                                 //QUARTERLY EXAM
@@ -292,7 +283,7 @@ foreach($result as $row) {
                                                     echo "<td class='text-center font-weight-bold'>".round($qgps,2 )."</td>";
                                                     echo "<td class='text-center font-weight-bold text-success'>".round(round($qgps,2 )*$row["percentqt"],2)."</td>";
                                                 } else {
-                                                    echo "<td class='alert-warning text-center text-gray font-size-10' colspan='".$perQuarters."'>*** NO DATA ***</td>";
+                                                    echo "<td class='alert-warning text-center text-gray font-size-10' colspan='".$qa."'>*** NO DATA ***</td>";
                                                 }
 
                                                 $initgrade = round(round($wgps,2 )*$row["percentww"] + round($pgps,2 )*$row["percentpt"] + round($qgps,2 )*$row["percentqt"],2);
@@ -366,7 +357,7 @@ foreach($result as $row) {
                                                 echo "<td class='text-center font-weight-bold'>".round($wgps,2 )."</td>";
                                                 echo "<td class='text-center font-weight-bold text-success'>".round(round($wgps,2 )*$row["percentww"],2)."</td>";
                                             } else {
-                                                echo "<td class='alert-warning text-center text-gray font-size-10' colspan='".$activities."'>*** NO DATA ***</td>";
+                                                echo "<td class='alert-warning text-center text-gray font-size-10' colspan='".$ww."'>*** NO DATA ***</td>";
                                             }
 
                                             // END OF WRITTEN WORK
@@ -409,7 +400,7 @@ foreach($result as $row) {
                                                 echo "<td class='text-center font-weight-bold'>".round($pgps,2 )."</td>";
                                                 echo "<td class='text-center font-weight-bold text-success'>".round(round($pgps,2 )*$row["percentpt"],2)."</td>";
                                             } else {
-                                                echo "<td class='alert-warning text-center text-gray font-size-10' colspan='".$performanceTasks."'>*** NO DATA ***</td>";
+                                                echo "<td class='alert-warning text-center text-gray font-size-10' colspan='".$pt."'>*** NO DATA ***</td>";
                                             }
 
                                             //QUARTERLY EXAM
@@ -451,7 +442,7 @@ foreach($result as $row) {
                                                 echo "<td class='text-center font-weight-bold'>".round($qgps,2 )."</td>";
                                                 echo "<td class='text-center font-weight-bold text-success'>".round(round($qgps,2 )*$row["percentqt"],2)."</td>";
                                             } else {
-                                                echo "<td class='alert-warning text-center text-gray font-size-10' colspan='".$perQuarters."'>*** NO DATA ***</td>";
+                                                echo "<td class='alert-warning text-center text-gray font-size-10' colspan='".$qa."'>*** NO DATA ***</td>";
                                             }
 
                                             $initgrade = round(round($wgps,2 )*$row["percentww"] + round($pgps,2 )*$row["percentpt"] + round($qgps,2 )*$row["percentqt"],2);
