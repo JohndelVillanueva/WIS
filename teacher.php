@@ -60,6 +60,8 @@ if(!isset($_SESSION['username']))
                                                                             $sections = $DB_con->prepare("SELECT DISTINCT(section) FROM user WHERE grade = :grade");
                                                                             $sections->execute(array(":grade"=>$row["subjlevel"]));
                                                                             $section = $sections->fetchAll();
+
+                                                                            
                                                                             foreach($section as $sec) {
                                                                         ?>
                                                                                 <div class="dropdown show">
