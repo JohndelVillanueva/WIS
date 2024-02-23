@@ -41,14 +41,13 @@ if(!isset($_SESSION['username']))
                                 <div class="card-body">
                                     <div class="row">
                                             <?php
-                                            // getting subjest and name
-                                                $subjects = $DB_con->prepare("SELECT * FROM s_subjects SS INNER JOIN user u ON SS.tid = u.empno WHERE tid = :empno");
+                                                $subjects = $DB_con->prepare("SELECT * FROM s_subjects INNER JOIN user ON s_subjects.tid = user.empno WHERE tid = :empno");
                                                 $subjects->execute(array(":empno"=>$_SESSION["empno"]));
                                                 $result = $subjects->fetchAll();
                                                 $count = $subjects->rowCount();
-                                                $cols = ($count != 0) ? 12 / $count : 0;
+                                                $cols = 12/$count;
 
-                                            foreach($result as $row) {
+                                                foreach($result as $row) {
                                                 ?>
                                                 <div class="col-2 col-lg-<?php echo $cols; ?> col-lg-2">
                                                     <div class="card">
@@ -58,23 +57,21 @@ if(!isset($_SESSION['username']))
                                                                     <h3 class="m-b-0"><?php echo $row["subjdesc"]." ".$row["subjlevel"]; ?></h3>
                                                                     <h2 class="m-b-0">
                                                                         <?php
-                                                                        // getting the section (Distinct) grade 
-                                                                            $sections = $DB_con->prepare("SELECT DISTINCT(section) FROM user WHERE grade = :grade AND section = :section ");
-                                                                            $sections->execute(array(":grade"=> $row["grade"], ":section" => $row["section"] ));
+                                                                            $sections = $DB_con->prepare("SELECT DISTINCT(section) FROM user WHERE grade = :grade");
+                                                                            $sections->execute(array(":grade"=>$row["subjlevel"]));
                                                                             $section = $sections->fetchAll();
-
-                                                                    foreach($section as $sec) {
+                                                                            foreach($section as $sec) {
                                                                         ?>
                                                                                 <div class="dropdown show">
                                                                                     <a class="btn btn-secondary btn-block dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                                         Quarterly Grades
                                                                                     </a>
-                                                                            
+
                                                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                                                        <a href="show-students-test.php?code=<?php echo  $row["code"]."&section=".$row["section"]."&qtr=1";?>" class="dropdown-item">
+                                                                                        <a href="show-students.php?code=<?php echo $row["code"]."&section=".$sec["section"]."&grade=".$row["subjlevel"]."&qtr=1";?>" class="dropdown-item">
                                                                                             First Quarter
                                                                                         </a>
-                                                                                        <a href="show-students-test.php?code=<?php echo $row["code"]."&section=".$row["section"]."&qtr=2";?>" class="dropdown-item">
+                                                                                        <a href="show-students.php?code=<?php echo $row["code"]."&section=".$sec["section"]."&grade=".$row["subjlevel"]."&qtr=2";?>" class="dropdown-item">
                                                                                             Second Quarter
                                                                                         </a>
                                                                                     </div>
@@ -100,8 +97,7 @@ if(!isset($_SESSION['username']))
                                                                             Today's Attendance
                                                                         </a>
                                                                         </div>
-                                                                        <?php 
-                                                                    } ?>
+                                                                        <?php } ?>
                                                                     </h2>
                                                                 </div>
                                                             </div>
