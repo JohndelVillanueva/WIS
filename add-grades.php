@@ -31,8 +31,6 @@ if(!isset($_SESSION['username']))
                                     $subjects->execute(array(":actid"=>$_GET["actid"]));
                                     $result = $subjects->fetchAll();
 
-                                    var_dump($result);
-
                                     foreach($result as $row) {
                                     $getstudents = $DB_con->prepare("SELECT * FROM user WHERE section = :section ORDER BY lname ASC");
                                     $getstudents->execute(array(":section"=>$_GET["section"]));
@@ -59,8 +57,7 @@ if(!isset($_SESSION['username']))
                                                 <td><?php echo $studrow["lname"].", ".$studrow["fname"]." ".$studrow["mname"]; ?></td>
                                                 <td><?php echo $studrow["grade"]." ".$studrow["section"];?></td>
                                                 <td><?php echo $row["actdesc"];?></td>
-                                                <td><input type="number" class="form-control" name="score[]" required placeholder="Insert Score of
-                                                <?php echo $studrow["lname"].", ".$studrow["fname"]." ".$studrow["mname"]; ?>" max="<?php echo $row["maxscore"];?>"></td>
+                                                <td><input type="number" class="form-control" name="score[]" required placeholder="Insert Score of <?php echo $studrow["lname"].", ".$studrow["fname"]." ".$studrow["mname"]; ?>" max="<?php echo $row["maxscore"];?>"></td>
                                                 <td id="<?php echo $row["maxscore"];?>"><?php echo $row["maxscore"];?></td>
                                             </tr>
                                             <input type="hidden" name="acttype[]" value="<?php echo $_GET['acttype']; ?>">
