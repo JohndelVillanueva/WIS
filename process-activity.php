@@ -34,8 +34,10 @@ if (!isset($_SESSION['username'])) {
                                         $letters = preg_replace('/[^a-zA-Z]/', '', $checkrow["actid"]);
                                         $newserial = $letters . str_pad($numbers + 1, 5, '0', STR_PAD_LEFT);
 
-                                        $insertact = $DB_con->prepare("INSERT INTO s_activities (actid, subjcode, actlvl, actsection, actdate, actcreate, actdesc, acttype, actqtr, maxscore) VALUES (:actid, :subjcode, :actlvl, :actsection, NOW(), :actcreate, :actdesc, :acttype, :actqtr, :maxscore)");
-                                        $insertact->execute(array(":actid" => $newserial, ":subjcode" => $_POST["subjcode"], ":actlvl" => $_POST["subjlvl"], ":actsection" => $_POST["section"], ":actcreate" => $_SESSION["fname"] . " " . $_SESSION["lname"], ":actdesc" => $_POST["actdesc"], ":acttype" => $_POST["acttype"], ":actqtr" => $_POST["actqtr"], ":maxscore" => $_POST["maxscore"]));
+                                        $insertact = $DB_con->prepare("INSERT INTO s_activities (actid, subjcode, actlvl, actsection, actdate, actcreate, actdesc, acttype, actqtr, maxscore)
+                                        VALUES (:actid, :subjcode, :actlvl, :actsection, NOW(), :actcreate, :actdesc, :acttype, :actqtr, :maxscore)");
+                                        $insertact->execute(array(":actid" => $newserial, ":subjcode" => $_POST["subjcode"], ":actlvl" => $_POST["subjlvl"], ":actsection" => $_POST["section"], ":actcreate" => $_SESSION["fname"] . 
+                                        " " . $_SESSION["lname"], ":actdesc" => $_POST["actdesc"], ":acttype" => $_POST["acttype"], ":actqtr" => $_POST["actqtr"], ":maxscore" => $_POST["maxscore"]));
                                     }
                                 } else {
                                     if ($_POST["acttype"] == 1) {
@@ -47,7 +49,8 @@ if (!isset($_SESSION['username'])) {
                                     }
 
                                     $insertact = $DB_con->prepare("INSERT INTO s_activities (actid, subjcode, actlvl, actsection, actdate, actcreate, actdesc, acttype, actqtr, maxscore) VALUES (:actid, :subjcode, :actlvl, :actsection, NOW(), :actcreate, :actdesc, :acttype, :actqtr, :maxscore)");
-                                    $insertact->execute(array(":actid" => $serial, ":subjcode" => $_POST["subjcode"], ":actlvl" => $_POST["subjlvl"], ":actsection" => $_POST["section"], ":actcreate" => $_SESSION["fname"] . " " . $_SESSION["lname"], ":actdesc" => $_POST["actdesc"], ":acttype" => $_POST["acttype"], ":actqtr" => $_POST["actqtr"], ":maxscore" => $_POST["maxscore"]));
+                                    $insertact->execute(array(":actid" => $serial, ":subjcode" => $_POST["subjcode"], ":actlvl" => $_POST["subjlvl"], ":actsection" => $_POST["section"], ":actcreate" => $_SESSION["fname"] . "
+                                     " . $_SESSION["lname"], ":actdesc" => $_POST["actdesc"], ":acttype" => $_POST["acttype"], ":actqtr" => $_POST["actqtr"], ":maxscore" => $_POST["maxscore"]));
 
                                     ?>
                                     <script>
