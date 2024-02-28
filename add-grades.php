@@ -32,43 +32,59 @@ if(!isset($_SESSION['username']))
                                     $result = $subjects->fetchAll();
 
                                     foreach($result as $row) {
-                                    $getstudents = $DB_con->prepare("SELECT * FROM user WHERE section = :section ORDER BY lname ASC");
-                                    $getstudents->execute(array(":section"=>$_GET["section"]));
-                                    $studres = $getstudents->fetchAll();
+                                        // code here
+                                        $getstudents = $DB_con->prepare("SELECT * FROM user WHERE section = :section ORDER BY lname ASC");
+                                        $getstudents->execute(array(":section"=>$_GET["section"]));
+                                        $studres = $getstudents->fetchAll();
 
+                                        if ($getstudents->errorInfo()[0] != "00000") {
+                                            var_dump($getstudents->errorInfo());
 
-                                    ?>
-                                    <table class="table table-hover ">
-                                        <thead>
-                                        <tr class="alert-warning">
-                                            <th>Student Name</th>
-                                            <th>Grade / Section</th>
-                                            <th>Activity</th>
-                                            <th>Score</th>
-                                            <th>Max Score</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-
-                                        <?php
-                                        foreach($studres as $studrow) {
-                                            ?>
-                                            <tr>
-                                                <td><?php echo $studrow["lname"].", ".$studrow["fname"]." ".$studrow["mname"]; ?></td>
-                                                <td><?php echo $studrow["grade"]." ".$studrow["section"];?></td>
-                                                <td><?php echo $row["actdesc"];?></td>
-                                                <td><input type="number" class="form-control" name="score[]" required placeholder="Insert Score of <?php echo $studrow["lname"].", ".$studrow["fname"]." ".$studrow["mname"]; ?>" max="<?php echo $row["maxscore"];?>"></td>
-                                                <td id="<?php echo $row["maxscore"];?>"><?php echo $row["maxscore"];?></td>
+                                        }
+    
+    
+                                        ?>
+                                        <table class="table table-hover ">
+                                            <thead>
+                                            <tr class="alert-warning">
+                                                <th>Student Name</th>
+                                                <th>Grade / Section</th>
+                                                <th>Activity</th>
+                                                <th>Score</th>
+                                                <th>Max Score</th>
                                             </tr>
-                                            <input type="hidden" name="acttype[]" value="<?php echo $_GET['acttype']; ?>">
-                                            <input type="hidden" name="actid[]" value="<?php echo $_GET["actid"]; ?>">
-                                            <input type="hidden" name="subjcode[]" value="<?php echo $_GET["subjcode"]; ?>">
-                                            <input type="hidden" name="section[]" value="<?php echo $_GET["section"]; ?>">
-                                            <input type="hidden" name="sid[]" value="<?php echo $studrow["username"]; ?>">
-                                            <input type="hidden" name="maxscore[]" value="<?php echo $row["maxscore"]; ?>">
+                                            </thead>
+                                            <tbody>
+    
                                             <?php
-                                        }
-                                        }
+                                            foreach($studres as $studrow) {
+                                                ?>
+                                                <tr>
+                                                    <td><?php echo $studrow["lname"].", ".$studrow["fname"]." ".$studrow["mname"]; ?></td>
+                                                    <td><?php echo $studrow["grade"]." ".$studrow["section"];?></td>
+                                                    <td><?php echo $row["actdesc"];?></td>
+                                                    <td><input type="number" class="form-control" name="score[]" required placeholder="Insert Score of <?php echo $studrow["lname"].", ".$studrow["fname"]." ".$studrow["mname"]; ?>" max="<?php echo $row["maxscore"];?>"></td>
+                                                    <td id="<?php echo $row["maxscore"];?>"><?php echo $row["maxscore"];?></td>
+                                                </tr>
+                                                <input type="hidden" name="acttype[]" value="<?php echo $_GET['acttype']; ?>">
+                                                <input type="hidden" name="actid[]" value="<?php echo $_GET["actid"]; ?>">
+                                                <input type="hidden" name="subjcode[]" value="<?php echo $_GET["subjcode"]; ?>">
+                                                <input type="hidden" name="section[]" value="<?php echo $_GET["section"]; ?>">
+                                                <input type="hidden" name="sid[]" value="<?php echo $studrow["username"]; ?>">
+                                                <input type="hidden" name="maxscore[]" value="<?php echo $row["maxscore"]; ?>">
+                                                
+
+                                                
+                                                <?php
+                                                
+                                                
+                                            }
+                                            ?>
+                                        
+
+                                   
+                                        <?php 
+                                    }
                                         ?>
 
                                         </tbody>

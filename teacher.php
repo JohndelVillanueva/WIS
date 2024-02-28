@@ -41,11 +41,19 @@ if(!isset($_SESSION['username']))
                                 <div class="card-body">
                                     <div class="row">
                                             <?php
-                                                $subjects = $DB_con->prepare("SELECT * FROM s_subjects INNER JOIN user ON s_subjects.tid = user.empno WHERE tid = :empno");
-                                                $subjects->execute(array(":empno"=>$_SESSION["empno"]));
-                                                $result = $subjects->fetchAll();
-                                                $count = $subjects->rowCount();
-                                                $cols = 12/$count;
+                                            $subjects = $DB_con->prepare("SELECT * FROM s_subjects INNER JOIN user ON s_subjects.tid = user.empno WHERE tid = :empno");
+                                            $subjects->execute(array(":empno"=>$_SESSION["empno"]));
+                                            $result = $subjects->fetchAll();
+                                            $count = count($result); // Count the number of rows fetched
+                                            
+                                            // Check if any rows were fetched before performing the division
+                                            if ($count > 0) {
+                                                $cols = 12 / $count;
+                                            } else {
+                                                // Handle the case where no rows were fetched
+                                                // For example, you can set $cols to 12 or any other default value
+                                                $cols = 12;
+                                            }
 
                                                 foreach($result as $row) {
                                                 ?>

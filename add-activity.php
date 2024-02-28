@@ -50,6 +50,7 @@ foreach($result as $subjrow) {
                                                 <option value="2">Performance Task</option>
                                                 <option value="3">Quarterly Exam</option>
                                             </select>
+                                            
                                         </div>
                                         <div class="col-lg-3">
                                             <select class="form-control" name="actqtr" required>
