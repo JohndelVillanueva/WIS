@@ -34,15 +34,15 @@ if ($checkrecord->rowCount() > 0) {
         $insertact = $DB_con->prepare("INSERT INTO s_activities (actid, subjcode, actlvl, actsection, actdate, actcreate, actdesc, acttype, actqtr, maxscore) 
                                         VALUES (:actid, :subjcode, :actlvl, :actsection, NOW(), :actcreate, :actdesc, :acttype, :actqtr, :maxscore)");
         $insertact->execute(array(":actid" => $newserial, ":subjcode" => $subjcode, ":actlvl" => $subjlvl, ":actsection" => $section, ":actcreate" => $_SESSION["fname"] 
-        . " " . $_SESSION["lname"], ":actdesc" => $actdesc, ":acttype" => $acttype, ":actqtr" => $actqtr, ":maxscore" => $maxscore));
-        header("location: add-grades.php?actid=" . urlencode($serial) . "&subjcode=$subjcode&section=$section&acttype=$acttype");
+                                        . " " . $_SESSION["lname"], ":actdesc" => $actdesc, ":acttype" => $acttype, ":actqtr" => $actqtr, ":maxscore" => $maxscore));
+                                        header("location: add-grades.php?actid=" . urlencode($serial) . "&subjcode=$subjcode&section=$section&acttype=$acttype");
     }
 } else {
     $insertact = $DB_con->prepare("INSERT INTO s_activities (actid, subjcode, actlvl, actsection, actdate, actcreate, actdesc, acttype, actqtr, maxscore) 
                                     VALUES (:actid, :subjcode, :actlvl, :actsection, NOW(), :actcreate, :actdesc, :acttype, :actqtr, :maxscore)");
     $insertact->execute(array(":actid" => $serial, ":subjcode" => $subjcode, ":actlvl" => $subjlvl, ":actsection" => $section, ":actcreate" => $_SESSION["fname"] 
-    . " " . $_SESSION["lname"], ":actdesc" => $actdesc, ":acttype" => $acttype, ":actqtr" => $actqtr, ":maxscore" => $maxscore));
-    header("location: add-grades.php?actid=" . urlencode($serial) . "&subjcode=$subjcode&section=$section&acttype=$acttype");
+                                    . " " . $_SESSION["lname"], ":actdesc" => $actdesc, ":acttype" => $acttype, ":actqtr" => $actqtr, ":maxscore" => $maxscore));
+                                    header("location: add-grades.php?actid=" . urlencode($serial) . "&subjcode=$subjcode&section=$section&acttype=$acttype");
 
 }
 

@@ -112,7 +112,7 @@ foreach($result as $row) {
                                         $perQuarters = $perQuarter->fetch(PDO::FETCH_ASSOC);
 
                                         $statement1 = ("SELECT DISTINCT SS.actid FROM s_scores SS
-                                        LEFT JOIN s_activities SA ON SS.actid = SA.actid 
+                                        LEFT JOIN s_activities SA ON SS.actid = SA.actid
                                         WHERE SA.actqtr = 1 AND SA.actsection = :section AND SA.actlvl = :glevel");
 
                                         // Written work Statement
@@ -130,19 +130,19 @@ foreach($result as $row) {
                                             ":qtr" => $_GET["qtr"])
                                         );
                                         // perQuarter Task statements
-                                        $quarter = $DB_con->prepare($statement1 ." AND SA.actid LIKE 'QA%' AND SA.actqtr = :qtr");
-                                        $quarter->execute(array(
+                                        $perQuarter = $DB_con->prepare($statement . "AND SA.actid LIKE 'QA%'");
+                                        $perQuarter->execute(array(
                                             ":glevel" => $row["subjlevel"],
                                             ":section" => $_GET["section"],
-                                            ":qtr" => $_GET["qtr"])
-                                        );
+                                            ":qtr" => $_GET["qtr"]
+                                        ));
 
                                         // Calculate number of Written work plus 3 (ww)
                                         $activities = $writtenWork->rowCount()+3;
                                         // Calculate number of performance task plus 3 (pt)
                                         $performanceTasks = $performTask->rowCount()+3;
                                         // Calculate number of quarters plus 2 (qa)
-                                        $perQuarters = $quarter->rowCount() + 2;
+                                        $numRows = $perQuarter->rowCount(); + 2;
 
                                     ?>
 
@@ -152,7 +152,7 @@ foreach($result as $row) {
                                             <td class="alert-success text-center font-size-20 bold" rowspan="2" style="width:250px!important;">Student<br>Name</td>
                                             <td class="alert-success text-center font-size-20 bold" colspan="<?php echo $activities; ?>">Written Works (<?php echo $row["percentww"]*100;?>%)</td>
                                             <td class="alert-success text-center font-size-20 bold" colspan="<?php echo $performanceTasks; ?>">Performance Tasks (<?php echo $row["percentpt"]*100;?>%)</td>
-                                            <td class="alert-success text-center font-size-20 bold" colspan="<?php echo $perQuarters; ?>">Quarterly Assessment (<?php echo $row["percentqt"]*100;?>%)</td>
+                                            <td class="alert-success text-center font-size-20 bold" colspan="<?php echo $numRows; ?>">Quarterly Assessment (<?php echo $row["percentqt"]*100;?>%)</td>
                                             <td class="alert-success text-center font-size-20 bold" rowspan="2">Initial<br>Grade</td>
                                             <td class="alert-success text-center font-size-20 bold" rowspan="2">Final<br>Grade</td>
                                         </tr>
@@ -188,7 +188,7 @@ foreach($result as $row) {
 
                                             <?php
                                             // Display cells for per quarter
-                                            for ($qtno = 1; $qtno <= $quarter->rowCount(); $qtno++) {
+                                            foreach ($perQuarter as $qtno) {
                                                 echo "<td class='alert-secondary'>" . $qtno . "</td>";
                                             }
                                             ?>
