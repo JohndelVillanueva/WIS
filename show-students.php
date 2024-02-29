@@ -81,68 +81,71 @@ foreach($result as $row) {
                                     <?php
                                         // Prepare the SQL statement
                                         $statement = "SELECT * FROM s_activities SA 
-                                                      LEFT JOIN s_scores SS ON SA.actid = SS.actid
-                                                      WHERE SA.actqtr = 1 AND SA.actlvl = :glevel AND SA.actsection = :section AND SA.actqtr = :qtr ";
-
-                                        //for activities
-                                        $activity = $DB_con->prepare($statement . "AND SA.actid LIKE 'WW%'");
-                                        $activity->execute(array(
-                                            ":glevel" => $row["subjlevel"],
-                                            ":section" => $_GET["section"],
-                                            ":qtr" => $_GET["qtr"]
-                                        ));
-                                        $activities = $activity->fetch(PDO::FETCH_ASSOC);
-
-                                        //for performance tasks
-                                        $perftask = $DB_con->prepare($statement . "AND SA.actid LIKE 'PT%'");
-                                        $perftask->execute(array(
-                                            ":glevel" => $row["subjlevel"],
-                                            ":section" => $_GET["section"],
-                                            ":qtr" => $_GET["qtr"])
-                                        );
-                                        $performanceTasks = $perftask->fetch(PDO::FETCH_ASSOC);
-
-                                        //for per quarter
-                                        $perQuarter = $DB_con->prepare($statement . "AND SA.actid LIKE 'QT%'");
-                                        $perQuarter->execute(array(
-                                            ":glevel" => $row["subjlevel"],
-                                            ":section" => $_GET["section"],
-                                            ":qtr" => $_GET["qtr"]
-                                        ));
-                                        $perQuarters = $perQuarter->fetch(PDO::FETCH_ASSOC);
-
-                                        $statement1 = ("SELECT DISTINCT SS.actid FROM s_scores SS
-                                        LEFT JOIN s_activities SA ON SS.actid = SA.actid
-                                        WHERE SA.actqtr = 1 AND SA.actsection = :section AND SA.actlvl = :glevel");
-
-                                        // Written work Statement
-                                        $writtenWork = $DB_con->prepare($statement1 ." AND SA.actid LIKE 'WW%' AND SA.actqtr = :qtr");
-                                        $writtenWork->execute(array(
-                                            ":glevel" => $row["subjlevel"],
-                                            ":section" => $_GET["section"],
-                                            ":qtr" => $_GET["qtr"])
-                                        );
-                                        // PerformTask statement 
-                                        $performTask = $DB_con->prepare($statement1 ." AND SA.actid LIKE 'PT%' AND SA.actqtr = :qtr");
-                                        $performTask->execute(array(
-                                            ":glevel" => $row["subjlevel"],
-                                            ":section" => $_GET["section"],
-                                            ":qtr" => $_GET["qtr"])
-                                        );
-                                        // perQuarter Task statements
-                                        $perQuarter = $DB_con->prepare($statement . "AND SA.actid LIKE 'QA%' AND SA.actqtr = :qtr");
-                                        $perQuarter->execute(array(
-                                            ":glevel" => $row["subjlevel"],
-                                            ":section" => $_GET["section"],
-                                            ":qtr" => $_GET["qtr"]
-                                        ));
-
-                                        // Calculate number of Written work plus 3 (ww)
-                                        $activities = $writtenWork->rowCount()+3;
-                                        // Calculate number of performance task plus 3 (pt)
-                                        $performanceTasks = $performTask->rowCount()+3;
-                                        // Calculate number of quarters plus 2 (qa)
-                                        $perQuarters = $perQuarter->rowCount(); + 2;
+                                        LEFT JOIN s_scores SS ON SA.actid = SS.actid
+                                        WHERE SA.actlvl = :glevel AND SA.actsection = :section AND SA.actqtr = :qtr ";
+                          
+                          // for activities
+                          $activityQuery = $DB_con->prepare($statement . "AND SA.actid LIKE 'WW%'");
+                          $activityQuery->execute(array(
+                              ":glevel" => $row["subjlevel"],
+                              ":section" => $_GET["section"],
+                              ":qtr" => $_GET["qtr"]
+                          ));
+                          $activitiesResult = $activityQuery->fetch(PDO::FETCH_ASSOC);
+                          
+                          // for performance tasks
+                          $perftaskQuery = $DB_con->prepare($statement . "AND SA.actid LIKE 'PT%'");
+                          $perftaskQuery->execute(array(
+                              ":glevel" => $row["subjlevel"],
+                              ":section" => $_GET["section"],
+                              ":qtr" => $_GET["qtr"]
+                          ));
+                          $performanceTasksResult = $perftaskQuery->fetch(PDO::FETCH_ASSOC);
+                          
+                          // for per quarter
+                          $perQuarterQuery = $DB_con->prepare($statement . "AND SA.actid LIKE 'QT%'");
+                          $perQuarterQuery->execute(array(
+                              ":glevel" => $row["subjlevel"],
+                              ":section" => $_GET["section"],
+                              ":qtr" => $_GET["qtr"]
+                          ));
+                          $perQuartersResult = $perQuarterQuery->fetch(PDO::FETCH_ASSOC);
+                          
+                          $statement1 = "SELECT DISTINCT SS.actid FROM s_scores SS
+                                         LEFT JOIN s_activities SA ON SS.actid = SA.actid
+                                         WHERE SA.actsection = :section AND SA.actlvl = :glevel";
+                          
+                          // Written work Statement
+                          $writtenWorkQuery = $DB_con->prepare($statement1 . " AND SA.actid LIKE 'WW%' AND SA.actqtr = :qtr");
+                          $writtenWorkQuery->execute(array(
+                              ":glevel" => $row["subjlevel"],
+                              ":section" => $_GET["section"],
+                              ":qtr" => $_GET["qtr"]
+                          ));
+                          
+                          // PerformTask statement 
+                          $performTaskQuery = $DB_con->prepare($statement1 . " AND SA.actid LIKE 'PT%' AND SA.actqtr = :qtr");
+                          $performTaskQuery->execute(array(
+                              ":glevel" => $row["subjlevel"],
+                              ":section" => $_GET["section"],
+                              ":qtr" => $_GET["qtr"]
+                          ));
+                          
+                          // perQuarter Task statements
+                          $perQuarterQuery = $DB_con->prepare($statement1 . " AND SA.actid LIKE 'QT%' AND SA.actqtr = :qtr");
+                          $perQuarterQuery->execute(array(
+                              ":glevel" => $row["subjlevel"],
+                              ":section" => $_GET["section"],
+                              ":qtr" => $_GET["qtr"]
+                          ));
+                          
+                          // Calculate number of Written work plus 3 (ww)
+                          $activitiesResult = $writtenWorkQuery->rowCount() + 3;
+                          // Calculate number of performance task plus 3 (pt)
+                          $performanceTasksResult = $performTaskQuery->rowCount() + 3;
+                          // Calculate number of quarters plus 2 (qt)
+                          $perQuartersResult = $perQuarterQuery->rowCount() + 2;
+                          
 
                                     ?>
 
@@ -150,9 +153,9 @@ foreach($result as $row) {
                                         <tbody>
                                         <tr>
                                             <td class="alert-success text-center font-size-20 bold" rowspan="2" style="width:250px!important;">Student<br>Name</td>
-                                            <td class="alert-success text-center font-size-20 bold" colspan="<?php echo $activities; ?>">Written Works (<?php echo $row["percentww"]*100;?>%)</td>
-                                            <td class="alert-success text-center font-size-20 bold" colspan="<?php echo $performanceTasks; ?>">Performance Tasks (<?php echo $row["percentpt"]*100;?>%)</td>
-                                            <td class="alert-success text-center font-size-20 bold" colspan="<?php echo $perQuarters; ?>">Quarterly Assessment (<?php echo $row["percentqt"]*100;?>%)</td>
+                                            <td class="alert-success text-center font-size-20 bold" colspan="<?php echo $activitiesResult; ?>">Written Works (<?php echo $row["percentww"]*100;?>%)</td>
+                                            <td class="alert-success text-center font-size-20 bold" colspan="<?php echo $performanceTasksResult; ?>">Performance Tasks (<?php echo $row["percentpt"]*100;?>%)</td>
+                                            <td class="alert-success text-center font-size-20 bold" colspan="<?php echo $perQuartersResult; ?>">Quarterly Assessment (<?php echo $row["percentqt"]*100;?>%)</td>
                                             <td class="alert-success text-center font-size-20 bold" rowspan="2">Initial<br>Grade</td>
                                             <td class="alert-success text-center font-size-20 bold" rowspan="2">Final<br>Grade</td>
                                         </tr>
@@ -161,7 +164,7 @@ foreach($result as $row) {
                                             <?php
                                             // Display cells for written work
                                                 // Get the number of rows from $writtenWork
-                                                $rowCount = $writtenWork->rowCount();
+                                                $rowCount = $writtenWorkQuery ->rowCount();
                                                 // Create an array of numbers from 1 to rowCount
                                                 $numbers = range(1, $rowCount);
                                                 // Iterate over the array using foreach
@@ -177,7 +180,7 @@ foreach($result as $row) {
                                             <?php
                                             
                                             // Display cells for performance tasks
-                                            foreach ($performTask as $ptno => $task) {
+                                            foreach ($performTaskQuery  as $ptno => $task) {
                                                 echo "<td class='alert-secondary'>" . ($ptno + 1) . "</td>";
                                             }
                                             
@@ -188,7 +191,7 @@ foreach($result as $row) {
 
                                             <?php
                                             // Display cells for per quarter
-                                            foreach ($perQuarter as $qtno => $task1) {
+                                            foreach ($perQuarterQuery  as $qtno => $task) {
                                                 echo "<td class='alert-secondary'>" . ($qtno + 1) . "</td>";
                                             }
                                             ?>
