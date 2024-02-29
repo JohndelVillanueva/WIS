@@ -253,7 +253,7 @@ foreach($result as $row) {
                                                     echo "<td class='text-center font-weight-bold'>".round($wgps,2 )."</td>";
                                                     echo "<td class='text-center font-weight-bold text-success'>".round(round($wgps,2 )*$row["percentww"],2)."</td>";
                                                 } else {
-                                                    echo "<td class='alert-warning text-center text-gray font-size-10' colspan='".$activities."'>*** NO DATA ***</td>";
+                                                    echo "<td class='alert-warning text-center text-gray font-size-10' colspan='".$activitiesResult."'>*** NO DATA ***</td>";
                                                 }
 
                                                 // END OF WRITTEN WORK
@@ -296,7 +296,7 @@ foreach($result as $row) {
                                                     echo "<td class='text-center font-weight-bold'>".round($pgps,2 )."</td>";
                                                     echo "<td class='text-center font-weight-bold text-success'>".round(round($pgps,2 )*$row["percentpt"],2)."</td>";
                                                 } else {
-                                                    echo "<td class='alert-warning text-center text-gray font-size-10' colspan='".$performanceTasks."'>*** NO DATA ***</td>";
+                                                    echo "<td class='alert-warning text-center text-gray font-size-10' colspan='".$performanceTasksResult."'>*** NO DATA ***</td>";
                                                 }
 
                                                 //QUARTERLY EXAM
@@ -338,7 +338,7 @@ foreach($result as $row) {
                                                     echo "<td class='text-center font-weight-bold'>".round($qgps,2 )."</td>";
                                                     echo "<td class='text-center font-weight-bold text-success'>".round(round($qgps,2 )*$row["percentqt"],2)."</td>";
                                                 } else {
-                                                    echo "<td class='alert-warning text-center text-gray font-size-10' colspan='".$perQuarters."'>*** NO DATA ***</td>";
+                                                    echo "<td class='alert-warning text-center text-gray font-size-10' colspan='".$perQuartersResult."'>*** NO DATA ***</td>";
                                                 }
 
                                                 $initgrade = round(round($wgps,2 )*$row["percentww"] + round($pgps,2 )*$row["percentpt"] + round($qgps,2 )*$row["percentqt"],2);
@@ -412,7 +412,7 @@ foreach($result as $row) {
                                                 echo "<td class='text-center font-weight-bold'>".round($wgps,2 )."</td>";
                                                 echo "<td class='text-center font-weight-bold text-success'>".round(round($wgps,2 )*$row["percentww"],2)."</td>";
                                             } else {
-                                                echo "<td class='alert-warning text-center text-gray font-size-10' colspan='".$activities."'>*** NO DATA ***</td>";
+                                                echo "<td class='alert-warning text-center text-gray font-size-10' colspan='".$activitiesResult."'>*** NO DATA ***</td>";
                                             }
 
                                             // END OF WRITTEN WORK
@@ -455,7 +455,7 @@ foreach($result as $row) {
                                                 echo "<td class='text-center font-weight-bold'>".round($pgps,2 )."</td>";
                                                 echo "<td class='text-center font-weight-bold text-success'>".round(round($pgps,2 )*$row["percentpt"],2)."</td>";
                                             } else {
-                                                echo "<td class='alert-warning text-center text-gray font-size-10' colspan='".$performanceTasks."'>*** NO DATA ***</td>";
+                                                echo "<td class='alert-warning text-center text-gray font-size-10' colspan='".$performanceTasksResult."'>*** NO DATA ***</td>";
                                             }
 
                                             //QUARTERLY EXAM
@@ -497,7 +497,7 @@ foreach($result as $row) {
                                                 echo "<td class='text-center font-weight-bold'>".round($qgps,2 )."</td>";
                                                 echo "<td class='text-center font-weight-bold text-success'>".round(round($qgps,2 )*$row["percentqt"],2)."</td>";
                                             } else {
-                                                echo "<td class='alert-warning text-center text-gray font-size-10' colspan='".$perQuarters."'>*** NO DATA ***</td>";
+                                                echo "<td class='alert-warning text-center text-gray font-size-10' colspan='".$perQuartersResult."'>*** NO DATA ***</td>";
                                             }
 
                                             $initgrade = round(round($wgps,2 )*$row["percentww"] + round($pgps,2 )*$row["percentpt"] + round($qgps,2 )*$row["percentqt"],2);
