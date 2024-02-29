@@ -130,7 +130,7 @@ foreach($result as $row) {
                                             ":qtr" => $_GET["qtr"])
                                         );
                                         // perQuarter Task statements
-                                        $perQuarter = $DB_con->prepare($statement . "AND SA.actid LIKE 'QA%'");
+                                        $perQuarter = $DB_con->prepare($statement . "AND SA.actid LIKE 'QA%' AND SA.actqtr = :qtr");
                                         $perQuarter->execute(array(
                                             ":glevel" => $row["subjlevel"],
                                             ":section" => $_GET["section"],
@@ -142,7 +142,7 @@ foreach($result as $row) {
                                         // Calculate number of performance task plus 3 (pt)
                                         $performanceTasks = $performTask->rowCount()+3;
                                         // Calculate number of quarters plus 2 (qa)
-                                        $numRows = $perQuarter->rowCount(); + 2;
+                                        $perQuarters = $perQuarter->rowCount(); + 2;
 
                                     ?>
 
@@ -152,7 +152,7 @@ foreach($result as $row) {
                                             <td class="alert-success text-center font-size-20 bold" rowspan="2" style="width:250px!important;">Student<br>Name</td>
                                             <td class="alert-success text-center font-size-20 bold" colspan="<?php echo $activities; ?>">Written Works (<?php echo $row["percentww"]*100;?>%)</td>
                                             <td class="alert-success text-center font-size-20 bold" colspan="<?php echo $performanceTasks; ?>">Performance Tasks (<?php echo $row["percentpt"]*100;?>%)</td>
-                                            <td class="alert-success text-center font-size-20 bold" colspan="<?php echo $numRows; ?>">Quarterly Assessment (<?php echo $row["percentqt"]*100;?>%)</td>
+                                            <td class="alert-success text-center font-size-20 bold" colspan="<?php echo $perQuarters; ?>">Quarterly Assessment (<?php echo $row["percentqt"]*100;?>%)</td>
                                             <td class="alert-success text-center font-size-20 bold" rowspan="2">Initial<br>Grade</td>
                                             <td class="alert-success text-center font-size-20 bold" rowspan="2">Final<br>Grade</td>
                                         </tr>
@@ -188,8 +188,8 @@ foreach($result as $row) {
 
                                             <?php
                                             // Display cells for per quarter
-                                            foreach ($perQuarter as $qtno) {
-                                                echo "<td class='alert-secondary'>" . $qtno . "</td>";
+                                            foreach ($perQuarter as $qtno => $task1) {
+                                                echo "<td class='alert-secondary'>" . ($qtno + 1) . "</td>";
                                             }
                                             ?>
                                             <td class='alert-secondary'>PS</td>
