@@ -27,7 +27,6 @@ if(!isset($_SESSION['username']))
                             $acttypearray = $_POST['acttype'];
                             $actidarray = $_POST['actid'];
                             $subjcodearray = $_POST['subjcode'];
-                            $sectionarray = $_POST['section'];
                             $sidarray = $_POST['sid'];
                             $maxscorearray = $_POST['maxscore'];
 
