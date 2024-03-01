@@ -28,7 +28,6 @@ try {
         foreach ($checkresult as $checkrow) {
             $numbers = preg_replace('/[^0-9]/', '', $checkrow["actid"]);
             $letters = preg_replace('/[^a-zA-Z]/', '', $checkrow["actid"]);
-            $newserial = $letters . str_pad($numbers + 1, 5, '0', STR_PAD_LEFT);
             $serial = ($acttype == 1) ? "WW" : (($acttype == 2) ? "PT" : "QT");
             $serial .= str_pad($numbers + 1, 5, '0', STR_PAD_LEFT);
 
