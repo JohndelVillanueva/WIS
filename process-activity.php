@@ -33,21 +33,21 @@ try {
 
             $insertact = $DB_con->prepare("INSERT INTO s_activities (actid, subjcode, actlvl, actsection, actdate, actcreate, actdesc, acttype, actqtr, maxscore) 
                                             VALUES (:actid, :subjcode, :actlvl, :actsection, NOW(), :actcreate, :actdesc, :acttype, :actqtr, :maxscore)");
-            $insertact->execute(array(":actid" => $serial, ":subjcode" => $subjcode, ":actlvl" => $subjlvl, ":actsection" => $section, ":actcreate" => $_SESSION["fname"] 
-            . " " . $_SESSION["lname"], ":actdesc" => $actdesc, ":acttype" => $acttype, ":actqtr" => $actqtr, ":maxscore" => $maxscore));
+            $insertact->execute(array(":actid" => $serial, ":subjcode" => $subjcode, ":actlvl" => $subjlvl, ":actsection" => $section, ":actcreate" => $_SESSION["fname"]
+                . " " . $_SESSION["lname"], ":actdesc" => $actdesc, ":acttype" => $acttype, ":actqtr" => $actqtr, ":maxscore" => $maxscore));
             header("location: add-grades.php?actid=" . urlencode($serial) . "&subjcode=$subjcode&section=$section&acttype=$acttype");
         }
     } else {
         // Set a default value for $numbers if no records are found
         $numbers = 0;
-        
+
         $serial = ($acttype == 1) ? "WW" : (($acttype == 2) ? "PT" : "QT");
         $serial .= str_pad($numbers + 1, 5, '0', STR_PAD_LEFT);
 
         $insertact = $DB_con->prepare("INSERT INTO s_activities (actid, subjcode, actlvl, actsection, actdate, actcreate, actdesc, acttype, actqtr, maxscore) 
                                     VALUES (:actid, :subjcode, :actlvl, :actsection, NOW(), :actcreate, :actdesc, :acttype, :actqtr, :maxscore)");
-        $insertact->execute(array(":actid" => $serial, ":subjcode" => $subjcode, ":actlvl" => $subjlvl, ":actsection" => $section, ":actcreate" => $_SESSION["fname"] 
-        . " " . $_SESSION["lname"], ":actdesc" => $actdesc, ":acttype" => $acttype, ":actqtr" => $actqtr, ":maxscore" => $maxscore));
+        $insertact->execute(array(":actid" => $serial, ":subjcode" => $subjcode, ":actlvl" => $subjlvl, ":actsection" => $section, ":actcreate" => $_SESSION["fname"]
+            . " " . $_SESSION["lname"], ":actdesc" => $actdesc, ":acttype" => $acttype, ":actqtr" => $actqtr, ":maxscore" => $maxscore));
         header("location: add-grades.php?actid=" . urlencode($serial) . "&subjcode=$subjcode&section=$section&acttype=$acttype");
     }
 
@@ -61,4 +61,3 @@ try {
 
 include_once "includes/footer.php";
 include_once "includes/scripts.php";
-?>

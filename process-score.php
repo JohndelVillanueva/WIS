@@ -3,12 +3,11 @@ include_once "includes/config.php";
 //ini_set('display_errors', 0);
 //error_reporting(E_ERROR | E_WARNING | E_PARSE);
 session_start();
-if(!isset($_SESSION['username']))
-{
+if (!isset($_SESSION['username'])) {
     header("location: login.php");
-
 }
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html lang="en">
 
 <?php include_once "includes/css.php"; ?>
@@ -29,20 +28,20 @@ if(!isset($_SESSION['username']))
                             <div class="card-header bg-warning">
                                 <h3 class="pt-2"><span class="icon-holder"><i class="anticon anticon-book"></i></span> Edit Grade</h3>
                             </div>
-                             <div class="card-body">
+                            <div class="card-body">
                                 <?php
-                                    $update = $DB_con->prepare("UPDATE s_scores SET score = :score WHERE actid = :actid AND sid = :sid");
-                                    $update->execute(array(":score"=>$_POST["score"], ":actid"=>$_POST["actid"], ":sid"=>$_POST["sid"]));
+                                $update = $DB_con->prepare("UPDATE s_scores SET score = :score WHERE actid = :actid AND sid = :sid");
+                                $update->execute(array(":score" => $_POST["score"], ":actid" => $_POST["actid"], ":sid" => $_POST["sid"]));
                                 ?>
 
                             </div>
                         </div>
                     </div>
-                <!-- form ends !-->
+                    <!-- form ends !-->
                 </div>
-            <?php include_once "includes/footer.php"; ?>
+                <?php include_once "includes/footer.php"; ?>
             </div>
-        <?php include_once "includes/scripts.php";?>
+            <?php include_once "includes/scripts.php"; ?>
         </div>
     </div>
 </div>
