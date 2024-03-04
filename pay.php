@@ -2,14 +2,14 @@
 include_once "includes/config.php";
 session_start();
 
-if ( $_POST[ 'stage' ] <= 8 ) {
+if ($_POST['stage'] <= 8) {
   $process = "UPDATE user SET status = :status, tf = :tf WHERE uniqid = :uniqid";
-  $process_statement = $DB_con->prepare( $process );
-  $process_statement->execute( array( ':status' => $_POST[ 'stage' ], ':tf' => $_POST[ 'tf' ], ':uniqid' => $_POST[ 'ern' ] ) );
+  $process_statement = $DB_con->prepare($process);
+  $process_statement->execute(array(':status' => $_POST['stage'], ':tf' => $_POST['tf'], ':uniqid' => $_POST['ern']));
 
   $log = "INSERT INTO logs_enroll ( ern, stage, usertouch, touch, notes ) VALUES ( :ern, :stage, :user, NOW(), :notes )";
-  $logstmt = $DB_con->prepare( $log );
-  $logstmt->execute( array( ':ern'=>$_POST['ern'], ':stage'=>$_POST['stage'], ':user'=>$_SESSION['fname']." ".$_SESSION['lname'], ':notes'=>$_POST['notes'] ) );
+  $logstmt = $DB_con->prepare($log);
+  $logstmt->execute(array(':ern' => $_POST['ern'], ':stage' => $_POST['stage'], ':user' => $_SESSION['fname'] . " " . $_SESSION['lname'], ':notes' => $_POST['notes']));
   /*$message = "
 									<center>
 										<img src='https://westfields.edu.ph/wp-content/uploads/2021/11/logo1x-1.png'>
@@ -44,10 +44,9 @@ if ( $_POST[ 'stage' ] <= 8 ) {
     die();
   }*/
 
-  header( "Location: cashier.php?ern=" . $_POST[ 'ern' ] );
+  header("Location: cashier.php?ern=" . $_POST['ern']);
   die();
-
 } else {
-  header( "Location: cashier.php?ern=" . $_POST[ 'ern' ] . "&err=1" );
+  header("Location: cashier.php?ern=" . $_POST['ern'] . "&err=1");
   die();
 }
