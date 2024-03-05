@@ -5,7 +5,7 @@ class DB
     private $db_host = 'localhost';
     private $db_name = 'u652554119_admissions';
     private $db_user = 'u652554119_admissions';
-    private $db_pass = 'qQ5xkDk!yLzMui.f';
+    private $db_pass = 'Dg6iW4uYOCyzBFfG';
 
     private $dbh;
     private $error;

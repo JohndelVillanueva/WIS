@@ -43,7 +43,7 @@ if (!isset($_SESSION['username'])) {
                                 <div class="card-body">
                                     <div class="row">
                                         <?php
-                                        $subjects = $DB_con->prepare("SELECT * FROM s_subjects INNER JOIN user ON s_subjects.tid = user.empno WHERE tid = :empno");
+                                        $subjects = $DB_con->prepare("SELECT * FROM user INNER JOIN s_subjects ON user.empno = s_subjects.tid WHERE empno = :empno ");
                                         $subjects->execute(array(":empno" => $_SESSION["empno"]));
                                         $result = $subjects->fetchAll();
                                         $count = count($result); // Count the number of rows fetched
@@ -67,13 +67,13 @@ if (!isset($_SESSION['username'])) {
                                                                 <h3 class="m-b-0"><?php echo $row["subjdesc"] . " " . $row["subjlevel"]; ?></h3>
                                                                 <h2 class="m-b-0">
                                                                     <?php
-                                                                    $sections = $DB_con->prepare("SELECT DISTINCT(section) FROM user WHERE grade = :grade");
+                                                                    $sections = $DB_con->prepare("SELECT DISTINCT section FROM user WHERE grade = :grade");
                                                                     $sections->execute(array(":grade" => $row["subjlevel"]));
                                                                     $section = $sections->fetchAll();
 
-
                                                                     foreach ($section as $sec) {
                                                                     ?>
+                                                                        <p><?= $sec['section'] ?></p>
                                                                         <div class="dropdown show">
                                                                             <a class="btn btn-secondary btn-block dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                                 Quarterly Grades
@@ -107,7 +107,7 @@ if (!isset($_SESSION['username'])) {
                                                                         <div class="pt-2">
                                                                             <a href="check-attendance.php?code=<?php echo $row["code"] . "&section=" . $sec["section"]; ?>" class="btn btn-primary btn-block text-sm">
                                                                                 Today's Attendance
-                                                                            </a>
+                                                                            </a><br>
                                                                         </div>
                                                                     <?php } ?>
                                                                 </h2>
@@ -116,14 +116,23 @@ if (!isset($_SESSION['username'])) {
                                                     </div>
                                                 </div>
                                             </div>
+
                                         <?php
                                         }
                                         ?>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body text-center fs-1">
+                                                <p>“You have to believe in yourself when no one else does.”</p>
+                                                <footer class="blockquote-footer">Westfields International <cite title="Source Title"> School</cite></footer>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
                     <!-- form ends !-->
                 </div>
                 <?php include_once "includes/footer.php"; ?>

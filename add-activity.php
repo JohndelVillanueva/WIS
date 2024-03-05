@@ -70,6 +70,7 @@ foreach ($result as $subjrow) {
                                 </div>
                             </div>
                         </div>
+                        <p class="fs-1 text-center text-uppercase">PLEASE FILL ALL THE TEXT BOX</p>
                         <!-- form ends !-->
                     </div>
                     <?php include_once "includes/footer.php"; ?>

@@ -1,7 +1,7 @@
 <?php
 $DB_host = "localhost";
 $DB_user = "u652554119_admissions";
-$DB_pass = "qQ5xkDk!yLzMui.f";
+$DB_pass = "Dg6iW4uYOCyzBFfG";
 $DB_name = "u652554119_admissions";
 
 try {
