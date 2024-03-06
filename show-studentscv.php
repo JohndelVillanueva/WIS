@@ -71,15 +71,8 @@ function transmuteGrade($sql, $params = array())
 
                                                     foreach($coregrades as $cv){
 
-                                                            echo "<td class='text-center font-weight-bold alert-primary font-size-16'>".transmuteGrade("SELECT grade FROM s_coretable WHERE ? BETWEEN start AND end",array($cv["independence"]))."<br><span class='small'>(".$cv["independence"].")</span></td>";
-                                                            echo "<td class='text-center font-weight-bold alert-primary font-size-16'>".transmuteGrade("SELECT grade FROM s_coretable WHERE ? BETWEEN start AND end",array($cv["confidence"]))."<br><span class='small'>(".$cv["confidence"].")</span></td>";
-                                                            echo "<td class='text-center font-weight-bold alert-primary font-size-16'>".transmuteGrade("SELECT grade FROM s_coretable WHERE ? BETWEEN start AND end",array($cv["respect"]))."<br><span class='small'>(".$cv["respect"].")</span></td>";
-                                                            echo "<td class='text-center font-weight-bold alert-primary font-size-16'>".transmuteGrade("SELECT grade FROM s_coretable WHERE ? BETWEEN start AND end",array($cv["empathy"]))."<br><span class='small'>(".$cv["empathy"].")</span></td>";
-                                                            echo "<td class='text-center font-weight-bold alert-primary font-size-16'>".transmuteGrade("SELECT grade FROM s_coretable WHERE ? BETWEEN start AND end",array($cv["appreciation"]))."<br><span class='small'>(".$cv["appreciation"].")</span></td>";
-                                                            echo "<td class='text-center font-weight-bold alert-primary font-size-16'>".transmuteGrade("SELECT grade FROM s_coretable WHERE ? BETWEEN start AND end",array($cv["tolerance"]))."<br><span class='small'>(".$cv["tolerance"].")</span></td>";
-                                                            echo "<td class='text-center font-weight-bold alert-primary font-size-16'>".transmuteGrade("SELECT grade FROM s_coretable WHERE ? BETWEEN start AND end",array($cv["enthusiasm"]))."<br><span class='small'>(".$cv["enthusiasm"].")</span></td>";
-                                                            echo "<td class='text-center font-weight-bold alert-primary font-size-16'>".transmuteGrade("SELECT grade FROM s_coretable WHERE ? BETWEEN start AND end",array($cv["conduct"]))."<br><span class='small'>(".$cv["conduct"].")</span></td>";
-
+                                                        foreach (["independence", "confidence", "respect", "empathy", "appreciation", "tolerance", "enthusiasm", "conduct"] as $q)
+                                                        echo "<td class='text-center font-weight-bold alert-primary font-size-16'>".transmuteGrade("SELECT grade FROM s_coretable WHERE ? BETWEEN start AND end", array($cv[$q]))."<br><span class='small'>(".$cv[$q].")</span></td>";
                                                     }
                                                 ?>
                                             </tr>
@@ -100,6 +93,15 @@ function transmuteGrade($sql, $params = array())
                                                 <td><?php echo $studF["lname"].", ".$studF["fname"]." ".$studF["mname"]; ?></td>
                                             </tr>
                                             <?php
+                                            $coregrades = $DB_con->prepare("SELECT * FROM s_studentcv WHERE sid = :sid and tid = :tid AND qtr = :qtr");
+                                            $coregrades->execute(array(":sid"=>$studM["username"],":tid"=>$_SESSION["empno"],":qtr"=>$_GET["qtr"] ));
+                                            $cgrades = $coregrades->fetchAll();
+
+                                            foreach($cgrades as $cvg){
+
+                                                foreach (["independence", "confidence", "respect", "empathy", "appreciation", "tolerance", "enthusiasm", "conduct"] as $q)
+                                                echo "<td class='text-center font-weight-bold alert-primary font-size-16'>".transmuteGrade("SELECT grade FROM s_coretable WHERE ? BETWEEN start AND end", array($cvg[$q]))."<br><span class='small'>(".$cvg[$q].")</span></td>";
+                                            }
                                         }
                                         ?>
                                     </table>
