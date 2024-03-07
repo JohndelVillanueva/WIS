@@ -12,7 +12,8 @@ if (!isset($_SESSION['username'])) {
 <?php include_once "includes/css.php"; ?>
 
 <?php
-$subjects = $DB_con->prepare("SELECT * FROM s_subjects WHERE code = :code");
+$subjects = $DB_con->prepare("SELECT * FROM s_subjects 
+WHERE code = :code");
 $subjects->execute(array(":code" => $_GET["code"]));
 $result = $subjects->fetchAll();
 
@@ -49,7 +50,7 @@ foreach ($result as $row) {
                                     }
                                     ?>
                                     <div class="float-right">
-                                        <a class="btn btn-primary btn-tone btn-rounded" href="add-activity.php?code=<?php echo $_GET["code"] ?>&section=<?php echo $_GET["section"]; ?>"><i class="anticon anticon-diff"></i> Add Activity</a>
+                                        <a class="btn btn-primary btn-tone btn-rounded" href="add-activity.php?code=<?php echo $_GET["code"] ?>&section=<?php echo $_GET["section"]?>&qtr=<?=$_GET['qtr']; ?>"><i class="anticon anticon-diff"></i> Add Activity</a>
                                         <?php
                                         if (isset($_GET["lock"])) {
                                             if ($_GET["lock"] == 1) {
@@ -213,8 +214,9 @@ foreach ($result as $row) {
                                                     <?php
 
                                                     // WRITTEN WORK
-                                                    $wgrades = $DB_con->prepare("SELECT * FROM s_scores WHERE sid = :sid AND subjcode = :subjcode AND acttype = 1");
-                                                    $wgrades->execute(array(":sid" => $srow["username"], ":subjcode" => $_GET["code"]));
+                                                    $qtr = $_GET['qtr'];
+                                                    $wgrades = $DB_con->prepare("SELECT * FROM s_scores WHERE sid = :sid AND subjcode = :subjcode AND acttype = 1 AND qtr = :qtr");
+                                                    $wgrades->execute(array(":sid" => $srow["username"], ":subjcode" => $_GET["code"], ":qtr" => $qtr));
                                                     $rwgrade = $wgrades->fetchAll();
                                                     $wgsum = 0;
                                                     $wgmax = 0;
@@ -261,9 +263,9 @@ foreach ($result as $row) {
                                                     }
 
                                                     // END OF WRITTEN WORK
-
-                                                    $pgrades = $DB_con->prepare("SELECT * FROM s_scores WHERE sid = :sid AND subjcode = :subjcode AND acttype = 2");
-                                                    $pgrades->execute(array(":sid" => $srow["username"], ":subjcode" => $_GET["code"]));
+                                                    $qtr = $_GET['qtr'];
+                                                    $pgrades = $DB_con->prepare("SELECT * FROM s_scores WHERE sid = :sid AND subjcode = :subjcode AND acttype = 2 AND qtr = :qtr");
+                                                    $pgrades->execute(array(":sid" => $srow["username"], ":subjcode" => $_GET["code"], ":qtr" => $qtr));
                                                     $rpgrade = $pgrades->fetchAll();
                                                     $pgsum = 0;
                                                     $pgmax = 0;
@@ -307,8 +309,9 @@ foreach ($result as $row) {
 
                                                     //QUARTERLY EXAM
 
-                                                    $qgrades = $DB_con->prepare("SELECT * FROM s_scores WHERE sid = :sid AND subjcode = :subjcode AND acttype = 3");
-                                                    $qgrades->execute(array(":sid" => $srow["username"], ":subjcode" => $_GET["code"]));
+                                                    $qtr = $_GET['qtr'];
+                                                    $qgrades = $DB_con->prepare("SELECT * FROM s_scores WHERE sid = :sid AND subjcode = :subjcode AND acttype = 3 AND qtr = :qtr");
+                                                    $qgrades->execute(array(":sid" => $srow["username"], ":subjcode" => $_GET["code"], ":qtr" => $qtr));
                                                     $qrpgrade = $qgrades->fetchAll();
                                                     $qgsum = 0;
                                                     $qgmax = 0;
@@ -379,8 +382,9 @@ foreach ($result as $row) {
                                                     <?php
 
                                                     // WRITTEN WORK
-                                                    $wgrades = $DB_con->prepare("SELECT * FROM s_scores WHERE sid = :sid AND subjcode = :subjcode AND acttype = 1");
-                                                    $wgrades->execute(array(":sid" => $srow["username"], ":subjcode" => $_GET["code"]));
+                                                    $qtr = $_GET['qtr'];
+                                                    $wgrades = $DB_con->prepare("SELECT * FROM s_scores WHERE sid = :sid AND subjcode = :subjcode AND acttype = 1 AND qtr = :qtr");
+                                                    $wgrades->execute(array(":sid" => $srow["username"], ":subjcode" => $_GET["code"], ":qtr" => $qtr));
                                                     $rwgrade = $wgrades->fetchAll();
                                                     $wgsum = 0;
                                                     $wgmax = 0;
@@ -427,9 +431,9 @@ foreach ($result as $row) {
                                                     }
 
                                                     // END OF WRITTEN WORK
-
-                                                    $pgrades = $DB_con->prepare("SELECT * FROM s_scores WHERE sid = :sid AND subjcode = :subjcode AND acttype = 2");
-                                                    $pgrades->execute(array(":sid" => $srow["username"], ":subjcode" => $_GET["code"]));
+                                                    $qtr = $_GET['qtr'];
+                                                    $pgrades = $DB_con->prepare("SELECT * FROM s_scores WHERE sid = :sid AND subjcode = :subjcode AND acttype = 2 AND qtr = :qtr");
+                                                    $pgrades->execute(array(":sid" => $srow["username"], ":subjcode" => $_GET["code"], ":qtr" => $qtr));
                                                     $rpgrade = $pgrades->fetchAll();
                                                     $pgsum = 0;
                                                     $pgmax = 0;
@@ -472,9 +476,8 @@ foreach ($result as $row) {
                                                     }
 
                                                     //QUARTERLY EXAM
-
-                                                    $qgrades = $DB_con->prepare("SELECT * FROM s_scores WHERE sid = :sid AND subjcode = :subjcode AND acttype = 3");
-                                                    $qgrades->execute(array(":sid" => $srow["username"], ":subjcode" => $_GET["code"]));
+                                                    $qgrades = $DB_con->prepare("SELECT * FROM s_scores WHERE sid = :sid AND subjcode = :subjcode AND acttype = 3 AND qtr = :qtr");
+                                                    $qgrades->execute(array(":sid" => $srow["username"], ":subjcode" => $_GET["code"], ":qtr" => $qtr));
                                                     $qrpgrade = $qgrades->fetchAll();
                                                     $qgsum = 0;
                                                     $qgmax = 0;

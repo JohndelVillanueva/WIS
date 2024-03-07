@@ -19,7 +19,7 @@ if (isset($_REQUEST['submit'])) {
         $errorMsg[] = "Enter Password";
     } else {
         try {
-            $select_stmt = $DB_con->prepare("SELECT * FROM user WHERE username=:uname OR email=:uemail");
+            $select_stmt = $DB_con->prepare("SELECT * FROM user INNER JOIN s_subjects ON user.empno = s_subjects.tid WHERE username=:uname OR email=:uemail");
             $select_stmt->execute(array(':uname' => $username, ':uemail' => $email));
             $row = $select_stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -41,6 +41,7 @@ if (isset($_REQUEST['submit'])) {
                         $_SESSION["status"] = $row["status"];
                         $_SESSION["ern"] = $row["uniqid"];
                         $_SESSION["empno"] = $row["empno"];
+                        $_SESSION["subjdesc"] = $row["subjdesc"];
                         $loginMsg = "Login Successful! Redirecting...";
                         if ($row["level"] == 0) {
                             header("refresh:1; student.php");

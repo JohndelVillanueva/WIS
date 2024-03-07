@@ -28,8 +28,10 @@ if (!isset($_SESSION['username'])) {
                                     </div>
                                     <div class="card-body">
                                         <?php
-                                        $corevalues = $DB_con->prepare("SELECT * FROM s_subjects WHERE code = :code");
-                                        $corevalues->execute(array(":code" => $_GET["code"]));
+                                        $corevalues = $DB_con->prepare("SELECT * FROM s_subjects SS
+                                        LEFT JOIN s_activities SA on SS.code = SA.subjcode 
+                                        WHERE code = :code AND actqtr = :actqtr");
+                                        $corevalues->execute(array(":code" => $_GET["code"] , ":actqtr" => $_GET['qtr']));
                                         $result = $corevalues->fetchAll();
 
                                         foreach ($result as $row) {
@@ -65,7 +67,7 @@ if (!isset($_SESSION['username'])) {
                                                     ?>
                                                         <tr>
                                                             <td><?php echo $studrow["lname"] . ", " . $studrow["fname"] . " " . $studrow["mname"]; ?></td>
-                                                            <td><input type="hidden" name="qtr[]"> <?= $_GET["qtr"] ?> </td>
+                                                            <td><input type="hidden" name=""> <?= $_GET["qtr"] ?> </td>
                                                             <td><input type="number" class="form-control" name="independence[]" max="4"></td>
                                                             <td><input type="number" class="form-control" name="confidence[]" max="4"></td>
                                                             <td><input type="number" class="form-control" name="respect[]" max="4"></td>
@@ -76,6 +78,8 @@ if (!isset($_SESSION['username'])) {
                                                             <td><input type="number" class="form-control" name="conduct[]" max="4"></td>
                                                             <input type="hidden" name="sid[]" value="<?= $studrow["username"]; ?>">
                                                             <input type="hidden" name="subjid[]" value="<?= $row["code"]; ?>">
+                                                            <input type="hidden" name="qtr[]" value="<?= $row["actqtr"]; ?>">
+                                                            
                                                             
                                                         </tr>
                                                 <?php

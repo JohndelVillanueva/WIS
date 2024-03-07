@@ -27,16 +27,18 @@ if (!isset($_SESSION['username'])) {
                             $subjcodearray = $_POST['subjcode'];
                             $sidarray = $_POST['sid'];
                             $maxscorearray = $_POST['maxscore'];
+                            $qtr = $_POST['qtr'];
 
                             for ($i = 0; $i < count($scorearray); $i++) {
-                                $insertscore = $DB_con->prepare("INSERT INTO s_scores (subjcode, actid, acttype, sid, score, maxscore) VALUES (:subjcode, :actid, :acttype, :sid, :score, :maxscore)");
+                                $insertscore = $DB_con->prepare("INSERT INTO s_scores (subjcode, actid, acttype, sid, score, maxscore, qtr) VALUES (:subjcode, :actid, :acttype, :sid, :score, :maxscore, :qtr)");
                                 $insertscore->execute(array(
                                     ":subjcode" => $subjcodearray[$i],
                                     ":actid" => $actidarray[$i],
                                     ":acttype" => $acttypearray[$i],
                                     ":sid" => $sidarray[$i],
                                     ":score" => $scorearray[$i],
-                                    ":maxscore" => $maxscorearray[$i]
+                                    ":maxscore" => $maxscorearray[$i],
+                                    ":qtr" => $qtr[$i]
                                 ));
                             }
                             ?>

@@ -43,8 +43,10 @@ if (!isset($_SESSION['username'])) {
                                 <div class="card-body">
                                     <div class="row">
                                         <?php
-                                        $subjects = $DB_con->prepare("SELECT * FROM user INNER JOIN s_subjects ON user.empno = s_subjects.tid WHERE empno = :empno ");
-                                        $subjects->execute(array(":empno" => $_SESSION["empno"]));
+                                        $subjects = $DB_con->prepare("SELECT * FROM user 
+                                        LEFT JOIN s_subjects ON user.empno = s_subjects.tid 
+                                        WHERE empno = :empno AND subjdesc = :subjdesc");
+                                        $subjects->execute(array(":empno" => $_SESSION["empno"], ":subjdesc" => $_SESSION["subjdesc"]));
                                         $result = $subjects->fetchAll();
                                         $count = count($result); // Count the number of rows fetched
 
@@ -80,11 +82,17 @@ if (!isset($_SESSION['username'])) {
                                                                             </a>
 
                                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                                                <a href="show-students.php?code=<?php echo $row["code"] . "&section=" . $sec["section"] . "&grade=" . $row["subjlevel"] . "&qtr=1"; ?>" class="dropdown-item">
+                                                                            <a href="show-students.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=1" . "&subjdesc=". $_SESSION['subjdesc']; ?>" class="dropdown-item">
                                                                                     First Quarter
                                                                                 </a>
-                                                                                <a href="show-students.php?code=<?php echo $row["code"] . "&section=" . $sec["section"] . "&grade=" . $row["subjlevel"] . "&qtr=2"; ?>" class="dropdown-item">
+                                                                                <a href="show-students.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=2" . "&subjdesc=". $_SESSION['subjdesc']; ?>" class="dropdown-item">
                                                                                     Second Quarter
+                                                                                </a>
+                                                                                <a href="show-students.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=3" . "&subjdesc=". $_SESSION['subjdesc']; ?>" class="dropdown-item">
+                                                                                    Third Quarter
+                                                                                </a>
+                                                                                <a href="show-students.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=4" . "&subjdesc=". $_SESSION['subjdesc']; ?>" class="dropdown-item">
+                                                                                    Fourth Quarter
                                                                                 </a>
                                                                             </div>
                                                                         </div>
@@ -95,11 +103,17 @@ if (!isset($_SESSION['username'])) {
                                                                             </a>
 
                                                                             <div class="dropdown-menu" aria-labelledby="coreValues">
-                                                                                <a href="show-studentscv.php?code=<?php echo $row["code"] . "&section=" . $sec["section"] . "&grade=" . $row["subjlevel"] . "&qtr=1"; ?>" class="dropdown-item">
+                                                                            <a href="show-studentscv.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=1" . "&subjdesc=". $_SESSION['subjdesc']; ?>" class="dropdown-item">
                                                                                     First Quarter
                                                                                 </a>
-                                                                                <a href="show-studentscv.php?code=<?php echo $row["code"] . "&section=" . $sec["section"] . "&grade=" . $row["subjlevel"] . "&qtr=2"; ?>" class="dropdown-item">
+                                                                                <a href="show-studentscv.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=2" . "&subjdesc=". $_SESSION['subjdesc']; ?>" class="dropdown-item">
                                                                                     Second Quarter
+                                                                                </a>
+                                                                                <a href="show-studentscv.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=3" . "&subjdesc=". $_SESSION['subjdesc']; ?>" class="dropdown-item">
+                                                                                    Third Quarter
+                                                                                </a>
+                                                                                <a href="show-studentscv.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=4" . "&subjdesc=". $_SESSION['subjdesc']; ?>" class="dropdown-item">
+                                                                                    Fourth Quarter
                                                                                 </a>
                                                                             </div>
                                                                         </div>

@@ -71,6 +71,8 @@ if (!isset($_SESSION['username'])) {
                                                         <input type="hidden" name="section[]" value="<?php echo $_GET["section"]; ?>">
                                                         <input type="hidden" name="sid[]" value="<?php echo $studrow["username"]; ?>">
                                                         <input type="hidden" name="maxscore[]" value="<?php echo $row["maxscore"]; ?>">
+                                                        <input type="hidden" name="qtr[]" value="<?php echo $row["actqtr"]; ?>">
+
 
 
 
