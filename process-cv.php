@@ -61,7 +61,7 @@ if (!isset($_SESSION['username'])) {
                         </div>
                     </div>
                     <script>
-                        // window.location.replace("teacher.php");
+                        window.location.replace("teacher.php");
                     </script>
                     <!-- form ends !-->
                 </div>
