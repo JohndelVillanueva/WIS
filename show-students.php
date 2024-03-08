@@ -33,7 +33,7 @@ foreach ($result as $row) {
                                     <h3 class="pt-2"><span class="icon-holder"><i class="anticon anticon-book"></i></span> <?php echo $row["subjdesc"] . " " . $row["subjlevel"] . " - " . $_GET["section"]; ?></h3>
                                 </div>
                                 <div class="card-body">
-                                    <?php
+                                    <?php           
                                     if (isset($_GET["lock"])) {
                                         if ($_GET["lock"] == 1) {
                                     ?>
@@ -85,14 +85,15 @@ foreach ($result as $row) {
                                     // Prepare the SQL statement
                                     $statement = "SELECT * FROM s_activities SA 
                                         LEFT JOIN s_scores SS ON SA.actid = SS.actid
-                                        WHERE SA.actlvl = :glevel AND SA.actsection = :section AND SA.actqtr = :qtr ";
+                                        WHERE SA.actlvl = :glevel AND SA.actsection = :section AND SA.actqtr = :qtr AND SS.subjcode = :subjcode ";
 
                                     // for activities
                                     $activityQuery = $DB_con->prepare($statement . "AND SA.actid LIKE 'WW%'");
                                     $activityQuery->execute(array(
                                         ":glevel" => $row["subjlevel"],
                                         ":section" => $_GET["section"],
-                                        ":qtr" => $_GET["qtr"]
+                                        ":qtr" => $_GET["qtr"],
+                                        ":subjcode" => $row["code"]
                                     ));
                                     $activitiesResult = $activityQuery->fetch(PDO::FETCH_ASSOC);
 
@@ -101,7 +102,8 @@ foreach ($result as $row) {
                                     $perftaskQuery->execute(array(
                                         ":glevel" => $row["subjlevel"],
                                         ":section" => $_GET["section"],
-                                        ":qtr" => $_GET["qtr"]
+                                        ":qtr" => $_GET["qtr"],
+                                        ":subjcode" => $row["code"]
                                     ));
                                     $performanceTasksResult = $perftaskQuery->fetch(PDO::FETCH_ASSOC);
 
@@ -110,36 +112,40 @@ foreach ($result as $row) {
                                     $perQuarterQuery->execute(array(
                                         ":glevel" => $row["subjlevel"],
                                         ":section" => $_GET["section"],
-                                        ":qtr" => $_GET["qtr"]
+                                        ":qtr" => $_GET["qtr"],
+                                        ":subjcode" => $row["code"]
                                     ));
                                     $perQuartersResult = $perQuarterQuery->fetch(PDO::FETCH_ASSOC);
 
-                                    $statement1 = "SELECT DISTINCT SS.actid FROM s_scores SS
-                                         LEFT JOIN s_activities SA ON SS.actid = SA.actid
-                                         WHERE SA.actsection = :section AND SA.actlvl = :glevel";
+                                    $statement1 = "SELECT DISTINCT SS.actid FROM s_scores ss
+                                         LEFT JOIN s_activities sa ON SS.actid = SA.actid
+                                         WHERE SA.actsection = :section AND SA.actlvl = :glevel AND ss.subjcode = :subjcode";
 
                                     // Written work Statement
-                                    $writtenWorkQuery = $DB_con->prepare($statement1 . " AND SA.actid LIKE 'WW%' AND SA.actqtr = :qtr");
+                                    $writtenWorkQuery = $DB_con->prepare($statement1 . " AND sa.actid LIKE 'WW%' AND sa.actqtr = :qtr");
                                     $writtenWorkQuery->execute(array(
                                         ":glevel" => $row["subjlevel"],
                                         ":section" => $_GET["section"],
-                                        ":qtr" => $_GET["qtr"]
+                                        ":qtr" => $_GET["qtr"],
+                                        ":subjcode" => $row["code"]
                                     ));
 
                                     // PerformTask statement 
-                                    $performTaskQuery = $DB_con->prepare($statement1 . " AND SA.actid LIKE 'PT%' AND SA.actqtr = :qtr");
+                                    $performTaskQuery = $DB_con->prepare($statement1 . " AND sa.actid LIKE 'PT%' AND sa.actqtr = :qtr");
                                     $performTaskQuery->execute(array(
                                         ":glevel" => $row["subjlevel"],
                                         ":section" => $_GET["section"],
-                                        ":qtr" => $_GET["qtr"]
+                                        ":qtr" => $_GET["qtr"],
+                                        ":subjcode" => $row["code"]
                                     ));
 
                                     // perQuarter Task statements
-                                    $perQuarterQuery = $DB_con->prepare($statement1 . " AND SA.actid LIKE 'QT%' AND SA.actqtr = :qtr");
+                                    $perQuarterQuery = $DB_con->prepare($statement1 . " AND sa.actid LIKE 'QT%' AND sa.actqtr = :qtr");
                                     $perQuarterQuery->execute(array(
                                         ":glevel" => $row["subjlevel"],
                                         ":section" => $_GET["section"],
-                                        ":qtr" => $_GET["qtr"]
+                                        ":qtr" => $_GET["qtr"],
+                                        ":subjcode" => $row["code"]
                                     ));
 
                                     // Calculate number of Written work plus 3 (ww)
@@ -215,8 +221,10 @@ foreach ($result as $row) {
 
                                                     // WRITTEN WORK
                                                     $qtr = $_GET['qtr'];
-                                                    $wgrades = $DB_con->prepare("SELECT * FROM s_scores WHERE sid = :sid AND subjcode = :subjcode AND acttype = 1 AND qtr = :qtr");
-                                                    $wgrades->execute(array(":sid" => $srow["username"], ":subjcode" => $_GET["code"], ":qtr" => $qtr));
+                                                    $wgrades = $DB_con->prepare("SELECT * FROM s_scores 
+                                                    LEFT JOIN s_subjects ON s_scores.subjcode = s_subjects.code
+                                                    WHERE sid = :sid AND subjcode = :subjcode AND acttype = 1 AND qtr = :qtr AND s_subjects.id = :id ");
+                                                    $wgrades->execute(array(":sid" => $srow["username"], ":subjcode" => $_GET["code"], ":qtr" => $qtr, ":id" => $row['id']));
                                                     $rwgrade = $wgrades->fetchAll();
                                                     $wgsum = 0;
                                                     $wgmax = 0;
@@ -263,9 +271,12 @@ foreach ($result as $row) {
                                                     }
 
                                                     // END OF WRITTEN WORK
+
                                                     $qtr = $_GET['qtr'];
-                                                    $pgrades = $DB_con->prepare("SELECT * FROM s_scores WHERE sid = :sid AND subjcode = :subjcode AND acttype = 2 AND qtr = :qtr");
-                                                    $pgrades->execute(array(":sid" => $srow["username"], ":subjcode" => $_GET["code"], ":qtr" => $qtr));
+                                                    $pgrades = $DB_con->prepare("SELECT * FROM s_scores 
+                                                    LEFT JOIN s_subjects ON s_scores.subjcode = s_subjects.code
+                                                    WHERE sid = :sid AND subjcode = :subjcode AND acttype = 2 AND qtr = :qtr AND subjdesc = :subjdesc ");
+                                                    $pgrades->execute(array(":sid" => $srow["username"], ":subjcode" => $_GET["code"], ":qtr" => $qtr, ":subjdesc" => $_GET['subjdesc']));
                                                     $rpgrade = $pgrades->fetchAll();
                                                     $pgsum = 0;
                                                     $pgmax = 0;
@@ -310,8 +321,10 @@ foreach ($result as $row) {
                                                     //QUARTERLY EXAM
 
                                                     $qtr = $_GET['qtr'];
-                                                    $qgrades = $DB_con->prepare("SELECT * FROM s_scores WHERE sid = :sid AND subjcode = :subjcode AND acttype = 3 AND qtr = :qtr");
-                                                    $qgrades->execute(array(":sid" => $srow["username"], ":subjcode" => $_GET["code"], ":qtr" => $qtr));
+                                                    $qgrades = $DB_con->prepare("SELECT * FROM s_scores 
+                                                    LEFT JOIN s_subjects ON s_scores.subjcode = s_subjects.code
+                                                    WHERE sid = :sid AND subjcode = :subjcode AND acttype = 3 AND qtr = :qtr AND subjdesc = :subjdesc ");
+                                                    $qgrades->execute(array(":sid" => $srow["username"], ":subjcode" => $_GET["code"], ":qtr" => $qtr, ":subjdesc" => $_GET['subjdesc']));
                                                     $qrpgrade = $qgrades->fetchAll();
                                                     $qgsum = 0;
                                                     $qgmax = 0;
@@ -383,8 +396,10 @@ foreach ($result as $row) {
 
                                                     // WRITTEN WORK
                                                     $qtr = $_GET['qtr'];
-                                                    $wgrades = $DB_con->prepare("SELECT * FROM s_scores WHERE sid = :sid AND subjcode = :subjcode AND acttype = 1 AND qtr = :qtr");
-                                                    $wgrades->execute(array(":sid" => $srow["username"], ":subjcode" => $_GET["code"], ":qtr" => $qtr));
+                                                    $wgrades = $DB_con->prepare("SELECT * FROM s_scores 
+                                                    LEFT JOIN s_subjects ON s_scores.subjcode = s_subjects.code
+                                                    WHERE sid = :sid AND subjcode = :subjcode AND acttype = 1 AND qtr = :qtr AND subjdesc = :subjdesc ");
+                                                    $wgrades->execute(array(":sid" => $srow["username"], ":subjcode" => $_GET["code"], ":qtr" => $qtr, ":subjdesc" => $_GET['subjdesc']));
                                                     $rwgrade = $wgrades->fetchAll();
                                                     $wgsum = 0;
                                                     $wgmax = 0;
@@ -432,8 +447,10 @@ foreach ($result as $row) {
 
                                                     // END OF WRITTEN WORK
                                                     $qtr = $_GET['qtr'];
-                                                    $pgrades = $DB_con->prepare("SELECT * FROM s_scores WHERE sid = :sid AND subjcode = :subjcode AND acttype = 2 AND qtr = :qtr");
-                                                    $pgrades->execute(array(":sid" => $srow["username"], ":subjcode" => $_GET["code"], ":qtr" => $qtr));
+                                                    $pgrades = $DB_con->prepare("SELECT * FROM s_scores 
+                                                    LEFT JOIN s_subjects ON s_scores.subjcode = s_subjects.code
+                                                    WHERE sid = :sid AND subjcode = :subjcode AND acttype = 2 AND qtr = :qtr AND subjdesc = :subjdesc ");
+                                                    $pgrades->execute(array(":sid" => $srow["username"], ":subjcode" => $_GET["code"], ":qtr" => $qtr, ":subjdesc" => $_GET['subjdesc']));
                                                     $rpgrade = $pgrades->fetchAll();
                                                     $pgsum = 0;
                                                     $pgmax = 0;
@@ -476,8 +493,11 @@ foreach ($result as $row) {
                                                     }
 
                                                     //QUARTERLY EXAM
-                                                    $qgrades = $DB_con->prepare("SELECT * FROM s_scores WHERE sid = :sid AND subjcode = :subjcode AND acttype = 3 AND qtr = :qtr");
-                                                    $qgrades->execute(array(":sid" => $srow["username"], ":subjcode" => $_GET["code"], ":qtr" => $qtr));
+                                                    $qtr = $_GET['qtr'];
+                                                    $qgrades = $DB_con->prepare("SELECT * FROM s_scores 
+                                                    LEFT JOIN s_subjects ON s_scores.subjcode = s_subjects.code
+                                                    WHERE sid = :sid AND subjcode = :subjcode AND acttype = 3 AND qtr = :qtr AND subjdesc = :subjdesc ");
+                                                    $qgrades->execute(array(":sid" => $srow["username"], ":subjcode" => $_GET["code"], ":qtr" => $qtr, ":subjdesc" => $_GET['subjdesc']));
                                                     $qrpgrade = $qgrades->fetchAll();
                                                     $qgsum = 0;
                                                     $qgmax = 0;

@@ -45,8 +45,8 @@ if (!isset($_SESSION['username'])) {
                                         <?php
                                         $subjects = $DB_con->prepare("SELECT * FROM user 
                                         LEFT JOIN s_subjects ON user.empno = s_subjects.tid 
-                                        WHERE empno = :empno AND subjdesc = :subjdesc");
-                                        $subjects->execute(array(":empno" => $_SESSION["empno"], ":subjdesc" => $_SESSION["subjdesc"]));
+                                        WHERE empno = :empno");
+                                        $subjects->execute(array(":empno" => $_SESSION["empno"]));
                                         $result = $subjects->fetchAll();
                                         $count = count($result); // Count the number of rows fetched
 
@@ -82,16 +82,16 @@ if (!isset($_SESSION['username'])) {
                                                                             </a>
 
                                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                                            <a href="show-students.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=1" . "&subjdesc=". $_SESSION['subjdesc']; ?>" class="dropdown-item">
+                                                                            <a href="show-students.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=1" . "&subjdesc=". $row['subjdesc']; ?>" class="dropdown-item">
                                                                                     First Quarter
                                                                                 </a>
-                                                                                <a href="show-students.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=2" . "&subjdesc=". $_SESSION['subjdesc']; ?>" class="dropdown-item">
+                                                                                <a href="show-students.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=2" . "&subjdesc=". $row['subjdesc']; ?>" class="dropdown-item">
                                                                                     Second Quarter
                                                                                 </a>
-                                                                                <a href="show-students.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=3" . "&subjdesc=". $_SESSION['subjdesc']; ?>" class="dropdown-item">
+                                                                                <a href="show-students.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=3" . "&subjdesc=". $row['subjdesc']; ?>" class="dropdown-item">
                                                                                     Third Quarter
                                                                                 </a>
-                                                                                <a href="show-students.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=4" . "&subjdesc=". $_SESSION['subjdesc']; ?>" class="dropdown-item">
+                                                                                <a href="show-students.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=4" . "&subjdesc=". $row['subjdesc']; ?>" class="dropdown-item">
                                                                                     Fourth Quarter
                                                                                 </a>
                                                                             </div>
