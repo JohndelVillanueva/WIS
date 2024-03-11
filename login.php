@@ -41,6 +41,8 @@ if (isset($_REQUEST['submit'])) {
                         $_SESSION["status"] = $row["status"];
                         $_SESSION["ern"] = $row["uniqid"];
                         $_SESSION["empno"] = $row["empno"];
+                        $_SESSION["grade"] = $row["grade"]; 
+                        $_SESSION["gender"] = $row["gender"]; 
                         $loginMsg = "Login Successful! Redirecting...";
                         if ($row["level"] == 0) {
                             header("refresh:1; student.php");

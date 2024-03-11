@@ -5,6 +5,7 @@ session_start();
 
 if (!isset($_SESSION['id'])) {
     header("location: login.php");
+    exit();
 }
 ?>
 
@@ -17,11 +18,17 @@ if (!isset($_SESSION['id'])) {
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>1st Quarter Grade</title>
+    <style>
+    .vertical-text {
+     transform: rotate(270deg);
+}
+</style>
 </head>
+
 
 <body class="reportCard">
     <!--container-->
-    <div class="container p-3 mb-2 bg-light text-dark reportCardbg">
+    <div class="container-fluid p-3 mb-2 bg-light text-dark reportCardbg">
         <div class="layout text-center mt-5">
             <div class="row">
                 <div class="col-lg-12">
@@ -33,10 +40,20 @@ if (!isset($_SESSION['id'])) {
             </div>
             <?php
 
-            $infoStudent = $DB_con->prepare("SELECT * FROM user u
-                LEFT JOIN s_subjects sub ON u.level = sub.subjlevel  WHERE u.id = :id ");
-            $infoStudent->execute(array(":id" => $_SESSION["id"]));
+            $infoStudent = $DB_con->prepare("SELECT 
+            AVG(independence) as independence_avg,
+            AVG(confidence) as confidence_avg,
+            AVG(respect) as respect_avg,
+            AVG(empathy) as empathy_avg,
+            AVG(appreciation) as appreciation_avg,
+            AVG(tolerance) as tolerance_avg,
+            AVG(enthusiasm) as enthusiasm_avg,
+            AVG(conduct) as conduct_avg
+            FROM s_studentcv WHERE sid = :sid AND qtr = 1");
+            $infoStudent->execute(array(":sid" => $_SESSION["username"]));
             $displayStudentInfo = $infoStudent->fetchAll(PDO::FETCH_OBJ);
+            // var_dump($displayStudentInfo);
+
 
             foreach ($displayStudentInfo as $student) {
 
@@ -44,23 +61,24 @@ if (!isset($_SESSION['id'])) {
             ?>
                 <div class="row mt-5">
                     <div class="col-lg-6 font-primary">
-                        <div>Name: <?=  $student->fname . " " . $student->mname . " " . $student->lname ?> </div>
-                        <div>Level: <?= $student->grade ?></div>
+                        <div>Name: <?= $_SESSION['fname'] . " " . $_SESSION['mname'] . " " . $_SESSION['lname'] ?> </div>
+                        <div>Level: <?= $_SESSION['grade'] ?></div>
                         <div>Cambridge Level: 7</div>
                     </div>
                     <div class="col-lg-6 font-primary">
-                        <div>LRN: <?php echo $student["lrn"] ?></div>
-                        <div>Gender:<?php echo $student["gender"] ?> </div>
+                        <div>LRN: <?= $_SESSION['lrn'] ?></div>
+                        <div>Gender:<?= $_SESSION['gender'] ?> </div>
                     </div>
+                    
                 </div>
 
                 <div class="row mt-4">
-                    <div class="col-lg-8">
+                    <div class="col-lg-6">
                         <div class="text-black-50 font-size-29 font-primary">Scholastic Performance</div>
                         <table class="table table-bordered mt-3 font-primary">
                             <thead>
                                 <tr>
-                                    <th class="font-size-18 text-black-50 font-weight-normal"></th>
+                                    <th class="font-size-18 text-black-50 font-weight-normal">Subject</th>
                                     <th>1st</th>
                                     <th>2nd</th>
                                     <th>3rd</th>
@@ -71,7 +89,7 @@ if (!isset($_SESSION['id'])) {
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th class="font-size-18 text-black-50 font-weight-normal">English</th>
+                                    <td class="font-size-18 text-black-50 font-weight-normal"></td>
                                     <td>1</td>
                                     <td>1</td>
                                     <td>1</td>
@@ -86,53 +104,32 @@ if (!isset($_SESSION['id'])) {
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="text-black-50 font-size-29 font-primary">Core Values</div>
-                        <table class="table table-bordered mt-3 font-primary">
+                    <div class="col-lg-6">
+                        <div class="text-black-50 font-size-29 font-primary ">Core Values</div>
+                        <table class="table table-bordered mt-3 font-primary" style="width:300px; max-width:300px">
                             <thead>
                                 <tr>
-                                    <th></th>
-                                    <th>1st</th>
-                                    <th>2nd</th>
-                                    <th>3rd</th>
-                                    <th>4th</th>
-                                    <th>Final</th>
+                                    <th class="vertical-text font-weight-normal text-center" style="width: 130px;" height = 130>Independence</th>
+                                    <th class="vertical-text">Confidence</th>
+                                    <th class="vertical-text">Respect</th>
+                                    <th class="vertical-text">Empathy</th>
+                                    <th class="vertical-text">Appreciation</th>
+                                    <th class="vertical-text">Tolerance</th>
+                                    <th class="vertical-text">Enthusiasm</th>
+                                    <th class="vertical-text">Conduct</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th>1</th>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
+                                    <td><?= $student->independence_avg?></td>
+                                    <td><?= $student->confidence_avg ?></td>
+                                    <td><?= $student->respect_avg ?></td>
+                                    <td><?= $student->empathy_avg ?></td>
+                                    <td><?= $student->appreciation_avg ?></td>
+                                    <td><?= $student->tolerance_avg ?></td>
+                                    <td><?= $student->enthusiasm_avg ?></td>
+                                    <td><?= $student->conduct_avg ?></td>
                                 </tr>
-                                <tr>
-                                    <th>2</th>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                </tr>
-                                <tr>
-                                    <th>3</th>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                </tr>
-                                <tr>
-                                    <th>4</th>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                </tr>
-
                             </tbody>
                         </table>
 
@@ -204,10 +201,13 @@ if (!isset($_SESSION['id'])) {
             <?php
             }
             ?>
-
+<?php include_once "includes/footer.php"; ?>
+<?php include_once "includes/scripts.php";?>
 
         </div>
     </div>
 </body>
+
+
 
 </html>

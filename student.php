@@ -76,7 +76,7 @@ if(!isset($_SESSION['username']))
                                 $infoStudent = $DB_con->prepare("SELECT * FROM user u
                                 LEFT JOIN s_subjects sub ON u.level = sub.subjlevel  WHERE u.id = :id ");
                                 $infoStudent->execute(array(":id" => $_SESSION["id"]));
-                                $displayStudentInfo = $infoStudent->fetchAll(PDO::FETCH_ASSOC);
+                                $displayStudentInfo = $infoStudent->fetchAll(PDO::FETCH_OBJ);
 
                                 foreach($displayStudentInfo as $student){ 
 
@@ -85,13 +85,13 @@ if(!isset($_SESSION['username']))
                             ?>
                             <div class="row">
                                 <div class="col-lg-6 font-primary" >
-                                    <div>Name: <?php echo  $student["fname"] ." ". $student["mname"] ." ". $student["lname"] ?></div>
-                                    <div>Level: <?php echo $student["grade"] ?> </div>
+                                    <div>Name: <?=  $student->fname ." ". $student->mname ." ". $student->lname ?></div>
+                                    <div>Level: <?= $student->grade ?> </div>
                                     <div>Cambridge Level: 7</div>
                                 </div>
                                 <div class="col-lg-6 font-primary">
-                                    <div>LRN: <?php echo $student["lrn"]?> </div>
-                                    <div>Gender:<?php echo $student["gender"]?></div>
+                                    <div>LRN: <?= $student->lrn?> </div>
+                                    <div>Gender:<?= $student->gender?></div>
                                 </div>
                                 <?php 
                                 }
