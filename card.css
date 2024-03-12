@@ -1,0 +1,143 @@
+.bg-custom {
+    background-image: url("../Card/repeat.png");
+    z-index: -1;
+}
+
+.image-container {
+    width: 100%;
+    height: 175px;
+    object-fit: cover;
+    object-position: 50% 50%;
+
+}
+
+.logo {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    object-position: 50% 50%;
+}
+
+.col ul li {
+    text-decoration: none;
+}
+
+.left-outer {
+    border-style: solid;
+    border-color: black;
+    border-right-style: none;
+    border-bottom-style: none;
+}
+
+
+.centered {
+    border-style: solid;
+    border-bottom-style: none;
+}
+
+.right-outer {
+    border-style: solid;
+    border-left-style: none;
+    border-bottom-style: none;
+}
+
+.left-outer-last {
+    border-style: solid;
+    border-right-style: none;
+}
+
+.centered-last {
+    border-style: solid;
+}
+
+.right-outer-last {
+    border-style: solid;
+    border-left-style: none;
+}
+
+.whole {
+    border-style: solid;
+    border-bottom-style: none;
+}
+
+.left-inner {
+    border-style: solid;
+    border-right-style: none;
+    border-bottom: none;
+}
+
+.right-inner {
+    border-style: solid;
+    border-bottom: none;
+}
+
+.left-inner-last {
+    border-style: solid;
+    border-right-style: none;
+}
+
+.right-inner-last {
+    border-style: solid;
+}
+div.grade-cell-1st{
+    flex: 0 0 auto;
+    width: 49.18px;
+}
+
+div.grade-cell-2nd{
+    flex: 0 0 auto;
+    width: 55.5px;
+}
+
+div.grade-cell-3rd{
+    flex: 0 0 auto;
+    width: 54.86px;
+}
+
+
+div.grade-cell-4th{
+    flex: 0 0 auto;
+    width: 51.78px;
+}
+
+
+div.grade-cell-final{
+    flex: 0 0 auto;
+    width: 62.41px;
+}
+
+
+div.head-cell-remark{
+    flex: 0 0 auto;
+    width: 92.74px;
+}
+
+div.grade-cell-remark{
+    flex: 0 0 auto;
+    width: 92.84px;
+}
+
+div.col-custom-1{
+    flex: 0 0 auto;
+    width: 122.34px;
+}
+
+div.col-custom-2{
+    flex: 0 0 auto;
+    width: 84.09px;
+}
+
+div.col-custom-3{
+    flex: 0 0 auto;
+    width: 104.42px;
+}
+
+div.col-custom-4{
+    flex: 0 0 auto;
+    width: 108.88px;
+}
+
+div.col-custom-5{
+    flex: 0 0 auto;
+    width: 57.17px;
+}

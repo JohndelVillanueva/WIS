@@ -64,8 +64,8 @@ function transmuteGrade($sql, $params = array())
                                                 <td><?php echo $studM["lname"] . ", " . $studM["fname"] . " " . $studM["mname"]; ?></td>
                                                 <?php
 
-                                                $coregrade = $DB_con->prepare("SELECT * FROM s_studentcv WHERE sid = :sid and tid = :tid AND qtr = :qtr");
-                                                $coregrade->execute(array(":sid" => $studM["username"], ":tid" => $_SESSION["empno"], ":qtr" => $_GET["qtr"]));
+                                                $coregrade = $DB_con->prepare("SELECT * FROM s_studentcv WHERE sid = :sid and tid = :tid AND qtr = :qtr AND subjid = :subjid");
+                                                $coregrade->execute(array(":sid" => $studM["username"], ":tid" => $_SESSION["empno"], ":qtr" => $_GET["qtr"], ":subjid" => $_GET['code'] ));
                                                 $coregrades = $coregrade->fetchAll();
 
                                                 foreach ($coregrades as $cv) {
@@ -93,8 +93,8 @@ function transmuteGrade($sql, $params = array())
                                                 <td><?php echo $studF["lname"] . ", " . $studF["fname"] . " " . $studF["mname"]; ?></td>
 
                                             <?php
-                                            $coregrades = $DB_con->prepare("SELECT * FROM s_studentcv WHERE sid = :sid and tid = :tid AND qtr = :qtr");
-                                            $coregrades->execute(array(":sid" => $studM["username"], ":tid" => $_SESSION["empno"], ":qtr" => $_GET["qtr"]));
+                                            $coregrades = $DB_con->prepare("SELECT * FROM s_studentcv WHERE sid = :sid and tid = :tid AND qtr = :qtr AND subjid = :subjid");
+                                            $coregrades->execute(array(":sid" => $studM["username"], ":tid" => $_SESSION["empno"], ":qtr" => $_GET["qtr"], ":subjid" => $_GET['code']));
                                             $cgrades = $coregrades->fetchAll();
 
                                             foreach ($cgrades as $cvg) {

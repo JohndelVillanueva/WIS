@@ -18,11 +18,6 @@ if (!isset($_SESSION['id'])) {
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>1st Quarter Grade</title>
-    <style>
-        .vertical-text {
-            transform: rotate(270deg);
-        }
-    </style>
 </head>
 
 
@@ -49,8 +44,8 @@ if (!isset($_SESSION['id'])) {
             tolerance,
             enthusiasm,
             conduct
-            FROM s_studentcv WHERE sid = :sid AND qtr = 1");
-            $infoStudent->execute(array(":sid" => $_SESSION["username"]));
+            FROM s_studentcv WHERE sid = :sid AND qtr = :qtr");
+            $infoStudent->execute(array(":sid" => $_SESSION["username"], ":qtr" => $_GET["qtr"]));
             $displayStudentInfo = $infoStudent->fetchAll(PDO::FETCH_OBJ);
 
             $student_data = [];
@@ -94,7 +89,7 @@ if (!isset($_SESSION['id'])) {
                     <div class="col-lg-6 font-primary">
                         <div>Name: <?= $_SESSION['fname'] . " " . $_SESSION['mname'] . " " . $_SESSION['lname'] ?> </div>
                         <div>Level: <?= $_SESSION['grade'] ?></div>
-                        <div>Cambridge Level: 7</div>
+                        <div>Cambridge Level: N/a</div>
                     </div>
                     <div class="col-lg-6 font-primary">
                         <div>LRN: <?= $_SESSION['lrn'] ?></div>
@@ -103,9 +98,29 @@ if (!isset($_SESSION['id'])) {
 
                 </div>
 
+                <?php
+                $getTheGradeOfaStudent = $DB_con->prepare("SELECT * FROM s_subjects WHERE subjlevel = :grade");
+                $getTheGradeOfaStudent->execute([":grade" => $_SESSION['grade']]);
+                $getAllSubjects = $getTheGradeOfaStudent->fetchAll(PDO::FETCH_OBJ);
+
+                foreach ($getAllSubjects as $studentSubject) {
+
+                    $getScoreQuery = $DB_con->prepare('SELECT * FROM s_scores WHERE sid = :sid AND qtr = :qtr AND subjcode = :subjcode');
+                    $getScoreQuery->execute([
+                        ":sid" => $_SESSION['username'],
+                        ":qtr" => $_GET['qtr'],
+                        ":subjcode" => $_SESSION['username']
+                    ]);
+                    $getScore = $getScoreQuery->fetchAll(PDO::FETCH_OBJ);
+
+                    foreach ($getScore as $score) {
+                    }
+                }
+                ?>
+
                 <div class="row mt-4">
-                    <div class="col-lg-6">
-                        <div class="text-black-50 font-size-29 font-primary">Scholastic Performance</div>
+                    <div class="col-lg-7">
+                        <div class="text-black-50 font-size-28 font-primary">Scholastic Performance</div>
                         <table class="table table-bordered mt-3 font-primary">
                             <thead>
                                 <tr>
@@ -120,7 +135,7 @@ if (!isset($_SESSION['id'])) {
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td class="font-size-18 text-black-50 font-weight-normal"></td>
+                                    <td class="font-size-18 text-black-50 font-weight-normal"><?= $studentSubject->subjdesc ?></td>
                                     <td>1</td>
                                     <td>1</td>
                                     <td>1</td>
@@ -129,37 +144,37 @@ if (!isset($_SESSION['id'])) {
                                     <td>1</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="6" class="text-center">Get General Average</td>
-                                    <td>Get Ge</td>
+                                    <td colspan="7" class="text-center">Get General Average</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-lg-6">
+                </div>
+                    <div class="col-lg-5">
                         <div class="text-black-50 font-size-29 font-primary ">Core Values</div>
                         <table class="table table-bordered mt-3 font-primary" style="width:300px; max-width:300px">
                             <thead>
                                 <tr>
-                                    <th class="vertical-text font-weight-normal text-center" style="width: 130px;" height=130>Independence</th>
-                                    <th class="vertical-text">Confidence</th>
-                                    <th class="vertical-text">Respect</th>
-                                    <th class="vertical-text">Empathy</th>
-                                    <th class="vertical-text">Appreciation</th>
-                                    <th class="vertical-text">Tolerance</th>
-                                    <th class="vertical-text">Enthusiasm</th>
-                                    <th class="vertical-text">Conduct</th>
+                                    <th class="font-weight-normal text-center" height=10>Independence</th>
+                                    <th class="font-weight-normal text-center">Confidence</th>
+                                    <th class="font-weight-normal text-center">Respect</th>
+                                    <th class="font-weight-normal text-center">Empathy</th>
+                                    <th class="font-weight-normal text-center">Appreciation</th>
+                                    <th class="font-weight-normal text-center">Tolerance</th>
+                                    <th class="font-weight-normal text-center">Enthusiasm</th>
+                                    <th class="font-weight-normal text-center">Conduct</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><?= implode(", ", $student_data['independence']) ?></td>
-                                    <td><?= implode(", ", $student_data['confidence']) ?></td>
-                                    <td><?= implode(", ", $student_data['respect']) ?></td>
-                                    <td><?= implode(", ", $student_data['empathy']) ?></td>
-                                    <td><?= implode(", ", $student_data['appreciation']) ?></td>
-                                    <td><?= implode(", ", $student_data['tolerance']) ?></td>
-                                    <td><?= implode(", ", $student_data['enthusiasm']) ?></td>
-                                    <td><?= implode(", ", $student_data['conduct']) ?></td>
+                                    <td class="text-center"><?= implode(", ", $student_data['independence']) ?></td>
+                                    <td class="text-center"><?= implode(", ", $student_data['confidence']) ?></td>
+                                    <td class="text-center"><?= implode(", ", $student_data['respect']) ?></td>
+                                    <td class="text-center"><?= implode(", ", $student_data['empathy']) ?></td>
+                                    <td class="text-center"><?= implode(", ", $student_data['appreciation']) ?></td>
+                                    <td class="text-center"><?= implode(", ", $student_data['tolerance']) ?></td>
+                                    <td class="text-center"><?= implode(", ", $student_data['enthusiasm']) ?></td>
+                                    <td class="text-center"><?= implode(", ", $student_data['conduct']) ?></td>
                                 </tr>
                             </tbody>
                         </table>

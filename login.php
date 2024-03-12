@@ -42,6 +42,7 @@ if (isset($_REQUEST['submit'])) {
                         $_SESSION["ern"] = $row["uniqid"];
                         $_SESSION["empno"] = $row["empno"];
                         $_SESSION["grade"] = $row["grade"]; 
+                        $_SESSION["section"] = $row["section"]; 
                         $_SESSION["gender"] = $row["gender"]; 
                         $loginMsg = "Login Successful! Redirecting...";
                         if ($row["level"] == 0) {

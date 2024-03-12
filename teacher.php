@@ -48,20 +48,21 @@ if (!isset($_SESSION['username'])) {
                                         WHERE empno = :empno");
                                         $subjects->execute(array(":empno" => $_SESSION["empno"]));
                                         $result = $subjects->fetchAll();
-                                        $count = count($result); // Count the number of rows fetched
+                                        
+                                        // Count the number of rows fetched
+                                        $count = count($result); 
 
                                         // Check if any rows were fetched before performing the division
                                         if ($count > 0) {
                                             $cols = 12 / $count;
                                         } else {
                                             // Handle the case where no rows were fetched
-                                            // For example, you can set $cols to 12 or any other default value
                                             $cols = 12;
                                         }
 
                                         foreach ($result as $row) {
                                         ?>
-                                            <div class="col-2 col-lg-<?php echo $cols; ?> col-lg-2">
+                                            <div class=" col-lg-6 col-lg-<?php echo $cols; ?>">
                                                 <div class="card">
                                                     <div class="card-body alert-warning">
                                                         <div class="align-items-center text-center">
@@ -82,16 +83,16 @@ if (!isset($_SESSION['username'])) {
                                                                             </a>
 
                                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                                            <a href="show-students.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=1" . "&subjdesc=". $row['subjdesc']; ?>" class="dropdown-item">
+                                                                                <a href="show-students.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=1" . "&subjdesc=" . $row['subjdesc']; ?>" class="dropdown-item">
                                                                                     First Quarter
                                                                                 </a>
-                                                                                <a href="show-students.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=2" . "&subjdesc=". $row['subjdesc']; ?>" class="dropdown-item">
+                                                                                <a href="show-students.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=2" . "&subjdesc=" . $row['subjdesc']; ?>" class="dropdown-item">
                                                                                     Second Quarter
                                                                                 </a>
-                                                                                <a href="show-students.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=3" . "&subjdesc=". $row['subjdesc']; ?>" class="dropdown-item">
+                                                                                <a href="show-students.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=3" . "&subjdesc=" . $row['subjdesc']; ?>" class="dropdown-item">
                                                                                     Third Quarter
                                                                                 </a>
-                                                                                <a href="show-students.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=4" . "&subjdesc=". $row['subjdesc']; ?>" class="dropdown-item">
+                                                                                <a href="show-students.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=4" . "&subjdesc=" . $row['subjdesc']; ?>" class="dropdown-item">
                                                                                     Fourth Quarter
                                                                                 </a>
                                                                             </div>
@@ -103,16 +104,16 @@ if (!isset($_SESSION['username'])) {
                                                                             </a>
 
                                                                             <div class="dropdown-menu" aria-labelledby="coreValues">
-                                                                            <a href="show-studentscv.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=1" . "&subjdesc=". $_SESSION['subjdesc']; ?>" class="dropdown-item">
+                                                                                <a href="show-studentscv.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=1" . "&subjdesc=" . $row['subjdesc']; ?>" class="dropdown-item">
                                                                                     First Quarter
                                                                                 </a>
-                                                                                <a href="show-studentscv.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=2" . "&subjdesc=". $_SESSION['subjdesc']; ?>" class="dropdown-item">
+                                                                                <a href="show-studentscv.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=2" . "&subjdesc=" . $row['subjdesc']; ?>" class="dropdown-item">
                                                                                     Second Quarter
                                                                                 </a>
-                                                                                <a href="show-studentscv.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=3" . "&subjdesc=". $_SESSION['subjdesc']; ?>" class="dropdown-item">
+                                                                                <a href="show-studentscv.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=3" . "&subjdesc=" . $row['subjdesc']; ?>" class="dropdown-item">
                                                                                     Third Quarter
                                                                                 </a>
-                                                                                <a href="show-studentscv.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=4" . "&subjdesc=". $_SESSION['subjdesc']; ?>" class="dropdown-item">
+                                                                                <a href="show-studentscv.php?grade=<?php echo $row["subjlevel"] . "&section=" . $sec["section"] . "&code=" . $row["code"] . "&qtr=4" . "&subjdesc=" . $row['subjdesc']; ?>" class="dropdown-item">
                                                                                     Fourth Quarter
                                                                                 </a>
                                                                             </div>
@@ -123,7 +124,9 @@ if (!isset($_SESSION['username'])) {
                                                                                 Today's Attendance
                                                                             </a><br>
                                                                         </div>
-                                                                    <?php } ?>
+                                                                    <?php
+                                                                    }
+                                                                    ?>
                                                                 </h2>
                                                             </div>
                                                         </div>
@@ -137,16 +140,14 @@ if (!isset($_SESSION['username'])) {
                                     </div>
                                     <div class="card">
                                         <div class="card-body text-center fs-1">
-                                                <p>“You have to believe in yourself when no one else does.”</p>
-                                                <footer class="blockquote-footer">Westfields International <cite title="Source Title"> School</cite></footer>
+                                            <p>“Integrity is telling myself the truth. And honesty is telling the truth to other people”</p>
+                                            <footer class="blockquote-footer">Westfields International <cite title="Source Title"> School</cite></footer>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
                     <!-- form ends !-->
                 </div>
                 <?php include_once "includes/footer.php"; ?>

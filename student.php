@@ -73,37 +73,30 @@ if(!isset($_SESSION['username']))
                             <!--use foreach to view specific student-->
                             <!--Student Info-->
                             <?php 
-                                $infoStudent = $DB_con->prepare("SELECT * FROM user u
-                                LEFT JOIN s_subjects sub ON u.level = sub.subjlevel  WHERE u.id = :id ");
-                                $infoStudent->execute(array(":id" => $_SESSION["id"]));
-                                $displayStudentInfo = $infoStudent->fetchAll(PDO::FETCH_OBJ);
+                                // $infoStudent = $DB_con->prepare("SELECT * FROM user u
+                                // LEFT JOIN s_subjects sub ON u.level = sub.subjlevel  WHERE u.id = :id ");
+                                // $infoStudent->execute(array(":id" => $_SESSION["id"]));
+                                // $displayStudentInfo = $infoStudent->fetchAll(PDO::FETCH_OBJ);
 
-                                foreach($displayStudentInfo as $student){ 
-
-
-                                    
                             ?>
                             <div class="row">
                                 <div class="col-lg-6 font-primary" >
-                                    <div>Name: <?=  $student->fname ." ". $student->mname ." ". $student->lname ?></div>
-                                    <div>Level: <?= $student->grade ?> </div>
+                                    <div>Name: <?=  $_SESSION["fname"] ." ". $_SESSION["mname"] ." ". $_SESSION["lname"] ?></div>
+                                    <div>Level: <?= $_SESSION["grade"]?> </div>
                                     <div>Cambridge Level: 7</div>
                                 </div>
                                 <div class="col-lg-6 font-primary">
-                                    <div>LRN: <?= $student->lrn?> </div>
-                                    <div>Gender:<?= $student->gender?></div>
+                                    <div>LRN: <?= $_SESSION["lrn"]?> </div>
+                                    <div>Gender:<?= $_SESSION["gender"]?></div>
                                 </div>
-                                <?php 
-                                }
-                                ?>
                             </div><br>
                             <!--Student Card-->
                             <div class="text-center  lead">Click what QUARTER you want to visit below:</div>
                             <div class="row p-l-80 mt-4 ">
-                                <div><a href="studentGrade1st.php" class="btn btn-outline-dark link-secondary font-primary font-size-12">1st Quarter</a></div>
-                                <div class="pl-4"><a href="studentGrade2nd.php" class="btn btn-outline-dark link-secondary font-primary font-size-12">2nd Quarter</a></div>
-                                <div class="pl-4"><a href="studentGrade3rd.php" class="btn btn-outline-dark link-secondary font-primary font-size-12">3rd Quarter</a></div>
-                                <div class="pl-4"><a href="studentGrade4th.php" class="btn btn-outline-dark link-secondary font-primary font-size-12">4th Quarter</a></div>
+                                <div><a href="studentGrade1st.php?qtr=1&grade=<?=$_SESSION["grade"]?>&username=<?=$_SESSION['username'] ?>  "class="btn btn-outline-dark link-secondary font-primary font-size-12">1st Quarter</a></div>
+                                <div class="pl-4"><a href="studentGrade2nd.php?qtr=2" class="btn btn-outline-dark link-secondary font-primary font-size-12">2nd Quarter</a></div>
+                                <div class="pl-4"><a href="studentGrade3rd.php?qtr=3" class="btn btn-outline-dark link-secondary font-primary font-size-12">3rd Quarter</a></div>
+                                <div class="pl-4"><a href="studentGrade4th.php?qtr=4" class="btn btn-outline-dark link-secondary font-primary font-size-12">4th Quarter</a></div>
                             </div>
 
                         </div>
