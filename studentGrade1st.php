@@ -19,10 +19,10 @@ if (!isset($_SESSION['id'])) {
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>1st Quarter Grade</title>
     <style>
-    .vertical-text {
-     transform: rotate(270deg);
-}
-</style>
+        .vertical-text {
+            transform: rotate(270deg);
+        }
+    </style>
 </head>
 
 
@@ -41,23 +41,54 @@ if (!isset($_SESSION['id'])) {
             <?php
 
             $infoStudent = $DB_con->prepare("SELECT 
-            AVG(independence) as independence_avg,
-            AVG(confidence) as confidence_avg,
-            AVG(respect) as respect_avg,
-            AVG(empathy) as empathy_avg,
-            AVG(appreciation) as appreciation_avg,
-            AVG(tolerance) as tolerance_avg,
-            AVG(enthusiasm) as enthusiasm_avg,
-            AVG(conduct) as conduct_avg
+            independence,
+            confidence,
+            respect,
+            empathy,
+            appreciation,
+            tolerance,
+            enthusiasm,
+            conduct
             FROM s_studentcv WHERE sid = :sid AND qtr = 1");
             $infoStudent->execute(array(":sid" => $_SESSION["username"]));
             $displayStudentInfo = $infoStudent->fetchAll(PDO::FETCH_OBJ);
+
+            $student_data = [];
             // var_dump($displayStudentInfo);
+            foreach ($displayStudentInfo as $studentgrade) {
 
+                $coreTableQuery = $DB_con->prepare("SELECT `start`,`end`,`grade` FROM s_coretable");
+                $coreTableQuery->execute();
+                $coreTables = $coreTableQuery->fetchAll(PDO::FETCH_OBJ);
 
-            foreach ($displayStudentInfo as $student) {
+                foreach ($coreTables as $coreTable) {
 
+                    if ($studentgrade->independence >= $coreTable->start && $studentgrade->independence <= $coreTable->end) {
+                        $student_data['independence'][] = $coreTable->grade;
+                    }
+                    if ($studentgrade->confidence >= $coreTable->start && $studentgrade->confidence <= $coreTable->end) {
+                        $student_data['confidence'][] = $coreTable->grade;
+                    }
+                    if ($studentgrade->respect >= $coreTable->start && $studentgrade->respect <= $coreTable->end) {
+                        $student_data['respect'][] = $coreTable->grade;
+                    }
+                    if ($studentgrade->empathy >= $coreTable->start && $studentgrade->empathy <= $coreTable->end) {
+                        $student_data['empathy'][] = $coreTable->grade;
+                    }
+                    if ($studentgrade->appreciation >= $coreTable->start && $studentgrade->appreciation <= $coreTable->end) {
+                        $student_data['appreciation'][] = $coreTable->grade;
+                    }
 
+                    if ($studentgrade->tolerance >= $coreTable->start && $studentgrade->tolerance <= $coreTable->end) {
+                        $student_data['tolerance'][] = $coreTable->grade;
+                    }
+                    if ($studentgrade->enthusiasm >= $coreTable->start && $studentgrade->enthusiasm <= $coreTable->end) {
+                        $student_data['enthusiasm'][] = $coreTable->grade;
+                    }
+                    if ($studentgrade->conduct >= $coreTable->start && $studentgrade->conduct <= $coreTable->end) {
+                        $student_data['conduct'][] = $coreTable->grade;
+                    }
+                }
             ?>
                 <div class="row mt-5">
                     <div class="col-lg-6 font-primary">
@@ -69,7 +100,7 @@ if (!isset($_SESSION['id'])) {
                         <div>LRN: <?= $_SESSION['lrn'] ?></div>
                         <div>Gender:<?= $_SESSION['gender'] ?> </div>
                     </div>
-                    
+
                 </div>
 
                 <div class="row mt-4">
@@ -109,7 +140,7 @@ if (!isset($_SESSION['id'])) {
                         <table class="table table-bordered mt-3 font-primary" style="width:300px; max-width:300px">
                             <thead>
                                 <tr>
-                                    <th class="vertical-text font-weight-normal text-center" style="width: 130px;" height = 130>Independence</th>
+                                    <th class="vertical-text font-weight-normal text-center" style="width: 130px;" height=130>Independence</th>
                                     <th class="vertical-text">Confidence</th>
                                     <th class="vertical-text">Respect</th>
                                     <th class="vertical-text">Empathy</th>
@@ -121,14 +152,14 @@ if (!isset($_SESSION['id'])) {
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><?= $student->independence_avg?></td>
-                                    <td><?= $student->confidence_avg ?></td>
-                                    <td><?= $student->respect_avg ?></td>
-                                    <td><?= $student->empathy_avg ?></td>
-                                    <td><?= $student->appreciation_avg ?></td>
-                                    <td><?= $student->tolerance_avg ?></td>
-                                    <td><?= $student->enthusiasm_avg ?></td>
-                                    <td><?= $student->conduct_avg ?></td>
+                                    <td><?= implode(", ", $student_data['independence']) ?></td>
+                                    <td><?= implode(", ", $student_data['confidence']) ?></td>
+                                    <td><?= implode(", ", $student_data['respect']) ?></td>
+                                    <td><?= implode(", ", $student_data['empathy']) ?></td>
+                                    <td><?= implode(", ", $student_data['appreciation']) ?></td>
+                                    <td><?= implode(", ", $student_data['tolerance']) ?></td>
+                                    <td><?= implode(", ", $student_data['enthusiasm']) ?></td>
+                                    <td><?= implode(", ", $student_data['conduct']) ?></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -137,7 +168,7 @@ if (!isset($_SESSION['id'])) {
                         <div class=" text-black-50">E = Exemplary</div>
                         <div class="text-black-50">HS = Highly Satisfactory</div>
                         <div class="text-black-50">S = Satisfactory</div>
-                        <div class="text-black-50">Ng = Needs Guidance</div>
+                        <div class="text-black-50">Ng = Needs Guidance</div><br>
 
                     </div>
                 </div>
@@ -201,8 +232,8 @@ if (!isset($_SESSION['id'])) {
             <?php
             }
             ?>
-<?php include_once "includes/footer.php"; ?>
-<?php include_once "includes/scripts.php";?>
+            <?php include_once "includes/footer.php"; ?>
+            <?php include_once "includes/scripts.php"; ?>
 
         </div>
     </div>
