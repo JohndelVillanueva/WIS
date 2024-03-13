@@ -1,6 +1,7 @@
 <?php
 include_once "includes/css.php";
 include_once "includes/config.php";
+include_once "includes/dbconfig.php";
 session_start();
 
 if (!isset($_SESSION['id'])) {
@@ -26,6 +27,9 @@ if (!isset($_SESSION['id'])) {
     <div class="container-fluid p-3 mb-2 bg-light text-dark reportCardbg">
         <div class="layout text-center mt-5">
             <div class="row">
+                <div>
+            <button type="submit" class="btn btn-outline-warning ml-5 btn-lg border-warning"><i class="fa fa-home"></i><a href="student.php">Home</a></button>
+            </div>
                 <div class="col-lg-12">
                     <div> <img style=" max-width: 150px; margin-top: 2px  " src="assets/images/logo/west.png"></div>
                     <div>Primary School</div>
@@ -102,24 +106,11 @@ if (!isset($_SESSION['id'])) {
                 $getTheGradeOfaStudent = $DB_con->prepare("SELECT * FROM s_subjects WHERE subjlevel = :grade");
                 $getTheGradeOfaStudent->execute([":grade" => $_SESSION['grade']]);
                 $getAllSubjects = $getTheGradeOfaStudent->fetchAll(PDO::FETCH_OBJ);
-
-                foreach ($getAllSubjects as $studentSubject) {
-
-                    $getScoreQuery = $DB_con->prepare('SELECT * FROM s_scores WHERE sid = :sid AND qtr = :qtr AND subjcode = :subjcode');
-                    $getScoreQuery->execute([
-                        ":sid" => $_SESSION['username'],
-                        ":qtr" => $_GET['qtr'],
-                        ":subjcode" => $_SESSION['username']
-                    ]);
-                    $getScore = $getScoreQuery->fetchAll(PDO::FETCH_OBJ);
-
-                    foreach ($getScore as $score) {
-                    }
-                }
                 ?>
 
                 <div class="row mt-4">
-                    <div class="col-lg-7">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-8">
                         <div class="text-black-50 font-size-28 font-primary">Scholastic Performance</div>
                         <table class="table table-bordered mt-3 font-primary">
                             <thead>
@@ -134,28 +125,52 @@ if (!isset($_SESSION['id'])) {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="font-size-18 text-black-50 font-weight-normal"><?= $studentSubject->subjdesc ?></td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                </tr>
+                                <?php foreach ($getAllSubjects as $studentSubject) : ?>
+                                    <tr>
+                                        <td class="font-size-18 text-black-50 font-weight-normal"><?= $studentSubject->subjdesc ?></td>
+                                        <?php
+                                            // $getScoreQuery = $DB_con->prepare('SELECT * FROM s_scores WHERE sid = :sid AND qtr = :qtr AND subjcode = :subjcode');
+                                            // $getScoreQuery->execute([
+                                            //     ":sid" => $_SESSION['username'],
+                                            //     ":qtr" => $_GET['qtr'],
+                                            //     ":subjcode" => $_SESSION['username']
+                                            // ]);
+                                            // $getScore = $getScoreQuery->fetchAll(PDO::FETCH_OBJ);
+                                            // $_GET['score'];
+                                            $studentScore = new DB();
+                                            $getScore = $studentScore->getScores($studentSubject->code,1,$_SESSION['username']);
+
+                                            if (!empty($getScore)) {
+                                                foreach ($getScore as $score):
+                                                    ?>
+                                                    <td><?= $score->totalScore ?></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <?php
+                                                endforeach;
+                                            } else {
+                                                echo "<td colspan='6' class='text-center'> No Record Yet</td>";
+                                            }
+                                            ?>
+                                <?php endforeach; ?>
                                 <tr>
                                     <td colspan="7" class="text-center">Get General Average</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                </div>
-                    <div class="col-lg-5">
+                    <div class="col-lg-2"></div>
+                </div><br>
+                <div class="row mt-4">
+                    <div class="col-lg-2"></div>
+
+                    <div class="col-lg-8">
                         <div class="text-black-50 font-size-29 font-primary ">Core Values</div>
-                        <table class="table table-bordered mt-3 font-primary" style="width:300px; max-width:300px">
+                        <table class="table table-bordered mt-3 font-primary">
                             <thead>
                                 <tr>
-                                    <th class="font-weight-normal text-center" height=10>Independence</th>
+                                    <th class="font-weight-normal text-center">Independence</th>
                                     <th class="font-weight-normal text-center">Confidence</th>
                                     <th class="font-weight-normal text-center">Respect</th>
                                     <th class="font-weight-normal text-center">Empathy</th>
@@ -186,71 +201,73 @@ if (!isset($_SESSION['id'])) {
                         <div class="text-black-50">Ng = Needs Guidance</div><br>
 
                     </div>
+                    <div class="col-lg-2"></div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-12 bg-light">
-                        <table class="table table-bordered mt-3 font-primary">
-                            <thead class="thead-white text-center">
-                                <th colspan="4">Attendance</th>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td>Mark</td>
-                                    <td>Mark</td>
-                                    <td>Mark</td>
-
-
-                                </tr>
-                                <tr>
-                                    <th>1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                    <th>2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <th>3</th>
-                                    <td>Larry the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="mt-4 font-size-17 text-left">Promote to grade: __________ Retain in grade: _______</div>
-                        <div class="mt-4 font-size-17 mr-5 text-left">Eligible for Admission to Grade:________ </div>
-                        <div class="mt-4 font-size-17 mr-5 text-left">Date:________</div><br>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6 ">
-                        <div class="adviser">
-                            <div class="mt-3 text-black-50"> Name of the adviser </div>
-                            <div class="font-size-23"> Adviser</div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="adviser">
-                            <div class="mt-3 text-black-50"> Name of the headMaster </div>
-                            <div class="font-size-23"> Primary School Headmaster</div>
-                        </div>
-                    </div>
-                </div>
-            <?php
-            }
-            ?>
-            <?php include_once "includes/footer.php"; ?>
-            <?php include_once "includes/scripts.php"; ?>
-
         </div>
+        <div class="row">
+            <div class="col-lg-12 bg-light">
+                <table class="table table-bordered mt-3 font-primary">
+                    <thead class="thead-white text-center">
+                        <th colspan="4">Attendance</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td>Mark</td>
+                            <td>Mark</td>
+                            <td>Mark</td>
+
+
+                        </tr>
+                        <tr>
+                            <th>1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                        </tr>
+                        <tr>
+                            <th>2</th>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                        </tr>
+                        <tr>
+                            <th>3</th>
+                            <td>Larry the Bird</td>
+                            <td>@twitter</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="mt-4 font-size-17 text-left">Promote to grade: __________ Retain in grade: _______</div>
+                <div class="mt-4 font-size-17 mr-5 text-left">Eligible for Admission to Grade:________ </div>
+                <div class="mt-4 font-size-17 mr-5 text-left">Date:________</div><br>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 ">
+                <div class="adviser">
+                    <div class="mt-3 text-black-50"> Name of the adviser </div>
+                    <div class="font-size-23"> Adviser</div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="adviser">
+                    <div class="mt-3 text-black-50"> Name of the headMaster </div>
+                    <div class="font-size-23"> Primary School Headmaster</div>
+                </div>
+            </div>
+        </div>
+    <?php
+            }
+    ?>
+    <?php include_once "includes/footer.php"; ?>
+    <?php include_once "includes/scripts.php"; ?>
+
+    </div>
     </div>
 </body>
 

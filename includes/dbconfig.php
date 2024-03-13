@@ -10,6 +10,7 @@ class DB
     private $dbh;
     private $error;
     private $stmt;
+    public $score;
 
     public function __construct()
     {
@@ -89,6 +90,17 @@ class DB
     public function close()
     {
         return $this->dbh = null;
+    }
+
+    public function getScores($code, $qtr, $sid){
+        $getScoreOfAstudent = $this->dbh->prepare("SELECT SUM(`score`) as totalScore FROM s_scores WHERE 
+        subjcode = :subjcode AND qtr = :qtr AND sid = :sid");
+        $getScoreOfAstudent->execute([":subjcode" => $code, ":qtr" => $qtr,":sid" => $sid]);
+        $getScores = $getScoreOfAstudent->fetchAll(PDO::FETCH_OBJ);
+
+        return $getScores;
+
+
     }
 
 }
