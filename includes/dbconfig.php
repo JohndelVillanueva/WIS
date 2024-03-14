@@ -93,12 +93,57 @@ class DB
     }
 
     public function getScores($code, $qtr, $sid){
-        $getScoreOfAstudent = $this->dbh->prepare("SELECT SUM(`score`) as totalScore FROM s_scores WHERE 
+        $getScoreOfAstudent = $this->dbh->prepare("SELECT SUM(`score`) as totalScore, `maxscore` FROM s_scores WHERE 
         subjcode = :subjcode AND qtr = :qtr AND sid = :sid");
         $getScoreOfAstudent->execute([":subjcode" => $code, ":qtr" => $qtr,":sid" => $sid]);
         $getScores = $getScoreOfAstudent->fetchAll(PDO::FETCH_OBJ);
 
+        $getWrittenWorkQuery = $this->dbh->prepare("SELECT ss.percentww FROM s_scores 
+        LEFT JOIN s_subjects ss ON s_scores.subjcode = ss.code
+        WHERE  acttype = 1");
+        $getWrittenWorkQuery->execute();
+        $writteGrade = $getWrittenWorkQuery->fetchAll();
+
+        $getPerformanceTaskQuery = $this->dbh->prepare("SELECT sub.percentpt FROM s_scores 
+            LEFT JOIN s_subjects sub ON s_scores.subjcode = sub.code
+            WHERE acttype = 2");
+        $getPerformanceTaskQuery->execute();
+        $performanceGrade = $getPerformanceTaskQuery->fetchAll();
+
         return $getScores;
+
+
+    }
+
+    public function getFinalGrade($qtr){
+
+        $userLogin = $_SESSION['username'];
+        $getWrittenWorkQuery = $this->dbh->prepare("SELECT ss.percentww FROM s_scores 
+            LEFT JOIN s_subjects ss ON s_scores.subjcode = ss.code
+            WHERE  acttype = 1");
+        $getWrittenWorkQuery->execute(array(":sid" =>  $userLogin, ":qtr" => $qtr));
+        $writteGrade = $getWrittenWorkQuery->fetch();
+
+        $getPerformanceTaskQuery = $this->dbh->prepare("SELECT sub.percentpt FROM s_scores 
+            LEFT JOIN s_subjects sub ON s_scores.subjcode = sub.code
+            WHERE acttype = 2");
+        $getPerformanceTaskQuery->execute();
+        $performanceGrade = $getPerformanceTaskQuery->fetch();
+
+        $getQuarterlyQuery = $this->dbh->prepare("SELECT subs.percentqt FROM s_scores 
+            LEFT JOIN s_subjects subs ON s_scores.subjcode = subs.code
+            WHERE acttype = 3 ");
+        $getQuarterlyQuery->execute();
+        $quarterlyGrade = $getQuarterlyQuery->fetch();
+
+        $initgrade = round(round($writteGrade, 2) * $writteGrade["percentww"] + round($performanceGrade, 2) * $performanceGrade["percentpt"] + round($quarterlyGrade, 2) * $quarterlyGrade["percentqt"], 2);
+
+        $resultGrade = $this->dbh->prepare("SELECT * FROM s_transmute WHERE :initgrade BETWEEN lowerl AND upperl");
+        $resultGrade->execute(array(":initgrade" =>  round($initgrade, 1)));
+        $transmutedGrade = $resultGrade->fetchAll();
+
+        return $transmutedGrade;
+
 
 
     }

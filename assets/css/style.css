@@ -50,6 +50,7 @@ body {
 body.reportCard{
     background-image: url("../images/logo/repeat.png");
     background-repeat: repeat;
+
 }
 div.reportCardbg {
     opacity: 0.9;
