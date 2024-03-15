@@ -135,31 +135,51 @@ if (!isset($_SESSION['id'])) {
                                     <tr>
                                         <td class="font-size-18 text-black-50 font-weight-normal"><?= $studentSubject->subjdesc ?></td>
                                         <?php
-                                        // $getScoreQuery = $DB_con->prepare('SELECT * FROM s_scores WHERE sid = :sid AND qtr = :qtr AND subjcode = :subjcode');
-                                        // $getScoreQuery->execute([
-                                        //     ":sid" => $_SESSION['username'],
-                                        //     ":qtr" => $_GET['qtr'],
-                                        //     ":subjcode" => $_SESSION['username']
-                                        // ]);
-                                        // $getScore = $getScoreQuery->fetchAll(PDO::FETCH_OBJ);
-                                        // $_GET['score'];
-                                        $studentScore = new DB();
-                                        $getScore = $studentScore->getScores($studentSubject->code, 1, $_SESSION['username']);
+                                        // $studentScore = new DB();
+                                        // $getScore = $studentScore->getScores($studentSubject->code, 1, $_SESSION['username']);
+                                        $getWrittenWorkQuery = $DB_con->prepare("SELECT SUM(`score`) as totalScore, SUM(`maxscore`) as totalActivity, `percentww` FROM s_scores 
+                                        LEFT JOIN s_subjects ss ON s_scores.subjcode = ss.code
+                                        WHERE  subjcode = :subjcode AND qtr = :qtr AND sid = :sid AND acttype = :acttype");
+                                        $getWrittenWorkQuery->execute([":subjcode" => $studentSubject->code , ":qtr" => $_GET['qtr'], ":sid" => $_SESSION['username'], ":acttype" => 1 ]);
+                                        $writtenGrades = $getWrittenWorkQuery->fetchAll();
+                                        $wwScore = 0;
+                                        $wwMaxscore = 0;
 
-                                        if (!empty($getScore)) {
-                                            foreach ($getScore as $score) :
-                                        ?>
-                                                <td><?= $score->totalScore ?></td>
+                                        $getPerformanceTaskQuery = $DB_con->prepare("SELECT SUM(`score`) as totalScore, SUM(`maxscore`) as totalActivity, `percentww` FROM s_scores 
+                                        LEFT JOIN s_subjects ss ON s_scores.subjcode = ss.code
+                                        WHERE  subjcode = :subjcode AND qtr = :qtr AND sid = :sid AND acttype = :acttype");
+                                        $getPerformanceTaskQuery->execute([":subjcode" => $studentSubject->code , ":qtr" => $_GET['qtr'], ":sid" => $_SESSION['username'], ":acttype" => 2 ]);
+                                        $performanceTask = $getPerformanceTaskQuery->fetchAll();
+                                        $wwScore = 0;
+                                        $wwMaxscore = 0;
+
+
+                                        if (!empty($writtenGrades)) {
+                                            foreach ($writtenGrades as $writtenGrade) {
+                                                $wwScore += $writtenGrade['totalScore'];
+                                                $wwMaxscore += $writtenGrade['totalActivity'];
+                                            }
+                                
+                                            if ($wwMaxscore != 0) {
+                                                $totalGrade = ($wwScore / $wwMaxscore) * 100;
+                                                $getTotalGrade = round($totalGrade, 2);
+                                                $getFinalGrade = round(round($getTotalGrade, 2) * $writtenGrade['percentww'], 2)
+                                                ?>
+                                                <td class="text-center" ><?= $getFinalGrade ?></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
-                                        <?php
-                                            endforeach;
+                                            <?php
+                                            } else {
+                                                // Handle the case where $wwMaxscore is zero
+                                                echo "<td colspan='5' class='text-center'> No Grades</td>";
+                                            }
                                         } else {
-                                            echo "<td colspan='6' class='text-center'> No Record Yet</td>";
+                                            echo "<td colspan='5' class='text-center'> No Record Yet</td>";
                                         }
                                         ?>
+                                    </tr>
                                     <?php endforeach; ?>
                                     <tr>
                                         <td colspan="7" class="text-center">Get General Average</td>
