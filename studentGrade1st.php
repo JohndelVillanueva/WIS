@@ -141,31 +141,69 @@ if (!isset($_SESSION['id'])) {
                                         LEFT JOIN s_subjects ss ON s_scores.subjcode = ss.code
                                         WHERE  subjcode = :subjcode AND qtr = :qtr AND sid = :sid AND acttype = :acttype");
                                         $getWrittenWorkQuery->execute([":subjcode" => $studentSubject->code , ":qtr" => $_GET['qtr'], ":sid" => $_SESSION['username'], ":acttype" => 1 ]);
-                                        $writtenGrades = $getWrittenWorkQuery->fetchAll();
+                                        $writtenGrades = $getWrittenWorkQuery->fetchAll(PDO::FETCH_ASSOC);
                                         $wwScore = 0;
                                         $wwMaxscore = 0;
 
-                                        $getPerformanceTaskQuery = $DB_con->prepare("SELECT SUM(`score`) as totalScore, SUM(`maxscore`) as totalActivity, `percentww` FROM s_scores 
+                                        foreach ($writtenGrades as $writtenGrade) {
+                                            $wwScore += $writtenGrade['totalScore'];
+                                            $wwMaxscore += $writtenGrade['totalActivity'];
+                                        }
+
+                                        $performanceTaskQuery = $DB_con->prepare("SELECT SUM(`score`) as ptTotalScore, SUM(`maxscore`) as ptTotalActivity, `percentpt` FROM s_scores 
                                         LEFT JOIN s_subjects ss ON s_scores.subjcode = ss.code
-                                        WHERE  subjcode = :subjcode AND qtr = :qtr AND sid = :sid AND acttype = :acttype");
-                                        $getPerformanceTaskQuery->execute([":subjcode" => $studentSubject->code , ":qtr" => $_GET['qtr'], ":sid" => $_SESSION['username'], ":acttype" => 2 ]);
-                                        $performanceTask = $getPerformanceTaskQuery->fetchAll();
-                                        $wwScore = 0;
-                                        $wwMaxscore = 0;
+                                        WHERE  acttype = :acttype");
+                                        $performanceTaskQuery->execute([":acttype" => 2 ]);
+                                        $performanceTaskGrade = $performanceTaskQuery->fetchAll(PDO::FETCH_ASSOC);
+                                        $ptScore = 0;
+                                        $ptMaxscore = 0;
 
+                                        foreach($performanceTaskGrade as $performanceTask){
+                                            $ptScore += $performanceTask['ptTotalScore'];
+                                            $ptMaxscore += $performanceTask['ptTotalActivity'];
+                                        }
 
-                                        if (!empty($writtenGrades)) {
-                                            foreach ($writtenGrades as $writtenGrade) {
-                                                $wwScore += $writtenGrade['totalScore'];
-                                                $wwMaxscore += $writtenGrade['totalActivity'];
+                                        $quarterlyQuery = $DB_con->prepare("SELECT SUM(`score`) as qtTotalScore, SUM(`maxscore`) as qtTotalActivity, `percentqt` FROM s_scores 
+                                        LEFT JOIN s_subjects ss ON s_scores.subjcode = ss.code
+                                        WHERE  acttype = :acttype");
+                                        $quarterlyQuery->execute([":acttype" => 3 ]);
+                                        $QuarterlyGrade = $quarterlyQuery->fetchAll(PDO::FETCH_ASSOC);
+                                        $qtScore = 0;
+                                        $qtMaxscore = 0;
+
+                                            foreach($QuarterlyGrade as $quarterly){
+                                                $qtScore += $quarterly['qtTotalScore'];
+                                                $qtMaxscore += $quarterly['qtTotalActivity'];
                                             }
+
                                 
-                                            if ($wwMaxscore != 0) {
-                                                $totalGrade = ($wwScore / $wwMaxscore) * 100;
-                                                $getTotalGrade = round($totalGrade, 2);
-                                                $getFinalGrade = round(round($getTotalGrade, 2) * $writtenGrade['percentww'], 2)
+                                            if ($wwMaxscore != 0 && $ptMaxscore != 0 && $qtMaxscore != 0) {
+                                                $writtenWorkTotal = ($wwScore / $wwMaxscore) * 100;
+                                                $wwGetTotalGrade = round($writtenWorkTotal, 2);
+                                                $getFinalGrade = round(round($wwGetTotalGrade, 2) * $writtenGrade['percentww'], 2);
+
+                                                $performanceTaskTotal = ($ptScore / $ptMaxscore) * 100;
+                                                $ptGetTotalGrade = round($performanceTaskTotal, 2);
+                                                $ptgetFinalGrade = round(round($ptGetTotalGrade, 2) * $performanceTask['percentpt'], 2);
+
+                                                $quarterlyTotal = ($qtScore / $qtMaxscore) * 100;
+                                                $qaGetTotalGrade = round($quarterlyTotal, 2);
+                                                $qagetFinalGrade = round(round($qaGetTotalGrade, 2) * $quarterly['percentqt'], 2);
+
+
+                                                
+                                                $totalGrade = round(round($wwGetTotalGrade, 2) * $writtenGrade['percentww'] + round($ptGetTotalGrade, 2) * $performanceTask['percentpt'] + round($qaGetTotalGrade, 2) * $quarterly['percentqt'], 2);
+
+                                                    $finalgrade = $DB_con->prepare("SELECT * FROM s_transmute WHERE :transmuted BETWEEN lowerl AND upperl");
+                                                    $finalgrade->execute(array(":transmuted" => $totalGrade));
+                                                    $finalg = $finalgrade->fetchAll(PDO::FETCH_ASSOC);
+
+                                                    foreach($finalg as $final){
+
+                                                    }
+
                                                 ?>
-                                                <td class="text-center" ><?= $getFinalGrade ?></td>
+                                                <td class="text-center" ><?= $final['transmuted'];?></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -175,9 +213,6 @@ if (!isset($_SESSION['id'])) {
                                                 // Handle the case where $wwMaxscore is zero
                                                 echo "<td colspan='5' class='text-center'> No Grades</td>";
                                             }
-                                        } else {
-                                            echo "<td colspan='5' class='text-center'> No Record Yet</td>";
-                                        }
                                         ?>
                                     </tr>
                                     <?php endforeach; ?>
