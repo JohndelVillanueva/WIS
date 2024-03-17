@@ -61,6 +61,7 @@ if (!isset($_SESSION['id'])) {
                 $getTheGradeOfaStudent = $DB_con->prepare("SELECT * FROM s_subjects WHERE subjlevel = :grade");
                 $getTheGradeOfaStudent->execute([":grade" => $_SESSION['grade']]);
                 $getAllSubjects = $getTheGradeOfaStudent->fetchAll(PDO::FETCH_OBJ);
+
                 ?>
 
                 <div class="row mt-4">
@@ -88,41 +89,28 @@ if (!isset($_SESSION['id'])) {
                                         // $getScore = $studentScore->getScores($studentSubject->code, 1, $_SESSION['username']);
                                         $getWrittenWorkQuery = $DB_con->prepare("SELECT SUM(`score`) as totalScore, SUM(`maxscore`) as totalMaxscore FROM s_scores 
                                         WHERE  subjcode = :subjcode AND qtr = :qtr AND sid = :sid AND acttype = :acttype");
-                                        $getWrittenWorkQuery->execute([":subjcode" => $studentSubject->code , ":qtr" => 1, ":sid" => $_SESSION['username'], ":acttype" => 1 ]);
+                                        $getWrittenWorkQuery->execute([":subjcode" => $studentSubject->code , ":qtr" => $_GET['qtr'], ":sid" => $_SESSION['username'], ":acttype" => 1 ]);
                                         $writtenGrades = $getWrittenWorkQuery->fetch(PDO::FETCH_OBJ);
                                         $wwScore = $writtenGrades->totalScore;
                                         $wwMaxscore = $writtenGrades->totalMaxscore;
+                                        // print_r(['wwscore' => $wwScore, 'wmaxscore' => $wwMaxscore]);
 
-                                        // foreach ($writtenGrades as $writtenGrade) {
-                                        //     $wwScore += $writtenGrade['totalScore'];
-                                        //     $wwMaxscore += $writtenGrade['totalActivity'];
-                                        // }
+                                        $performanceTaskQuery = $DB_con->prepare("SELECT SUM(`score`) as ptTotalScore, SUM(`maxscore`) as ptTotalMaxscore FROM s_scores 
+                                        WHERE  subjcode = :subjcode AND qtr = :qtr AND sid = :sid AND acttype = :acttype");
+                                        $performanceTaskQuery->execute([":subjcode" => $studentSubject->code , ":qtr" => $_GET['qtr'], ":sid" => $_SESSION['username'], ":acttype" => 2 ]);
+                                        $performanceTaskGrade = $performanceTaskQuery->fetch(PDO::FETCH_OBJ);
+                                        $ptScore = $performanceTaskGrade->ptTotalScore;
+                                        $ptMaxscore = $performanceTaskGrade->ptTotalMaxscore;
+                                        // print_r(['ptscore' => $ptScore, 'ptmaxscore' => $ptMaxscore]);
 
-                                        $performanceTaskQuery = $DB_con->prepare("SELECT SUM(`score`) as ptTotalScore, SUM(`maxscore`) as ptTotalActivity FROM s_scores 
-                                        WHERE  acttype = :acttype");
-                                        $performanceTaskQuery->execute([":acttype" => 2 ]);
-                                        $performanceTaskGrade = $performanceTaskQuery->fetchAll(PDO::FETCH_ASSOC);
-                                        $ptScore = 0;
-                                        $ptMaxscore = 0;
+                                        $quarterlyQuery = $DB_con->prepare("SELECT SUM(`score`) as qtTotalScore, SUM(`maxscore`) as qtTotalMaxScore FROM s_scores 
+                                        WHERE  subjcode = :subjcode AND qtr = :qtr AND sid = :sid AND acttype = :acttype");
+                                        $quarterlyQuery->execute([":subjcode" => $studentSubject->code , ":qtr" => $_GET['qtr'], ":sid" => $_SESSION['username'], ":acttype" => 3 ]);
+                                        $QuarterlyGrade = $quarterlyQuery->fetch(PDO::FETCH_OBJ);
+                                        $qtScore = $QuarterlyGrade->qtTotalScore;
+                                        $qtMaxscore = $QuarterlyGrade->qtTotalMaxScore;
+                                        // print_r(['qtScore' => $qtScore, 'qtMaxscore' => $qtMaxscore]);
 
-                                        foreach($performanceTaskGrade as $performanceTask){
-                                            $ptScore += $performanceTask['ptTotalScore'];
-                                            $ptMaxscore += $performanceTask['ptTotalActivity'];
-                                        }
-
-                                        $quarterlyQuery = $DB_con->prepare("SELECT SUM(`score`) as qtTotalScore, SUM(`maxscore`) as qtTotalActivity FROM s_scores 
-                                        WHERE  acttype = :acttype");
-                                        $quarterlyQuery->execute([":acttype" => 3 ]);
-                                        $QuarterlyGrade = $quarterlyQuery->fetchAll(PDO::FETCH_ASSOC);
-                                        $qtScore = 0;
-                                        $qtMaxscore = 0;
-
-                                            foreach($QuarterlyGrade as $quarterly){
-                                                $qtScore += $quarterly['qtTotalScore'];
-                                                $qtMaxscore += $quarterly['qtTotalActivity'];
-                                            }
-
-                                
                                             if ($wwMaxscore != 0 && $ptMaxscore != 0 && $qtMaxscore != 0) {
                                                 $writtenWorkTotal = ($wwScore / $wwMaxscore) * 100;
                                                 $wwGetTotalGrade = round($writtenWorkTotal, 2);
@@ -142,20 +130,10 @@ if (!isset($_SESSION['id'])) {
 
                                                     $finalgrade = $DB_con->prepare("SELECT * FROM s_transmute WHERE :transmuted BETWEEN lowerl AND upperl");
                                                     $finalgrade->execute(array(":transmuted" => $totalGrade));
-                                                    $finalg = $finalgrade->fetchAll(PDO::FETCH_ASSOC);
-
-                                                    $totalGrade = round(round($wwGetTotalGrade, 2) * $studentSubject->percentww + round($ptGetTotalGrade, 2) * $studentSubject->percentpt + round($qaGetTotalGrade, 2) * $studentSubject->percentqt, 2);
-
-                                                    $finalgrade = $DB_con->prepare("SELECT * FROM s_transmute WHERE :transmuted BETWEEN lowerl AND upperl");
-                                                    $finalgrade->execute(array(":transmuted" => $totalGrade));
-                                                    $finalg = $finalgrade->fetchAll(PDO::FETCH_ASSOC);
-
-                                                    foreach($finalg as $final){
-
-                                                    }
+                                                    $finalg = $finalgrade->fetch(PDO::FETCH_OBJ);
 
                                                 ?>
-                                                <td class="text-center" ><?= $final['transmuted'];?></td>
+                                                <td class="text-center" ><?= $finalg->transmuted;?></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -180,85 +158,88 @@ if (!isset($_SESSION['id'])) {
                     <div class="col-lg-2"></div>
                     <?php
 
-            $infoStudent = $DB_con->prepare("SELECT 
-            independence,
-            confidence,
-            respect,
-            empathy,
-            appreciation,
-            tolerance,
-            enthusiasm,
-            conduct
-            FROM s_studentcv WHERE sid = :sid AND qtr = :qtr");
-            $infoStudent->execute(array(":sid" => $_SESSION["username"], ":qtr" => $_GET["qtr"]));
-            $displayStudentInfo = $infoStudent->fetchAll(PDO::FETCH_OBJ);
+$studentQuery = $DB_con->prepare("SELECT 
+independence,
+confidence,
+respect,
+empathy,
+appreciation,
+tolerance,
+enthusiasm,
+conduct
+FROM s_studentcv WHERE sid = :sid AND qtr = :qtr");
+    $studentQuery->execute(array(":sid" => $_SESSION["username"], ":qtr" => $_GET["qtr"]));
+    $studentgrade = $studentQuery->fetch(PDO::FETCH_OBJ);
 
-            $student_data = [];
-            // var_dump($displayStudentInfo);
-            foreach ($displayStudentInfo as $studentgrade) {
+    $coreTableQuery = $DB_con->prepare("SELECT `start`,`end`,`grade` FROM s_coretable");
+    $coreTableQuery->execute();
+    $coreTables = $coreTableQuery->fetchAll(PDO::FETCH_OBJ);
 
-                $coreTableQuery = $DB_con->prepare("SELECT `start`,`end`,`grade` FROM s_coretable");
-                $coreTableQuery->execute();
-                $coreTables = $coreTableQuery->fetchAll(PDO::FETCH_OBJ);
+    // $student_data = [];
+    // var_dump($displayStudentInfo);
+    $gradeConversion = [];
+    if ($studentgrade) {
+        foreach ($coreTables as $coreTable) {
 
-                foreach ($coreTables as $coreTable) {
+            if ($studentgrade->independence >= $coreTable->start && $studentgrade->independence <= $coreTable->end) {
+                $gradeConversion['independence'] = $coreTable->grade;
+            }
+            if ($studentgrade->confidence >= $coreTable->start && $studentgrade->confidence <= $coreTable->end) {
+                $gradeConversion['confidence'] = $coreTable->grade;
+            }
+            if ($studentgrade->respect >= $coreTable->start && $studentgrade->respect <= $coreTable->end) {
+                $gradeConversion['respect'] = $coreTable->grade;
+            }
+            if ($studentgrade->empathy >= $coreTable->start && $studentgrade->empathy <= $coreTable->end) {
+                $gradeConversion['empathy'] = $coreTable->grade;
+            }
+            if ($studentgrade->appreciation >= $coreTable->start && $studentgrade->appreciation <= $coreTable->end) {
+                $gradeConversion['appreciation'] = $coreTable->grade;
+            }
 
-                    if ($studentgrade->independence >= $coreTable->start && $studentgrade->independence <= $coreTable->end) {
-                        $student_data['independence'][] = $coreTable->grade;
-                    }
-                    if ($studentgrade->confidence >= $coreTable->start && $studentgrade->confidence <= $coreTable->end) {
-                        $student_data['confidence'][] = $coreTable->grade;
-                    }
-                    if ($studentgrade->respect >= $coreTable->start && $studentgrade->respect <= $coreTable->end) {
-                        $student_data['respect'][] = $coreTable->grade;
-                    }
-                    if ($studentgrade->empathy >= $coreTable->start && $studentgrade->empathy <= $coreTable->end) {
-                        $student_data['empathy'][] = $coreTable->grade;
-                    }
-                    if ($studentgrade->appreciation >= $coreTable->start && $studentgrade->appreciation <= $coreTable->end) {
-                        $student_data['appreciation'][] = $coreTable->grade;
-                    }
+            if ($studentgrade->tolerance >= $coreTable->start && $studentgrade->tolerance <= $coreTable->end) {
+                $gradeConversion['tolerance'] = $coreTable->grade;
+            }
+            if ($studentgrade->enthusiasm >= $coreTable->start && $studentgrade->enthusiasm <= $coreTable->end) {
+                $gradeConversion['enthusiasm'] = $coreTable->grade;
+            }
+            if ($studentgrade->conduct >= $coreTable->start && $studentgrade->conduct <= $coreTable->end) {
+                $gradeConversion['conduct'] = $coreTable->grade;
+            }
+        }
+    }
 
-                    if ($studentgrade->tolerance >= $coreTable->start && $studentgrade->tolerance <= $coreTable->end) {
-                        $student_data['tolerance'][] = $coreTable->grade;
-                    }
-                    if ($studentgrade->enthusiasm >= $coreTable->start && $studentgrade->enthusiasm <= $coreTable->end) {
-                        $student_data['enthusiasm'][] = $coreTable->grade;
-                    }
-                    if ($studentgrade->conduct >= $coreTable->start && $studentgrade->conduct <= $coreTable->end) {
-                        $student_data['conduct'][] = $coreTable->grade;
-                    }
-                }
-            ?>
+    ?>
 
-                    <div class="col-lg-8">
-                        <div class="text-black-50 h1 font-weight-light">Core Values</div>
-                        <table class="table table-bordered mt-3 font-primary">
-                            <thead>
-                                <tr>
-                                    <th class="font-weight-normal text-center">Independence</th>
-                                    <th class="font-weight-normal text-center">Confidence</th>
-                                    <th class="font-weight-normal text-center">Respect</th>
-                                    <th class="font-weight-normal text-center">Empathy</th>
-                                    <th class="font-weight-normal text-center">Appreciation</th>
-                                    <th class="font-weight-normal text-center">Tolerance</th>
-                                    <th class="font-weight-normal text-center">Enthusiasm</th>
-                                    <th class="font-weight-normal text-center">Conduct</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="text-center"><?= implode(", ", $student_data['independence']) ?></td>
-                                    <td class="text-center"><?= implode(", ", $student_data['confidence']) ?></td>
-                                    <td class="text-center"><?= implode(", ", $student_data['respect']) ?></td>
-                                    <td class="text-center"><?= implode(", ", $student_data['empathy']) ?></td>
-                                    <td class="text-center"><?= implode(", ", $student_data['appreciation']) ?></td>
-                                    <td class="text-center"><?= implode(", ", $student_data['tolerance']) ?></td>
-                                    <td class="text-center"><?= implode(", ", $student_data['enthusiasm']) ?></td>
-                                    <td class="text-center"><?= implode(", ", $student_data['conduct']) ?></td>
-                                </tr>
-                            </tbody>
-                        </table>
+    <div class="col-lg-8">
+        <div class="text-black-50 h1 font-weight-light">Core Values</div>
+        <table class="table table-bordered mt-3 font-primary">
+            <thead>
+                <tr>
+                    <th class="font-weight-normal text-center">Independence</th>
+                    <th class="font-weight-normal text-center">Confidence</th>
+                    <th class="font-weight-normal text-center">Respect</th>
+                    <th class="font-weight-normal text-center">Empathy</th>
+                    <th class="font-weight-normal text-center">Appreciation</th>
+                    <th class="font-weight-normal text-center">Tolerance</th>
+                    <th class="font-weight-normal text-center">Enthusiasm</th>
+                    <th class="font-weight-normal text-center">Conduct</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center"><?= $gradeConversion['independence'] ?? '-' ?></td>
+                    <td class="text-center"><?= $gradeConversion['confidence'] ?? '-' ?></td>
+                    <td class="text-center"><?= $gradeConversion['respect'] ?? '-' ?></td>
+                    <td class="text-center"><?= $gradeConversion['empathy'] ?? '-' ?></td>
+                    <td class="text-center"><?= $gradeConversion['appreciation'] ?? '-' ?></td>
+                    <td class="text-center"><?= $gradeConversion['tolerance'] ?? '-' ?></td>
+                    <td class="text-center"><?= $gradeConversion['enthusiasm'] ?? '-' ?></td>
+                    <td class="text-center"><?= $gradeConversion['conduct'] ?? '-' ?></td>
+                </tr>
+            </tbody>
+        </table>
+
 
                         <div class="col-form-label text-black-50 mt-5 font-size-22">None-Numeric Descriptor</div>
                         <div class=" text-black-50">E = Exemplary</div>
@@ -331,9 +312,6 @@ if (!isset($_SESSION['id'])) {
                 </div>
             </div>
         </div>
-    <?php
-            }
-    ?>
     <?php include_once "includes/footer.php"; ?>
     <?php include_once "includes/scripts.php"; ?>
 
