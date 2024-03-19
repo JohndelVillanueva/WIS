@@ -13,7 +13,7 @@ session_start(); ?>
 			<div class="page-container">
 				<div class="main-content">
 					<!-- form starts !-->
-					<form action="newstudent.php" method="post">
+					<form action="" method="post">
 						<div class="row">
 							<div class="col-lg-12">
 								<?php
@@ -52,7 +52,7 @@ session_start(); ?>
 									$newstudent = "INSERT INTO user ( sy, gender, username, password, apptype, lname, fname, mname, grade, dob, lrn, prevsch, prevschcountry, uniqid, status, strand, nationality, guardianname, guardianemail, guardianphone, referral, visa, tos, earlybird, modelrelease, feepolicy, refund ) VALUES ( :sy, :gender, :username, :password, :apptype, :lname, :fname, :mname, :grade, :dob, :lrn, :prevsch, :prevschcountry, :uniqid, :status, :strand, :nationality, :guardianname, :guardianemail, :guardianphone, :referral, :visa, :tos, :earlybird, :modelrelease, :feepolicy, :refund )";
 									$studqry = $DB_con->prepare($newstudent);
 									$studqry->execute(array(
-										':sy' => '2023-24',
+										':sy' => '2024-25',
 										':gender' => ucwords(strtolower($_POST['gender'])),
 										':username' => str_replace(' ', '', strtolower($_POST['lastname'] . $_POST['firstname'])),
 										':password' => password_hash($uniqid, PASSWORD_DEFAULT),
@@ -148,15 +148,15 @@ session_start(); ?>
 								}
 
 								?>
-								<script>
+								<!-- <script>
 									function pageRedirect() {
 										var delay = 3000;
 										setTimeout(function() {
-											window.location = "application.php";
+											window.location = "registrardocs.php";
 										}, delay);
 									}
 									pageRedirect();
-								</script>
+								</script> -->
 							</div>
 						</div>
 					</form>
