@@ -43,26 +43,28 @@ if (!isset($_SESSION['username'])) {
                                     <?php
                                     }
                                     ?>
-                                    <div class="row">
-                                        <table class="table">
+                                    <div class="row ">
+                                        <div class="col-lg-12">
+                                            <table id="userlist" class="display table table-stripped table-fluid"  >
                                             <thead>
                                                 <tr>
                                                     <th scope="col">Reference Number</th>
                                                     <th scope="col">Full Name</th>
                                                     <th scope="col">Gender</th>
                                                     <th scope="col">Date of Birth</th>
-                                                    <th scope="col">LRN</th>
+                                                    <!-- <th scope="col">LRN</th> -->
                                                     <th scope="col">Profile</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $pdo_statement = $DB_con->prepare("SELECT * FROM user WHERE status = 8");
-                                                $pdo_statement->execute();
+                                                $pdo_statement = $DB_con->prepare("SELECT * FROM users24 WHERE position = :position
+                                               ORDER BY `id` DESC");
+                                                $pdo_statement->execute([":position" => "Student"]);
                                                 $result = $pdo_statement->fetchAll();
                                                 foreach ($result as $row) {
                                                 ?>
-                                                    <tr>
+                                                    <tr style="padding-top:10px!important; padding-bottom:10px!important;">
                                                         <form>
                                                             <th scope="row">
                                                                 <div class="col-lg-12">
@@ -86,7 +88,7 @@ if (!isset($_SESSION['username'])) {
                                                             <td><?php echo $row["lname"] . ", " . $row["fname"] . " " . $row["mname"]; ?></td>
                                                             <td><?php echo $row["gender"]; ?></td>
                                                             <td><?php echo date("F j, Y", strtotime($row["dob"])); ?></td>
-                                                            <td><?php echo $row["lrn"]; ?></td>
+                                                            <!-- <td><?php echo $row["lrn"]; ?></td> -->
                                                             <td>
                                                                 <a type="button" href="profile.php?id=<?php echo $row["id"]; ?>" class="btn btn-success rounded"><span class="icon-holder"><i class="anticon anticon-eye"></i></span></a>
                                                                 <?php
@@ -105,6 +107,7 @@ if (!isset($_SESSION['username'])) {
                                             </tbody>
                                         </table>
                                     </div>
+                                    </div>
                                 </div>
                                 <div class="card-footer bg-light text-center"></div>
                             </div>
@@ -117,6 +120,21 @@ if (!isset($_SESSION['username'])) {
             <?php include_once "includes/scripts.php"; ?>
         </div>
     </div>
+    <script>
+        $(document).ready(function() {
+            $('#userlist').DataTable( {
+                dom: 'frtipB',
+                buttons: [
+                    'copyHtml5',
+                    'excelHtml5',
+                    'csvHtml5',
+                    'pdfHtml5',
+                    'print'
+                ],
+                "pageLength":15
+            } );
+        } );
+    </script>
 </body>
 
 </html>

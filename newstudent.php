@@ -13,20 +13,20 @@ session_start(); ?>
 			<div class="page-container">
 				<div class="main-content">
 					<!-- form starts !-->
-					<form action="" method="post">
+					<form action="registrardocs.php" method="post">
 						<div class="row">
 							<div class="col-lg-12">
 								<?php
-								$checkrecord = "SELECT id FROM user WHERE fname LIKE ? AND lname LIKE ?";
+								$checkrecord = "SELECT id FROM users24 WHERE fname LIKE ? AND lname LIKE ?";
 								$params = array($_POST['firstname'], $_POST['lastname']);
 								$stmt = $DB_con->prepare($checkrecord);
 								$stmt->execute($params);
 								if ($stmt->rowCount() != 0) {
 									$uniqid = uniqid('WNS-');
-									$oldstudent = "UPDATE user SET sy = :sy, uniqid = :uniqid, status = :status WHERE fname LIKE :fname AND lname LIKE :lname";
+									$oldstudent = "UPDATE users24 SET sy = :sy, uniqid = :uniqid, status = :status WHERE fname LIKE :fname AND lname LIKE :lname";
 									$studqry = $DB_con->prepare($oldstudent);
 									$studqry->execute(array(
-										':sy' => "2022-23",
+										':sy' => "2024-25",
 										':uniqid' => $uniqid,
 										':status' => "7",
 										':fname' => $_POST['firstname'],
@@ -49,9 +49,10 @@ session_start(); ?>
 								<?php
 								} else {
 									$uniqid = uniqid('WNS-');
-									$newstudent = "INSERT INTO user ( sy, gender, username, password, apptype, lname, fname, mname, grade, dob, lrn, prevsch, prevschcountry, uniqid, status, strand, nationality, guardianname, guardianemail, guardianphone, referral, visa, tos, earlybird, modelrelease, feepolicy, refund ) VALUES ( :sy, :gender, :username, :password, :apptype, :lname, :fname, :mname, :grade, :dob, :lrn, :prevsch, :prevschcountry, :uniqid, :status, :strand, :nationality, :guardianname, :guardianemail, :guardianphone, :referral, :visa, :tos, :earlybird, :modelrelease, :feepolicy, :refund )";
+									$newstudent = "INSERT INTO users24 ( position, sy, gender, username, password, apptype, lname, fname, mname, grade, dob, lrn, prevsch, prevschcountry, uniqid, status, strand, nationality, guardianname, guardianemail, guardianphone, referral, visa, tos, earlybird, modelrelease, feepolicy, refund ) VALUES ( :position, :sy, :gender, :username, :password, :apptype, :lname, :fname, :mname, :grade, :dob, :lrn, :prevsch, :prevschcountry, :uniqid, :status, :strand, :nationality, :guardianname, :guardianemail, :guardianphone, :referral, :visa, :tos, :earlybird, :modelrelease, :feepolicy, :refund )";
 									$studqry = $DB_con->prepare($newstudent);
 									$studqry->execute(array(
+										':position' => $_POST['applicationtype'],
 										':sy' => '2024-25',
 										':gender' => ucwords(strtolower($_POST['gender'])),
 										':username' => str_replace(' ', '', strtolower($_POST['lastname'] . $_POST['firstname'])),
@@ -64,11 +65,11 @@ session_start(); ?>
 										':dob' => $_POST['dob'],
 										':lrn' => $_POST['lrn'],
 										':prevsch' => ucwords(strtolower($_POST['oldschool'])),
-										':prevschcountry' => ucwords(strtolower($_POST['oldschoolctry'])),
+										':prevschcountry' => ucwords(strtolower($_POST['countryName'])),
 										':uniqid' => $uniqid,
 										':status' => 1,
 										':strand' => ucwords(strtolower($_POST['strand'])),
-										':nationality' => ucwords(strtolower($_POST['nationality'])),
+										':nationality' => ucwords(strtolower($_POST['nationalityName'])),
 										':guardianname' => ucwords(strtolower($_POST['guardian'])),
 										':guardianemail' => $_POST['guardianemail'],
 										':guardianphone' => $_POST['guardianphone'],
@@ -110,6 +111,13 @@ session_start(); ?>
 									$headers .= 	'From: ' . $from . "\r\n" .
 										'Reply-To: ' . $from . "\r\n" .
 										'X-Mailer: PHP/' . phpversion();
+
+
+
+									$log_enrollQuery = $DB_con->prepare('INSERT INTO logs_enroll (ern,stage,usertouch,touch,notes) VALUES (?, ?, ?, ?, ? )');
+									$log_enrollQuery->execute([$uniqid, "Verification", $_SESSION['username'], date("Y-m-d H:i:s"), "Application Form"]);
+
+										
 								?>
 									<div class="card">
 										<div class="card-header bg-primary rounded-top pt-2">
@@ -148,7 +156,7 @@ session_start(); ?>
 								}
 
 								?>
-								<!-- <script>
+								<script>
 									function pageRedirect() {
 										var delay = 3000;
 										setTimeout(function() {
@@ -156,7 +164,7 @@ session_start(); ?>
 										}, delay);
 									}
 									pageRedirect();
-								</script> -->
+								</script>
 							</div>
 						</div>
 					</form>

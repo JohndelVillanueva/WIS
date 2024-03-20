@@ -4,11 +4,11 @@ session_start();
 
 if ($_POST['stage'] <= 8) {
     if ($_POST['stage'] == '3') {
-        $process = "UPDATE user SET status = :status, tf = :tf  WHERE uniqid = :uniqid";
+        $process = "UPDATE users24 SET status = :status, tf = :tf  WHERE uniqid = :uniqid";
         $process_statement = $DB_con->prepare($process);
         $process_statement->execute(array(':status' => $_POST['stage'], ':tf' => $_POST['tf'], ':uniqid' => $_POST['ern']));
     } elseif ($_POST['stage'] == '4') {
-        $process = "UPDATE user SET status = :status WHERE uniqid = :uniqid";
+        $process = "UPDATE users24 SET status = :status WHERE uniqid = :uniqid";
         $process_statement = $DB_con->prepare($process);
         $process_statement->execute(array(':status' => $_POST['stage'], ':uniqid' => $_POST['ern']));
 
@@ -18,7 +18,7 @@ if ($_POST['stage'] <= 8) {
         $sched_process = $DB_con->prepare($sched);
         $sched_process->execute(array($_POST['sname'], $date, $date));
     } elseif ($_POST['stage'] == '5') {
-        $process = "UPDATE user SET status = :status WHERE uniqid = :uniqid";
+        $process = "UPDATE users24 SET status = :status WHERE uniqid = :uniqid";
         $process_statement = $DB_con->prepare($process);
         $process_statement->execute(array(':status' => $_POST['stage'], ':uniqid' => $_POST['ern']));
 
@@ -26,7 +26,7 @@ if ($_POST['stage'] <= 8) {
         $sched_process = $DB_con->prepare($sched);
         $sched_process->execute(array($_POST['sname']));
     } else {
-        $process = "UPDATE user SET status = :status WHERE uniqid = :uniqid";
+        $process = "UPDATE users24 SET status = :status WHERE uniqid = :uniqid";
         $process_statement = $DB_con->prepare($process);
         $process_statement->execute(array(':status' => $_POST['stage'], ':uniqid' => $_POST['ern']));
     }

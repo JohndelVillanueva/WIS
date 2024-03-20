@@ -59,7 +59,7 @@ if(!isset($_SESSION['username']))
                                             </thead>
                                             <tbody>
                                         <?php
-                                            $pdo_statement = $DB_con->prepare("SELECT * FROM user WHERE status = 1");
+                                            $pdo_statement = $DB_con->prepare("SELECT * FROM users24 WHERE status = 1");
                                             $pdo_statement->execute();
                                             $result = $pdo_statement->fetchAll();
                                             foreach($result as $row) {

@@ -24,16 +24,16 @@
         <div class="row">
             <div class="col-lg-12">
                 <?php
-                $checkrecord = "SELECT id FROM user WHERE fname LIKE ? AND lname LIKE ?";
+                $checkrecord = "SELECT id FROM users24 WHERE fname LIKE ? AND lname LIKE ?";
                 $params = array($_POST['firstname'], $_POST['lastname']);
                 $stmt = $DB_con->prepare($checkrecord);
                 $stmt->execute($params);
                 if ($stmt->rowCount() != 0) {
                     $uniqid = uniqid('WNS-');
-                    $oldstudent = "UPDATE user SET sy = :sy, uniqid = :uniqid, status = :status WHERE fname LIKE :fname AND lname LIKE :lname";
+                    $oldstudent = "UPDATE users24 SET sy = :sy, uniqid = :uniqid, status = :status WHERE fname LIKE :fname AND lname LIKE :lname";
                     $studqry = $DB_con->prepare($oldstudent);
                     $studqry->execute(array(
-                        ':sy' => "2022-23",
+                        ':sy' => "2024-25",
                         ':uniqid' => $uniqid,
                         ':status' => "7",
                         ':fname' => $_POST['firstname'],
@@ -56,10 +56,10 @@
                 <?php
                 } else {
                     $uniqid = uniqid('WNS-');
-                    $newstudent = "INSERT INTO user ( sy, gender, username, password, apptype, lname, fname, mname, grade, dob, lrn, prevsch, prevschcountry, uniqid, status, strand, nationality, guardianname, guardianemail, guardianphone, referral, visa, tos, earlybird, modelrelease, feepolicy, refund ) VALUES ( :sy, :gender, :username, :password, :apptype, :lname, :fname, :mname, :grade, :dob, :lrn, :prevsch, :prevschcountry, :uniqid, :status, :strand, :nationality, :guardianname, :guardianemail, :guardianphone, :referral, :visa, :tos, :earlybird, :modelrelease, :feepolicy, :refund )";
+                    $newstudent = "INSERT INTO users24 ( sy, gender, username, password, apptype, lname, fname, mname, grade, dob, lrn, prevsch, prevschcountry, uniqid, status, strand, nationality, guardianname, guardianemail, guardianphone, referral, visa, tos, earlybird, modelrelease, feepolicy, refund ) VALUES ( :sy, :gender, :username, :password, :apptype, :lname, :fname, :mname, :grade, :dob, :lrn, :prevsch, :prevschcountry, :uniqid, :status, :strand, :nationality, :guardianname, :guardianemail, :guardianphone, :referral, :visa, :tos, :earlybird, :modelrelease, :feepolicy, :refund )";
                     $studqry = $DB_con->prepare($newstudent);
                     $studqry->execute(array(
-                        ':sy' => '2023-24',
+                        ':sy' => '2024-25',
                         ':gender' => ucwords(strtolower($_POST['gender'])),
                         ':username' => str_replace(' ', '', strtolower($_POST['lastname'] . $_POST['firstname'])),
                         ':password' => password_hash($uniqid, PASSWORD_DEFAULT),

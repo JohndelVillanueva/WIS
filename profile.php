@@ -15,7 +15,7 @@ if (!isset($_SESSION['username'])) {
             <?php include_once "includes/heading.php"; ?>
             <?php include_once "includes/sidemenu.php"; ?>
             <?php
-            $pdo_statement = $DB_con->prepare("SELECT * FROM user WHERE id = :id");
+            $pdo_statement = $DB_con->prepare("SELECT * FROM users24 WHERE id = :id");
             $pdo_statement->execute(array(":id" => $_GET['id']));
             $result = $pdo_statement->fetchAll();
             foreach ($result as $row) {
