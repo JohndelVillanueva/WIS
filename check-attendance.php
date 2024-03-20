@@ -354,6 +354,11 @@ foreach ($result as $row) {
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-lg-3"></div>
+                        <button class="btn btn-success col-lg-6" style="color:red;"><a href="teacher.php" style="color:black;">Submit</a></button>
+                        <div class="col-lg-3"></div>
+                    </div>
                     <!-- form ends !-->
                 </div>
                 <?php include_once "includes/footer.php"; ?>
