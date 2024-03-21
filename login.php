@@ -19,7 +19,7 @@ if (isset($_REQUEST['submit'])) {
         $errorMsg[] = "Enter Password";
     } else {
         try {
-            $select_stmt = $DB_con->prepare("SELECT * FROM user WHERE username=:uname OR email=:uemail");
+            $select_stmt = $DB_con->prepare("SELECT * FROM users24 WHERE username=:uname OR email=:uemail");
             $select_stmt->execute(array(':uname' => $username, ':uemail' => $email));
             $row = $select_stmt->fetch(PDO::FETCH_ASSOC);
 

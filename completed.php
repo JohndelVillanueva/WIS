@@ -58,9 +58,9 @@ if (!isset($_SESSION['username'])) {
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $pdo_statement = $DB_con->prepare("SELECT * FROM users24 WHERE position = :position
+                                                $pdo_statement = $DB_con->prepare("SELECT * FROM users24 WHERE position = :position AND status = :stage
                                                ORDER BY `id` DESC");
-                                                $pdo_statement->execute([":position" => "Student"]);
+                                                $pdo_statement->execute([":position" => "Student" , ":stage" => 8]);
                                                 $result = $pdo_statement->fetchAll();
                                                 foreach ($result as $row) {
                                                 ?>
@@ -117,11 +117,12 @@ if (!isset($_SESSION['username'])) {
                 </div>
                 <?php include_once "includes/footer.php"; ?>
             </div>
-            <?php include_once "includes/scripts.php"; ?>
+            <?php include_once "script.php"; ?>
+
         </div>
     </div>
     <script>
-        $(document).ready(function() {
+        $(document).ready( function() {
             $('#userlist').DataTable( {
                 dom: 'frtipB',
                 buttons: [
