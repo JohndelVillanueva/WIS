@@ -38,7 +38,7 @@ if (!isset($_SESSION['username'])) {
                                                 <div class="alert alert-success" role="alert">
                                                     Successfully processed ERN <?php echo $_GET['ern']; ?>
                                                 </div>
-                                            </div>[
+                                            </div>
                                         </div>
                                     <?php
                                     }

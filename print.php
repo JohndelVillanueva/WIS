@@ -6,7 +6,7 @@
 
 <body onload="window.print();">
     <?php
-    $pdo_statement = $DB_con->prepare("SELECT * FROM user WHERE id = :id");
+    $pdo_statement = $DB_con->prepare("SELECT * FROM users24 WHERE id = :id");
     $pdo_statement->execute(array(":id" => $_GET['id']));
     $result = $pdo_statement->fetchAll();
     foreach ($result as $row) {
@@ -15,16 +15,9 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
-                        <div class="card-header bg-warning rounded-top pt-2">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <h4><span class="icon-holder"><i class="anticon anticon-idcard"></i></span>Student Profile</h4>
-                                </div>
-                            </div>
-                        </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-2"><img class="rounded" src="assets/images/avatars/<?php
+                                <div class="col-sm-2"><img class="rounded" style="width: 150px" src="assets/images/avatars/<?php
                                                                                                         if (empty($row["photo"])) {
                                                                                                             echo "avatar.jpg";
                                                                                                         } else {
@@ -575,12 +568,11 @@
         </form>
     <?php
     } ?>
-    <?php include_once "includes/footer.php"; ?>
     <script>
         function pageRedirect() {
             var delay = 3000;
             setTimeout(function() {
-                window.location = "registrar.php";
+                window.location = "completed.php";
             }, delay);
         }
         pageRedirect();

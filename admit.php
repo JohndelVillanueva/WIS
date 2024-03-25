@@ -56,9 +56,10 @@
                 <?php
                 } else {
                     $uniqid = uniqid('WNS-');
-                    $newstudent = "INSERT INTO users24 ( sy, gender, username, password, apptype, lname, fname, mname, grade, dob, lrn, prevsch, prevschcountry, uniqid, status, strand, nationality, guardianname, guardianemail, guardianphone, referral, visa, tos, earlybird, modelrelease, feepolicy, refund ) VALUES ( :sy, :gender, :username, :password, :apptype, :lname, :fname, :mname, :grade, :dob, :lrn, :prevsch, :prevschcountry, :uniqid, :status, :strand, :nationality, :guardianname, :guardianemail, :guardianphone, :referral, :visa, :tos, :earlybird, :modelrelease, :feepolicy, :refund )";
+                    $newstudent = "INSERT INTO users24 ( position, sy, gender, username, password, apptype, lname, fname, mname, grade, dob, lrn, prevsch, prevschcountry, uniqid, status, strand, nationality, guardianname, guardianemail, guardianphone, referral, visa, tos, earlybird, modelrelease, feepolicy, refund ) VALUES ( :position, :sy, :gender, :username, :password, :apptype, :lname, :fname, :mname, :grade, :dob, :lrn, :prevsch, :prevschcountry, :uniqid, :status, :strand, :nationality, :guardianname, :guardianemail, :guardianphone, :referral, :visa, :tos, :earlybird, :modelrelease, :feepolicy, :refund )";
                     $studqry = $DB_con->prepare($newstudent);
                     $studqry->execute(array(
+                        ':postion' => $_POST['applicationtype'],
                         ':sy' => '2024-25',
                         ':gender' => ucwords(strtolower($_POST['gender'])),
                         ':username' => str_replace(' ', '', strtolower($_POST['lastname'] . $_POST['firstname'])),

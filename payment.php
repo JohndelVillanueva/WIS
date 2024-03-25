@@ -81,8 +81,8 @@ if (!isset($_SESSION['username'])) {
                                                                 <select class="custom-select" id="tf" class="form-select" name="tf" required>
                                                                     <option value="0" disabled selected>-- select one --</option>
                                                                     <option value="1">Application Fee</option>
-                                                                    <option value="2">AP + Tuition Fee</option>
-                                                                    <option value="3">AP + TF + Other Fees</option>
+                                                                    <option value="2">AF + Tuition Fee</option>
+                                                                    <option value="3">AF + TF + Other Fees</option>
                                                                     <option value="4">Others</option>
                                                                 </select>
                                                             </td>

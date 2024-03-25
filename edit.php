@@ -2,7 +2,7 @@
 include_once "includes/config.php";
 session_start();
 
-$process =
+$studentdetailsQuery =
 	"INSERT INTO studentdetails 
 		(uniqid,visa,
 		street, barangay,
@@ -53,7 +53,7 @@ $process =
 		:psych,:psychdets,
 		:minor,:emergency,
 		:hospital,:otc)";
-$process_statement = $DB_con->prepare( $process );
+$process_statement = $DB_con->prepare( $studentdetailsQuery );
 $process_statement->execute(
 	array(
 		':uniqid' => $_POST[ 'ern' ],
@@ -108,8 +108,8 @@ $process_statement->execute(
 		':otc' => $_POST[ 'otc' ]
 	));
 
-$userprocesses = 
-	"UPDATE user SET
+$updateUserQuery = 
+	"UPDATE users24 SET
 		fname = :fname, lname = :lname,
 		mname = :mname, gender = :gender,
 		guardianname = :guardian,
@@ -117,11 +117,13 @@ $userprocesses =
 		guardianphone = :guardianphone, 
 		tf = :tf, status = :status,
 		lrn = :lrn, prevsch = :oldschool,
-		prevschcountry = :oldschoolctry, nationality = :nationality,
-		grade = :gradelevel, section = :section
-	WHERE uniqid = :uniqid";	
+		prevschcountry = :oldschoolctry, 
+		nationality = :nationality,
+		grade = :gradelevel, 
+		section = :section
+		WHERE uniqid = :uniqid";	
 
-$userprocess_statement = $DB_con->prepare( $userprocesses );
+$userprocess_statement = $DB_con->prepare( $updateUserQuery );
 $userprocess_statement->execute(
 	array(
 		':status' => $_POST[ 'stage' ],

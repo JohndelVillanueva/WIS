@@ -66,7 +66,7 @@ session_start(); ?>
                                                 <div class="col-lg-2">
                                                     <label for="gender">Gender</label>
                                                     <select class="custom-select" id="gender" name="gender">
-                                                        <option value="<?php echo $row["gender"]; ?>""><?php echo $row["gender"]; ?></option>
+                                                        <option value="<?php echo $row["gender"]; ?>"><?php echo $row["gender"]; ?></option>
                                                 <option value=" M">Male</option>
                                                         <option value="F">Female</option>
                                                     </select>
@@ -100,9 +100,9 @@ session_start(); ?>
                                                 <div class="col-lg-2">
                                                     <label for="oldschoolctry">Country</label>
                                                     <select id="oldschoolctry" name="oldschoolctry" class="form-control">
-                                                        <option value="<?php echo $row["prevschcountry"]; ?>""><?php echo $row["prevschcountry"]; ?></option>
-                                                <option value="">-- select one --</option>
-                                                <option value=" Afghanistan">Afghanistan</option>
+                                                        <option value="<?php echo $row["prevschcountry"]; ?>"><?php echo $row["prevschcountry"]; ?></option>
+                                                        <option value="">-- select one --</option>
+                                                        <option value=" Afghanistan">Afghanistan</option>
                                                         <option value="Åland Islands">Åland Islands</option>
                                                         <option value="Albania">Albania</option>
                                                         <option value="Algeria">Algeria</option>
@@ -375,8 +375,8 @@ session_start(); ?>
                                                     <label for="nationality">Nationality</label>
                                                     <select class="custom-select" id="nationality" name="nationality">
                                                         <option value="<?php echo $row["nationality"]; ?>""><?php echo ucfirst($row["nationality"]); ?></option>
-                                                <option value="">-- select one --</option>
-                                                <option value=" afghan">Afghan</option>
+                                                        <option value="">-- select one --</option>
+                                                        <option value=" afghan">Afghan</option>
                                                         <option value="albanian">Albanian</option>
                                                         <option value="algerian">Algerian</option>
                                                         <option value="american">American</option>
@@ -908,20 +908,23 @@ session_start(); ?>
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <label for="speechdets">Speech Remarks</label>
-                                                    <input type="text" class="form-control" id="speechdets" name="speechdets" placeholder="Speech Remarks" required value="<?php if (!empty($irow['speechr'])) {
-                                                                                                                                                                                echo $irow['speechr'];
-                                                                                                                                                                            } ?>">
+                                                    <input type="text" class="form-control" id="speechdets" name="speechdets" placeholder="Speech Remarks" required value="
+                                                    <?php if (!empty($irow['speechr'])) {
+                                                        echo $irow['speechr'];
+                                                    } ?>">
                                                 </div>
                                             </div>
                                             <div class="row my-3">
                                                 <div class="col-lg-1 ">
                                                     <label for="vision">Vision</label>
                                                     <select class="custom-select" id="vision" class="form-select" name="vision" required>
-                                                        <option value="<?php if (!empty($irow['vision'])) {
-                                                                            echo $irow['vision'];
-                                                                        } ?>" selected><?php if (!empty($irow['vision'])) {
-                                                                                                                                                    echo $irow['vision'];
-                                                                                                                                                } ?></option>
+                                                        <option value="
+                                                        <?php if (!empty($irow['vision'])) {
+                                                            echo $irow['vision'];
+                                                        } ?>" selected>
+                                                        <?php if (!empty($irow['vision'])) {
+                                                            echo $irow['vision'];
+                                                        } ?></option>
                                                         <option value="">-- select one --</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
