@@ -644,12 +644,6 @@ session_start(); ?>
                                                     <hr>
                                                 </div>
                                             </div>
-                                            <?php
-                                            /*$info_statement = $DB_con->prepare("SELECT * FROM studentdetails WHERE uniqid = :uniqid");
-                                            $info_statement->execute(array(":uniqid"=>$row['uniqid']));
-                                            $iresult = $info_statement->fetchAll();
-                                            foreach($iresult as $irow) {*/
-                                            ?>
                                             <div class="row my-3">
                                                 <div class="col-lg-3">
                                                     <label for="street">Number and Street</label>

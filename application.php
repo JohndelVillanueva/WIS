@@ -92,7 +92,7 @@ if (!isset($_SESSION['username'])) {
                                 ?>
                                 <div class="col-lg-2">
                                     <label for="oldschoolctry">Country</label>
-                                    <select id="id" name="countryName" class="form-control">
+                                    <select id="countryName" name="countryName" class="form-control">
                                         <option value="">-- select one --</option>
                                         <?php
                                         foreach ($countries as $country) {
@@ -111,7 +111,7 @@ if (!isset($_SESSION['username'])) {
 
                                 <div class="col-lg-1">
                                     <label for="nationality">Nationality</label>
-                                    <select class="custom-select" id="id" name="nationalityName">
+                                    <select class="custom-select" id="nationalityName" name="nationalityName">
 
                                         <option value="">-- select one --</option>
                                         <?php
@@ -148,7 +148,7 @@ if (!isset($_SESSION['username'])) {
                                     </select>
                                 </div>
                                 <div class="col-lg-1" id="row12">
-                                    <label for="strand">Strand:</label>
+                                    <label for="strand" id="strandlbl">Strand:</label>
                                     <select class="custom-select" id="strand" class="form-select" name="strand">
                                         <option value="">-- select one --</option>
                                         <option value="GAS">GAS</option>
@@ -185,9 +185,9 @@ if (!isset($_SESSION['username'])) {
                                     </select>
                                 </div>
                                 <div class="col-lg-3">
-                                    <label for="visa">Visa Status</label>
+                                    <label for="visa" id="visalbl">Visa Status</label>
                                     <select class="custom-select" id="visa" class="form-select" name="visa">
-                                        <option value="">-- select one --</option>
+                                        <option value="NA">-- select one --</option>
                                         <option value="Temporary Visitor's Visa">Temporary Visitor's Visa</option>
                                         <option value="Special Non-Immigrant Visa">Special Non-Immigrant Visa</option>
                                         <option value="Non-Quota Immigrant Visa">Non-Quota Immigrant Visa</option>
@@ -423,6 +423,26 @@ if (!isset($_SESSION['username'])) {
                 document.getElementById("row12").style.display = "block";
             }
         }
+
+    $('#nationalityName').change(function(e){
+        if($(this).val() == "Philippines"){
+            $('#visa').prop('hidden',true);
+            $('#visalbl').prop('hidden',true);
+        }
+        else {
+            $('#visa').prop('hidden',false);
+        }
+    });
+
+    $('#gradelevel').change(function(e){
+        if($(this).val() != "Grade 11" || $(this).val() != "Grade 11"){
+            $('#strand').prop('hidden',true);
+            $('#strandlbl').prop('hidden',true);
+        }
+        else {
+            $('#strand').prop('hidden',false);
+        }
+    });
 </script>
 </div>
 </div>
