@@ -19,12 +19,12 @@ if (isset($_REQUEST['submit'])) {
         $errorMsg[] = "Enter Password";
     } else {
         try {
-            $select_stmt = $DB_con->prepare("SELECT * FROM user WHERE username=:uname OR email=:uemail OR empno = :empno");
-            $select_stmt->execute(array(':uname' => $username, ':uemail' => $email, ':empno' => $empno));
+            $select_stmt = $DB_con->prepare("SELECT * FROM user WHERE username=:uname OR email=:uemail");
+            $select_stmt->execute(array(':uname' => $username, ':uemail' => $email));
             $row = $select_stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($select_stmt->rowCount() > 0) {
-                if ($username == $row["username"] OR $email == $row["email"] OR $empno == $row['empno']) {
+                if ($username == $row["username"] OR $email == $row["email"]) {
                     if (password_verify($password, $row["password"])) {
                         $_SESSION["username"] = $row["username"];
                         $_SESSION["fname"] = $row["fname"];

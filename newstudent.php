@@ -48,36 +48,16 @@ session_start(); ?>
 									</div>
 								<?php
 								} else {
-									$checkStudent = $DB_con->prepare("SELECT MAX(username) AS max_username FROM users24 WHERE position = :position");
+									$checkStudent = $DB_con->prepare("SELECT * FROM users24 WHERE position = :position  ORDER BY id DESC");
 									$checkStudent->execute(["position" => "Student"]);
 									$existingUser = $checkStudent->fetch(PDO::FETCH_OBJ);
 
-									$lastStudentNumber = $existingUser->max_username;
-									if ($lastStudentNumber) {
-										$removeCharacter = explode("S", $lastStudentNumber);
-										$newStudentNumber = intval($removeCharacter[1]) + 1;
-									} else {
-										// If no existing student numbers, start from 1
-										$newStudentNumber = 1;
-									}
+									$removeCharacter = explode("nS", $existingUser->username);
+									$nStudent = str_pad(str_pad(intval($removeCharacter[1]) + 1, 6, 0, STR_PAD_LEFT), 7, "0", STR_PAD_LEFT);
+									$insertNewStudent = "nS" . $nStudent;
 
-									$newStudent = "Sn" . str_pad($newStudentNumber, 7, '0', STR_PAD_LEFT);
-									// $checkStudent = $DB_con->prepare("SELECT * FROM users24 WHERE position = :position  ORDER BY empno DESC");
-									// $checkStudent->execute(["position" => "Student"]);
-									// $existingUser = $checkStudent->fetch(PDO::FETCH_OBJ);
-
-									// // $testdata = "S0000005";
-									// // $existingUser = $_POST['username'];
-									// // $removeCharacter = explode("S",$existingUser->username);
-									// // $newStudent = str_pad(str_pad(intval($removeCharacter[1])+1,7,0,STR_PAD_LEFT),"8","S",STR_PAD_LEFT);
-									// $removeCharacter = explode("S", $existingUser->username);
-									// $newStudentNumber = intval($removeCharacter[1]) + 1;
-									// $newStudent = "Sn" . str_pad($newStudentNumber, 7, '0', STR_PAD_LEFT);
-
-									// // $existingUsername = intval($existingUser->username) + 1;
-									// $newstudent = $existingUser++;
-
-									// echo $newstudent;
+									// echo $nStudent;
+									// die();
 
 									$uniqid = uniqid('WNS-');
 									$newstudent = "INSERT INTO users24 ( position, sy, gender, username, password, apptype, lname, fname, mname, grade, dob, lrn, prevsch, prevschcountry, uniqid, status, strand, nationality, guardianname, guardianemail, guardianphone, referral, visa, tos, earlybird, modelrelease, feepolicy, refund ) VALUES ( :position, :sy, :gender, :username, :password, :apptype, :lname, :fname, :mname, :grade, :dob, :lrn, :prevsch, :prevschcountry, :uniqid, :status, :strand, :nationality, :guardianname, :guardianemail, :guardianphone, :referral, :visa, :tos, :earlybird, :modelrelease, :feepolicy, :refund )";
@@ -87,7 +67,7 @@ session_start(); ?>
 										':sy' => '2024-25',
 										':gender' => ucwords(strtolower($_POST['gender'])),
 										// str_replace(' ', '', strtolower($_POST['lastname'] . $_POST['firstname']))
-										':username' => $newStudent,
+										':username' => $insertNewStudent,
 										':password' => password_hash($uniqid, PASSWORD_DEFAULT),
 										':apptype' => ucwords(strtolower($_POST['applicationtype'])),
 										':lname' => ucwords(strtolower($_POST['lastname'])),
@@ -175,7 +155,7 @@ session_start(); ?>
 															die();
 														} else {
 															echo 'Cannot reach you at ' . $_POST['guardianemail'];
-															die();
+															// die();
 														}
 														?>
 													</h1>
