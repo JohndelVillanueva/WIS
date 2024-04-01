@@ -1,5 +1,6 @@
 <?php
 include_once "includes/config.php";
+// include_once "assets/images/avatars";
 session_start();
 
 if (isset($_SESSION["username"])) {

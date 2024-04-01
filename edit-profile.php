@@ -1,5 +1,6 @@
 <?php include_once "includes/config.php";
-session_start(); ?>
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,7 +46,7 @@ session_start(); ?>
                                                     <?php
                                                     } else {
                                                     ?>
-                                                        <img class="rounded" src="assets/images/avatars/.<?php echo $row["photo"]; ?>>
+                                                        <img class="rounded" src="assets/images/avatars/.<?php echo $row["photo"]; ?>
 													<?php
                                                     }
                                                     ?>
@@ -67,7 +68,7 @@ session_start(); ?>
                                                     <label for="gender">Gender</label>
                                                     <select class="custom-select" id="gender" name="gender">
                                                         <option value="<?php echo $row["gender"]; ?>"><?php echo $row["gender"]; ?></option>
-                                                <option value=" M">Male</option>
+                                                        <option value=" M">Male</option>
                                                         <option value="F">Female</option>
                                                     </select>
                                                 </div>
@@ -600,8 +601,8 @@ session_start(); ?>
                                                         <option value="<?php if (!empty($row['section'])) {
                                                                             echo $row['section'];
                                                                         } ?>" selected><?php if (!empty($row['section'])) {
-                                                                                                                                                    echo $row['section'];
-                                                                                                                                                } ?></option>
+                                                                                            echo $row['section'];
+                                                                                        } ?></option>
                                                         <option value="">-- select one --</option>
                                                         <option value="A">A</option>
                                                         <option value="B">B</option>
@@ -707,8 +708,8 @@ session_start(); ?>
                                                         <option value="<?php if (!empty($irow['fsalary'])) {
                                                                             echo $irow['fsalary'];
                                                                         } ?>" selected><?php if (!empty($irow['fsalary'])) {
-                                                                                                                                                        echo $irow['fsalary'];
-                                                                                                                                                    } ?></option>
+                                                                                            echo $irow['fsalary'];
+                                                                                        } ?></option>
                                                         <option value="">-- select one --</option>
                                                         <option value="P 0 - P 50 000">P 0 - P 50 000</option>
                                                         <option value="P 50 001 - P 100 000">P 50 001 - P 100 000</option>
@@ -755,8 +756,8 @@ session_start(); ?>
                                                         <option value="<?php if (!empty($irow['msalary'])) {
                                                                             echo $irow['msalary'];
                                                                         } ?>" selected><?php if (!empty($irow['msalary'])) {
-                                                                                                                                                        echo $irow['msalary'];
-                                                                                                                                                    } ?></option>
+                                                                                            echo $irow['msalary'];
+                                                                                        } ?></option>
                                                         <option value="">-- select one --</option>
                                                         <option value="P 0 - P 50 000">P 0 - P 50 000</option>
                                                         <option value="P 50 001 - P 100 000">P 50 001 - P 100 000</option>
@@ -774,8 +775,8 @@ session_start(); ?>
                                                         <option value="<?php if (!empty($irow['englishrw'])) {
                                                                             echo $irow['englishrw'];
                                                                         } ?>" selected><?php if (!empty($irow['englishrw'])) {
-                                                                                                                                                            echo $irow['englishrw'];
-                                                                                                                                                        } ?></option>
+                                                                                            echo $irow['englishrw'];
+                                                                                        } ?></option>
                                                         <option value="" disabled>-- select one --</option>
                                                         <option value="Good">Good</option>
                                                         <option value="Fair">Fair</option>
@@ -789,8 +790,8 @@ session_start(); ?>
                                                         <option value="<?php if (!empty($irow['englishv'])) {
                                                                             echo $irow['englishv'];
                                                                         } ?>" selected><?php if (!empty($irow['englishv'])) {
-                                                                                                                                                        echo $irow['englishv'];
-                                                                                                                                                    } ?></option>
+                                                                                            echo $irow['englishv'];
+                                                                                        } ?></option>
                                                         <option value="" disabled>-- select one --</option>
                                                         <option value="Good">Good</option>
                                                         <option value="Fair">Fair</option>
@@ -836,8 +837,8 @@ session_start(); ?>
                                                         <option value="<?php if (!empty($irow['ashtma'])) {
                                                                             echo $irow['ashtma'];
                                                                         } ?>" selected><?php if (!empty($irow['ashtma'])) {
-                                                                                                                                                    echo $irow['ashtma'];
-                                                                                                                                                } ?></option>
+                                                                                            echo $irow['ashtma'];
+                                                                                        } ?></option>
                                                         <option value="">-- select one --</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
@@ -855,8 +856,8 @@ session_start(); ?>
                                                         <option value="<?php if (!empty($irow['allergy'])) {
                                                                             echo $irow['allergy'];
                                                                         } ?>" selected><?php if (!empty($irow['allergy'])) {
-                                                                                                                                                        echo $irow['allergy'];
-                                                                                                                                                    } ?></option>
+                                                                                            echo $irow['allergy'];
+                                                                                        } ?></option>
                                                         <option value="">-- select one --</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
@@ -874,8 +875,8 @@ session_start(); ?>
                                                         <option value="<?php if (!empty($irow['allergyr'])) {
                                                                             echo $irow['allergyr'];
                                                                         } ?>" selected><?php if (!empty($irow['allergyr'])) {
-                                                                                                                                                        echo $irow['allergyr'];
-                                                                                                                                                    } ?></option>allergyr
+                                                                                            echo $irow['allergyr'];
+                                                                                        } ?></option>allergyr
                                                         <option value="">-- select one --</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
@@ -893,8 +894,8 @@ session_start(); ?>
                                                         <option value="<?php if (!empty($irow['speech'])) {
                                                                             echo $irow['speech'];
                                                                         } ?>" selected><?php if (!empty($irow['speech'])) {
-                                                                                                                                                    echo $irow['speech'];
-                                                                                                                                                } ?></option>
+                                                                                            echo $irow['speech'];
+                                                                                        } ?></option>
                                                         <option value="">-- select one --</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
@@ -916,9 +917,9 @@ session_start(); ?>
                                                         <?php if (!empty($irow['vision'])) {
                                                             echo $irow['vision'];
                                                         } ?>" selected>
-                                                        <?php if (!empty($irow['vision'])) {
-                                                            echo $irow['vision'];
-                                                        } ?></option>
+                                                            <?php if (!empty($irow['vision'])) {
+                                                                echo $irow['vision'];
+                                                            } ?></option>
                                                         <option value="">-- select one --</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
@@ -936,8 +937,8 @@ session_start(); ?>
                                                         <option value="<?php if (!empty($irow['hearing'])) {
                                                                             echo $irow['hearing'];
                                                                         } ?>" selected><?php if (!empty($irow['hearing'])) {
-                                                                                                                                                        echo $irow['hearing'];
-                                                                                                                                                    } ?></option>
+                                                                                            echo $irow['hearing'];
+                                                                                        } ?></option>
                                                         <option value="">-- select one --</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
@@ -955,8 +956,8 @@ session_start(); ?>
                                                         <option value="<?php if (!empty($irow['adhd'])) {
                                                                             echo $irow['adhd'];
                                                                         } ?>" selected><?php if (!empty($irow['adhd'])) {
-                                                                                                                                                echo $irow['adhd'];
-                                                                                                                                            } ?></option>
+                                                                                            echo $irow['adhd'];
+                                                                                        } ?></option>
                                                         <option value="">-- select one --</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
@@ -1004,8 +1005,8 @@ session_start(); ?>
                                                         <option value="<?php if (!empty($irow['general'])) {
                                                                             echo $irow['general'];
                                                                         } ?>" selected><?php if (!empty($irow['general'])) {
-                                                                                                                                                        echo $irow['general'];
-                                                                                                                                                    } ?></option>
+                                                                                            echo $irow['general'];
+                                                                                        } ?></option>
                                                         <option value="">-- select one --</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
@@ -1023,8 +1024,8 @@ session_start(); ?>
                                                         <option value="<?php if (!empty($irow['psych'])) {
                                                                             echo $irow['psych'];
                                                                         } ?>" selected><?php if (!empty($irow['psych'])) {
-                                                                                                                                                    echo $irow['psych'];
-                                                                                                                                                } ?></option>
+                                                                                            echo $irow['psych'];
+                                                                                        } ?></option>
                                                         <option value="">-- select one --</option>
                                                         <option value="Psychiatrist">Psychiatrist</option>
                                                         <option value="Psychologist">Psychologist</option>
@@ -1045,8 +1046,8 @@ session_start(); ?>
                                                         <option value="<?php if (!empty($irow['minor'])) {
                                                                             echo $irow['minor'];
                                                                         } ?>" selected><?php if (!empty($irow['minor'])) {
-                                                                                                                                                    echo $irow['minor'];
-                                                                                                                                                } ?></option>
+                                                                                            echo $irow['minor'];
+                                                                                        } ?></option>
                                                         <option value="" disabled>Minor First Aid</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
@@ -1058,8 +1059,8 @@ session_start(); ?>
                                                         <option value="<?php if (!empty($irow['emergency'])) {
                                                                             echo $irow['emergency'];
                                                                         } ?>" selected><?php if (!empty($irow['emergency'])) {
-                                                                                                                                                            echo $irow['emergency'];
-                                                                                                                                                        } ?></option>
+                                                                                            echo $irow['emergency'];
+                                                                                        } ?></option>
                                                         <option value="" disabled>Emergency Care</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
@@ -1071,8 +1072,8 @@ session_start(); ?>
                                                         <option value="<?php if (!empty($irow['hospital'])) {
                                                                             echo $irow['hospital'];
                                                                         } ?>" selected><?php if (!empty($irow['hospital'])) {
-                                                                                                                                                        echo $irow['hospital'];
-                                                                                                                                                    } ?></option>
+                                                                                            echo $irow['hospital'];
+                                                                                        } ?></option>
                                                         <option value="" disabled>Emergency Care at Hospital</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
@@ -1084,8 +1085,8 @@ session_start(); ?>
                                                         <option value="<?php if (!empty($irow['otc'])) {
                                                                             echo $irow['otc'];
                                                                         } ?>" selected><?php if (!empty($irow['otc'])) {
-                                                                                                                                                echo $irow['otc'];
-                                                                                                                                            } ?></option>
+                                                                                            echo $irow['otc'];
+                                                                                        } ?></option>
                                                         <option value="" disabled>Oral OTC Medication</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>

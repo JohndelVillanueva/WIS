@@ -29,10 +29,10 @@
                 <div class="pointer" data-toggle="dropdown">
                     <div class="avatar avatar-image  m-h-10 m-r-15">
                         <img src="assets/images/avatars/<?php
-												if(empty($_SESSION['photo']))	{
+												if(empty($_SESSION["photo"]))	{
 													echo "avatar.jpg";
 												} else {
-													echo $_SESSION['photo'];
+													echo $_SESSION["photo"];
 												}
 											?>.jpg"  alt="">
                     </div>
