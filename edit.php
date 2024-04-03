@@ -108,8 +108,22 @@ $process_statement->execute(
 		':otc' => $_POST[ 'otc' ]
 	));
 
+	if(isset($_POST['Submit'])){
+		$newImage = $_FILES['photo']['name'];
+
+		if($newImage != ''){
+			$updateFileName = $newImage;
+			if(file_exists("assets/images/avatars".$_FILES['photo']['name'])){
+				$filename = $_FILES['photo']['name'];
+				echo $filename. "Already Exist";
+				header('location: dashboard.php');
+			}
+		}
+
+	}
 $updateUserQuery = 
 	"UPDATE users24 SET
+		photo = :photo,
 		fname = :fname, lname = :lname,
 		mname = :mname, gender = :gender,
 		guardianname = :guardian,
@@ -126,6 +140,7 @@ $updateUserQuery =
 $userprocess_statement = $DB_con->prepare( $updateUserQuery );
 $userprocess_statement->execute(
 	array(
+		':photo' => $updateFileName,
 		':status' => $_POST[ 'stage' ],
 		':tf' => $_POST[ 'tf' ],
 		':uniqid' => $_POST[ 'ern' ],
@@ -144,6 +159,18 @@ $userprocess_statement->execute(
 		':guardianemail' => $_POST[ 'guardianemail' ],
 		':guardianphone' => $_POST[ 'guardianphone' ]
 	));
+
+	if($userprocess_statement){
+		if($_FILES['photo']['name'] !=''){
+			move_uploaded_file($_FILES['photo']['tmp_name'],"assets/images/avatars/".$_FILES['photo']['name']);
+		}
+		echo "Image Successful";
+		header('location: dashboard.php');
+	}else {
+		echo "Image Uploading Failed";
+		header('location: edit-profile.php');
+
+	}
 
 header( "Location: interview.php?ern=" . $_POST[ 'ern' ] );
 die();

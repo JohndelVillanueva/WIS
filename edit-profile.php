@@ -20,7 +20,7 @@ session_start();
                 <div class="page-container">
                     <div class="main-content">
                         <!-- form starts !-->
-                        <form action="edit.php" method="post">
+                        <form action="edit.php" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="ern" value="<?php echo $row['uniqid'] ?>">
                             <input type="hidden" name="stage" value="<?php echo $row['status'] ?>">
                             <input type="hidden" name="tf" value="<?php echo $row['tf'] ?>">
@@ -1097,7 +1097,7 @@ session_start();
                                             </div>
                                         </div>
                                         <div class="card-footer bg-light text-center">
-                                            <button class="btn btn-primary btn-lg" type="submit">Commit Changes</button>
+                                            <button class="btn btn-primary btn-lg" type="submit" name="Submit" >Commit Changes</button>
                                         </div>
                                     </div>
                                 </div>

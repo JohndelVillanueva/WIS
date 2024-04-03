@@ -36,15 +36,19 @@ if (!isset($_SESSION['username'])) {
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-lg-2"><img class="rounded" style="max-width: 128px!important;" src="assets/images/avatars/
-                                                    <?php
-                                                    if (!empty($row["photo"])) {
-                                                        echo "avatar.jpg";
-                                                    } else {
-                                                        echo $row["photo"];
-                                                    }
-                                                    ?>">
-                                                </div>
+                                            <div class="col-lg-2">
+                                            <div class="col-lg-2">
+                                            <img class="rounded" style="max-width: 128px!important;" src="
+                                            <?php
+                                            if(!empty($row["photo"])) {
+                                                echo "assets/images/avatars/".$row["photo"].".jpg"; 
+                                            } else {
+                                                echo "assets/images/avatars/avatar.jpg";
+                                            }
+                                            ?>
+                                            ">
+                                        </div>
+                                        </div>
                                                 <div class="col-lg-8">
                                                     <h1><?php echo $row["lname"] . ", " . $row["fname"] . " " . $row["mname"] ?></h1>
                                                     <hr>

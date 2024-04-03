@@ -37,6 +37,18 @@
                 </li>
             <?php
             }
+            if ($_SESSION['level'] == 4 or $_SESSION['level'] == 9) {
+                ?>
+                <li class="nav-item dropdown">
+                    <a class="dropdown-toggle" href="student_verification.php">
+                        <span class="icon-holder">
+                            <i class="fas fa-user"></i> <!-- Change to person icon -->
+                        </span>
+                        <span class="title">Student Verification</span>
+                    </a>
+                </li>
+                <?php
+                }
 
             if ($_SESSION['level'] == 3 or $_SESSION['level'] == 9) {
             ?>
