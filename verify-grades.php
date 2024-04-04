@@ -42,10 +42,20 @@ if (!isset($_SESSION['username'])) {
                                             $update->execute(array(":username" => $studrow["username"]));
                                         }
                                     }
+                                    $insertingVerification = $DB_con->prepare("INSERT INTO s_verifications (user_id,section,grade,created_at,flag,subject) VALUES (:user_id,:section,:grade,:created_at,:flag,:subject)");
+                                    $insertingVerification->execute([
+                                        ":user_id" => $_SESSION["fname"] . " " . $_SESSION["lname"],
+                                        ":section" => $_GET['section'],
+                                        ":grade" => $subjrow['subjlevel'],
+                                        ":created_at" => date("Y-m-d H:i:s"),
+                                        ":flag" => 1,
+                                        ":subject" => $_GET["subjdesc"]
+                                    ])
                                     ?>
                                     <script>
-                                        window.location.replace("show-students.php?code=<?php echo $_GET["code"]; ?>&section=<?php echo $_GET["section"]; ?>&lock=1");
+                                        window.location.replace("show-students.php?code=<?= $_GET["code"]; ?>&section=<?= $_GET["section"]; ?>&subjdesc=<?=$subjrow['subjdesc'];?>&qtr=<?=$_GET['qtr'];?>&lock=1");
                                     </script>
+
                                 </div>
                             </div>
                         </div>

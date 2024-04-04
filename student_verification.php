@@ -47,27 +47,29 @@ if (!isset($_SESSION['username'])) {
                                         <table class="table">
                                             <thead>
                                                 <tr>
+                                                    <th></th>
+                                                    <th scope="col">Teacher</th>
+                                                    <th scope="col">Subject</th>
                                                     <th scope="col">Grade</th>
                                                     <th scope="col">Section</th>
-                                                    <th scope="col">Subject</th>
-                                                    <th scope="col">Teacher</th>
                                                     <th scope="col">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $verifyInformationQuery = $DB_con->prepare("SELECT * FROM s_activities 
+                                                $verifyInformationQuery = $DB_con->prepare("SELECT * FROM s_verifications 
                                                 WHERE flag = 1 ORDER BY id");
                                                 $verifyInformationQuery->execute();
                                                 $informations = $verifyInformationQuery->fetchAll(PDO::FETCH_OBJ);
                                                 foreach ($informations as $information) {
                                                 ?>
                                                     <tr>
-                                                        <td><?= $information->actlvl ?></td>
-                                                        <td><?= $information->actsection ?></td>
-                                                        <td><?= $information->subjcode ?></td>
-                                                        <td><?= $information->actcreate ?></td>
-                                                        <td><a href="https://example.com" class="btn btn-primary">
+                                                        <td></td>
+                                                        <td><?= $information->user_id ?></td>
+                                                        <td><?= $information->subject ?></td>
+                                                        <td><?= $information->grade ?></td>
+                                                        <td><?= $information->section ?></td>
+                                                        <td><a href="#" class="btn btn-primary">
                                                         <i class="fas fa-eye"></i>
                                                         </a></td>
 
