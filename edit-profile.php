@@ -20,10 +20,11 @@ session_start();
                 <div class="page-container">
                     <div class="main-content">
                         <!-- form starts !-->
-                        <form action="edit.php" method="post" enctype="multipart/form-data">
+                        <form action="edit.php" method="post" enctype="multipart/form-data" id="mainForm">
                             <input type="hidden" name="ern" value="<?php echo $row['uniqid'] ?>">
                             <input type="hidden" name="stage" value="<?php echo $row['status'] ?>">
                             <input type="hidden" name="tf" value="<?php echo $row['tf'] ?>">
+                            <input type="hidden" name="id" value="<?php echo $_GET['id'] ?>">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="card">
@@ -46,7 +47,7 @@ session_start();
                                                     <?php
                                                     } else {
                                                     ?>
-                                                        <img class="rounded" src="assets/images/avatars/.<?php echo $row["photo"]; ?>
+                                                        <img class="rounded" src="assets/images/avatars/<?php echo $row["photo"]; ?>" style="width:128px!important;">
 													<?php
                                                     }
                                                     ?>
@@ -613,15 +614,15 @@ session_start();
                                             <div class="row">
                                                 <div class="col-lg-3">
                                                     <label for="guardian">Guardian's Name</label>
-                                                    <input type="text" class="form-control" id="guardian" name="guardian" placeholder="Guardian's Name" required value="<?php echo $row["guardianname"]; ?>">
+                                                    <input type="text" class="form-control" id="guardian" name="guardian" placeholder="Guardian's Name" value="<?php echo $row["guardianname"]; ?>">
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <label for="guardianemail">Guardian's Email</label>
-                                                    <input type="text" class="form-control" id="guardianemail" name="guardianemail" placeholder="Guardian's Email" required value="<?php echo $row["guardianemail"]; ?>">
+                                                    <input type="text" class="form-control" id="guardianemail" name="guardianemail" placeholder="Guardian's Email" value="<?php echo $row["guardianemail"]; ?>">
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <label for="guardianphone">Guardian's Phone Number</label>
-                                                    <input type="text" class="form-control" id="guardianphone" name="guardianphone" placeholder="Guardian's Phone Number" required value="<?php echo $row["guardianphone"]; ?>">
+                                                    <input type="text" class="form-control" id="guardianphone" name="guardianphone" placeholder="Guardian's Phone Number" value="<?php echo $row["guardianphone"]; ?>">
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <label for="visa">VISA Status</label>
@@ -648,25 +649,25 @@ session_start();
                                             <div class="row my-3">
                                                 <div class="col-lg-3">
                                                     <label for="street">Number and Street</label>
-                                                    <input type="text" class="form-control" id="street" name="street" placeholder="Number and Street" required value="<?php if (!empty($irow['street'])) {
+                                                    <input type="text" class="form-control" id="street" name="street" placeholder="Number and Street" value="<?php if (!empty($irow['street'])) {
                                                                                                                                                                             echo $irow['street'];
                                                                                                                                                                         } ?>">
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <label for="barangay">Barangay / Subdivision</label>
-                                                    <input type="text" class="form-control" id="barangay" name="barangay" placeholder="Mother's Email" required value="<?php if (!empty($irow['barangay'])) {
+                                                    <input type="text" class="form-control" id="barangay" name="barangay" placeholder="Mother's Email" value="<?php if (!empty($irow['barangay'])) {
                                                                                                                                                                             echo $irow['barangay'];
                                                                                                                                                                         } ?>">
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <label for="city">City</label>
-                                                    <input type="text" class="form-control" id="city" name="city" placeholder="City" required value="<?php if (!empty($irow['city'])) {
+                                                    <input type="text" class="form-control" id="city" name="city" placeholder="City"value="<?php if (!empty($irow['city'])) {
                                                                                                                                                             echo $irow['city'];
                                                                                                                                                         } ?>">
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <label for="postal">Postal Code</label>
-                                                    <input type="text" class="form-control" id="postal" name="postal" placeholder="Postal Code" required value="<?php if (!empty($irow['postal'])) {
+                                                    <input type="text" class="form-control" id="postal" name="postal" placeholder="Postal Code" value="<?php if (!empty($irow['postal'])) {
                                                                                                                                                                     echo $irow['postal'];
                                                                                                                                                                 } ?>">
                                                 </div>
@@ -674,31 +675,31 @@ session_start();
                                             <div class="row">
                                                 <div class="col-lg-2">
                                                     <label for="father">Father's Name</label>
-                                                    <input type="text" class="form-control" id="father" name="father" placeholder="Father's Name" required value="<?php if (!empty($irow['street'])) {
+                                                    <input type="text" class="form-control" id="father" name="father" placeholder="Father's Name" value="<?php if (!empty($irow['street'])) {
                                                                                                                                                                         echo $irow['street'];
                                                                                                                                                                     } ?>">
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <label for="fathermail">Father's Email</label>
-                                                    <input type="text" class="form-control" id="fathermail" name="fathermail" placeholder="Father's Email" required value="<?php if (!empty($irow['fathermail'])) {
+                                                    <input type="text" class="form-control" id="fathermail" name="fathermail" placeholder="Father's Email" value="<?php if (!empty($irow['fathermail'])) {
                                                                                                                                                                                 echo $irow['fathermail'];
                                                                                                                                                                             } ?>">
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <label for="fatherphone">Father's Phone Number</label>
-                                                    <input type="text" class="form-control" id="fatherphone" name="fatherphone" placeholder="Father's Phone Number" required value="<?php if (!empty($irow['fathernumber'])) {
+                                                    <input type="text" class="form-control" id="fatherphone" name="fatherphone" placeholder="Father's Phone Number" value="<?php if (!empty($irow['fathernumber'])) {
                                                                                                                                                                                         echo $irow['fathernumber'];
                                                                                                                                                                                     } ?>">
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <label for="fatherwork">Father's Occupation</label>
-                                                    <input type="text" class="form-control" id="fatherwork" name="fatherwork" placeholder="Father's Occupation" required value="<?php if (!empty($irow['fatherwork'])) {
+                                                    <input type="text" class="form-control" id="fatherwork" name="fatherwork" placeholder="Father's Occupation" value="<?php if (!empty($irow['fatherwork'])) {
                                                                                                                                                                                     echo $irow['fatherwork'];
                                                                                                                                                                                 } ?>">
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <label for="fathercompany">Father's Company</label>
-                                                    <input type="text" class="form-control" id="fathercompany" name="fathercompany" placeholder="Father's Company" required value="<?php if (!empty($irow['fatherwork'])) {
+                                                    <input type="text" class="form-control" id="fathercompany" name="fathercompany" placeholder="Father's Company" value="<?php if (!empty($irow['fatherwork'])) {
                                                                                                                                                                                         echo $irow['fatherwork'];
                                                                                                                                                                                     } ?>">
                                                 </div>
@@ -722,31 +723,31 @@ session_start();
                                             <div class="row my-3">
                                                 <div class="col-lg-2">
                                                     <label for="mother">Mother's Name</label>
-                                                    <input type="text" class="form-control" id="mother" name="mother" placeholder="Mother's Name" required value="<?php if (!empty($irow['mother'])) {
+                                                    <input type="text" class="form-control" id="mother" name="mother" placeholder="Mother's Name" value="<?php if (!empty($irow['mother'])) {
                                                                                                                                                                         echo $irow['mother'];
                                                                                                                                                                     } ?>">
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <label for="mothermail">Mother's Email</label>
-                                                    <input type="text" class="form-control" id="mothermail" name="mothermail" placeholder="Mother's Email" required value="<?php if (!empty($irow['mothermail'])) {
+                                                    <input type="text" class="form-control" id="mothermail" name="mothermail" placeholder="Mother's Email" value="<?php if (!empty($irow['mothermail'])) {
                                                                                                                                                                                 echo $irow['mothermail'];
                                                                                                                                                                             } ?>">
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <label for="motherphone">Mothers's Phone Number</label>
-                                                    <input type="text" class="form-control" id="motherphone" name="motherphone" placeholder="Mothers's Phone Number" required value="<?php if (!empty($irow['mothernumber'])) {
+                                                    <input type="text" class="form-control" id="motherphone" name="motherphone" placeholder="Mothers's Phone Number" value="<?php if (!empty($irow['mothernumber'])) {
                                                                                                                                                                                             echo $irow['mothernumber'];
                                                                                                                                                                                         } ?>">
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <label for="motherwork">Mother's Occupation</label>
-                                                    <input type="text" class="form-control" id="motherwork" name="motherwork" placeholder="Mother's Occupation" required value="<?php if (!empty($irow['motherwork'])) {
+                                                    <input type="text" class="form-control" id="motherwork" name="motherwork" placeholder="Mother's Occupation" value="<?php if (!empty($irow['motherwork'])) {
                                                                                                                                                                                     echo $irow['motherwork'];
                                                                                                                                                                                 } ?>">
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <label for="mothercompany">Mother's Company</label>
-                                                    <input type="text" class="form-control" id="mothercompany" name="mothercompany" placeholder="Mother's Company" required value="<?php if (!empty($irow['mcompany'])) {
+                                                    <input type="text" class="form-control" id="mothercompany" name="mothercompany" placeholder="Mother's Company" value="<?php if (!empty($irow['mcompany'])) {
                                                                                                                                                                                         echo $irow['mcompany'];
                                                                                                                                                                                     } ?>">
                                                 </div>
@@ -771,7 +772,7 @@ session_start();
                                             <div class="row my-3">
                                                 <div class="col-lg-2">
                                                     <label for="english1">English Reading and Writing</label>
-                                                    <select class="custom-select" id="english1" class="form-select" name="english1" required>
+                                                    <select class="custom-select" id="english1" class="form-select" name="english1">
                                                         <option value="<?php if (!empty($irow['englishrw'])) {
                                                                             echo $irow['englishrw'];
                                                                         } ?>" selected><?php if (!empty($irow['englishrw'])) {
@@ -786,7 +787,7 @@ session_start();
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <label for="english2">English Verbal Proficiency</label>
-                                                    <select class="custom-select" id="english2" class="form-select" name="english2" required>
+                                                    <select class="custom-select" id="english2" class="form-select" name="english2" >
                                                         <option value="<?php if (!empty($irow['englishv'])) {
                                                                             echo $irow['englishv'];
                                                                         } ?>" selected><?php if (!empty($irow['englishv'])) {
@@ -801,25 +802,25 @@ session_start();
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <label for="lang">Major Languages at home</label>
-                                                    <input type="text" class="form-control" id="lang" name="lang" placeholder="Major Languages at home" required value="<?php if (!empty($irow['languages'])) {
+                                                    <input type="text" class="form-control" id="lang" name="lang" placeholder="Major Languages at home" value="<?php if (!empty($irow['languages'])) {
                                                                                                                                                                             echo $irow['languages'];
                                                                                                                                                                         } ?>">
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <label for="alc">ALC</label>
-                                                    <input type="text" class="form-control" id="alc" name="alc" placeholder="ALC" required value="<?php if (!empty($irow['advclasses'])) {
+                                                    <input type="text" class="form-control" id="alc" name="alc" placeholder="ALC" value="<?php if (!empty($irow['advclasses'])) {
                                                                                                                                                         echo $irow['advclasses'];
                                                                                                                                                     } ?>">
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <label for="remedial">Remedial School</label>
-                                                    <input type="text" class="form-control" id="remedial" name="remedial" placeholder="Remedial School" required value="<?php if (!empty($irow['remedial'])) {
+                                                    <input type="text" class="form-control" id="remedial" name="remedial" placeholder="Remedial School"  value="<?php if (!empty($irow['remedial'])) {
                                                                                                                                                                             echo $irow['remedial'];
                                                                                                                                                                         } ?>">
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <label for="skill">Special Skill</label>
-                                                    <input type="text" class="form-control" id="skill" name="skill" placeholder="Special Skill" required value="<?php if (!empty($irow['skill'])) {
+                                                    <input type="text" class="form-control" id="skill" name="skill" placeholder="Special Skill"  value="<?php if (!empty($irow['skill'])) {
                                                                                                                                                                     echo $irow['skill'];
                                                                                                                                                                 } ?>">
                                                 </div>
@@ -833,7 +834,7 @@ session_start();
                                             <div class="row my-3">
                                                 <div class="col-lg-1 ">
                                                     <label for="asthma">Asthma</label>
-                                                    <select class="custom-select" id="asthma" class="form-select" name="asthma" required>
+                                                    <select class="custom-select" id="asthma" class="form-select" name="asthma" >
                                                         <option value="<?php if (!empty($irow['ashtma'])) {
                                                                             echo $irow['ashtma'];
                                                                         } ?>" selected><?php if (!empty($irow['ashtma'])) {
@@ -846,13 +847,13 @@ session_start();
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <label for="asthmadets">Asthma Remarks</label>
-                                                    <input type="text" class="form-control" id="asthmadets" name="asthmadets" placeholder="Asthma Remarks" required value="<?php if (!empty($irow['ashtmar'])) {
+                                                    <input type="text" class="form-control" id="asthmadets" name="asthmadets" placeholder="Asthma Remarks" value="<?php if (!empty($irow['ashtmar'])) {
                                                                                                                                                                                 echo $irow['ashtmar'];
                                                                                                                                                                             } ?>">
                                                 </div>
                                                 <div class="col-lg-1">
                                                     <label for="allergies">Allergy</label>
-                                                    <select class="custom-select" id="allergies" class="form-select" name="allergies" required>
+                                                    <select class="custom-select" id="allergies" class="form-select" name="allergies" >
                                                         <option value="<?php if (!empty($irow['allergy'])) {
                                                                             echo $irow['allergy'];
                                                                         } ?>" selected><?php if (!empty($irow['allergy'])) {
@@ -865,13 +866,13 @@ session_start();
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <label for="allergiesdets">Allergy Remarks</label>
-                                                    <input type="text" class="form-control" id="allergiesdets" name="allergiesdets" placeholder="Allergy Remarks" required value="<?php if (!empty($irow['allergyr'])) {
+                                                    <input type="text" class="form-control" id="allergiesdets" name="allergiesdets" placeholder="Allergy Remarks" value="<?php if (!empty($irow['allergyr'])) {
                                                                                                                                                                                         echo $irow['allergyr'];
                                                                                                                                                                                     } ?>">
                                                 </div>
                                                 <div class="col-lg-1">
                                                     <label for="dallergies">Drug Allergy</label>
-                                                    <select class="custom-select" id="dallergies" class="form-select" name="dallergies" required>
+                                                    <select class="custom-select" id="dallergies" class="form-select" name="dallergies" >
                                                         <option value="<?php if (!empty($irow['allergyr'])) {
                                                                             echo $irow['allergyr'];
                                                                         } ?>" selected><?php if (!empty($irow['allergyr'])) {
@@ -884,13 +885,13 @@ session_start();
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <label for="dallergiesdets">Drug Allergy Remarks</label>
-                                                    <input type="text" class="form-control" id="dallergiesdets" name="dallergiesdets" placeholder="Drug Allergy Remarks" required value="<?php if (!empty($irow['drugr'])) {
+                                                    <input type="text" class="form-control" id="dallergiesdets" name="dallergiesdets" placeholder="Drug Allergy Remarks" value="<?php if (!empty($irow['drugr'])) {
                                                                                                                                                                                                 echo $irow['drugr'];
                                                                                                                                                                                             } ?>">
                                                 </div>
                                                 <div class="col-lg-1">
                                                     <label for="speech">Speech</label>
-                                                    <select class="custom-select" id="speech" class="form-select" name="speech" required>
+                                                    <select class="custom-select" id="speech" class="form-select" name="speech" >
                                                         <option value="<?php if (!empty($irow['speech'])) {
                                                                             echo $irow['speech'];
                                                                         } ?>" selected><?php if (!empty($irow['speech'])) {
@@ -903,7 +904,7 @@ session_start();
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <label for="speechdets">Speech Remarks</label>
-                                                    <input type="text" class="form-control" id="speechdets" name="speechdets" placeholder="Speech Remarks" required value="
+                                                    <input type="text" class="form-control" id="speechdets" name="speechdets" placeholder="Speech Remarks" value="
                                                     <?php if (!empty($irow['speechr'])) {
                                                         echo $irow['speechr'];
                                                     } ?>">
@@ -912,7 +913,7 @@ session_start();
                                             <div class="row my-3">
                                                 <div class="col-lg-1 ">
                                                     <label for="vision">Vision</label>
-                                                    <select class="custom-select" id="vision" class="form-select" name="vision" required>
+                                                    <select class="custom-select" id="vision" class="form-select" name="vision" >
                                                         <option value="
                                                         <?php if (!empty($irow['vision'])) {
                                                             echo $irow['vision'];
@@ -927,13 +928,13 @@ session_start();
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <label for="visiondets">Vision Remarks</label>
-                                                    <input type="text" class="form-control" id="visiondets" name="visiondets" placeholder="Vision Remarks" required value="<?php if (!empty($irow['visionr'])) {
+                                                    <input type="text" class="form-control" id="visiondets" name="visiondets" placeholder="Vision Remarks" value="<?php if (!empty($irow['visionr'])) {
                                                                                                                                                                                 echo $irow['visionr'];
                                                                                                                                                                             } ?>">
                                                 </div>
                                                 <div class="col-lg-1">
                                                     <label for="hearing">Hearing Problems</label>
-                                                    <select class="custom-select" id="hearing" class="form-select" name="hearing" required>
+                                                    <select class="custom-select" id="hearing" class="form-select" name="hearing" >
                                                         <option value="<?php if (!empty($irow['hearing'])) {
                                                                             echo $irow['hearing'];
                                                                         } ?>" selected><?php if (!empty($irow['hearing'])) {
@@ -946,13 +947,13 @@ session_start();
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <label for="hearingdets">Hearing Remarks</label>
-                                                    <input type="text" class="form-control" id="hearingdets" name="hearingdets" placeholder="Hearing Remarks" required value="<?php if (!empty($irow['hearingr'])) {
+                                                    <input type="text" class="form-control" id="hearingdets" name="hearingdets" placeholder="Hearing Remarks" value="<?php if (!empty($irow['hearingr'])) {
                                                                                                                                                                                     echo $irow['hearingr'];
                                                                                                                                                                                 } ?>">
                                                 </div>
                                                 <div class="col-lg-1">
                                                     <label for="adhd">ADHD</label>
-                                                    <select class="custom-select" id="adhd" class="form-select" name="adhd" required>
+                                                    <select class="custom-select" id="adhd" class="form-select" name="adhd" >
                                                         <option value="<?php if (!empty($irow['adhd'])) {
                                                                             echo $irow['adhd'];
                                                                         } ?>" selected><?php if (!empty($irow['adhd'])) {
@@ -965,7 +966,7 @@ session_start();
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <label for="adhddets">ADHD Remarks</label>
-                                                    <input type="text" class="form-control" id="adhddets" name="adhddets" placeholder="ADHD Remarks" required value="<?php if (!empty($irow['adhdr'])) {
+                                                    <input type="text" class="form-control" id="adhddets" name="adhddets" placeholder="ADHD Remarks" value="<?php if (!empty($irow['adhdr'])) {
                                                                                                                                                                             echo $irow['adhdr'];
                                                                                                                                                                         } ?>">
                                                 </div>
@@ -973,13 +974,13 @@ session_start();
                                             <div class="row my-3">
                                                 <div class="col-lg-6">
                                                     <label for="healthcond">Any other health condition that te school should be aware of?</label>
-                                                    <input type="text" class="form-control" id="healthcond" name="healthcond" placeholder="Other Conditions" required value="<?php if (!empty($irow['healthcond'])) {
+                                                    <input type="text" class="form-control" id="healthcond" name="healthcond" placeholder="Other Conditions" value="<?php if (!empty($irow['healthcond'])) {
                                                                                                                                                                                     echo $irow['healthcond'];
                                                                                                                                                                                 } ?>">
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <label for="hospitalization">Has your child recently been hospitalized?</label>
-                                                    <input type="text" class="form-control" id="hospitalization" name="hospitalization" placeholder="Hospitalization" required value="<?php if (!empty($irow['hospitalization'])) {
+                                                    <input type="text" class="form-control" id="hospitalization" name="hospitalization" placeholder="Hospitalization" value="<?php if (!empty($irow['hospitalization'])) {
                                                                                                                                                                                             echo $irow['hospitalization'];
                                                                                                                                                                                         } ?>">
                                                 </div>
@@ -987,13 +988,13 @@ session_start();
                                             <div class="row my-3">
                                                 <div class="col-lg-6">
                                                     <label for="injuries">Has your child recently had any serious injuries? Why?</label>
-                                                    <input type="text" class="form-control" id="injuries" name="injuries" placeholder="Injuries" required value="<?php if (!empty($irow['injuries'])) {
+                                                    <input type="text" class="form-control" id="injuries" name="injuries" placeholder="Injuries" value="<?php if (!empty($irow['injuries'])) {
                                                                                                                                                                         echo $irow['injuries'];
                                                                                                                                                                     } ?>">
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <label for="medication">Is your child on regular medication?</label>
-                                                    <input type="text" class="form-control" id="medication" name="medication" placeholder="State name of Medication and Frequency" required value="<?php if (!empty($irow['medication'])) {
+                                                    <input type="text" class="form-control" id="medication" name="medication" placeholder="State name of Medication and Frequency" value="<?php if (!empty($irow['medication'])) {
                                                                                                                                                                                                         echo $irow['medication'];
                                                                                                                                                                                                     } ?>">
                                                 </div>
@@ -1001,7 +1002,7 @@ session_start();
                                             <div class="row my-3">
                                                 <div class="col-lg-2">
                                                     <label for="general">General Health</label>
-                                                    <select class="custom-select" id="general" class="form-select" name="general" required>
+                                                    <select class="custom-select" id="general" class="form-select" name="general" >
                                                         <option value="<?php if (!empty($irow['general'])) {
                                                                             echo $irow['general'];
                                                                         } ?>" selected><?php if (!empty($irow['general'])) {
@@ -1014,13 +1015,13 @@ session_start();
                                                 </div>
                                                 <div class="col-lg-4">
                                                     <label for="generaldets">HG Remarks</label>
-                                                    <input type="text" class="form-control" id="generaldets" name="generaldets" placeholder="HG Remarks" required value="<?php if (!empty($irow['generaldets'])) {
+                                                    <input type="text" class="form-control" id="generaldets" name="generaldets" placeholder="HG Remarks" value="<?php if (!empty($irow['generaldets'])) {
                                                                                                                                                                                 echo $irow['generaldets'];
                                                                                                                                                                             } ?>">
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <label for="psych">Psychological</label>
-                                                    <select class="custom-select" id="psych" class="form-select" name="psych" required>
+                                                    <select class="custom-select" id="psych" class="form-select" name="psych" >
                                                         <option value="<?php if (!empty($irow['psych'])) {
                                                                             echo $irow['psych'];
                                                                         } ?>" selected><?php if (!empty($irow['psych'])) {
@@ -1034,7 +1035,7 @@ session_start();
                                                 </div>
                                                 <div class="col-lg-4">
                                                     <label for="psychdets">Psychological Remarks</label>
-                                                    <input type="text" class="form-control" id="psychdets" name="psychdets" placeholder="Psychological Remarks" required value="<?php if (!empty($irow['psychdets'])) {
+                                                    <input type="text" class="form-control" id="psychdets" name="psychdets" placeholder="Psychological Remarks" value="<?php if (!empty($irow['psychdets'])) {
                                                                                                                                                                                     echo $irow['psychdets'];
                                                                                                                                                                                 } ?>">
                                                 </div>
@@ -1042,7 +1043,7 @@ session_start();
                                             <div class="row my-3">
                                                 <div class="col-lg-3">
                                                     <label for="minor">Consent</label>
-                                                    <select class="custom-select" id="minor" class="form-select" name="minor" required>
+                                                    <select class="custom-select" id="minor" class="form-select" name="minor" >
                                                         <option value="<?php if (!empty($irow['minor'])) {
                                                                             echo $irow['minor'];
                                                                         } ?>" selected><?php if (!empty($irow['minor'])) {
@@ -1055,7 +1056,7 @@ session_start();
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <label for="emergency">Emergency Care</label>
-                                                    <select class="custom-select" id="emergency" class="form-select" name="emergency" required>
+                                                    <select class="custom-select" id="emergency" class="form-select" name="emergency" >
                                                         <option value="<?php if (!empty($irow['emergency'])) {
                                                                             echo $irow['emergency'];
                                                                         } ?>" selected><?php if (!empty($irow['emergency'])) {
@@ -1068,7 +1069,7 @@ session_start();
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <label for="hospital">Emergency Care at Hospital</label>
-                                                    <select class="custom-select" id="hospital" class="form-select" name="hospital" required>
+                                                    <select class="custom-select" id="hospital" class="form-select" name="hospital" >
                                                         <option value="<?php if (!empty($irow['hospital'])) {
                                                                             echo $irow['hospital'];
                                                                         } ?>" selected><?php if (!empty($irow['hospital'])) {
@@ -1081,7 +1082,7 @@ session_start();
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <label for="otc">Oral OTC Medication</label>
-                                                    <select class="custom-select" id="otc" class="form-select" name="otc" required>
+                                                    <select class="custom-select" id="otc" class="form-select" name="otc" >
                                                         <option value="<?php if (!empty($irow['otc'])) {
                                                                             echo $irow['otc'];
                                                                         } ?>" selected><?php if (!empty($irow['otc'])) {
@@ -1113,6 +1114,13 @@ session_start();
                 <?php include_once "includes/scripts.php"; ?>
         </div>
     </div>
+<script>
+    $("#mainForm").submit(function () {
+        if (which == "submit") {
+            return false;
+        }
+    });
+</script>
 </body>
 
 </html>

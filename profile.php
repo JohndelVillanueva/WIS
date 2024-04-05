@@ -37,18 +37,16 @@ if (!isset($_SESSION['username'])) {
                                         <div class="card-body">
                                             <div class="row">
                                             <div class="col-lg-2">
-                                            <div class="col-lg-2">
                                             <img class="rounded" style="max-width: 128px!important;" src="
                                             <?php
                                             if(!empty($row["photo"])) {
-                                                echo "assets/images/avatars/".$row["photo"].".jpg"; 
+                                                echo "assets/images/avatars/".$row["photo"]; // Display the image path from the database
                                             } else {
-                                                echo "assets/images/avatars/avatar.jpg";
+                                                echo "assets/images/avatars/avatar.jpg"; // Fallback image if $row["photo"] is empty
                                             }
-                                            ?>
-                                            ">
+                                            ?>">
                                         </div>
-                                        </div>
+
                                                 <div class="col-lg-8">
                                                     <h1><?php echo $row["lname"] . ", " . $row["fname"] . " " . $row["mname"] ?></h1>
                                                     <hr>

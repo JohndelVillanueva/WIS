@@ -116,7 +116,6 @@ $process_statement->execute(
 			if(file_exists("assets/images/avatars".$_FILES['photo']['name'])){
 				$filename = $_FILES['photo']['name'];
 				echo $filename. "Already Exist";
-				header('location: dashboard.php');
 			}
 		}
 
@@ -165,12 +164,9 @@ $userprocess_statement->execute(
 			move_uploaded_file($_FILES['photo']['tmp_name'],"assets/images/avatars/".$_FILES['photo']['name']);
 		}
 		echo "Image Successful";
-		header('location: dashboard.php');
 	}else {
 		echo "Image Uploading Failed";
-		header('location: edit-profile.php');
-
 	}
 
-header( "Location: interview.php?ern=" . $_POST[ 'ern' ] );
+header( "Location: edit-profile.php?id=" . $_POST[ 'id' ] );
 die();

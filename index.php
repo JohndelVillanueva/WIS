@@ -1,9 +1,5 @@
 <?php
 include_once "includes/config.php";
-session_start();
-if (!isset($_SESSION['username'])) {
-    header("location: login.php");
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,14 +8,12 @@ if (!isset($_SESSION['username'])) {
 <body>
 <div class="app">
 <div class="layout">
-<?php include_once "includes/heading.php"; ?>
-<?php include_once "includes/sidemenu.php"; ?>
 <div class="page-container">
     <div class="main-content">
         <!-- form starts !-->
         <form action="newstudent.php" method="post">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-10">
                     <div class="card">
                         <div class="card-header bg-warning rounded-top pt-2">
                             <h4>
