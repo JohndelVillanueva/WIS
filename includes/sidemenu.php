@@ -37,18 +37,6 @@
                 </li>
             <?php
             }
-            if ($_SESSION['level'] == 4 or $_SESSION['level'] == 9) {
-                ?>
-                <li class="nav-item dropdown">
-                    <a class="dropdown-toggle" href="student_verification.php">
-                        <span class="icon-holder">
-                            <i class="fas fa-user"></i> <!-- Change to person icon -->
-                        </span>
-                        <span class="title">Student Verification</span>
-                    </a>
-                </li>
-                <?php
-                }
 
             if ($_SESSION['level'] == 3 or $_SESSION['level'] == 9) {
             ?>
@@ -188,6 +176,14 @@
                         <a href="changePassword.php">Change Password </a>
                     </li>
                 </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="dropdown-toggle" href="other-activities.php">
+                    <span class="icon-holder">
+                        <i class="anticon anticon-calendar"></i>
+                    </span>
+                    <span class="title">Other Activities</span>
+                </a>
             </li>
             <li class="nav-item dropdown">
                 <a class="dropdown-toggle" href="logout.php">

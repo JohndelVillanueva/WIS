@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://Z:">
+      <sourceFolder url="file://Z:/guest/src" isTestSource="false" packagePrefix="UniFi_API" />
+      <sourceFolder url="file://Z:/voucher/src" isTestSource="false" packagePrefix="UniFi_API" />
+      <sourceFolder url="file://Z:/bsms_ci/tests" isTestSource="true" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

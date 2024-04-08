@@ -1,0 +1,1 @@
+{"is_active":"d9b1d7db4cd6e70935368a1efb10e377","purchase_code":"123","item_name":"ChatPion - Facebook & Instagram Chatbot,eCommerce,SMS\\\/Email & Social Media Marketing Platform (SaaS)","buy_at":"2022-02-22T03:47:37+10:00","licence_type":"Extended License","domain":"10.10.10.10","checking_date":"2024-03-27"}

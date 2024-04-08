@@ -1,0 +1,95 @@
+@font-face {
+    font-family: 'Friz Quadrata Std Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Friz Quadrata Std Italic'), url('../fonts/friz-quadrata-std-italic-587033b2c95df.woff') format('woff');
+    }
+    
+
+    @font-face {
+    font-family: 'Friz Quadrata Std Medium';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Friz Quadrata Std Medium'), url('../fonts/friz-quadrata-std-medium-5870338ec7ef8.woff') format('woff');
+    }
+    
+
+    @font-face {
+    font-family: 'Friz Quadrata Std Bold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Friz Quadrata Std Bold'), url('../fonts/friz-quadrata-std-bold-587034a220f9f.woff') format('woff');
+    }
+    
+
+    @font-face {
+    font-family: 'Friz Quadrata Std Bold Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Friz Quadrata Std Bold Italic'), url('../fonts/friz-quadrata-std-bold-italic-587033d6d4298.woff') format('woff');
+    }
+
+@font-face {
+    font-family: 'Digital Numbers Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Digital Numbers Regular'), url('../fonts/DigitalNumbers-Regular.woff') format('woff');
+    }
+
+body {
+    background: linear-gradient(245deg, #35007f, #e18300, #9345ff);
+    background-size: 600% 600%;
+    -webkit-animation: wisBG 10s ease infinite;
+    -moz-animation: wisBG 10s ease infinite;
+    animation: wisBG 10s ease infinite;
+	color:#041179;
+}
+@-webkit-keyframes wisBG {
+    0%{background-position:0% 79%}
+    50%{background-position:100% 22%}
+    100%{background-position:0% 79%}
+}
+@-moz-keyframes wisBG {
+    0%{background-position:0% 79%}
+    50%{background-position:100% 22%}
+    100%{background-position:0% 79%}
+}
+@keyframes wisBG {
+    0%{background-position:0% 79%}
+    50%{background-position:100% 22%}
+    100%{background-position:0% 79%}
+}
+.wrapper {
+	background-color:rgba(255,255,255,0.3);
+  	border: solid 2px #041179;
+  	box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.32);
+	-webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.32);
+	-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.32);
+  	border-radius:25px;
+}
+.logo {
+	text-align: center;
+}
+#clock {
+	font-family: 'Digital Numbers Regular';
+	text-align: center!important;
+}
+input[type="password"], textarea {
+	background-color:rgba(0,0,0,0,0.5)!important;
+	outline: none;
+}
+input[type="password"]:focus{
+	outline: none;
+	box-shadow: none;
+	border-color: transparent;
+}
+.rfidLogo {
+    opacity: 0.6;
+    animation: fade 2s linear;
+	animation-iteration-count: infinite;
+}
+
+@keyframes fade {
+  0%,100% { opacity: 0 }
+  50% { opacity: 0.6 }
+}

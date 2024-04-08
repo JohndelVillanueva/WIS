@@ -50,7 +50,7 @@ foreach ($result as $row) {
                                     }
                                     ?>
                                     <div class="float-right">
-                                        <a class="btn btn-primary btn-tone btn-rounded" href="add-activity.php?code=<?php echo $_GET["code"] ?>&section=<?php echo $_GET["section"]?>&qtr=<?=$_GET['qtr']; ?>&grade=<?=$row['subjlevel']; ?>"><i class="anticon anticon-diff"></i> Add Activity</a>
+                                        <a class="btn btn-primary btn-tone btn-rounded" href="add-activity.php?code=<?php echo $_GET["code"] ?>&section=<?php echo $_GET["section"]?>&qtr=<?=$_GET['qtr']; ?>"><i class="anticon anticon-diff"></i> Add Activity</a>
                                         <?php
                                         if (isset($_GET["lock"])) {
                                             if ($_GET["lock"] == 1) {
@@ -68,7 +68,7 @@ foreach ($result as $row) {
                                             const confirmAction = () => {
                                                 const response = confirm("Are you sure you want submit this to the registrar?");
                                                 if (response) {
-                                                    window.location.replace("verify-grades.php?code=<?php echo $_GET["code"]; ?>&section=<?php echo $_GET["section"]; ?>&subjdesc=<?php echo $row["subjdesc"]; ?>&qtr=<?php echo $_GET["qtr"]; ?>&grade=<?=$row['subjlevel']; ?>");
+                                                    window.location.replace("verify-grades.php?code=<?php echo $_GET["code"] ?>&section=<?php echo $_GET["section"]; ?>");
                                                 }
                                             }
 

@@ -6,7 +6,7 @@
 
 <body onload="window.print();">
     <?php
-    $pdo_statement = $DB_con->prepare("SELECT * FROM users24 WHERE id = :id");
+    $pdo_statement = $DB_con->prepare("SELECT * FROM users24 WHERE id = :id ");
     $pdo_statement->execute(array(":id" => $_GET['id']));
     $result = $pdo_statement->fetchAll();
     foreach ($result as $row) {
@@ -23,7 +23,7 @@
                                                                                                         } else {
                                                                                                             echo $row["photo"];
                                                                                                         }
-                                                                                                        ?>">"></div>
+                                                                                                        ?>"></div>
                                 <div class="col-sm-10">
                                     <h1 class="display-4"><?php echo $row["lname"] . ", " . $row["fname"] . " " . $row["mname"] ?></h1>
                                     <hr>

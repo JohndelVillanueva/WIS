@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PHPUnit">
+    <option name="directories">
+      <list>
+        <option value="Z:/bsms_ci/tests" />
+        <option value="Z:/wisbot/application/libraries/mercadopago/doctrine/common/tests" />
+        <option value="Z:/wisbot/application/libraries/mercadopago/doctrine/inflector/tests" />
+        <option value="Z:/wisbot/application/libraries/mercadopago/doctrine/reflection/tests" />
+        <option value="Z:/wisbot/application/libraries/mercadopago/doctrine/event-manager/tests" />
+        <option value="Z:/wisbot/ci/tests" />
+        <option value="Z:/wisbot/application/libraries/mercadopago/doctrine/collections/tests" />
+        <option value="Z:/wisbot/application/libraries/mercadopago/doctrine/lexer/tests" />
+        <option value="Z:/wisbot/application/libraries/mercadopago/doctrine/cache/tests" />
+        <option value="Z:/wisbot/application/libraries/mercadopago/doctrine/annotations/tests" />
+        <option value="Z:/wisbot/application/libraries/mercadopago/doctrine/persistence/tests" />
+      </list>
+    </option>
+  </component>
+</project>
