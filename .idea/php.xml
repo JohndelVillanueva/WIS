@@ -10,26 +10,6 @@
     <option name="highlightLevel" value="WARNING" />
     <option name="transferred" value="true" />
   </component>
-  <component name="PhpIncludePathManager">
-    <include_path>
-      <path value="Z:/wisbot/vendor/psr/http-message" />
-      <path value="Z:/wisbot/vendor/psr/log" />
-      <path value="Z:/wisbot/vendor/pusher/pusher-php-server" />
-      <path value="Z:/wisbot/vendor/symfony/deprecation-contracts" />
-      <path value="Z:/wisbot/vendor/symfony/polyfill-mbstring" />
-      <path value="Z:/wisbot/vendor/symfony/var-dumper" />
-      <path value="Z:/wisbot/vendor/composer" />
-      <path value="Z:/wisbot/vendor/paragonie/random_compat" />
-      <path value="Z:/wisbot/vendor/paragonie/sodium_compat" />
-      <path value="Z:/wisbot/vendor/ralouphie/getallheaders" />
-      <path value="Z:/wisbot/vendor/guzzlehttp/guzzle" />
-      <path value="Z:/wisbot/vendor/guzzlehttp/promises" />
-      <path value="Z:/wisbot/vendor/guzzlehttp/psr7" />
-      <path value="Z:/wisbot/vendor/psr/http-client" />
-      <path value="Z:/wisbot/vendor/psr/http-factory" />
-    </include_path>
-  </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="7.4" />
   <component name="PhpStanOptionsConfiguration">
     <option name="transferred" value="true" />
   </component>

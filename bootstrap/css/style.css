@@ -1,6 +1,0 @@
-.maincontainer {
-    background-image: url("../resouces/images/pattern.png");
-    background-repeat: repeat;
-}
-.card { background-color: rgba(245, 245, 245, 0.4)!important; }
-.card-header, .card-footer { opacity: 1}

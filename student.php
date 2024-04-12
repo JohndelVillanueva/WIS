@@ -94,9 +94,9 @@ if(!isset($_SESSION['username']))
                             <div class="text-center  lead">Click what QUARTER you want to visit below:</div>
                             <div class="row p-l-80 mt-4 ">
                                 <div><a href="studentGrade1st.php?qtr=1&grade=<?=$_SESSION["grade"]?>&username=<?=$_SESSION['username'] ?>  "class="btn btn-outline-dark link-secondary font-primary font-size-12">1st Quarter</a></div>
-                                <div class="pl-4"><a href="studentGrade2nd.php?qtr=2" class="btn btn-outline-dark link-secondary font-primary font-size-12">2nd Quarter</a></div>
-                                <div class="pl-4"><a href="studentGrade3rd.php?qtr=3" class="btn btn-outline-dark link-secondary font-primary font-size-12">3rd Quarter</a></div>
-                                <div class="pl-4"><a href="studentGrade4th.php?qtr=4" class="btn btn-outline-dark link-secondary font-primary font-size-12">4th Quarter</a></div>
+                                <div class="pl-4"><a href="studentGrade1st.php?qtr=2&grade=<?=$_SESSION["grade"]?>&username=<?=$_SESSION['username'] ?> " class="btn btn-outline-dark link-secondary font-primary font-size-12">2nd Quarter</a></div>
+                                <div class="pl-4"><a href="studentGrade1st.php?qtr=3&grade=<?=$_SESSION["grade"]?>&username=<?=$_SESSION['username'] ?> " class="btn btn-outline-dark link-secondary font-primary font-size-12">3rd Quarter</a></div>
+                                <div class="pl-4"><a href="studentGrade1st.php?qtr=4&grade=<?=$_SESSION["grade"]?>&username=<?=$_SESSION['username'] ?> " class="btn btn-outline-dark link-secondary font-primary font-size-12">4th Quarter</a></div>
                             </div>
 
                         </div>

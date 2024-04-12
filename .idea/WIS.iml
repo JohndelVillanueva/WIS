@@ -1,67 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
-    <content url="file://Z:">
-      <sourceFolder url="file://Z:/bsms_ci/tests" isTestSource="true" />
-      <sourceFolder url="file://Z:/guest/src" isTestSource="false" packagePrefix="UniFi_API" />
-      <sourceFolder url="file://Z:/inventory/assests/plugins/fileinput/" isTestSource="false" packagePrefix="kartik\plugins\fileinput\" />
-      <sourceFolder url="file://Z:/voucher/src" isTestSource="false" packagePrefix="UniFi_API" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries" isTestSource="false" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/annotations/lib/Doctrine/Common/Annotations" isTestSource="false" packagePrefix="Doctrine\Common\Annotations\" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/annotations/tests" isTestSource="true" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/annotations/tests/Doctrine/Performance/Common/Annotations" isTestSource="true" packagePrefix="Doctrine\Performance\Common\Annotations\" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/annotations/tests/Doctrine/Tests/Common/Annotations" isTestSource="true" packagePrefix="Doctrine\Tests\Common\Annotations\" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/cache/lib/Doctrine/Common/Cache" isTestSource="false" packagePrefix="Doctrine\Common\Cache\" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/cache/tests" isTestSource="true" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/cache/tests/Doctrine/Tests" isTestSource="true" packagePrefix="Doctrine\Tests\" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/collections/lib/Doctrine/Common/Collections" isTestSource="false" packagePrefix="Doctrine\Common\Collections\" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/collections/tests" isTestSource="true" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/collections/tests/Doctrine/Tests" isTestSource="true" packagePrefix="Doctrine\Tests\" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/common/lib/Doctrine/Common" isTestSource="false" packagePrefix="Doctrine\Common\" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/common/tests" isTestSource="true" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/common/tests/Doctrine/Tests" isTestSource="true" packagePrefix="Doctrine\Tests\" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/event-manager/lib/Doctrine/Common" isTestSource="false" packagePrefix="Doctrine\Common\" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/event-manager/tests" isTestSource="true" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/event-manager/tests/Doctrine/Tests" isTestSource="true" packagePrefix="Doctrine\Tests\" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/inflector/lib/Doctrine/Common/Inflector" isTestSource="false" packagePrefix="Doctrine\Common\Inflector\" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/inflector/lib/Doctrine/Inflector" isTestSource="false" packagePrefix="Doctrine\Inflector\" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/inflector/tests" isTestSource="true" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/inflector/tests/Doctrine/Tests/Common/Inflector" isTestSource="true" packagePrefix="Doctrine\Tests\Common\Inflector\" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/inflector/tests/Doctrine/Tests/Inflector" isTestSource="true" packagePrefix="Doctrine\Tests\Inflector\" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/lexer/lib/Doctrine/Common/Lexer" isTestSource="false" packagePrefix="Doctrine\Common\Lexer\" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/lexer/tests" isTestSource="true" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/lexer/tests/Doctrine" isTestSource="true" packagePrefix="Doctrine\Tests\" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/persistence/lib/Doctrine/Common" isTestSource="false" packagePrefix="Doctrine\Common\" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/persistence/lib/Doctrine/Persistence" isTestSource="false" packagePrefix="Doctrine\Persistence\" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/persistence/tests" isTestSource="true" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/persistence/tests/Doctrine/Tests" isTestSource="true" packagePrefix="Doctrine\Tests\" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/persistence/tests/Doctrine/Tests_PHP74" isTestSource="true" packagePrefix="Doctrine\Tests_PHP74\" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/reflection/lib/Doctrine/Common" isTestSource="false" packagePrefix="Doctrine\Common\" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/reflection/tests" isTestSource="true" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/reflection/tests/Doctrine/Tests" isTestSource="true" packagePrefix="Doctrine\Tests\" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/reflection/tests/Doctrine/Tests_PHP74" isTestSource="true" packagePrefix="Doctrine\Tests_PHP74\" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/mercadopago/dx-php/src" isTestSource="false" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/mercadopago/dx-php/src/MercadoPago/Entities" isTestSource="false" packagePrefix="MercadoPago" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/mercadopago/dx-php/src/MercadoPago/Entities/Shared" isTestSource="false" packagePrefix="MercadoPago" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/mercadopago/dx-php/src/MercadoPago/Generic" isTestSource="false" packagePrefix="MercadoPago" />
-      <sourceFolder url="file://Z:/wisbot/application/libraries/twilio" isTestSource="false" />
-      <sourceFolder url="file://Z:/wisbot/ci/tests" isTestSource="true" />
-      <excludeFolder url="file://Z:/wisbot/vendor/composer" />
-      <excludeFolder url="file://Z:/wisbot/vendor/guzzlehttp/guzzle" />
-      <excludeFolder url="file://Z:/wisbot/vendor/guzzlehttp/promises" />
-      <excludeFolder url="file://Z:/wisbot/vendor/guzzlehttp/psr7" />
-      <excludeFolder url="file://Z:/wisbot/vendor/paragonie/random_compat" />
-      <excludeFolder url="file://Z:/wisbot/vendor/paragonie/sodium_compat" />
-      <excludeFolder url="file://Z:/wisbot/vendor/psr/http-client" />
-      <excludeFolder url="file://Z:/wisbot/vendor/psr/http-factory" />
-      <excludeFolder url="file://Z:/wisbot/vendor/psr/http-message" />
-      <excludeFolder url="file://Z:/wisbot/vendor/psr/log" />
-      <excludeFolder url="file://Z:/wisbot/vendor/pusher/pusher-php-server" />
-      <excludeFolder url="file://Z:/wisbot/vendor/ralouphie/getallheaders" />
-      <excludeFolder url="file://Z:/wisbot/vendor/symfony/deprecation-contracts" />
-      <excludeFolder url="file://Z:/wisbot/vendor/symfony/polyfill-mbstring" />
-      <excludeFolder url="file://Z:/wisbot/vendor/symfony/var-dumper" />
-    </content>
+    <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>

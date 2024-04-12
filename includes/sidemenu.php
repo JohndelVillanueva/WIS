@@ -151,6 +151,20 @@
                 </li>
             <?php
             }
+
+            if ($_SESSION['level'] == 3 or $_SESSION['level'] == 9) {
+                ?>
+
+                <li class="nav-item dropdown">
+                    <a class="dropdown-toggle" href="show-uniform-inventory.php">
+                    <span class="icon-holder">
+                        <i class="anticon anticon-tags"></i>
+                    </span>
+                        <span class="title">Uniforms</span>
+                    </a>
+                </li>
+                <?php
+            }
             ?>
             <li class="nav-item dropdown">
                 <a class="dropdown-toggle" href="javascript:void(0);">
@@ -177,6 +191,10 @@
                     </li>
                 </ul>
             </li>
+            <?php
+            if ($_SESSION['level'] == 3 or $_SESSION['level'] == 9) {
+            ?>
+
             <li class="nav-item dropdown">
                 <a class="dropdown-toggle" href="other-activities.php">
                     <span class="icon-holder">
@@ -185,6 +203,9 @@
                     <span class="title">Other Activities</span>
                 </a>
             </li>
+            <?php
+            }
+            ?>
             <li class="nav-item dropdown">
                 <a class="dropdown-toggle" href="logout.php">
                     <span class="icon-holder">
