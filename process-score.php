@@ -12,10 +12,9 @@ if (!isset($_SESSION['username'])) {
 
 <?php include_once "includes/css.php"; ?>
 
-
-<!-- <script>
-    window.location.replace("/wis/show-students.php?code=UGS0001grade=4&section=Curiosity&code=UGS0001&qtr=1&subjdesc=Arts");
-</script> -->
+<script>
+    window.location.replace("show-students.php?code=<?php echo $_POST["subjcode"]; ?>&section=<?php echo $_POST["section"];  ?>");
+</script>
 <div class="app is-folded">
     <div class="layout">
         <?php include_once "includes/heading.php"; ?>
@@ -38,12 +37,6 @@ if (!isset($_SESSION['username'])) {
                             </div>
                         </div>
                     </div>
-                   
-                    <script>
-                        // grade=4&section=Curiosity&code=UGS0001&qtr=1&subjdesc=Arts
-                        window.location.replace(sessionStorage.getItem("show_students"));
-
-                    </script>
                     <!-- form ends !-->
                 </div>
                 <?php include_once "includes/footer.php"; ?>
@@ -52,7 +45,6 @@ if (!isset($_SESSION['username'])) {
         </div>
     </div>
 </div>
-
 
 </body>
 

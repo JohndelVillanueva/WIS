@@ -7,13 +7,18 @@ include_once "includes/config.php";
 <?php include_once "includes/css.php"; ?>
 <body>
 <div class="app">
-<div class="layout">
-<div class="page-container">
+<div class="layout mx-5 pt-2">
+<div class="container container-fluid"></div>
     <div class="main-content">
         <!-- form starts !-->
         <form action="newstudent.php" method="post">
             <div class="row">
-                <div class="col-lg-10">
+                <div class="col-lg-12 text-center">
+                    <a href="login.php"><img src="assets/images/logo/west.png" style="width: 300px"></a>
+                </div>
+            </div>
+            <div class="row pt-2">
+                <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header bg-warning rounded-top pt-2">
                             <h4>

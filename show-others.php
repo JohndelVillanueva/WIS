@@ -6,6 +6,27 @@ if(!isset($_SESSION['username']))
     header("location: login.php");
 
 }
+
+if(isset($_GET["asid"])) {
+
+    $addstudent = $DB_con->prepare("INSERT INTO afterschool_students (fname, mname, lname) VALUES (:fname, :mname, :lname)");
+    $addstudent->execute(array(
+        ":fname"=>$_GET["fname"],
+        ":mname"=>$_GET["mname"],
+        ":lname"=>$_GET["lname"],
+    ));
+
+    $checkid = $DB_con->query("SELECT LAST_INSERT_ID()");
+    $lastId = $checkid->fetchColumn();
+
+    $enrollstudent = $DB_con->prepare("INSERT INTO afterschool_enrolled (sid, asid, enrolldate) VALUES (:sid, :asid, NOW())");
+    $enrollstudent->execute(array(
+        ":sid"=>$lastId,
+        ":asid"=>$_GET["asid"]
+    ));
+
+    header("location: show-others.php?id=".$_GET["asid"]);
+}
 ?><!DOCTYPE html>
 <html lang="en">
 
@@ -36,6 +57,19 @@ if(!isset($_SESSION['username']))
                             </div>
                              <div class="card-body">
                                  <div class="row">
+                                     <div class="col-lg-12">
+                                         <div class="dropdown float-right">
+                                             <button class="btn btn-lg btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                 <span class="icon-holder"><i class="anticon anticon-contacts"></i></span> Actions
+                                             </button>
+                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                 <a class="dropdown-item" type="button" data-toggle="modal" data-target="#addStudent"><span class="icon-holder"><i class="anticon anticon-user-add"></i></span> Add Student</a>
+                                                 <a class="dropdown-item" href="other-attendance.php?id=<?php echo $_GET["id"];?>"><span class="icon-holder"><i class="anticon anticon-usergroup-add"></i></span> Check Attendance</a>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 <div class="row pt-2">
                                     <table class="table table-hover table-bordered text-center">
                                         <thead class="thead-dark">
                                             <tr>
@@ -43,7 +77,8 @@ if(!isset($_SESSION['username']))
                                                 <th>Last Name</th>
                                                 <th>First Name</th>
                                                 <th>Middle Name</th>
-                                                <th>Session</th>
+                                                <th>Enroll Date</th>
+                                                <th>Sessions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -52,6 +87,7 @@ if(!isset($_SESSION['username']))
                                                 $getstudents->execute(array(":asid"=>$_GET["id"]));
                                                 $students = $getstudents->fetchAll();
 
+                                                if($getstudents->rowCount()!=0) {
                                                 foreach($students as $rec) {
                                             ?>
                                             <tr>
@@ -59,9 +95,48 @@ if(!isset($_SESSION['username']))
                                                 <td><?php echo $rec["lname"]; ?></td>
                                                 <td><?php echo $rec["fname"]; ?></td>
                                                 <td><?php echo $rec["mname"]; ?></td>
-                                                <th><?php echo $getrecords->rowCount()."/".$row["max"]; ?></th>
+                                                <td><?php echo $rec["enrolldate"]; ?></td>
+                                                <td style="width: 8.33%">
+                                                    <?php
+                                                        $getsessions = $DB_con->prepare("SELECT * FROM afterschool_records WHERE sid = :sid AND asid = :asid");
+                                                        $getsessions->execute(array(":sid"=>$rec["id"], ":asid"=>$row["id"]));
+                                                        $sessions = $getsessions->fetchAll();
+                                                    ?>
+                                                    <button class="btn btn-sm btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample<?php echo $rec["id"]; ?>" aria-expanded="false" aria-controls="collapseExample">
+                                                        <?php echo $getsessions->rowCount()." / ".$row["max"]; ?> <span class="icon-holder"><i class="anticon anticon-caret-down"></i></span>
+                                                    </button>
+                                                    <div class="collapse" id="collapseExample<?php echo $rec["id"]; ?>">
+                                                        <div class="card card-body">
+                                                            <?php
+                                                            if($getsessions->rowCount()!=0) {
+                                                            foreach($sessions as $srow) {
+                                                                echo "&check; ".$srow["attend"]."<br>";
+                                                            } } else {
+                                                                ?>
+                                                                <div class="alert alert-warning" role="alert">
+                                                                    No Record
+                                                                </div>
+                                                                <?php
+                                                            }
+                                                            ?>
+                                                        </div>
+                                                    </div>
+                                                </td>
                                             </tr>
-                                            <?php } ?>
+                                            <?php
+                                                }
+                                                    } else {
+                                                        ?>
+                                                        <tr>
+                                                            <td colspan="6">
+                                                            <div class="alert alert-warning" role="alert">
+                                                                No Students Enrolled.
+                                                            </div>
+                                                            </td>
+                                                        </tr>
+                                                        <?php
+                                                    }
+                                            ?>
                                         </tbody>
                                     </table>
                                  </div>
@@ -74,9 +149,52 @@ if(!isset($_SESSION['username']))
             <?php include_once "includes/footer.php"; ?>
             </div>
         <?php include_once "includes/scripts.php";?>
+            <script>
+                $(document).ready(function(){
+                    $('[data-toggle="popover"]').popover();
+                });
+            </script>
         </div>
     </div>
 </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="addStudent" tabindex="-1" role="dialog" aria-labelledby="addStudentTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addStudentTitle"><span class="icon-holder"><i class="anticon anticon-file-add"></i></span> Add New Student</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <label for="activityName">Last Name</label>
+                                <input type="text" name="lname" class="form-control" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="activityName">First Name</label>
+                                <input type="text" name="fname" class="form-control" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="activityName">Middle Name</label>
+                                <input type="text" name="mname" class="form-control" value=" " required>
+                                <input type="hidden" name="asid" value="<?php echo $_GET["id"];?>">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Enroll Student</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 </body>
 

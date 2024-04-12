@@ -4,23 +4,7 @@ include_once "includes/config.php";
 session_start();
 if (!isset($_SESSION['username'])) {
     header("location: login.php");
-
-    // $_SESSION["fname"] = $row["fname"];
 }
-// else{
-//     $_SESSION["prev_grade"] = $_GET["grade"];
-//     $_SESSION["prev_section"] = $_GET["section"];
-//     $_SESSION["prev_code"] = $_GET["code"];
-//     $_SESSION["prev_qtr"] = $_GET["qtr"];
-//     $_SESSION["prev_subjdesc"] = $_GET["subjdesc"];
-// // var_dump(["Text " => $_SESSION["prev_grade"]]);
-// // var_dump(["Text " => $_SESSION["prev_section"]]);
-// // var_dump(["Text " => $_SESSION["prev_code"]]);
-// // var_dump(["Text " => $_SESSION["prev_qtr"]]);
-// // var_dump(["Text " => $_SESSION["prev_subjdesc"]]);
-
-// }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -579,12 +563,6 @@ foreach ($result as $row) {
                             </div>
                         </div>
                     </div>
-                    <script>
-
-                        let showStudentList = window.location.href;
-                        sessionStorage.setItem("show_students", showStudentList);                      
-
-                    </script>
                     <!-- form ends !-->
                 </div>
                 <?php include_once "includes/footer.php"; ?>
