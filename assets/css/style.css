@@ -391,3 +391,138 @@ input[type=password]:placeholder.login {
   line-height: 30px;
   color: #222;
 }
+
+
+/* Show Inventory Styles */
+/* * {
+    border: 1px solid black;
+} */
+
+/* Option Button */
+.dropdown button {
+    border-radius: 0 !important;
+    width: 170px;
+}
+
+
+button.dropdown-btn::before {
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font: var(--fa-font-solid);
+    content: "\f085";
+    padding-right: 5px;
+}
+
+/* Dropdown */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Defines the width of Dropdown / Parent Container for button */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    width: 170px;
+    z-index: 1;
+    background-color: #dc3545;
+    color: white;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* Dropdown Button Properties */
+.dropdown-content button {
+    display: block;
+    width: 100%;
+    font-size: .8rem;
+    border-radius: 0 !important;
+}
+
+/* Custom Properties */
+.dropdown-content button:nth-of-type(1)::before {
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font: var(--fa-font-solid);
+    content: "\2b";
+    padding-right: 5px;
+}
+
+/* Custom Properties */
+button:nth-of-type(2)::before {
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font: var(--fa-font-solid);
+    content: "\f00c";
+    padding-right: 5px;
+}
+
+/* Custom Properties */
+button:nth-of-type(3)::before {
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font: var(--fa-font-solid);
+    content: "\f328";
+    padding-right: 5px;
+}
+
+/* Hover Properties */
+.dropdown-content button:hover {
+    background-color: brown;
+    color: white;
+}
+
+/* Hide/Show Toggler */
+.show {
+    display: block;
+}
+
+/* Modal Properties*/
+.modal-dialog {
+    border-radius: 0 !important;
+}
+
+.modal-footer button:nth-of-type(1):before {
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font: var(--fa-font-solid);
+    content: "\f0c7";
+    padding-right: 5px;
+}
+
+.modal-footer button:nth-of-type(2):before {
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font: var(--fa-font-solid);
+    content: "\f00d";
+    padding-right: 5px;
+}
+
+.modal-header {
+    background-color: #ffc107;
+    border-radius: 0 !important;
+}
+
+.modal-header h5 {
+    color: white;
+}
+
+.modal-footer {
+    background-color: #ffc107;
+    border-radius: 0 !important;
+}
+
+.modal-footer button {
+    color: white;
+    border-radius: 0 !important;
+}
+
+input {
+    text-align: center;
+}
