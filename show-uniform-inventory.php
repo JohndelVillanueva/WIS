@@ -30,9 +30,8 @@ if (!isset($_SESSION['username'])) {
                                         <div class="col-lg-12">
                                             <div class="btn-group float-right">
                                                 <div class="dropdown">
-                                                    <button class=" dropdown-btn btn btn-danger" onclick="drpFunction()"> Options </button>
+                                                    <button class=" dropdown-btn btn btn-danger" type="button" onclick="drpFunction()"> Options </button>
                                                     <div id="dropdown-list" class="dropdown-content">
-                                                        <button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button>
                                                         <button type="button" data-bs-toggle="modal" data-bs-target="#release" class="btn btn-danger">Release Inventory</button>
                                                         <button type="button" class="btn btn-danger">Reports</button>
                                                     </div>
@@ -75,26 +74,7 @@ if (!isset($_SESSION['username'])) {
                                                 <form action="" method="post">
                                                     <!-- <input type="hidden" name="id" value=""> -->
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title">Select Uniform Type</h5>
-                                                    </div>
-                                                    <div class="modal-body text-center">
-                                                        <div class="row col-12">
-                                                            <div class="col-4">
-                                                                <input type="radio" id="reg" name="uniformtype" value="regular" onclick="adaptColor()" required="required">
-                                                                <label for="regular">Regular Uniform</label>
-                                                            </div>
-                                                            <div class="col-4">
-                                                                <input type="radio" id="phyedu" name="uniformtype" value="physicalEducation" onclick="adaptColor()" required="required">
-                                                                <label for=" regular">PE Uniform</label>
-                                                            </div>
-                                                            <div class="col-4">
-                                                                <input type="radio" id="afterschool" name="uniformtype" value="afterSchool" onclick="adaptColor()" required="required">
-                                                                <label for=" regular">Afterschool Uniform</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-header" id="modal-header-body">
-                                                        <h5 class="modal-title">Add Uniform</h5>
+                                                        <h5 class="modal-title">Add Uniform Stock</h5>
                                                     </div>
                                                     <div class="modal-body">
                                                         <table class="table text-center">
@@ -139,123 +119,25 @@ if (!isset($_SESSION['username'])) {
                                                             </tbody>
                                                         </table>
                                                     </div>
-                                                    <div class="modal-footer">
-                                                        <button type="submit" class="btn btn-success">Save changes</button>
-                                                        <button type="reset" class="btn btn-danger" data-bs-dismiss="modal" id="reset">Cancel</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>  
-
-                                    <!-- Release Inventory -->
-                                    <div class="modal fade" tabindex="-1" id="release" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="modal1">
-                                        <div class="modal-dialog modal-xl ">
-                                            <div class="modal-content ">
-                                                <form action="inventory.php">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">Students List</h5>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="col-row-1 p-2">
-                                                            <table class="table table-bordered table-hover w-100" id="studentInventory">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>First Name</th>
-                                                                        <th>Last Name</th>
-                                                                        <th>Grade Level</th>
-                                                                        <th>Actions</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr class="align-middle">
-                                                                        <td class="">Johndel</td>
-                                                                        <td>Villanueva</dh>
-                                                                        <td>999</td>
-                                                                        <td><button type="button" class="btn btn-danger" data-bs-target="record" data-bs-toggle="modal"> Release</button></td>
-                                                                    </tr>
-                                                                    <tr class="align-middle">
-                                                                        <td class="">Jerald</td>
-                                                                        <td>Balilu</dh>
-                                                                        <td>999</td>
-                                                                        <td><button type="button" class="btn btn-danger"> Release</button></td>
-                                                                    </tr>
-                                                                    <tr class="align-middle">
-                                                                        <td class="">Rose Ann</td>
-                                                                        <td>Vino</dh>
-                                                                        <td>999</td>
-                                                                        <td><button type="button" class="btn btn-danger"> Release</button></td>
-                                                                    </tr>
-                                                                    <tr class="align-middle">
-                                                                        <td class="">Myren Josh</td>
-                                                                        <td>Tiqui</dh>
-                                                                        <td>999</td>
-                                                                        <td><button type="button" class="btn btn-danger"> Release</button></td>
-                                                                    </tr>
-                                                                    <tr class="align-middle">
-                                                                        <td class="">Johndel</td>
-                                                                        <td>Villanueva</dh>
-                                                                        <td>999</td>
-                                                                        <td><button type="button" class="btn btn-danger"> Release</button></td>
-                                                                    </tr>
-                                                                    <tr class="align-middle">
-                                                                        <td class="">Johndel</td>
-                                                                        <td>Villanueva</dh>
-                                                                        <td>999</td>
-                                                                        <td><button type="button" class="btn btn-danger"> Release</button></td>
-                                                                    </tr>
-                                                                    <tr class="align-middle">
-                                                                        <td class="">Johndel</td>
-                                                                        <td>Villanueva</dh>
-                                                                        <td>999</td>
-                                                                        <td><button type="button" class="btn btn-danger"> Release</button></td>
-                                                                    </tr>
-                                                                    <tr class="align-middle">
-                                                                        <td class="">Johndel</td>
-                                                                        <td>Villanueva</dh>
-                                                                        <td>999</td>
-                                                                        <td><button type="button" class="btn btn-danger"> Release</button></td>
-                                                                    </tr>
-                                                                    <tr class="align-middle">
-                                                                        <td class="">Johndel</td>
-                                                                        <td>Villanueva</dh>
-                                                                        <td>999</td>
-                                                                        <td><button type="button" class="btn btn-danger"> Release</button></td>
-                                                                    </tr>
-                                                                    <tr class="align-middle">
-                                                                        <td class="">Johndel</td>
-                                                                        <td>Villanueva</dh>
-                                                                        <td>999</td>
-                                                                        <td><button type="button" class="btn btn-danger"> Release</button></td>
-                                                                    </tr>
-                                                                    <tr class="align-middle">
-                                                                        <td class="">Johndel</td>
-                                                                        <td>Villanueva</dh>
-                                                                        <td>999</td>
-                                                                        <td><button type="button" class="btn btn-danger"> Release</button></td>
-                                                                    </tr>
-                                                                    <tr class="align-middle">
-                                                                        <td class="">Johndel</td>
-                                                                        <td>Villanueva</dh>
-                                                                        <td>999</td>
-                                                                        <td><button type="button" class="btn btn-danger"> Release</button></td>
-                                                                    </tr>
-                                                                    <tr class="align-middle">
-                                                                        <td class="">Johndel</td>
-                                                                        <td>Villanueva</dh>
-                                                                        <td>999</td>
-                                                                        <td><button type="button" class="btn btn-danger"> Release</button></td>
-                                                                    </tr>
-                                                                    <tr class="align-middle">
-                                                                        <td class="">Johndel</td>
-                                                                        <td>Villanueva</dh>
-                                                                        <td>999</td>
-                                                                        <td><button type="button" class="btn btn-danger"> Release</button></td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
+                                                    <!-- <div class="modal-body text-center">
+                                                        <div class="row col-12">
+                                                            <div class="col-4">
+                                                                <input type="radio" id="reg" name="uniformtype" value="regular" onclick="adaptColor()" required="required">
+                                                                <label for="regular">Regular Uniform</label>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <input type="radio" id="phyedu" name="uniformtype" value="physicalEducation" onclick="adaptColor()" required="required">
+                                                                <label for=" regular">PE Uniform</label>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <input type="radio" id="afterschool" name="uniformtype" value="afterSchool" onclick="adaptColor()" required="required">
+                                                                <label for=" regular">Afterschool Uniform</label>
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
+                                                    <!-- <div class="modal-header" id="modal-header-body">
+                                                        <h5 class="modal-title">Add Uniform</h5>
+                                                    </div> -->
                                                     <div class="modal-footer">
                                                         <button type="submit" class="btn btn-success">Save changes</button>
                                                         <button type="reset" class="btn btn-danger" data-bs-dismiss="modal" id="reset">Cancel</button>
@@ -264,311 +146,428 @@ if (!isset($_SESSION['username'])) {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                                    <br>
-                                    <div class="container col-lg-12">
-                                        <div class="row">
-                                            <div class="col-lg-5">
-                                                <div class="card bg-primary p-4">
-                                                    <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-bank"></i></span> Regular Uniform</h3>
-                                                    <table class="table table-hover table-light">
-                                                        <thead class="text-center">
-                                                            <tr class="table-light">
-                                                                <th>Size</th>
-                                                                <th>Last Inventory</th>
-                                                                <th>Date</th>
-                                                                <th>User</th>
-                                                                <th>Actions</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody class="text-center">
-                                                            <?php
-                                                            $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniformtype = :uniformtype AND gender = :gender");
-                                                            $getreginv->execute(array(":uniformtype" => "1", ":gender" => "F"));
-                                                            $reguniform = $getreginv->fetchAll();
-
-                                                            if ($getreginv->rowCount() != 0) {
-                                                                foreach ($reguniform as $reg) {
-                                                            ?>
-                                                                    <tr>
-                                                                        <td><?php echo $reg["size"] ?></td>
-                                                                        <td><?php echo $reg["qty"] ?></td>
-                                                                        <td><?php echo $reg["date"] ?></td>
-                                                                        <td><?php echo $reg["user"] ?></td>
-                                                                        <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
-                                                                    </tr>
-                                                                <?php
-                                                                }
-                                                            } else {
-                                                                ?>
-                                                                <tr>
-                                                                    <td colspan="4">
-                                                                        <div class="alert alert-warning" role="alert">
-                                                                            ***** NO INVENTORY *****
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                        </tbody>
-                                                    </table>
+                                <!-- Release Inventory -->
+                                <div class="modal fade" tabindex="-1" id="release" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="modal1">
+                                    <div class="modal-dialog modal-xl ">
+                                        <div class="modal-content ">
+                                            <form action="inventory.php">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Students List</h5>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-5">
-                                                <div class="card bg-info p-4">
-                                                    <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-dribbble"></i></span> PE Uniform</h3>
-                                                    <table class="table table-hover table-light">
-                                                        <thead class="text-center">
-                                                            <tr class="table-light">
-                                                                <th>Size</th>
-                                                                <th>Last Inventory</th>
-                                                                <th>Date</th>
-                                                                <th>User</th>
-                                                                <th>Actions</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody class="text-center">
-                                                            <?php
-                                                            $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniformtype = :uniformtype AND gender = :gender");
-                                                            $getreginv->execute(array(":uniformtype" => "2", ":gender" => "F"));
-                                                            $reguniform = $getreginv->fetchAll();
-
-                                                            if ($getreginv->rowCount() != 0) {
-                                                                foreach ($reguniform as $reg) {
-                                                            ?>
-                                                                    <tr>
-                                                                        <td><?php echo $reg["size"] ?></td>
-                                                                        <td><?php echo $reg["qty"] ?></td>
-                                                                        <td><?php echo $reg["date"] ?></td>
-                                                                        <td><?php echo $reg["user"] ?></td>
-                                                                        <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
-                                                                    </tr>
-                                                                <?php
-                                                                }
-                                                            } else {
-                                                                ?>
+                                                <div class="modal-body">
+                                                    <div class="col-row-1 p-2">
+                                                        <table class="table table-bordered table-hover w-100" id="studentInventory">
+                                                            <thead>
                                                                 <tr>
-                                                                    <td colspan="4">
-                                                                        <div class="alert alert-warning" role="alert">
-                                                                            ***** NO INVENTORY *****
-                                                                        </div>
-                                                                    </td>
+                                                                    <th>First Name</th>
+                                                                    <th>Last Name</th>
+                                                                    <th>Grade Level</th>
+                                                                    <th>Actions</th>
                                                                 </tr>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-5">
-                                                <div class="card bg-secondary p-4">
-                                                    <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-alert"></i></span> Activity Uniform</h3>
-                                                    <table class="table table-hover table-light">
-                                                        <thead class="text-center">
-                                                            <tr class="table-light">
-                                                                <th>Size</th>
-                                                                <th>Last Inventory</th>
-                                                                <th>Date</th>
-                                                                <th>User</th>
-                                                                <th>Actions</th>
-
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody class="text-center">
-                                                            <?php
-                                                            $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniformtype = :uniformtype AND gender = :gender");
-                                                            $getreginv->execute(array(":uniformtype" => "3", ":gender" => "F"));
-                                                            $reguniform = $getreginv->fetchAll();
-
-                                                            if ($getreginv->rowCount() != 0) {
-                                                                foreach ($reguniform as $reg) {
-                                                            ?>
-                                                                    <tr>
-                                                                        <td><?php echo $reg["size"] ?></td>
-                                                                        <td><?php echo $reg["qty"] ?></td>
-                                                                        <td><?php echo $reg["date"] ?></td>
-                                                                        <td><?php echo $reg["user"] ?></td>
-                                                                        <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
-                                                                    </tr>
-                                                                <?php
-                                                                }
-                                                            } else {
-                                                                ?>
-                                                                <tr>
-                                                                    <td colspan="4">
-                                                                        <div class="alert alert-warning" role="alert">
-                                                                            ***** NO INVENTORY *****
-                                                                        </div>
-                                                                    </td>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="align-middle">
+                                                                    <td class="">Johndel</td>
+                                                                    <td>Villanueva</dh>
+                                                                    <td>999</td>
+                                                                    <td><button type="button" class="btn btn-danger" data-bs-target="record" data-bs-toggle="modal"> Release</button></td>
                                                                 </tr>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div><br><br>
-                                    <div class="container col-lg-12">
-                                        <div class="row">
-                                            <div class="col-lg-5">
-                                                <div class="card bg-primary p-4">
-                                                    <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-bank"></i></span> Regular Uniform</h3>
-                                                    <table class="table table-hover table-light">
-                                                        <thead class="text-center">
-                                                            <tr class="table-light">
-                                                                <th>Size</th>
-                                                                <th>Last Inventory</th>
-                                                                <th>Date</th>
-                                                                <th>User</th>
-                                                                <th>Actions</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody class="text-center">
-                                                            <?php
-                                                            $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniformtype = :uniformtype AND gender = :gender");
-                                                            $getreginv->execute(array(":uniformtype" => "1", ":gender" => "M"));
-                                                            $reguniform = $getreginv->fetchAll();
-
-                                                            if ($getreginv->rowCount() != 0) {
-                                                                foreach ($reguniform as $reg) {
-                                                            ?>
-                                                                    <tr>
-                                                                        <td><?php echo $reg["size"] ?></td>
-                                                                        <td><?php echo $reg["qty"] ?></td>
-                                                                        <td><?php echo $reg["date"] ?></td>
-                                                                        <td><?php echo $reg["user"] ?></td>
-                                                                        <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
-                                                                    </tr>
-                                                                <?php
-                                                                }
-                                                            } else {
-                                                                ?>
-                                                                <tr>
-                                                                    <td colspan="4">
-                                                                        <div class="alert alert-warning" role="alert">
-                                                                            ***** NO INVENTORY *****
-                                                                        </div>
-                                                                    </td>
+                                                                <tr class="align-middle">
+                                                                    <td class="">Jerald</td>
+                                                                    <td>Balilu</dh>
+                                                                    <td>999</td>
+                                                                    <td><button type="button" class="btn btn-danger"> Release</button></td>
                                                                 </tr>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-5">
-                                                <div class="card bg-info p-4">
-                                                    <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-dribbble"></i></span> PE Uniform</h3>
-                                                    <table class="table table-hover table-light">
-                                                        <thead class="text-center">
-                                                            <tr class="table-light">
-                                                                <th>Size</th>
-                                                                <th>Last Inventory</th>
-                                                                <th>Date</th>
-                                                                <th>User</th>
-                                                                <th>Actions</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody class="text-center">
-                                                            <?php
-                                                            $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniformtype = :uniformtype AND gender = :gender");
-                                                            $getreginv->execute(array(":uniformtype" => "2", ":gender" => "M"));
-                                                            $reguniform = $getreginv->fetchAll();
-
-                                                            if ($getreginv->rowCount() != 0) {
-                                                                foreach ($reguniform as $reg) {
-                                                            ?>
-                                                                    <tr>
-                                                                        <td><?php echo $reg["size"] ?></td>
-                                                                        <td><?php echo $reg["qty"] ?></td>
-                                                                        <td><?php echo $reg["date"] ?></td>
-                                                                        <td><?php echo $reg["user"] ?></td>
-                                                                        <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
-                                                                    </tr>
-                                                                <?php
-                                                                }
-                                                            } else {
-                                                                ?>
-                                                                <tr>
-                                                                    <td colspan="4">
-                                                                        <div class="alert alert-warning" role="alert">
-                                                                            ***** NO INVENTORY *****
-                                                                        </div>
-                                                                    </td>
+                                                                <tr class="align-middle">
+                                                                    <td class="">Rose Ann</td>
+                                                                    <td>Vino</dh>
+                                                                    <td>999</td>
+                                                                    <td><button type="button" class="btn btn-danger"> Release</button></td>
                                                                 </tr>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-5">
-                                                <div class="card bg-secondary p-4">
-                                                    <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-alert"></i></span> Activity Uniform</h3>
-                                                    <table class="table table-hover table-light">
-                                                        <thead class="text-center">
-                                                            <tr class="table-light">
-                                                                <th>Size</th>
-                                                                <th>Last Inventory</th>
-                                                                <th>Date</th>
-                                                                <th>User</th>
-                                                                <th>Actions</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody class="text-center">
-                                                            <?php
-                                                            $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniformtype = :uniformtype AND gender = :gender");
-                                                            $getreginv->execute(array(":uniformtype" => "3", ":gender" => "M"));
-                                                            $reguniform = $getreginv->fetchAll();
-
-                                                            if ($getreginv->rowCount() != 0) {
-                                                                foreach ($reguniform as $reg) {
-                                                            ?>
-                                                                    <tr>
-                                                                        <td><?php echo $reg["size"] ?></td>
-                                                                        <td><?php echo $reg["qty"] ?></td>
-                                                                        <td><?php echo $reg["date"] ?></td>
-                                                                        <td><?php echo $reg["user"] ?></td>
-                                                                        <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
-                                                                    </tr>
-                                                                <?php
-                                                                }
-                                                            } else {
-                                                                ?>
-                                                                <tr>
-                                                                    <td colspan="4">
-                                                                        <div class="alert alert-warning" role="alert">
-                                                                            ***** NO INVENTORY *****
-                                                                        </div>
-                                                                    </td>
+                                                                <tr class="align-middle">
+                                                                    <td class="">Myren Josh</td>
+                                                                    <td>Tiqui</dh>
+                                                                    <td>999</td>
+                                                                    <td><button type="button" class="btn btn-danger"> Release</button></td>
                                                                 </tr>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                        </tbody>
-                                                    </table>
+                                                                <tr class="align-middle">
+                                                                    <td class="">Johndel</td>
+                                                                    <td>Villanueva</dh>
+                                                                    <td>999</td>
+                                                                    <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                </tr>
+                                                                <tr class="align-middle">
+                                                                    <td class="">Johndel</td>
+                                                                    <td>Villanueva</dh>
+                                                                    <td>999</td>
+                                                                    <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                </tr>
+                                                                <tr class="align-middle">
+                                                                    <td class="">Johndel</td>
+                                                                    <td>Villanueva</dh>
+                                                                    <td>999</td>
+                                                                    <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                </tr>
+                                                                <tr class="align-middle">
+                                                                    <td class="">Johndel</td>
+                                                                    <td>Villanueva</dh>
+                                                                    <td>999</td>
+                                                                    <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                </tr>
+                                                                <tr class="align-middle">
+                                                                    <td class="">Johndel</td>
+                                                                    <td>Villanueva</dh>
+                                                                    <td>999</td>
+                                                                    <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                </tr>
+                                                                <tr class="align-middle">
+                                                                    <td class="">Johndel</td>
+                                                                    <td>Villanueva</dh>
+                                                                    <td>999</td>
+                                                                    <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                </tr>
+                                                                <tr class="align-middle">
+                                                                    <td class="">Johndel</td>
+                                                                    <td>Villanueva</dh>
+                                                                    <td>999</td>
+                                                                    <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                </tr>
+                                                                <tr class="align-middle">
+                                                                    <td class="">Johndel</td>
+                                                                    <td>Villanueva</dh>
+                                                                    <td>999</td>
+                                                                    <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                </tr>
+                                                                <tr class="align-middle">
+                                                                    <td class="">Johndel</td>
+                                                                    <td>Villanueva</dh>
+                                                                    <td>999</td>
+                                                                    <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                </tr>
+                                                                <tr class="align-middle">
+                                                                    <td class="">Johndel</td>
+                                                                    <td>Villanueva</dh>
+                                                                    <td>999</td>
+                                                                    <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-success">Save changes</button>
+                                                    <button type="reset" class="btn btn-danger" data-bs-dismiss="modal" id="reset">Cancel</button>
+                                            </form>
                                         </div>
                                     </div>
-                                    <!-- end -->
                                 </div>
                             </div>
                         </div>
-                        <!-- form ends !-->
+
+                        <br>
+                        <div class="container col-12">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card bg-primary p-4">
+                                        <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-bank"></i></span> Regular Uniform</h3>
+                                        <table class="table table-hover table-light">
+                                            <thead class="text-center">
+                                                <tr class="table-light">
+                                                    <th>Size</th>
+                                                    <th>Last Inventory</th>
+                                                    <th>Date</th>
+                                                    <th>User</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="text-center">
+                                                <?php
+                                                $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniformtype = :uniformtype AND gender = :gender");
+                                                $getreginv->execute(array(":uniformtype" => "1", ":gender" => "F"));
+                                                $reguniform = $getreginv->fetchAll();
+
+                                                if ($getreginv->rowCount() != 0) {
+                                                    foreach ($reguniform as $reg) {
+                                                ?>
+                                                        <tr>
+                                                            <td><?php echo $reg["size"] ?></td>
+                                                            <td><?php echo $reg["qty"] ?></td>
+                                                            <td><?php echo $reg["date"] ?></td>
+                                                            <td><?php echo $reg["user"] ?></td>
+                                                            <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
+                                                        </tr>
+                                                    <?php
+                                                    }
+                                                } else {
+                                                    ?>
+                                                    <tr>
+                                                        <td colspan="4">
+                                                            <div class="alert alert-warning" role="alert">
+                                                                ***** NO INVENTORY *****
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                <?php
+                                                }
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="card bg-info p-4">
+                                        <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-dribbble"></i></span> PE Uniform</h3>
+                                        <table class="table table-hover table-light">
+                                            <thead class="text-center">
+                                                <tr class="table-light">
+                                                    <th>Size</th>
+                                                    <th>Last Inventory</th>
+                                                    <th>Date</th>
+                                                    <th>User</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="text-center">
+                                                <?php
+                                                $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniformtype = :uniformtype AND gender = :gender");
+                                                $getreginv->execute(array(":uniformtype" => "2", ":gender" => "F"));
+                                                $reguniform = $getreginv->fetchAll();
+
+                                                if ($getreginv->rowCount() != 0) {
+                                                    foreach ($reguniform as $reg) {
+                                                ?>
+                                                        <tr>
+                                                            <td><?php echo $reg["size"] ?></td>
+                                                            <td><?php echo $reg["qty"] ?></td>
+                                                            <td><?php echo $reg["date"] ?></td>
+                                                            <td><?php echo $reg["user"] ?></td>
+                                                            <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
+                                                        </tr>
+                                                    <?php
+                                                    }
+                                                } else {
+                                                    ?>
+                                                    <tr>
+                                                        <td colspan="4">
+                                                            <div class="alert alert-warning" role="alert">
+                                                                ***** NO INVENTORY *****
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                <?php
+                                                }
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="card bg-secondary p-4">
+                                        <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-alert"></i></span> Activity Uniform</h3>
+                                        <table class="table table-hover table-light">
+                                            <thead class="text-center">
+                                                <tr class="table-light">
+                                                    <th>Size</th>
+                                                    <th>Last Inventory</th>
+                                                    <th>Date</th>
+                                                    <th>User</th>
+                                                    <th>Actions</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody class="text-center">
+                                                <?php
+                                                $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniformtype = :uniformtype AND gender = :gender");
+                                                $getreginv->execute(array(":uniformtype" => "3", ":gender" => "F"));
+                                                $reguniform = $getreginv->fetchAll();
+
+                                                if ($getreginv->rowCount() != 0) {
+                                                    foreach ($reguniform as $reg) {
+                                                ?>
+                                                        <tr>
+                                                            <td><?php echo $reg["size"] ?></td>
+                                                            <td><?php echo $reg["qty"] ?></td>
+                                                            <td><?php echo $reg["date"] ?></td>
+                                                            <td><?php echo $reg["user"] ?></td>
+                                                            <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
+                                                        </tr>
+                                                    <?php
+                                                    }
+                                                } else {
+                                                    ?>
+                                                    <tr>
+                                                        <td colspan="4">
+                                                            <div class="alert alert-warning" role="alert">
+                                                                ***** NO INVENTORY *****
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                <?php
+                                                }
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><br><br>
+                        <div class="container col-12">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card bg-primary p-4">
+                                        <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-bank"></i></span> Regular Uniform</h3>
+                                        <table class="table table-hover table-light">
+                                            <thead class="text-center">
+                                                <tr class="table-light">
+                                                    <th>Size</th>
+                                                    <th>Last Inventory</th>
+                                                    <th>Date</th>
+                                                    <th>User</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="text-center">
+                                                <?php
+                                                $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniformtype = :uniformtype AND gender = :gender");
+                                                $getreginv->execute(array(":uniformtype" => "1", ":gender" => "M"));
+                                                $reguniform = $getreginv->fetchAll();
+
+                                                if ($getreginv->rowCount() != 0) {
+                                                    foreach ($reguniform as $reg) {
+                                                ?>
+                                                        <tr>
+                                                            <td><?php echo $reg["size"] ?></td>
+                                                            <td><?php echo $reg["qty"] ?></td>
+                                                            <td><?php echo $reg["date"] ?></td>
+                                                            <td><?php echo $reg["user"] ?></td>
+                                                            <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
+                                                        </tr>
+                                                    <?php
+                                                    }
+                                                } else {
+                                                    ?>
+                                                    <tr>
+                                                        <td colspan="4">
+                                                            <div class="alert alert-warning" role="alert">
+                                                                ***** NO INVENTORY *****
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                <?php
+                                                }
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="card bg-info p-4">
+                                        <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-dribbble"></i></span> PE Uniform</h3>
+                                        <table class="table table-hover table-light">
+                                            <thead class="text-center">
+                                                <tr class="table-light">
+                                                    <th>Size</th>
+                                                    <th>Last Inventory</th>
+                                                    <th>Date</th>
+                                                    <th>User</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="text-center">
+                                                <?php
+                                                $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniformtype = :uniformtype AND gender = :gender");
+                                                $getreginv->execute(array(":uniformtype" => "2", ":gender" => "M"));
+                                                $reguniform = $getreginv->fetchAll();
+
+                                                if ($getreginv->rowCount() != 0) {
+                                                    foreach ($reguniform as $reg) {
+                                                ?>
+                                                        <tr>
+                                                            <td><?php echo $reg["size"] ?></td>
+                                                            <td><?php echo $reg["qty"] ?></td>
+                                                            <td><?php echo $reg["date"] ?></td>
+                                                            <td><?php echo $reg["user"] ?></td>
+                                                            <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
+                                                        </tr>
+                                                    <?php
+                                                    }
+                                                } else {
+                                                    ?>
+                                                    <tr>
+                                                        <td colspan="4">
+                                                            <div class="alert alert-warning" role="alert">
+                                                                ***** NO INVENTORY *****
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                <?php
+                                                }
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="card bg-secondary p-4">
+                                        <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-alert"></i></span> Activity Uniform</h3>
+                                        <table class="table table-hover table-light">
+                                            <thead class="text-center">
+                                                <tr class="table-light">
+                                                    <th>Size</th>
+                                                    <th>Last Inventory</th>
+                                                    <th>Date</th>
+                                                    <th>User</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="text-center">
+                                                <?php
+                                                $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniformtype = :uniformtype AND gender = :gender");
+                                                $getreginv->execute(array(":uniformtype" => "3", ":gender" => "M"));
+                                                $reguniform = $getreginv->fetchAll();
+
+                                                if ($getreginv->rowCount() != 0) {
+                                                    foreach ($reguniform as $reg) {
+                                                ?>
+                                                        <tr>
+                                                            <td><?php echo $reg["size"] ?></td>
+                                                            <td><?php echo $reg["qty"] ?></td>
+                                                            <td><?php echo $reg["date"] ?></td>
+                                                            <td><?php echo $reg["user"] ?></td>
+                                                            <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
+                                                        </tr>
+                                                    <?php
+                                                    }
+                                                } else {
+                                                    ?>
+                                                    <tr>
+                                                        <td colspan="4">
+                                                            <div class="alert alert-warning" role="alert">
+                                                                ***** NO INVENTORY *****
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                <?php
+                                                }
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end -->
                     </div>
-                    <?php include_once "includes/footer.php"; ?>
                 </div>
-                <?php include_once "includes/scripts.php"; ?>
             </div>
+            <!-- form ends !-->
         </div>
+        <?php include_once "includes/footer.php"; ?>
+    </div>
+    <?php include_once "includes/scripts.php"; ?>
+    </div>
+    </div>
     </div>
 
     </body>
