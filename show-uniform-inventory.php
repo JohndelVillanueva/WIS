@@ -72,9 +72,8 @@ if (!isset($_SESSION['username'])) {
                                         <div class="modal-dialog modal-lg ">
                                             <div class="modal-content ">
                                                 <form action="" method="post">
-                                                    <!-- <input type="hidden" name="id" value=""> -->
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title">Add Uniform Stock</h5>
+                                                        <h5 class="modal-title">Add Uniform</h5>
                                                     </div>
                                                     <div class="modal-body">
                                                         <table class="table text-center">
@@ -119,25 +118,6 @@ if (!isset($_SESSION['username'])) {
                                                             </tbody>
                                                         </table>
                                                     </div>
-                                                    <!-- <div class="modal-body text-center">
-                                                        <div class="row col-12">
-                                                            <div class="col-4">
-                                                                <input type="radio" id="reg" name="uniformtype" value="regular" onclick="adaptColor()" required="required">
-                                                                <label for="regular">Regular Uniform</label>
-                                                            </div>
-                                                            <div class="col-4">
-                                                                <input type="radio" id="phyedu" name="uniformtype" value="physicalEducation" onclick="adaptColor()" required="required">
-                                                                <label for=" regular">PE Uniform</label>
-                                                            </div>
-                                                            <div class="col-4">
-                                                                <input type="radio" id="afterschool" name="uniformtype" value="afterSchool" onclick="adaptColor()" required="required">
-                                                                <label for=" regular">Afterschool Uniform</label>
-                                                            </div>
-                                                        </div>
-                                                    </div> -->
-                                                    <!-- <div class="modal-header" id="modal-header-body">
-                                                        <h5 class="modal-title">Add Uniform</h5>
-                                                    </div> -->
                                                     <div class="modal-footer">
                                                         <button type="submit" class="btn btn-success">Save changes</button>
                                                         <button type="reset" class="btn btn-danger" data-bs-dismiss="modal" id="reset">Cancel</button>

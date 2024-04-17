@@ -33,7 +33,7 @@ foreach ($result as $row) {
                                     <h3 class="pt-2"><span class="icon-holder"><i class="anticon anticon-book"></i></span> <?php echo $row["subjdesc"] . " " . $row["subjlevel"] . " - " . $_GET["section"]; ?></h3>
                                 </div>
                                 <div class="card-body">
-                                    <?php           
+                                    <?php
                                     if (isset($_GET["lock"])) {
                                         if ($_GET["lock"] == 1) {
                                     ?>
@@ -49,7 +49,7 @@ foreach ($result as $row) {
                                         }
                                     }
                                     ?>
-                                    <?php 
+                                    <?php
                                     $selectQuery = $DB_con->prepare("SELECT * FROM s_scores WHERE flag = 1 AND subjcode = :subjcode LIMIT 1");
                                     $selectQuery->execute([
                                         ":subjcode" => $_GET['code']
@@ -57,22 +57,11 @@ foreach ($result as $row) {
                                     $checking = $selectQuery->fetch(PDO::FETCH_OBJ);
                                     ?>
 
-                                    <a id="unlockBtn" class="btn btn-primary btn-tone btn-rounded" href="#" onclick="handleButtonClick()"><i class="anticon anticon-lock"></i> <?php echo ($checking && $checking->flag == 1) ? 'Request Unlock' : 'Registrar Verification'; ?></a>
 
-                                    <script>
-                                    function handleButtonClick() {
-                                        var unlockBtn = document.getElementById('unlockBtn');
-                                        if (unlockBtn.innerText.trim() === 'Registrar Verification') {
-                                            confirmAction();
-                                        } else {
-                                            confirmAction2();
-                                        }
-                                    }
-                                    </script>
 
 
                                     <div class="float-right">
-                                        <a class="btn btn-primary btn-tone btn-rounded" href="add-activity.php?code=<?php echo $_GET["code"] ?>&section=<?php echo $_GET["section"]?>&qtr=<?=$_GET['qtr']; ?>"><i class="anticon anticon-diff"></i> Add Activity</a>
+                                    <a class="btn btn-primary btn-tone btn-rounded" href="add-activity.php?code=<?php echo $_GET["code"] ?>&section=<?php echo $_GET["section"] ?>&qtr=<?= $_GET['qtr']; ?>"><i class="anticon anticon-diff"></i> Add Activity</a>
                                         <script>
                                             const confirmAction = () => {
                                                 const response = confirm("Are you sure you want submit this to the registrar?");
@@ -89,6 +78,20 @@ foreach ($result as $row) {
                                                 }
                                             }
                                         </script>
+                                        
+                                        <a id="unlockBtn" class="btn btn-primary btn-tone btn-rounded" href="#" onclick="handleButtonClick()"><i class="anticon anticon-lock"></i> <?php echo ($checking && $checking->flag == 1) ? 'Request Unlock' : 'Registrar Verification'; ?></a>
+
+                                        <script>
+                                            function handleButtonClick() {
+                                                var unlockBtn = document.getElementById('unlockBtn');
+                                                if (unlockBtn.innerText.trim() === 'Registrar Verification') {
+                                                    confirmAction();
+                                                } else {
+                                                    confirmAction2();
+                                                }
+                                            }
+                                        </script>
+                                        
                                     </div>
                                     <br><br><br>
                                     <?php
