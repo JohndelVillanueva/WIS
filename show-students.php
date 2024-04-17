@@ -61,7 +61,7 @@ foreach ($result as $row) {
 
 
                                     <div class="float-right">
-                                    <a class="btn btn-primary btn-tone btn-rounded" href="add-activity.php?code=<?php echo $_GET["code"] ?>&section=<?php echo $_GET["section"] ?>&qtr=<?= $_GET['qtr']; ?>"><i class="anticon anticon-diff"></i> Add Activity</a>
+                                    <a class="btn btn-primary btn-tone btn-rounded" id="add-activity" href="add-activity.php?code=<?php echo $_GET["code"] ?>&section=<?php echo $_GET["section"] ?>&qtr=<?= $_GET['qtr']; ?>"><i class="anticon anticon-diff"></i> Add Activity</a>
                                         <script>
                                             const confirmAction = () => {
                                                 const response = confirm("Are you sure you want submit this to the registrar?");
@@ -75,10 +75,11 @@ foreach ($result as $row) {
                                                 const response = confirm("Are you sure you want request unlock?");
                                                 if (response) {
                                                     window.location.replace("request-unlock.php?code=<?php echo $_GET["code"] ?>&section=<?php echo $_GET["section"]; ?>");
+                                                    document.querySelector('#add-activity').style.display = "none";
                                                 }
                                             }
                                         </script>
-                                        
+
                                         <a id="unlockBtn" class="btn btn-primary btn-tone btn-rounded" href="#" onclick="handleButtonClick()"><i class="anticon anticon-lock"></i> <?php echo ($checking && $checking->flag == 1) ? 'Request Unlock' : 'Registrar Verification'; ?></a>
 
                                         <script>
