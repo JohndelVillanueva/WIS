@@ -61,7 +61,7 @@ foreach ($result as $row) {
 
 
                                     <div class="float-right">
-                                    <a class="btn btn-primary btn-tone btn-rounded" id="add-activity" href="add-activity.php?code=<?php echo $_GET["code"] ?>&section=<?php echo $_GET["section"] ?>&qtr=<?= $_GET['qtr']; ?>"><i class="anticon anticon-diff"></i> Add Activity</a>
+                                    <a class="btn btn-primary btn-tone btn-rounded" id="addact" href="add-activity.php?code=<?php echo $_GET["code"] ?>&section=<?php echo $_GET["section"] ?>&qtr=<?= $_GET['qtr']; ?>"><i class="anticon anticon-diff"></i> Add Activity</a>
                                         <script>
                                             const confirmAction = () => {
                                                 const response = confirm("Are you sure you want submit this to the registrar?");
@@ -577,6 +577,12 @@ foreach ($result as $row) {
                             </div>
                         </div>
                     </div>
+                    <script>
+
+                        let showStudentList = window.location.href;
+                        sessionStorage.setItem("show_students", showStudentList);                      
+
+                    </script>
                     <!-- form ends !-->
                 </div>
                 <?php include_once "includes/footer.php"; ?>
