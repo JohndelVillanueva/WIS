@@ -105,4 +105,6 @@
                 });
             });
         }
+
+        new DataTable('#studentInventory');
 </script>

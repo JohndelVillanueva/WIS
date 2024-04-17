@@ -32,22 +32,22 @@ if (!isset($_SESSION['username'])) {
                                                 <div class="dropdown">
                                                     <button class=" dropdown-btn btn btn-danger" onclick="drpFunction()"> Options </button>
                                                     <div id="dropdown-list" class="dropdown-content">
-                                                        <button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New Inventory</button>
-                                                        <button type="button" class="btn btn-danger">Release Inventory</button>
+                                                        <button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button>
+                                                        <button type="button" data-bs-toggle="modal" data-bs-target="#release" class="btn btn-danger">Release Inventory</button>
                                                         <button type="button" class="btn btn-danger">Reports</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <?php 
+                                    <?php
 
                                     $uniformtype = $_POST['uniformtype'];
                                     $displayAlltheInventoryQuery = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniformtype = :uniformtype");
                                     $displayAlltheInventoryQuery->execute([":uniformtype" => $uniformtype]);
                                     $display = $displayAlltheInventoryQuery->fetch(PDO::FETCH_OBJ);
-                                    
-                                    if($uniformtype == 1 ){
+
+                                    if ($uniformtype == 1) {
 
                                         $updateQuery = $DB_con->prepare("UPDATE uniform_inventory SET `qty` = ? WHERE id = ?");
                                         $updateQuery->execute([
@@ -55,7 +55,6 @@ if (!isset($_SESSION['username'])) {
                                             $_POST['Sqty'],
                                             $_POST['id']
                                         ]);
-                                        
                                     }
                                     // $insertUniformQuery = $DB_con->prepare("INSERT INTO uniform_inventory (uniformtype,size,qty,date,user) VALUES (?,?,?,?,?)");
                                     // $insertUniformQuery->execute([
@@ -108,7 +107,7 @@ if (!isset($_SESSION['username'])) {
                                                             </thead>
                                                             <tbody>
                                                                 <tr>
-                                                                    <th name="" >XS</th>
+                                                                    <th name="">XS</th>
                                                                     <th><input type="number" placeholder="Quantity for Male" value="0" name="XSqty" required="required"></th>
                                                                     <th><input type="number" placeholder="Quantity for Female" value="0" name="xsqty" required="required"></th>
                                                                 </tr>
@@ -147,12 +146,130 @@ if (!isset($_SESSION['username'])) {
                                             </div>
                                         </div>
                                     </div>
+                                </div>  
+
+                                    <!-- Release Inventory -->
+                                    <div class="modal fade" tabindex="-1" id="release" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="modal1">
+                                        <div class="modal-dialog modal-xl ">
+                                            <div class="modal-content ">
+                                                <form action="inventory.php">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Students List</h5>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="col-row-1 p-2">
+                                                            <table class="table table-bordered table-hover w-100" id="studentInventory">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>First Name</th>
+                                                                        <th>Last Name</th>
+                                                                        <th>Grade Level</th>
+                                                                        <th>Actions</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr class="align-middle">
+                                                                        <td class="">Johndel</td>
+                                                                        <td>Villanueva</dh>
+                                                                        <td>999</td>
+                                                                        <td><button type="button" class="btn btn-danger" data-bs-target="record" data-bs-toggle="modal"> Release</button></td>
+                                                                    </tr>
+                                                                    <tr class="align-middle">
+                                                                        <td class="">Jerald</td>
+                                                                        <td>Balilu</dh>
+                                                                        <td>999</td>
+                                                                        <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                    </tr>
+                                                                    <tr class="align-middle">
+                                                                        <td class="">Rose Ann</td>
+                                                                        <td>Vino</dh>
+                                                                        <td>999</td>
+                                                                        <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                    </tr>
+                                                                    <tr class="align-middle">
+                                                                        <td class="">Myren Josh</td>
+                                                                        <td>Tiqui</dh>
+                                                                        <td>999</td>
+                                                                        <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                    </tr>
+                                                                    <tr class="align-middle">
+                                                                        <td class="">Johndel</td>
+                                                                        <td>Villanueva</dh>
+                                                                        <td>999</td>
+                                                                        <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                    </tr>
+                                                                    <tr class="align-middle">
+                                                                        <td class="">Johndel</td>
+                                                                        <td>Villanueva</dh>
+                                                                        <td>999</td>
+                                                                        <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                    </tr>
+                                                                    <tr class="align-middle">
+                                                                        <td class="">Johndel</td>
+                                                                        <td>Villanueva</dh>
+                                                                        <td>999</td>
+                                                                        <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                    </tr>
+                                                                    <tr class="align-middle">
+                                                                        <td class="">Johndel</td>
+                                                                        <td>Villanueva</dh>
+                                                                        <td>999</td>
+                                                                        <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                    </tr>
+                                                                    <tr class="align-middle">
+                                                                        <td class="">Johndel</td>
+                                                                        <td>Villanueva</dh>
+                                                                        <td>999</td>
+                                                                        <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                    </tr>
+                                                                    <tr class="align-middle">
+                                                                        <td class="">Johndel</td>
+                                                                        <td>Villanueva</dh>
+                                                                        <td>999</td>
+                                                                        <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                    </tr>
+                                                                    <tr class="align-middle">
+                                                                        <td class="">Johndel</td>
+                                                                        <td>Villanueva</dh>
+                                                                        <td>999</td>
+                                                                        <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                    </tr>
+                                                                    <tr class="align-middle">
+                                                                        <td class="">Johndel</td>
+                                                                        <td>Villanueva</dh>
+                                                                        <td>999</td>
+                                                                        <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                    </tr>
+                                                                    <tr class="align-middle">
+                                                                        <td class="">Johndel</td>
+                                                                        <td>Villanueva</dh>
+                                                                        <td>999</td>
+                                                                        <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                    </tr>
+                                                                    <tr class="align-middle">
+                                                                        <td class="">Johndel</td>
+                                                                        <td>Villanueva</dh>
+                                                                        <td>999</td>
+                                                                        <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-success">Save changes</button>
+                                                        <button type="reset" class="btn btn-danger" data-bs-dismiss="modal" id="reset">Cancel</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                            </div>
 
                                     <br>
                                     <div class="container col-lg-12">
                                         <div class="row">
-                                            <div class="col-lg-4">
+                                            <div class="col-lg-5">
                                                 <div class="card bg-primary p-4">
                                                     <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-bank"></i></span> Regular Uniform</h3>
                                                     <table class="table table-hover table-light">
@@ -162,6 +279,7 @@ if (!isset($_SESSION['username'])) {
                                                                 <th>Last Inventory</th>
                                                                 <th>Date</th>
                                                                 <th>User</th>
+                                                                <th>Actions</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody class="text-center">
@@ -178,6 +296,7 @@ if (!isset($_SESSION['username'])) {
                                                                         <td><?php echo $reg["qty"] ?></td>
                                                                         <td><?php echo $reg["date"] ?></td>
                                                                         <td><?php echo $reg["user"] ?></td>
+                                                                        <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
                                                                     </tr>
                                                                 <?php
                                                                 }
@@ -197,7 +316,7 @@ if (!isset($_SESSION['username'])) {
                                                     </table>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4">
+                                            <div class="col-lg-5">
                                                 <div class="card bg-info p-4">
                                                     <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-dribbble"></i></span> PE Uniform</h3>
                                                     <table class="table table-hover table-light">
@@ -207,6 +326,7 @@ if (!isset($_SESSION['username'])) {
                                                                 <th>Last Inventory</th>
                                                                 <th>Date</th>
                                                                 <th>User</th>
+                                                                <th>Actions</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody class="text-center">
@@ -223,6 +343,7 @@ if (!isset($_SESSION['username'])) {
                                                                         <td><?php echo $reg["qty"] ?></td>
                                                                         <td><?php echo $reg["date"] ?></td>
                                                                         <td><?php echo $reg["user"] ?></td>
+                                                                        <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
                                                                     </tr>
                                                                 <?php
                                                                 }
@@ -242,7 +363,7 @@ if (!isset($_SESSION['username'])) {
                                                     </table>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4">
+                                            <div class="col-lg-5">
                                                 <div class="card bg-secondary p-4">
                                                     <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-alert"></i></span> Activity Uniform</h3>
                                                     <table class="table table-hover table-light">
@@ -252,6 +373,8 @@ if (!isset($_SESSION['username'])) {
                                                                 <th>Last Inventory</th>
                                                                 <th>Date</th>
                                                                 <th>User</th>
+                                                                <th>Actions</th>
+
                                                             </tr>
                                                         </thead>
                                                         <tbody class="text-center">
@@ -268,6 +391,7 @@ if (!isset($_SESSION['username'])) {
                                                                         <td><?php echo $reg["qty"] ?></td>
                                                                         <td><?php echo $reg["date"] ?></td>
                                                                         <td><?php echo $reg["user"] ?></td>
+                                                                        <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
                                                                     </tr>
                                                                 <?php
                                                                 }
@@ -291,7 +415,7 @@ if (!isset($_SESSION['username'])) {
                                     </div><br><br>
                                     <div class="container col-lg-12">
                                         <div class="row">
-                                            <div class="col-lg-4">
+                                            <div class="col-lg-5">
                                                 <div class="card bg-primary p-4">
                                                     <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-bank"></i></span> Regular Uniform</h3>
                                                     <table class="table table-hover table-light">
@@ -301,6 +425,7 @@ if (!isset($_SESSION['username'])) {
                                                                 <th>Last Inventory</th>
                                                                 <th>Date</th>
                                                                 <th>User</th>
+                                                                <th>Actions</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody class="text-center">
@@ -317,6 +442,7 @@ if (!isset($_SESSION['username'])) {
                                                                         <td><?php echo $reg["qty"] ?></td>
                                                                         <td><?php echo $reg["date"] ?></td>
                                                                         <td><?php echo $reg["user"] ?></td>
+                                                                        <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
                                                                     </tr>
                                                                 <?php
                                                                 }
@@ -336,7 +462,7 @@ if (!isset($_SESSION['username'])) {
                                                     </table>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4">
+                                            <div class="col-lg-5">
                                                 <div class="card bg-info p-4">
                                                     <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-dribbble"></i></span> PE Uniform</h3>
                                                     <table class="table table-hover table-light">
@@ -346,6 +472,7 @@ if (!isset($_SESSION['username'])) {
                                                                 <th>Last Inventory</th>
                                                                 <th>Date</th>
                                                                 <th>User</th>
+                                                                <th>Actions</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody class="text-center">
@@ -362,6 +489,7 @@ if (!isset($_SESSION['username'])) {
                                                                         <td><?php echo $reg["qty"] ?></td>
                                                                         <td><?php echo $reg["date"] ?></td>
                                                                         <td><?php echo $reg["user"] ?></td>
+                                                                        <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
                                                                     </tr>
                                                                 <?php
                                                                 }
@@ -381,7 +509,7 @@ if (!isset($_SESSION['username'])) {
                                                     </table>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4">
+                                            <div class="col-lg-5">
                                                 <div class="card bg-secondary p-4">
                                                     <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-alert"></i></span> Activity Uniform</h3>
                                                     <table class="table table-hover table-light">
@@ -391,6 +519,7 @@ if (!isset($_SESSION['username'])) {
                                                                 <th>Last Inventory</th>
                                                                 <th>Date</th>
                                                                 <th>User</th>
+                                                                <th>Actions</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody class="text-center">
@@ -407,6 +536,7 @@ if (!isset($_SESSION['username'])) {
                                                                         <td><?php echo $reg["qty"] ?></td>
                                                                         <td><?php echo $reg["date"] ?></td>
                                                                         <td><?php echo $reg["user"] ?></td>
+                                                                        <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
                                                                     </tr>
                                                                 <?php
                                                                 }
@@ -426,7 +556,7 @@ if (!isset($_SESSION['username'])) {
                                                     </table>
                                                 </div>
                                             </div>
-                                        </div> 
+                                        </div>
                                     </div>
                                     <!-- end -->
                                 </div>
