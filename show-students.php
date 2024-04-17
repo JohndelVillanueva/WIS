@@ -49,21 +49,30 @@ foreach ($result as $row) {
                                         }
                                     }
                                     ?>
+                                    <?php 
+                                    $selectQuery = $DB_con->prepare("SELECT * FROM s_scores WHERE flag = 1 AND subjcode = :subjcode LIMIT 1");
+                                    $selectQuery->execute([
+                                        ":subjcode" => $_GET['code']
+                                    ]);
+                                    $checking = $selectQuery->fetch(PDO::FETCH_OBJ);
+                                    ?>
+
+                                    <a id="unlockBtn" class="btn btn-primary btn-tone btn-rounded" href="#" onclick="handleButtonClick()"><i class="anticon anticon-lock"></i> <?php echo ($checking && $checking->flag == 1) ? 'Request Unlock' : 'Registrar Verification'; ?></a>
+
+                                    <script>
+                                    function handleButtonClick() {
+                                        var unlockBtn = document.getElementById('unlockBtn');
+                                        if (unlockBtn.innerText.trim() === 'Registrar Verification') {
+                                            confirmAction();
+                                        } else {
+                                            confirmAction2();
+                                        }
+                                    }
+                                    </script>
+
+
                                     <div class="float-right">
                                         <a class="btn btn-primary btn-tone btn-rounded" href="add-activity.php?code=<?php echo $_GET["code"] ?>&section=<?php echo $_GET["section"]?>&qtr=<?=$_GET['qtr']; ?>"><i class="anticon anticon-diff"></i> Add Activity</a>
-                                        <?php
-                                        if (isset($_GET["lock"])) {
-                                            if ($_GET["lock"] == 1) {
-                                        ?>
-                                                <a class="btn btn-primary btn-tone btn-rounded" href="#" onclick="confirmAction2()"><i class="anticon anticon-lock"></i> Request Unlock</a>
-                                            <?php
-                                            }
-                                        } else {
-                                            ?>
-                                            <a class="btn btn-primary btn-tone btn-rounded" href="#" onclick="confirmAction()"><i class="anticon anticon-lock"></i> Registrar Verification</a>
-                                        <?php
-                                        }
-                                        ?>
                                         <script>
                                             const confirmAction = () => {
                                                 const response = confirm("Are you sure you want submit this to the registrar?");

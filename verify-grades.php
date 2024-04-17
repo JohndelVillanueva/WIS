@@ -42,17 +42,19 @@ if (!isset($_SESSION['username'])) {
                                             $update->execute(array(":username" => $studrow["username"]));
                                         }
                                     }
-                                    $insertQueryForVerification = $DB_con->prepare("INSERT INTO s_verifications (user_id,section,grade,flag,created_at) VALUES (:user_id,:section,:grade,:flag,:created_at)");
+                                    $insertQueryForVerification = $DB_con->prepare("INSERT INTO s_verifications (user_id,section,grade,flag,created_at,subject,request_unlock) VALUES (:user_id,:section,:grade,:flag,:created_at,:subject,:request_unlock)");
                                     $insertQueryForVerification->execute([
                                         ":user_id" => $_SESSION['fname'] . " " . $_SESSION['lname'],
                                         ":section" => $_GET['section'],
                                         ":grade" => $_GET['grade'],
                                         ":flag" => 1,
-                                        ":created_at" => date('Y-m-d H:i:s')
+                                        ":created_at" => date('Y-m-d H:i:s'),
+                                        ":subject" => $_GET['subjdesc'],
+                                        ":request_unlock" => 1
                                     ])
                                     ?>
                                     <script>
-                                        window.location.replace("show-students.php?code=<?php echo $_GET["code"]; ?>&section=<?php echo $_GET["section"]; ?>&subjdesc=<?php echo $_GET["subjdesc"]; ?>&qtr=<?php echo $_GET["qtr"]; ?>&grade=<?php echo $_GET["grade"]; ?>&lock=1");
+                                        window.location.replace("show-students.php?code=<?php echo $_GET["code"]; ?>&section=<?php echo $_GET["section"]; ?>&subjdesc=<?php echo $_GET["subjdesc"]; ?>&qtr=<?php echo $_GET["qtr"]; ?>&grade=<?php echo $_GET["grade"]; ?>&flag=1");
                                     </script>
                                 </div>
                             </div>
