@@ -77,7 +77,7 @@ if (!isset($_SESSION['username'])) {
                                                                     foreach ($section as $sec) {
                                                                     ?>
                                                                         <p><?= $sec['section'] ?></p>
-                                                                        <div class="dropdown show">
+                                                                        <div class="dropdown show pb-2">
                                                                             <a class="btn btn-secondary btn-block dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                                 Quarterly Grades
                                                                             </a>
@@ -97,7 +97,6 @@ if (!isset($_SESSION['username'])) {
                                                                                 </a>
                                                                             </div>
                                                                         </div>
-                                                                        <br>
                                                                         <div class="dropdown show">
                                                                             <a class="btn btn-success btn-block dropdown-toggle" href="#" role="button" id="coreValues" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                                 Core Values
