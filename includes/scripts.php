@@ -45,7 +45,7 @@
 
         // dropdown-toggle
         function drpFunction() {
-            document.getElementById("dropdown-list").classList.toggle("show");
+            document.getElementById("dropdown-list").classList.toggle("showdrpdwn");
         }
         // dropdown-function
         window.onclick = function(event) {
