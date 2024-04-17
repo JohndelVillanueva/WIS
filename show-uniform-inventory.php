@@ -69,7 +69,7 @@ if (!isset($_SESSION['username'])) {
 
                                     <!-- Add New Modal -->
                                     <div class="modal fade" tabindex="-1" id="add" data-bs-backdrop="static" data-bs-keyboard="false">
-                                        <div class="modal-dialog modal-lg ">
+                                        <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content ">
                                                 <form action="" method="post">
                                                     <div class="modal-header">
@@ -80,15 +80,14 @@ if (!isset($_SESSION['username'])) {
                                                             <thead>
                                                                 <tr>
                                                                     <th>Size</th>
-                                                                    <th>Quantity for Male Uniform</th>
-                                                                    <th>Quantity for Female Uniform</th>
+                                                                    <th>Quantity</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 <tr>
-                                                                    <th name="">XS</th>
-                                                                    <th><input type="number" placeholder="Quantity for Male" value="0" name="XSqty" required="required"></th>
-                                                                    <th><input type="number" placeholder="Quantity for Female" value="0" name="xsqty" required="required"></th>
+                                                                    <th name="">XS</th> <!-- Change to Fetching database size !-->
+                                                                    <th><input type="number" placeholder="Quantity" value="0" name="XSqty" required="required"></th>
+                                                                    <!-- <th><input type="number" placeholder="Quantity for Female" value="0" name="sqty" required="required"></th>
                                                                 </tr>
                                                                 <tr>
                                                                     <th>SMALL</th>
@@ -114,7 +113,7 @@ if (!isset($_SESSION['username'])) {
                                                                     <th>XXL</th>
                                                                     <th><input type="number" placeholder="Quantity for Male" value="0" required="required"></th>
                                                                     <th><input type="number" placeholder="Quantity for Female" value="0" required="required"></th>
-                                                                </tr>
+                                                                </tr> -->
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -238,6 +237,7 @@ if (!isset($_SESSION['username'])) {
                                                 <div class="modal-footer">
                                                     <button type="submit" class="btn btn-success">Save changes</button>
                                                     <button type="reset" class="btn btn-danger" data-bs-dismiss="modal" id="reset">Cancel</button>
+                                                </div>
                                             </form>
                                         </div>
                                     </div>
@@ -247,9 +247,11 @@ if (!isset($_SESSION['username'])) {
 
                         <br>
                         <div class="container col-12">
-                            <div class="row">
+                            <div class="row bg-warning">
                                 <div class="col-12">
+                                <h3 class="male ps-2 py-3">Male</h3>
                                     <div class="card bg-primary p-4">
+                                        
                                         <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-bank"></i></span> Regular Uniform</h3>
                                         <table class="table table-hover table-light">
                                             <thead class="text-center">
@@ -393,8 +395,9 @@ if (!isset($_SESSION['username'])) {
                             </div>
                         </div><br><br>
                         <div class="container col-12">
-                            <div class="row">
+                            <div class="row bg-warning">
                                 <div class="col-12">
+                                <h3 class="fem ps-2 py-3">Female</h3>
                                     <div class="card bg-primary p-4">
                                         <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-bank"></i></span> Regular Uniform</h3>
                                         <table class="table table-hover table-light">

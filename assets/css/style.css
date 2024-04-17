@@ -526,3 +526,30 @@ button:nth-of-type(3)::before {
 input {
     text-align: center;
 }
+
+/* Uniform Text */
+div h3.male::before{
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font: var(--fa-font-solid);
+    content: "\f222";
+    padding-right: 8px;
+}
+
+div h3.fem::before{
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font: var(--fa-font-solid);
+    content: "\f221";
+    padding-right: 8px;
+}
+
+div h3.male{
+    margin-left: 9px;
+}
+
+div h3.fem{
+    margin-left: 9px;
+}
