@@ -126,6 +126,18 @@
                 </li>
             <?php
             }
+            if ($_SESSION['level'] == 4 or $_SESSION['level'] == 9) {
+                ?>
+                    <li class="nav-item dropdown">
+                        <a class="dropdown-toggle" href="student_verification.php">
+                            <span class="icon-holder">
+                                <i class="anticon anticon-book"></i>
+                            </span>
+                            <span class="title">Grades</span>
+                        </a>
+                    </li>
+                <?php
+                }
             if ($_SESSION['level'] == 0) {
             ?>
                 <li class="nav-item dropdown">

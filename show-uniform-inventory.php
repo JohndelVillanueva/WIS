@@ -108,7 +108,7 @@ if (!isset($_SESSION['username'])) {
                                                             </thead>
                                                             <tbody>
                                                                 <tr>
-                                                                    <th>XS</th>
+                                                                    <th name="" >XS</th>
                                                                     <th><input type="number" placeholder="Quantity for Male" value="0" name="XSqty" required="required"></th>
                                                                     <th><input type="number" placeholder="Quantity for Female" value="0" name="xsqty" required="required"></th>
                                                                 </tr>

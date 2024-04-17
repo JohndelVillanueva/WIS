@@ -67,8 +67,9 @@ foreach ($result as $row) {
                                         <script>
                                             const confirmAction = () => {
                                                 const response = confirm("Are you sure you want submit this to the registrar?");
+                                                // grade=4&section=Curiosity&code=UGS0001&qtr=1&subjdesc=Arts
                                                 if (response) {
-                                                    window.location.replace("verify-grades.php?code=<?php echo $_GET["code"] ?>&section=<?php echo $_GET["section"]; ?>");
+                                                    window.location.replace("verify-grades.php?code=<?php echo $_GET["code"]; ?>&section=<?php echo $_GET["section"]; ?>&subjdesc=<?php echo $_GET["subjdesc"]; ?>&qtr=<?php echo $_GET["qtr"]; ?>&grade=<?php echo $_GET["grade"]; ?>");
                                                 }
                                             }
 
