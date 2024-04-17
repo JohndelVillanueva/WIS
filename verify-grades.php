@@ -54,8 +54,7 @@ if (!isset($_SESSION['username'])) {
                                     ])
                                     ?>
                                     <script>
-                                        window.location.replace("show-students.php?code=<?php echo $_GET["code"]; ?>&section=<?php echo $_GET["section"]; ?>&subjdesc=<?php echo $_GET["subjdesc"]; ?>&qtr=<?php echo $_GET["qtr"]; ?>&grade=<?php echo $_GET["grade"]; ?>&flag=1");
-                                        document.querySelector('#addact').style.display('none');
+                                        window.location.replace("show-students.php?code=<?php echo $_GET["code"]; ?>&section=<?php echo $_GET["section"]; ?>&subjdesc=<?php echo $_GET["subjdesc"]; ?>&qtr=<?php echo $_GET["qtr"]; ?>&grade=<?php echo $_GET["grade"]; ?>");
                                     </script>
                                 </div>
                             </div>

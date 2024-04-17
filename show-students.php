@@ -34,8 +34,8 @@ foreach ($result as $row) {
                                 </div>
                                 <div class="card-body">
                                     <?php
-                                    if (isset($_GET["lock"])) {
-                                        if ($_GET["lock"] == 1) {
+                                    if (isset($_GET["flag"])) {
+                                        if ($_GET["flag"] == 1) {
                                     ?>
                                             <div class="alert alert-info" id="nagscreen">
                                                 <h3 class="text-center pt-2">Successfully submitted to Registrar for Verification.</h3>
@@ -50,9 +50,14 @@ foreach ($result as $row) {
                                     }
                                     ?>
                                     <?php
-                                    $selectQuery = $DB_con->prepare("SELECT * FROM s_scores WHERE flag = 1 AND subjcode = :subjcode LIMIT 1");
+                                    $selectQuery = $DB_con->prepare("SELECT * FROM s_scores 
+                                    LEFT JOIN s_activities ON s_scores.subjcode = s_activities.subjcode
+                                    LEFT JOIN s_subjects ON s_scores.subjcode = s_subjects.code
+                                    WHERE s_scores.flag = 1 AND s_scores.subjcode = :subjcode AND s_activities.actsection = :section AND s_subjects.subjdesc = :subjdesc LIMIT 1");
                                     $selectQuery->execute([
-                                        ":subjcode" => $_GET['code']
+                                        ":subjcode" => $_GET['code'],
+                                        ":section" => $_GET['section'],
+                                        ":subjdesc" => $row['subjdesc']
                                     ]);
                                     $checking = $selectQuery->fetch(PDO::FETCH_OBJ);
                                     ?>
@@ -62,6 +67,19 @@ foreach ($result as $row) {
 
                                     <div class="float-right">
                                     <a class="btn btn-primary btn-tone btn-rounded" id="addact" href="add-activity.php?code=<?php echo $_GET["code"] ?>&section=<?php echo $_GET["section"] ?>&qtr=<?= $_GET['qtr']; ?>"><i class="anticon anticon-diff"></i> Add Activity</a>
+                                    <?php
+                                        if (isset($checking->flag)) {
+                                            if ($checking->flag == 1) {
+                                        ?>
+                                                <a class="btn btn-primary btn-tone btn-rounded" href="#" onclick="confirmAction2()"><i class="anticon anticon-lock"></i> Request Unlock</a>
+                                            <?php
+                                            }
+                                        } else {
+                                            ?>
+                                            <a class="btn btn-primary btn-tone btn-rounded" href="#" onclick="confirmAction()"><i class="anticon anticon-lock"></i> Registrar Verification</a>
+                                        <?php
+                                        }
+                                        ?>
                                         <script>
                                             const confirmAction = () => {
                                                 const response = confirm("Are you sure you want submit this to the registrar?");
@@ -75,14 +93,14 @@ foreach ($result as $row) {
                                                 const response = confirm("Are you sure you want request unlock?");
                                                 if (response) {
                                                     window.location.replace("request-unlock.php?code=<?php echo $_GET["code"] ?>&section=<?php echo $_GET["section"]; ?>");
-                                                    document.querySelector('#add-activity').style.display = "none";
+                                                    document.querySelector('#addact').style.display = "none";
                                                 }
                                             }
                                         </script>
 
-                                        <a id="unlockBtn" class="btn btn-primary btn-tone btn-rounded" href="#" onclick="handleButtonClick()"><i class="anticon anticon-lock"></i> <?php echo ($checking && $checking->flag == 1) ? 'Request Unlock' : 'Registrar Verification'; ?></a>
+                                        <!-- <a id="unlockBtn" class="btn btn-primary btn-tone btn-rounded" href="#" onclick="handleButtonClick()"><i class="anticon anticon-lock"></i> <?php echo ($checking && $checking->flag == 1) ? 'Request Unlock' : 'Registrar Verification'; ?></a> -->
 
-                                        <script>
+                                        <!-- <script>
                                             function handleButtonClick() {
                                                 var unlockBtn = document.getElementById('unlockBtn');
                                                 if (unlockBtn.innerText.trim() === 'Registrar Verification') {
@@ -91,7 +109,7 @@ foreach ($result as $row) {
                                                     confirmAction2();
                                                 }
                                             }
-                                        </script>
+                                        </script> -->
                                         
                                     </div>
                                     <br><br><br>
