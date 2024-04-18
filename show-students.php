@@ -53,11 +53,12 @@ foreach ($result as $row) {
                                     $selectQuery = $DB_con->prepare("SELECT * FROM s_scores 
                                     INNER JOIN s_activities ON s_scores.subjcode = s_activities.subjcode
                                     INNER JOIN s_subjects ON s_scores.subjcode = s_subjects.code
-                                    WHERE s_scores.flag = 1 AND s_scores.subjcode = :subjcode AND s_activities.actsection = :section AND s_subjects.subjdesc = :subjdesc LIMIT 1");
+                                    WHERE s_scores.flag = 1 AND s_scores.subjcode = :subjcode AND s_activities.actsection = :section AND s_subjects.subjdesc = :subjdesc AND s_scores.qtr = :qtr LIMIT 1");
                                     $selectQuery->execute([
                                         ":subjcode" => $_GET['code'],
                                         ":section" => $_GET['section'],
-                                        ":subjdesc" => $row['subjdesc']
+                                        ":subjdesc" => $row['subjdesc'],
+                                        ":qtr" => $_GET['qtr']
                                     ]);
                                     $checking = $selectQuery->fetch(PDO::FETCH_OBJ);
                                     ?>

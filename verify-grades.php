@@ -47,8 +47,8 @@ if (!isset($_SESSION['username'])) {
                                                 ":qtr" => $_GET['qtr']
                                             ]);
                                             
-                                            $update = $DB_con->prepare("UPDATE s_scores SET flag = 1 WHERE sid = :username AND subjcode = :subjcode");
-                                            $child = $update->execute(array(":username" => $studrow["username"], ":subjcode" => $_GET['code']));
+                                            $update = $DB_con->prepare("UPDATE s_scores SET flag = 1 WHERE sid = :username AND subjcode = :subjcode AND qtr = :qtr");
+                                            $child = $update->execute(array(":username" => $studrow["username"], ":subjcode" => $_GET['code'], ":qtr" => $_GET['qtr']));
                                     
                                             if (!$mother || !$child) {
                                                 // Log or handle query execution errors
