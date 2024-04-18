@@ -40,7 +40,7 @@ if (!isset($_SESSION['username'])) {
                                         
                                         foreach ($students as $studrow) {
                                             $motherTableQuery = $DB_con->prepare("UPDATE s_activities SET flag = 1 WHERE subjcode = :subjcode AND actsection = :section AND actlvl = :grade AND actqtr = :qtr ");
-                                            $result1 = $motherTableQuery->execute([
+                                            $mother = $motherTableQuery->execute([
                                                 ":subjcode" => $_GET['code'],
                                                 ":section" => $_GET['section'],
                                                 ":grade" => $subjrow["subjlevel"],
@@ -48,9 +48,9 @@ if (!isset($_SESSION['username'])) {
                                             ]);
                                             
                                             $update = $DB_con->prepare("UPDATE s_scores SET flag = 1 WHERE sid = :username AND subjcode = :subjcode");
-                                            $result2 = $update->execute(array(":username" => $studrow["username"], ":subjcode" => $_GET['code']));
+                                            $child = $update->execute(array(":username" => $studrow["username"], ":subjcode" => $_GET['code']));
                                     
-                                            if (!$result1 || !$result2) {
+                                            if (!$mother || !$child) {
                                                 // Log or handle query execution errors
                                                 echo "Error executing queries!";
                                                 exit;
@@ -59,21 +59,18 @@ if (!isset($_SESSION['username'])) {
                                         
                                         $insertQueryForVerification = $DB_con->prepare("INSERT INTO s_verifications (user_id,section,grade,flag,created_at,subject,request_unlock) VALUES (:user_id,:section,:grade,:flag,:created_at,:subject,:request_unlock)");
                                         $insertQueryForVerification->execute([
-                                        ":user_id" => $_SESSION['fname'] . " " . $_SESSION['lname'],
-                                        ":section" => $_GET['section'],
-                                        ":grade" => $_GET['grade'],
-                                        ":flag" => 1,
-                                        ":created_at" => date('Y-m-d H:i:s'),
-                                        ":subject" => $_GET['subjdesc'],
-                                        ":request_unlock" => 1
-                                    ]);
+                                            ":user_id" => $_SESSION['fname'] . " " . $_SESSION['lname'],
+                                            ":section" => $_GET['section'],
+                                            ":grade" => $_GET['grade'],
+                                            ":flag" => 1,
+                                            ":created_at" => date('Y-m-d H:i:s'),
+                                            ":subject" => $_GET['subjdesc'],
+                                            ":request_unlock" => 1
+                                        ]);
                                     
-                                        // Debugging: Displaying query results
                                         // var_dump(["motherTable" => $motherTableQuery, "child" => $update]);
                                         // die();
                                     }
-                                    
-                                    // The rest of your code...
                                     
                                     ?>
                                     <script>
