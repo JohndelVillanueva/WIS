@@ -51,8 +51,8 @@ foreach ($result as $row) {
                                     ?>
                                     <?php
                                     $selectQuery = $DB_con->prepare("SELECT * FROM s_scores 
-                                    LEFT JOIN s_activities ON s_scores.subjcode = s_activities.subjcode
-                                    LEFT JOIN s_subjects ON s_scores.subjcode = s_subjects.code
+                                    INNER JOIN s_activities ON s_scores.subjcode = s_activities.subjcode
+                                    INNER JOIN s_subjects ON s_scores.subjcode = s_subjects.code
                                     WHERE s_scores.flag = 1 AND s_scores.subjcode = :subjcode AND s_activities.actsection = :section AND s_subjects.subjdesc = :subjdesc LIMIT 1");
                                     $selectQuery->execute([
                                         ":subjcode" => $_GET['code'],
@@ -62,20 +62,16 @@ foreach ($result as $row) {
                                     $checking = $selectQuery->fetch(PDO::FETCH_OBJ);
                                     ?>
 
-
-
-
                                     <div class="float-right">
-                                    <a class="btn btn-primary btn-tone btn-rounded" id="addact" href="add-activity.php?code=<?php echo $_GET["code"] ?>&section=<?php echo $_GET["section"] ?>&qtr=<?= $_GET['qtr']; ?>"><i class="anticon anticon-diff"></i> Add Activity</a>
                                     <?php
-                                        if (isset($checking->flag)) {
-                                            if ($checking->flag == 1) {
+                                        if (isset($checking->flag) && $checking->flag == 1) {
+
                                         ?>
                                                 <a class="btn btn-primary btn-tone btn-rounded" href="#" onclick="confirmAction2()"><i class="anticon anticon-lock"></i> Request Unlock</a>
                                             <?php
-                                            }
                                         } else {
                                             ?>
+                                            <a class="btn btn-primary btn-tone btn-rounded" id="addact" href="add-activity.php?code=<?php echo $_GET["code"] ?>&section=<?php echo $_GET["section"] ?>&qtr=<?= $_GET['qtr']; ?>"><i class="anticon anticon-diff"></i> Add Activity</a>
                                             <a class="btn btn-primary btn-tone btn-rounded" href="#" onclick="confirmAction()"><i class="anticon anticon-lock"></i> Registrar Verification</a>
                                         <?php
                                         }
@@ -88,28 +84,14 @@ foreach ($result as $row) {
                                                     window.location.replace("verify-grades.php?code=<?php echo $_GET["code"]; ?>&section=<?php echo $_GET["section"]; ?>&subjdesc=<?php echo $_GET["subjdesc"]; ?>&qtr=<?php echo $_GET["qtr"]; ?>&grade=<?php echo $_GET["grade"]; ?>");
                                                 }
                                             }
-
                                             const confirmAction2 = () => {
                                                 const response = confirm("Are you sure you want request unlock?");
                                                 if (response) {
                                                     window.location.replace("request-unlock.php?code=<?php echo $_GET["code"] ?>&section=<?php echo $_GET["section"]; ?>");
-                                                    document.querySelector('#addact').style.display = "none";
                                                 }
                                             }
                                         </script>
 
-                                        <!-- <a id="unlockBtn" class="btn btn-primary btn-tone btn-rounded" href="#" onclick="handleButtonClick()"><i class="anticon anticon-lock"></i> <?php echo ($checking && $checking->flag == 1) ? 'Request Unlock' : 'Registrar Verification'; ?></a> -->
-
-                                        <!-- <script>
-                                            function handleButtonClick() {
-                                                var unlockBtn = document.getElementById('unlockBtn');
-                                                if (unlockBtn.innerText.trim() === 'Registrar Verification') {
-                                                    confirmAction();
-                                                } else {
-                                                    confirmAction2();
-                                                }
-                                            }
-                                        </script> -->
                                         
                                     </div>
                                     <br><br><br>

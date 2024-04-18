@@ -32,18 +32,33 @@ if (!isset($_SESSION['username'])) {
                                     $s_subjects = $DB_con->prepare("SELECT * FROM s_subjects WHERE code = :code");
                                     $s_subjects->execute(array(":code" => $_GET["code"]));
                                     $subject = $s_subjects->fetchAll();
-
+                                    
                                     foreach ($subject as $subjrow) {
                                         $s_students = $DB_con->prepare("SELECT * FROM user WHERE grade = :grade AND section = :section");
                                         $s_students->execute(array(":grade" => $subjrow["subjlevel"], ":section" => $_GET["section"]));
                                         $students = $s_students->fetchAll();
+                                        
                                         foreach ($students as $studrow) {
-                                            $update = $DB_con->prepare("UPDATE s_scores SET flag = 1 WHERE sid = :username");
-                                            $update->execute(array(":username" => $studrow["username"]));
+                                            $motherTableQuery = $DB_con->prepare("UPDATE s_activities SET flag = 1 WHERE subjcode = :subjcode AND actsection = :section AND actlvl = :grade AND actqtr = :qtr ");
+                                            $result1 = $motherTableQuery->execute([
+                                                ":subjcode" => $_GET['code'],
+                                                ":section" => $_GET['section'],
+                                                ":grade" => $subjrow["subjlevel"],
+                                                ":qtr" => $_GET['qtr']
+                                            ]);
+                                            
+                                            $update = $DB_con->prepare("UPDATE s_scores SET flag = 1 WHERE sid = :username AND subjcode = :subjcode");
+                                            $result2 = $update->execute(array(":username" => $studrow["username"], ":subjcode" => $_GET['code']));
+                                    
+                                            if (!$result1 || !$result2) {
+                                                // Log or handle query execution errors
+                                                echo "Error executing queries!";
+                                                exit;
+                                            }
                                         }
-                                    }
-                                    $insertQueryForVerification = $DB_con->prepare("INSERT INTO s_verifications (user_id,section,grade,flag,created_at,subject,request_unlock) VALUES (:user_id,:section,:grade,:flag,:created_at,:subject,:request_unlock)");
-                                    $insertQueryForVerification->execute([
+                                        
+                                        $insertQueryForVerification = $DB_con->prepare("INSERT INTO s_verifications (user_id,section,grade,flag,created_at,subject,request_unlock) VALUES (:user_id,:section,:grade,:flag,:created_at,:subject,:request_unlock)");
+                                        $insertQueryForVerification->execute([
                                         ":user_id" => $_SESSION['fname'] . " " . $_SESSION['lname'],
                                         ":section" => $_GET['section'],
                                         ":grade" => $_GET['grade'],
@@ -51,7 +66,15 @@ if (!isset($_SESSION['username'])) {
                                         ":created_at" => date('Y-m-d H:i:s'),
                                         ":subject" => $_GET['subjdesc'],
                                         ":request_unlock" => 1
-                                    ])
+                                    ]);
+                                    
+                                        // Debugging: Displaying query results
+                                        // var_dump(["motherTable" => $motherTableQuery, "child" => $update]);
+                                        // die();
+                                    }
+                                    
+                                    // The rest of your code...
+                                    
                                     ?>
                                     <script>
                                         window.location.replace("show-students.php?code=<?php echo $_GET["code"]; ?>&section=<?php echo $_GET["section"]; ?>&subjdesc=<?php echo $_GET["subjdesc"]; ?>&qtr=<?php echo $_GET["qtr"]; ?>&grade=<?php echo $_GET["grade"]; ?>");
