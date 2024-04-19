@@ -41,12 +41,12 @@ if (!isset($_SESSION['username'])) {
                                     </div>
                                     <?php
 
-                                    $uniformtype = $_POST['uniformtype'];
-                                    $displayAlltheInventoryQuery = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniformtype = :uniformtype");
-                                    $displayAlltheInventoryQuery->execute([":uniformtype" => $uniformtype]);
+                                    $uniform_type_id = $_POST['uniform_type_id'];
+                                    $displayAlltheInventoryQuery = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniform_type_id = :uniform_type_id");
+                                    $displayAlltheInventoryQuery->execute([":uniform_type_id" => $uniform_type_id]);
                                     $display = $displayAlltheInventoryQuery->fetch(PDO::FETCH_OBJ);
 
-                                    if ($uniformtype == 1) {
+                                    if ($uniform_type_id == 1) {
 
                                         $updateQuery = $DB_con->prepare("UPDATE uniform_inventory SET `qty` = ? WHERE id = ?");
                                         $updateQuery->execute([
@@ -55,13 +55,13 @@ if (!isset($_SESSION['username'])) {
                                             $_POST['id']
                                         ]);
                                     }
-                                    // $insertUniformQuery = $DB_con->prepare("INSERT INTO uniform_inventory (uniformtype,size,qty,date,user) VALUES (?,?,?,?,?)");
+                                    // $insertUniformQuery = $DB_con->prepare("INSERT INTO uniform_inventory (uniform_type_id,size,qty,date,user) VALUES (?,?,?,?,?)");
                                     // $insertUniformQuery->execute([
-                                    //     $uniformtype = $_POST['uniformtype'],
-                                    //     $uniformtype = $_POST['size'],
-                                    //     $uniformtype = $_POST['qty'],
+                                    //     $uniform_type_id = $_POST['uniform_type_id'],
+                                    //     $uniform_type_id = $_POST['size'],
+                                    //     $uniform_type_id = $_POST['qty'],
                                     //     date("Y/m/d"),
-                                    //     $uniformtype = $_SESSION['fname'] . " " . $_SESSION['lname']
+                                    //     $uniform_type_id = $_SESSION['fname'] . " " . $_SESSION['lname']
                                     // ])
 
 
@@ -268,8 +268,8 @@ if (!isset($_SESSION['username'])) {
                                                 </thead>
                                                 <tbody class="text-center">
                                                     <?php
-                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniformtype = :uniformtype AND gender = :gender");
-                                                    $getreginv->execute(array(":uniformtype" => "1", ":gender" => "F"));
+                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniform_type_id = :uniform_type_id AND gender = :gender");
+                                                    $getreginv->execute(array(":uniform_type_id" => "1", ":gender" => "F"));
                                                     $reguniform = $getreginv->fetchAll();
 
                                                     if ($getreginv->rowCount() != 0) {
@@ -313,8 +313,8 @@ if (!isset($_SESSION['username'])) {
                                                 </thead>
                                                 <tbody class="text-center">
                                                     <?php
-                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniformtype = :uniformtype AND gender = :gender");
-                                                    $getreginv->execute(array(":uniformtype" => "2", ":gender" => "F"));
+                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniform_type_id = :uniform_type_id AND gender = :gender");
+                                                    $getreginv->execute(array(":uniform_type_id" => "2", ":gender" => "F"));
                                                     $reguniform = $getreginv->fetchAll();
 
                                                     if ($getreginv->rowCount() != 0) {
@@ -363,8 +363,8 @@ if (!isset($_SESSION['username'])) {
                                                 </thead>
                                                 <tbody class="text-center">
                                                     <?php
-                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniformtype = :uniformtype AND gender = :gender");
-                                                    $getreginv->execute(array(":uniformtype" => "1", ":gender" => "F"));
+                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniform_type_id = :uniform_type_id AND gender = :gender");
+                                                    $getreginv->execute(array(":uniform_type_id" => "1", ":gender" => "F"));
                                                     $reguniform = $getreginv->fetchAll();
 
                                                     if ($getreginv->rowCount() != 0) {
@@ -408,8 +408,8 @@ if (!isset($_SESSION['username'])) {
                                                 </thead>
                                                 <tbody class="text-center">
                                                     <?php
-                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniformtype = :uniformtype AND gender = :gender");
-                                                    $getreginv->execute(array(":uniformtype" => "2", ":gender" => "F"));
+                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniform_type_id = :uniform_type_id AND gender = :gender");
+                                                    $getreginv->execute(array(":uniform_type_id" => "2", ":gender" => "F"));
                                                     $reguniform = $getreginv->fetchAll();
 
                                                     if ($getreginv->rowCount() != 0) {
@@ -458,8 +458,8 @@ if (!isset($_SESSION['username'])) {
                                                 </thead>
                                                 <tbody class="text-center">
                                                     <?php
-                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniformtype = :uniformtype AND gender = :gender");
-                                                    $getreginv->execute(array(":uniformtype" => "1", ":gender" => "F"));
+                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniform_type_id = :uniform_type_id AND gender = :gender");
+                                                    $getreginv->execute(array(":uniform_type_id" => "1", ":gender" => "F"));
                                                     $reguniform = $getreginv->fetchAll();
 
                                                     if ($getreginv->rowCount() != 0) {
@@ -503,8 +503,8 @@ if (!isset($_SESSION['username'])) {
                                                 </thead>
                                                 <tbody class="text-center">
                                                     <?php
-                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniformtype = :uniformtype AND gender = :gender");
-                                                    $getreginv->execute(array(":uniformtype" => "2", ":gender" => "F"));
+                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniform_type_id = :uniform_type_id AND gender = :gender");
+                                                    $getreginv->execute(array(":uniform_type_id" => "2", ":gender" => "F"));
                                                     $reguniform = $getreginv->fetchAll();
 
                                                     if ($getreginv->rowCount() != 0) {
@@ -561,8 +561,8 @@ if (!isset($_SESSION['username'])) {
                                                 </thead>
                                                 <tbody class="text-center">
                                                     <?php
-                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniformtype = :uniformtype AND gender = :gender");
-                                                    $getreginv->execute(array(":uniformtype" => "1", ":gender" => "F"));
+                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniform_type_id = :uniform_type_id AND gender = :gender");
+                                                    $getreginv->execute(array(":uniform_type_id" => "1", ":gender" => "F"));
                                                     $reguniform = $getreginv->fetchAll();
 
                                                     if ($getreginv->rowCount() != 0) {
@@ -606,8 +606,8 @@ if (!isset($_SESSION['username'])) {
                                                 </thead>
                                                 <tbody class="text-center">
                                                     <?php
-                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniformtype = :uniformtype AND gender = :gender");
-                                                    $getreginv->execute(array(":uniformtype" => "2", ":gender" => "F"));
+                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniform_type_id = :uniform_type_id AND gender = :gender");
+                                                    $getreginv->execute(array(":uniform_type_id" => "2", ":gender" => "F"));
                                                     $reguniform = $getreginv->fetchAll();
 
                                                     if ($getreginv->rowCount() != 0) {
@@ -656,8 +656,8 @@ if (!isset($_SESSION['username'])) {
                                                 </thead>
                                                 <tbody class="text-center">
                                                     <?php
-                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniformtype = :uniformtype AND gender = :gender");
-                                                    $getreginv->execute(array(":uniformtype" => "1", ":gender" => "F"));
+                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniform_type_id = :uniform_type_id AND gender = :gender");
+                                                    $getreginv->execute(array(":uniform_type_id" => "1", ":gender" => "F"));
                                                     $reguniform = $getreginv->fetchAll();
 
                                                     if ($getreginv->rowCount() != 0) {
@@ -701,8 +701,8 @@ if (!isset($_SESSION['username'])) {
                                                 </thead>
                                                 <tbody class="text-center">
                                                     <?php
-                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniformtype = :uniformtype AND gender = :gender");
-                                                    $getreginv->execute(array(":uniformtype" => "2", ":gender" => "F"));
+                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniform_type_id = :uniform_type_id AND gender = :gender");
+                                                    $getreginv->execute(array(":uniform_type_id" => "2", ":gender" => "F"));
                                                     $reguniform = $getreginv->fetchAll();
 
                                                     if ($getreginv->rowCount() != 0) {
@@ -751,8 +751,8 @@ if (!isset($_SESSION['username'])) {
                                                 </thead>
                                                 <tbody class="text-center">
                                                     <?php
-                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniformtype = :uniformtype AND gender = :gender");
-                                                    $getreginv->execute(array(":uniformtype" => "1", ":gender" => "F"));
+                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniform_type_id = :uniform_type_id AND gender = :gender");
+                                                    $getreginv->execute(array(":uniform_type_id" => "1", ":gender" => "F"));
                                                     $reguniform = $getreginv->fetchAll();
 
                                                     if ($getreginv->rowCount() != 0) {
@@ -796,8 +796,8 @@ if (!isset($_SESSION['username'])) {
                                                 </thead>
                                                 <tbody class="text-center">
                                                     <?php
-                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniformtype = :uniformtype AND gender = :gender");
-                                                    $getreginv->execute(array(":uniformtype" => "2", ":gender" => "F"));
+                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniform_type_id = :uniform_type_id AND gender = :gender");
+                                                    $getreginv->execute(array(":uniform_type_id" => "2", ":gender" => "F"));
                                                     $reguniform = $getreginv->fetchAll();
 
                                                     if ($getreginv->rowCount() != 0) {
