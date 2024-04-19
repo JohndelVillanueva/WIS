@@ -77,17 +77,11 @@ if (!isset($_SESSION['username'])) {
 
 
                                                     <?php
-
-
                                                     }
                                                     ?>
-
-
-
                                                 <?php
                                             }
                                                 ?>
-
                                                 </tbody>
                                             </table>
                                             <?php
@@ -104,8 +98,6 @@ if (!isset($_SESSION['username'])) {
                                             if ($getstudents->errorInfo()[0] != "00000") {
                                                 var_dump($getstudents->errorInfo());
                                             }
-
-
                                         ?>
                                             <table class="table table-hover ">
                                                 <thead>
@@ -136,17 +128,10 @@ if (!isset($_SESSION['username'])) {
                                                         <input type="hidden" name="sid[]" value="<?php echo $studrow["username"]; ?>">
                                                         <input type="hidden" name="maxscore[]" value="<?php echo $row["maxscore"]; ?>">
                                                         <input type="hidden" name="qtr[]" value="<?php echo $row["actqtr"]; ?>">
-
-
-
-
                                                     <?php
-
 
                                                     }
                                                     ?>
-
-
 
                                                 <?php
                                             }

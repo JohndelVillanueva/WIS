@@ -88,7 +88,7 @@ if (!isset($_SESSION['id'])) {
                                     // $studentScore = new DB();
                                     // $getScore = $studentScore->getScores($studentSubject->code, 1, $_SESSION['username']);
                                     $getWrittenWorkQuery = $DB_con->prepare("SELECT SUM(`score`) as totalScore, SUM(`maxscore`) as totalMaxscore FROM s_scores 
-                                        WHERE  subjcode = :subjcode AND qtr = :qtr AND sid = :sid AND acttype = :acttype");
+                                        WHERE  flag = 2 AND subjcode = :subjcode AND qtr = :qtr AND sid = :sid AND acttype = :acttype");
                                     $getWrittenWorkQuery->execute([":subjcode" => $studentSubject->code, ":qtr" => $_GET['qtr'], ":sid" => $_SESSION['username'], ":acttype" => 1]);
                                     $writtenGrades = $getWrittenWorkQuery->fetch(PDO::FETCH_OBJ);
                                     $wwScore = $writtenGrades->totalScore;
@@ -96,7 +96,7 @@ if (!isset($_SESSION['id'])) {
                                     // print_r(['wwscore' => $wwScore, 'wmaxscore' => $wwMaxscore]);
 
                                     $performanceTaskQuery = $DB_con->prepare("SELECT SUM(`score`) as ptTotalScore, SUM(`maxscore`) as ptTotalMaxscore FROM s_scores 
-                                        WHERE  subjcode = :subjcode AND qtr = :qtr AND sid = :sid AND acttype = :acttype");
+                                        WHERE  flag = 2 AND subjcode = :subjcode AND qtr = :qtr AND sid = :sid AND acttype = :acttype");
                                     $performanceTaskQuery->execute([":subjcode" => $studentSubject->code, ":qtr" => $_GET['qtr'], ":sid" => $_SESSION['username'], ":acttype" => 2]);
                                     $performanceTaskGrade = $performanceTaskQuery->fetch(PDO::FETCH_OBJ);
                                     $ptScore = $performanceTaskGrade->ptTotalScore;
@@ -104,7 +104,7 @@ if (!isset($_SESSION['id'])) {
                                     // print_r(['ptscore' => $ptScore, 'ptmaxscore' => $ptMaxscore]);
 
                                     $quarterlyQuery = $DB_con->prepare("SELECT SUM(`score`) as qtTotalScore, SUM(`maxscore`) as qtTotalMaxScore FROM s_scores 
-                                        WHERE  subjcode = :subjcode AND qtr = :qtr AND sid = :sid AND acttype = :acttype");
+                                        WHERE  flag = 2 AND subjcode = :subjcode AND qtr = :qtr AND sid = :sid AND acttype = :acttype");
                                     $quarterlyQuery->execute([":subjcode" => $studentSubject->code, ":qtr" => $_GET['qtr'], ":sid" => $_SESSION['username'], ":acttype" => 3]);
                                     $QuarterlyGrade = $quarterlyQuery->fetch(PDO::FETCH_OBJ);
                                     $qtScore = $QuarterlyGrade->qtTotalScore;

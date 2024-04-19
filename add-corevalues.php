@@ -41,9 +41,6 @@ if (!isset($_SESSION['username'])) {
                                             if ($getstudents->errorInfo()[0] != "00000") {
                                                 var_dump($getstudents->errorInfo());
                                             }
-
-
-
                                         ?>
                                             <table class="table table-hover ">
                                                 <thead>
