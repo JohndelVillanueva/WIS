@@ -159,15 +159,15 @@ if (!isset($_SESSION['id'])) {
                 <?php
 
                 $studentQuery = $DB_con->prepare("SELECT 
-independence,
-confidence,
-respect,
-empathy,
-appreciation,
-tolerance,
-enthusiasm,
-conduct
-FROM s_studentcv WHERE sid = :sid AND qtr = :qtr");
+                independence,
+                confidence,
+                respect,
+                empathy,
+                appreciation,
+                tolerance,
+                enthusiasm,
+                conduct
+                FROM s_studentcv WHERE sid = :sid AND qtr = :qtr");
                 $studentQuery->execute(array(":sid" => $_SESSION["username"], ":qtr" => $_GET["qtr"]));
                 $studentgrade = $studentQuery->fetch(PDO::FETCH_OBJ);
 

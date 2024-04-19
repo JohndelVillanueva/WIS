@@ -88,7 +88,7 @@ if (!isset($_SESSION['id'])) {
                                     // $studentScore = new DB();
                                     // $getScore = $studentScore->getScores($studentSubject->code, 1, $_SESSION['username']);
                                     $getWrittenWorkQuery = $DB_con->prepare("SELECT SUM(`score`) as totalScore, SUM(`maxscore`) as totalMaxscore FROM s_scores 
-                                        WHERE  subjcode = :subjcode AND qtr = :qtr AND sid = :sid AND acttype = :acttype");
+                                        WHERE  flag = 2 AND subjcode = :subjcode AND qtr = :qtr AND sid = :sid AND acttype = :acttype");
                                     $getWrittenWorkQuery->execute([":subjcode" => $studentSubject->code, ":qtr" => $_GET['qtr'], ":sid" => $_SESSION['username'], ":acttype" => 1]);
                                     $writtenGrades = $getWrittenWorkQuery->fetch(PDO::FETCH_OBJ);
                                     $wwScore = $writtenGrades->totalScore;
@@ -96,7 +96,7 @@ if (!isset($_SESSION['id'])) {
                                     // print_r(['wwscore' => $wwScore, 'wmaxscore' => $wwMaxscore]);
 
                                     $performanceTaskQuery = $DB_con->prepare("SELECT SUM(`score`) as ptTotalScore, SUM(`maxscore`) as ptTotalMaxscore FROM s_scores 
-                                        WHERE  subjcode = :subjcode AND qtr = :qtr AND sid = :sid AND acttype = :acttype");
+                                        WHERE  flag = 2 AND subjcode = :subjcode AND qtr = :qtr AND sid = :sid AND acttype = :acttype");
                                     $performanceTaskQuery->execute([":subjcode" => $studentSubject->code, ":qtr" => $_GET['qtr'], ":sid" => $_SESSION['username'], ":acttype" => 2]);
                                     $performanceTaskGrade = $performanceTaskQuery->fetch(PDO::FETCH_OBJ);
                                     $ptScore = $performanceTaskGrade->ptTotalScore;
@@ -104,7 +104,7 @@ if (!isset($_SESSION['id'])) {
                                     // print_r(['ptscore' => $ptScore, 'ptmaxscore' => $ptMaxscore]);
 
                                     $quarterlyQuery = $DB_con->prepare("SELECT SUM(`score`) as qtTotalScore, SUM(`maxscore`) as qtTotalMaxScore FROM s_scores 
-                                        WHERE  subjcode = :subjcode AND qtr = :qtr AND sid = :sid AND acttype = :acttype");
+                                        WHERE  flag = 2 AND subjcode = :subjcode AND qtr = :qtr AND sid = :sid AND acttype = :acttype");
                                     $quarterlyQuery->execute([":subjcode" => $studentSubject->code, ":qtr" => $_GET['qtr'], ":sid" => $_SESSION['username'], ":acttype" => 3]);
                                     $QuarterlyGrade = $quarterlyQuery->fetch(PDO::FETCH_OBJ);
                                     $qtScore = $QuarterlyGrade->qtTotalScore;
@@ -159,15 +159,15 @@ if (!isset($_SESSION['id'])) {
                 <?php
 
                 $studentQuery = $DB_con->prepare("SELECT 
-independence,
-confidence,
-respect,
-empathy,
-appreciation,
-tolerance,
-enthusiasm,
-conduct
-FROM s_studentcv WHERE sid = :sid AND qtr = :qtr");
+                independence,
+                confidence,
+                respect,
+                empathy,
+                appreciation,
+                tolerance,
+                enthusiasm,
+                conduct
+                FROM s_studentcv WHERE sid = :sid AND qtr = :qtr");
                 $studentQuery->execute(array(":sid" => $_SESSION["username"], ":qtr" => $_GET["qtr"]));
                 $studentgrade = $studentQuery->fetch(PDO::FETCH_OBJ);
 
@@ -261,28 +261,6 @@ FROM s_studentcv WHERE sid = :sid AND qtr = :qtr");
                     <tbody>
                         <tr>
                             <td></td>
-                            <td>Mark</td>
-                            <td>Mark</td>
-                            <td>Mark</td>
-
-
-                        </tr>
-                        <tr>
-                            <th>1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th>2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th>3</th>
-                            <td>Larry the Bird</td>
-                            <td>@twitter</td>
                         </tr>
                     </tbody>
                 </table>
