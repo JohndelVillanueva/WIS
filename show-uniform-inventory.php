@@ -10,8 +10,24 @@ if (!isset($_SESSION['username'])) {
 
 <?php include_once "includes/css.php"; ?>
 
-<form>
+<?php 
+    if(!empty($_POST['uniform_type_id']) && !empty($_POST['uniform_size_id']) && !empty($_POST['qty'])&& !empty( $_POST['gender'])){
 
+    $insertingToChildTable = $DB_con->prepare("INSERT INTO uniform_inventory (uniform_type_id,uniform_size_id,qty,gender,date,user) VALUES (:uniform_type_id,:uniform_size_id,:qty,:gender,:date,:user)");
+    $result = $insertingToChildTable->execute([
+        ":uniform_type_id" => $_POST['uniform_type_id'],
+        ":uniform_size_id" => $_POST['uniform_size_id'],
+        ":qty" => $_POST['qty'],
+        ":gender" => $_POST['gender'],
+        ":date" => date("Y-m-d H:i:s"),
+        ":user" => $_SESSION['fname'] . " " . $_SESSION['lname']
+    ]);
+    // var_dump($result);
+    // die();
+    }
+
+
+?>
     <div class="app is-folded">
         <div class="layout">
             <?php include_once "includes/heading.php"; ?>
@@ -42,20 +58,20 @@ if (!isset($_SESSION['username'])) {
                                     </div>
                                     <?php
 
-                                    $uniform_type_id = $_POST['uniform_type_id'];
-                                    $displayAlltheInventoryQuery = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniform_type_id = :uniform_type_id");
-                                    $displayAlltheInventoryQuery->execute([":uniform_type_id" => $uniform_type_id]);
-                                    $display = $displayAlltheInventoryQuery->fetch(PDO::FETCH_OBJ);
+                                    // $uniform_type_id = $_POST['uniform_type_id'];
+                                    // $displayAlltheInventoryQuery = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniform_type_id = :uniform_type_id");
+                                    // $displayAlltheInventoryQuery->execute([":uniform_type_id" => $uniform_type_id]);
+                                    // $display = $displayAlltheInventoryQuery->fetch(PDO::FETCH_OBJ);
 
-                                    if ($uniform_type_id == 1) {
+                                    // if ($uniform_type_id == 1) {
 
-                                        $updateQuery = $DB_con->prepare("UPDATE uniform_inventory SET `qty` = ? WHERE id = ?");
-                                        $updateQuery->execute([
-                                            $_POST['XSqty'],
-                                            $_POST['Sqty'],
-                                            $_POST['id']
-                                        ]);
-                                    }
+                                    //     $updateQuery = $DB_con->prepare("UPDATE uniform_inventory SET `qty` = ? WHERE id = ?");
+                                    //     $updateQuery->execute([
+                                    //         $_POST['XSqty'],
+                                    //         $_POST['Sqty'],
+                                    //         $_POST['id']
+                                    //     ]);
+                                    // }
                                     // $insertUniformQuery = $DB_con->prepare("INSERT INTO uniform_inventory (uniform_type_id,size,qty,date,user) VALUES (?,?,?,?,?)");
                                     // $insertUniformQuery->execute([
                                     //     $uniform_type_id = $_POST['uniform_type_id'],
@@ -89,26 +105,58 @@ if (!isset($_SESSION['username'])) {
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
+                                                                <?php 
+                                                                
+                                                                $getAllUniformTypeQuery = $DB_con->prepare("SELECT * FROM uniform_types");
+                                                                $getAllUniformTypeQuery->execute();
+                                                                $types = $getAllUniformTypeQuery->fetchAll(PDO::FETCH_OBJ);
+                                                                
+                                                                ?>
                                                                 <th>
-                                                                    <select class="custom-select" id="uniformoption">
+                                                                    <select class="custom-select" id="uniformoption" name="uniform_type_id" >
                                                                         <option selected>Choose Uniform</option>
-                                                                        <option value="1">QUERY MU</option>
+                                                                        <?php 
+                                                                        foreach($types as $type){
+
+                                                                        ?>
+                                                                        <option value="<?= $type->type ?>"><?= $type->type ?></option>
+                                                                        <?php 
+                                                                        }
+                                                                        ?>
                                                                     </select>
                                                                 </th>
                                                                 <th>
-                                                                    <input class="form-control form-control-md" type="number" require="required" placeholder="Input Number">
+                                                                    <input class="form-control form-control-md" type="number" require="required" name="qty" placeholder="Input Number" >
                                                                 </th>
                                                                 <th>
-                                                                    <select class="custom-select" id="genderoption">
+                                                                    <select class="custom-select" id="genderoption" name="gender" >
                                                                         <option selected>Gender</option>
-                                                                        <option value="1">QUERY MU</option>
+                                                                        <option value="Male">Male</option>
+                                                                        <option value="Female">Female</option>
                                                                     </select>
                                                                 </th>
+                                                                <?php 
+                                                                
+                                                                $getAllSizesQuery = $DB_con->prepare("SELECT * FROM uniform_sizes");
+                                                                $getAllSizesQuery->execute();
+                                                                $sizes = $getAllSizesQuery->fetchAll(PDO::FETCH_OBJ);
+
+                                                                
+                                                                ?>
                                                                 <th>
-                                                                    <select class="custom-select" id="sizeoption">
+                                                                    <select class="custom-select" id="sizeoption" name="uniform_size_id" >
                                                                         <option selected>Choose Uniform SIze</option>
-                                                                        <option value="1">QUERY MU</option>
+                                                                        <?php 
+                                                                        foreach($sizes as $size){
+                                                                        ?>
+                                                                            <option value="<?= $size->size ?>"><?= $size->size ?></option>
+                                                                            
+                                                                        <?php 
+                                                                        }
+                                                                        ?>
+                                                                        
                                                                     </select>
+                                                                    
                                                                 </th>
                                                             </tbody>
                                                         </table>
@@ -121,9 +169,6 @@ if (!isset($_SESSION['username'])) {
                                             </div>
                                         </div>
                                     </div>
-
-
-
 
                                     <!-- Update Modal -->
                                     <div class="modal fade" tabindex="-1" id="update" data-bs-backdrop="static" data-bs-keyboard="false">
