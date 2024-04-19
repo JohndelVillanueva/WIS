@@ -68,7 +68,7 @@ foreach ($result as $row) {
                                         if (isset($checking->flag) && $checking->flag == 1) {
 
                                         ?>
-                                                <a class="btn btn-primary btn-tone btn-rounded" href="#" onclick="confirmAction2()"><i class="anticon anticon-lock"></i> Request Unlock</a>
+                                            <a class="btn btn-primary btn-tone btn-rounded" href="#" onclick="confirmAction2()"><i class="anticon anticon-lock"></i> Request Unlock</a>
                                             <?php
                                         } else {
                                             ?>

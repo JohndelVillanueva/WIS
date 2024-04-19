@@ -553,3 +553,11 @@ div h3.male{
 div h3.fem{
     margin-left: 9px;
 }
+
+.bg-male{
+    background-color: #36a9e0;
+}
+
+.bg-female{
+    background-color: #e5007d;
+}   
