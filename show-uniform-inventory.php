@@ -113,8 +113,8 @@ if (!isset($_SESSION['username'])) {
                                                                 
                                                                 ?>
                                                                 <th>
-                                                                    <select class="custom-select" id="uniformoption" name="uniform_type_id" >
-                                                                        <option selected>Choose Uniform</option>
+                                                                    <select class="custom-select" id="uniformoption" name="uniform_type_id" required>
+                                                                        <option selected disabled hidden value="">Choose Uniform</option>
                                                                         <?php 
                                                                         foreach($types as $type){
 
@@ -129,8 +129,8 @@ if (!isset($_SESSION['username'])) {
                                                                     <input class="form-control form-control-md" type="number" require="required" name="qty" placeholder="Input Number" >
                                                                 </th>
                                                                 <th>
-                                                                    <select class="custom-select" id="genderoption" name="gender" >
-                                                                        <option selected>Gender</option>
+                                                                    <select class="custom-select" id="genderoption" name="gender" required>
+                                                                        <option selected disabled hidden value="">Gender</option>
                                                                         <option value="Male">Male</option>
                                                                         <option value="Female">Female</option>
                                                                     </select>
@@ -144,8 +144,8 @@ if (!isset($_SESSION['username'])) {
                                                                 
                                                                 ?>
                                                                 <th>
-                                                                    <select class="custom-select" id="sizeoption" name="uniform_size_id" >
-                                                                        <option selected>Choose Uniform SIze</option>
+                                                                    <select class="custom-select" id="sizeoption" name="uniform_size_id" required>
+                                                                        <option selected disabled hidden value="">Choose Uniform SIze</option>
                                                                         <?php 
                                                                         foreach($sizes as $size){
                                                                         ?>
