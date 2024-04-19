@@ -70,7 +70,7 @@ if (!isset($_SESSION['username'])) {
 
                                     <!-- Add New Modal-->
                                     <div class="modal fade" tabindex="-1" id="update" data-bs-backdrop="static" data-bs-keyboard="false">
-                                        <div class=" modal-dialog modal-lg">
+                                        <div class=" modal-dialog modal-xl">
                                             <div class="modal-content">
                                                 <form method="POST">
                                                     <div class="modal-header">
@@ -82,9 +82,10 @@ if (!isset($_SESSION['username'])) {
                                                         <table class="table text-center">
                                                             <thead>
                                                                 <tr>
-                                                                    <th><h3>Uniform Type:</h3></th>
+                                                                    <th><h3>Uniform Type</h3></th>
                                                                     <th><h3>Quantity</h3></th>
                                                                     <th><h3>Gender</h3></th>
+                                                                    <th><h3>Size</h3></th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -100,6 +101,12 @@ if (!isset($_SESSION['username'])) {
                                                                 <th>
                                                                     <select class="custom-select" id="genderoption">
                                                                         <option selected>Choose Uniform</option>
+                                                                        <option value="1">QUERY MU</option>
+                                                                    </select>
+                                                                </th>
+                                                                <th>
+                                                                    <select class="custom-select" id="genderoption">
+                                                                        <option selected>Choose Uniform SIze</option>
                                                                         <option value="1">QUERY MU</option>
                                                                     </select>
                                                                 </th>
