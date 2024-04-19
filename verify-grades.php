@@ -57,7 +57,7 @@ if (!isset($_SESSION['username'])) {
                                             }
                                         }
                                         
-                                        $insertQueryForVerification = $DB_con->prepare("INSERT INTO s_verifications (user_id,section,grade,flag,created_at,subject,request_unlock) VALUES (:user_id,:section,:grade,:flag,:created_at,:subject,:request_unlock)");
+                                        $insertQueryForVerification = $DB_con->prepare("INSERT INTO s_verifications (user_id,section,grade,flag,created_at,subject,request_unlock,subjcode) VALUES (:user_id,:section,:grade,:flag,:created_at,:subject,:request_unlock,:subjcode)");
                                         $insertQueryForVerification->execute([
                                             ":user_id" => $_SESSION['fname'] . " " . $_SESSION['lname'],
                                             ":section" => $_GET['section'],
@@ -65,7 +65,8 @@ if (!isset($_SESSION['username'])) {
                                             ":flag" => 1,
                                             ":created_at" => date('Y-m-d H:i:s'),
                                             ":subject" => $_GET['subjdesc'],
-                                            ":request_unlock" => 1
+                                            ":request_unlock" => 1,
+                                            ":subjcode" => $_GET['code']
                                         ]);
                                     
                                         // var_dump(["motherTable" => $motherTableQuery, "child" => $update]);

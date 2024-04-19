@@ -51,11 +51,7 @@ foreach ($result as $subjrow) {
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <select class="form-control" name="actqtr" required>
-                                                        <option value="0" selected disabled>Select Quarter</option>
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                        <option value="3">3</option>
-                                                        <option value="4">4</option>
+                                                        <option value="<?= $_GET['qtr'] ?>" selected >Quarter <?= $_GET['qtr'] ?></option>
                                                     </select>
                                                     <input type="hidden" name="section" value="<?php echo $_GET["section"]; ?>">
                                                     <input type="hidden" name="subjcode" value="<?php echo $_GET["code"]; ?>">

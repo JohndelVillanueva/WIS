@@ -66,7 +66,7 @@ if (!isset($_SESSION['username'])) {
                                                     <tr>
                                                         <td></td>
                                                         <td><?= $information->user_id ?></td>
-                                                        <td><?= $information->subject ?></td>
+                                                        <td><?= $information->subject . "<br>" . $information->subjcode ?></td>
                                                         <td><?= $information->grade ?></td>
                                                         <td><?= $information->section ?></td>
                                                         <td><a href="#" class="btn btn-primary">
