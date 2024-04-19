@@ -90,7 +90,7 @@ if (!isset($_SESSION['username'])) {
                                                             </thead>
                                                             <tbody>
                                                                 <th>
-                                                                    <select class="custom-select" id="uniformtype">
+                                                                    <select class="custom-select" id="uniformoption">
                                                                         <option selected>Choose Uniform</option>
                                                                         <option value="1">QUERY MU</option>
                                                                     </select>
@@ -105,7 +105,7 @@ if (!isset($_SESSION['username'])) {
                                                                     </select>
                                                                 </th>
                                                                 <th>
-                                                                    <select class="custom-select" id="genderoption">
+                                                                    <select class="custom-select" id="sizeoption">
                                                                         <option selected>Choose Uniform SIze</option>
                                                                         <option value="1">QUERY MU</option>
                                                                     </select>
