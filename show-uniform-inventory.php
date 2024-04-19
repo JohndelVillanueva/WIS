@@ -32,6 +32,7 @@ if (!isset($_SESSION['username'])) {
                                                 <div class="dropdown">
                                                     <button class=" dropdown-btn btn btn-danger" type="button" onclick="drpFunction()"> Options </button>
                                                     <div id="dropdown-list" class="dropdown-content">
+                                                        <button type="button" data-bs-toggle="modal" data-bs-target="#update" class="btn btn-danger"> Add New</button>
                                                         <button type="button" data-bs-toggle="modal" data-bs-target="#release" class="btn btn-danger">Release Inventory</button>
                                                         <button type="button" class="btn btn-danger">Reports</button>
                                                     </div>
@@ -67,8 +68,58 @@ if (!isset($_SESSION['username'])) {
 
                                     ?>
 
-                                    <!-- Add New Modal -->
-                                    <div class="modal fade" tabindex="-1" id="add" data-bs-backdrop="static" data-bs-keyboard="false">
+                                    <!-- Add New Modal-->
+                                    <div class="modal fade" tabindex="-1" id="update" data-bs-backdrop="static" data-bs-keyboard="false">
+                                        <div class=" modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <form method="POST">
+                                                    <div class="modal-header">
+                                                        <div class="modal-title">
+                                                            Add New Uniform
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <table class="table text-center">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th><h3>Uniform Type:</h3></th>
+                                                                    <th><h3>Quantity</h3></th>
+                                                                    <th><h3>Gender</h3></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <th>
+                                                                    <select class="custom-select" id="uniformtype">
+                                                                        <option selected>Choose Uniform</option>
+                                                                        <option value="1">QUERY MU</option>
+                                                                    </select>
+                                                                </th>
+                                                                <th>
+                                                                    <input class="form-control form-control-md" type="number" require="required" placeholder="Input Number">
+                                                                </th>
+                                                                <th>
+                                                                    <select class="custom-select" id="genderoption">
+                                                                        <option selected>Choose Uniform</option>
+                                                                        <option value="1">QUERY MU</option>
+                                                                    </select>
+                                                                </th>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-success">Save changes</button>
+                                                        <button type="reset" class="btn btn-danger" data-bs-dismiss="modal" id="reset">Cancel</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <!-- Update Modal -->
+                                    <div class="modal fade" tabindex="-1" id="update" data-bs-backdrop="static" data-bs-keyboard="false">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content ">
                                                 <form action="" method="post">
@@ -833,13 +884,13 @@ if (!isset($_SESSION['username'])) {
                             </div>
                         </div>
                     </div>
-                        <!-- form ends !-->
-                    </div>
-                    <?php include_once "includes/footer.php"; ?>
+                    <!-- form ends !-->
                 </div>
-                <?php include_once "includes/scripts.php"; ?>
+                <?php include_once "includes/footer.php"; ?>
             </div>
+            <?php include_once "includes/scripts.php"; ?>
         </div>
+    </div>
     </div>
 
     </body>
