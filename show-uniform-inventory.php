@@ -100,7 +100,7 @@ if (!isset($_SESSION['username'])) {
                                                                 </th>
                                                                 <th>
                                                                     <select class="custom-select" id="genderoption">
-                                                                        <option selected>Choose Uniform</option>
+                                                                        <option selected>Gender</option>
                                                                         <option value="1">QUERY MU</option>
                                                                     </select>
                                                                 </th>
