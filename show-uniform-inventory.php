@@ -24,6 +24,7 @@ if (!isset($_SESSION['username'])) {
     ]);
     // var_dump($result);
     // die();
+    header("location: show-uniform-inventory.php");
     }
 
 
@@ -133,6 +134,7 @@ if (!isset($_SESSION['username'])) {
                                                                         <option selected disabled hidden value="">Gender</option>
                                                                         <option value="Male">Male</option>
                                                                         <option value="Female">Female</option>
+                                                                        <option value="All">All</option>
                                                                     </select>
                                                                 </th>
                                                                 <?php 
@@ -350,595 +352,85 @@ if (!isset($_SESSION['username'])) {
 
                         <br>
                         <!-- Start of First Table Set-->
+                        <?php 
+                        $inventoryQuery = $DB_con->prepare("SELECT DISTINCT uniform_type_id FROM uniform_inventory");
+                        $inventoryQuery->execute();
+                        $uniformTypes = $inventoryQuery->fetchAll(PDO::FETCH_OBJ);
+
+                        ?>
                         <div class="card col-12">
                             <div class="row">
                                 <div class="col-12 rounded-bottom card-header bg-warning">
-                                    <h3 class="male pt-2">Highschool Uniform</h3>
+                                    <h3 class="male pt-2">Stock</h3>
                                 </div>
                                 <div class="card-body col-12 pb-0">
                                     <div class="row row-cols-2 col-12 m-auto justify-content-center">
-                                        <div class="card bg-male p-3 col-6">
-                                            <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-bank"></i></span> Longsleeve Uniform (Male)</h3>
-                                            <table class="table table-hover table-light">
-                                                <thead class="text-center">
-                                                    <tr class="table-light">
-                                                        <th>Size</th>
-                                                        <th>Last Inventory</th>
-                                                        <th>Date</th>
-                                                        <th>User</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="text-center">
-                                                    <?php
-                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniform_type_id = :uniform_type_id AND gender = :gender");
-                                                    $getreginv->execute(array(":uniform_type_id" => "1", ":gender" => "F"));
-                                                    $reguniform = $getreginv->fetchAll();
+                                        <?php 
+                                        
+                                        foreach($uniformTypes as $type){
 
-                                                    if ($getreginv->rowCount() != 0) {
-                                                        foreach ($reguniform as $reg) {
-                                                    ?>
+                                            ?>
+                                            <div class="card bg-male p-3 col-6">
+                                                <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-bank"></i></span><?= $type->uniform_type_id ?></h3>
+                                                <table class="table table-hover table-light">
+                                                    <thead class="text-center">
+                                                        <tr class="table-light">
+                                                            <th>Size</th>
+                                                            <th>Last Inventory</th>
+                                                            <th>Gender</th>
+                                                            <th>Date</th>
+                                                            <th>User</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="text-center">
+                                                        <?php
+                                                        $selectSpecificUniformType = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniform_type_id = :uniform_type_id");
+                                                        $selectSpecificUniformType->bindParam(':uniform_type_id', $type->uniform_type_id);
+                                                        $selectSpecificUniformType->execute();
+                                                        $uniformItems = $selectSpecificUniformType->fetchAll(PDO::FETCH_OBJ);
+
+                                                        if ($selectSpecificUniformType->rowCount() != 0) {
+                                                            foreach ($uniformItems as $item) {
+                                                                ?>
+                                                                <tr>
+                                                                    <td><?= $item->uniform_size_id ?></td>
+                                                                    <td><?= $item->qty ?></td>
+                                                                    <td><?= $item->gender ?></td>
+                                                                    <td><?= $item->date ?></td>
+                                                                    <td><?= $item->user ?></td>
+                                                                    <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
+                                                                </tr>
+                                                                <?php
+                                                            }
+                                                        } else {
+                                                            ?>
                                                             <tr>
-                                                                <td><?php echo $reg["size"] ?></td>
-                                                                <td><?php echo $reg["qty"] ?></td>
-                                                                <td><?php echo $reg["date"] ?></td>
-                                                                <td><?php echo $reg["user"] ?></td>
-                                                                <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
+                                                                <td colspan="6">
+                                                                    <div class="alert alert-warning" role="alert">
+                                                                        ***** NO INVENTORY *****
+                                                                    </div>
+                                                                </td>
                                                             </tr>
                                                         <?php
                                                         }
-                                                    } else {
                                                         ?>
-                                                        <tr>
-                                                            <td colspan="5">
-                                                                <div class="alert alert-warning" role="alert">
-                                                                    ***** NO INVENTORY *****
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="card bg-female p-4 col-6">
-                                            <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-dribbble"></i></span> Longsleeve Uniform (Female)</h3>
-                                            <table class="table table-hover table-light">
-                                                <thead class="text-center">
-                                                    <tr class="table-light">
-                                                        <th>Size</th>
-                                                        <th>Last Inventory</th>
-                                                        <th>Date</th>
-                                                        <th>User</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="text-center">
-                                                    <?php
-                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniform_type_id = :uniform_type_id AND gender = :gender");
-                                                    $getreginv->execute(array(":uniform_type_id" => "2", ":gender" => "F"));
-                                                    $reguniform = $getreginv->fetchAll();
-
-                                                    if ($getreginv->rowCount() != 0) {
-                                                        foreach ($reguniform as $reg) {
-                                                    ?>
-                                                            <tr>
-                                                                <td><?php echo $reg["size"] ?></td>
-                                                                <td><?php echo $reg["qty"] ?></td>
-                                                                <td><?php echo $reg["date"] ?></td>
-                                                                <td><?php echo $reg["user"] ?></td>
-                                                                <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
-                                                            </tr>
-                                                        <?php
-                                                        }
-                                                    } else {
-                                                        ?>
-                                                        <tr>
-                                                            <td colspan="4">
-                                                                <div class="alert alert-warning" role="alert">
-                                                                    ***** NO INVENTORY *****
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <?php 
+                                        }
+                                        ?>
                                     </div>
-                                    <!-- End of First Table -->
-
-                                    <!-- Second Table Set -->
-                                    <div class="row row-cols-2 col-12 m-auto justify-content-center">
-                                        <div class="card bg-male p-3 col-6">
-                                            <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-bank"></i></span> Suit (Male)</h3>
-                                            <table class="table table-hover table-light">
-                                                <thead class="text-center">
-                                                    <tr class="table-light">
-                                                        <th>Size</th>
-                                                        <th>Last Inventory</th>
-                                                        <th>Date</th>
-                                                        <th>User</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="text-center">
-                                                    <?php
-                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniform_type_id = :uniform_type_id AND gender = :gender");
-                                                    $getreginv->execute(array(":uniform_type_id" => "1", ":gender" => "F"));
-                                                    $reguniform = $getreginv->fetchAll();
-
-                                                    if ($getreginv->rowCount() != 0) {
-                                                        foreach ($reguniform as $reg) {
-                                                    ?>
-                                                            <tr>
-                                                                <td><?php echo $reg["size"] ?></td>
-                                                                <td><?php echo $reg["qty"] ?></td>
-                                                                <td><?php echo $reg["date"] ?></td>
-                                                                <td><?php echo $reg["user"] ?></td>
-                                                                <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
-                                                            </tr>
-                                                        <?php
-                                                        }
-                                                    } else {
-                                                        ?>
-                                                        <tr>
-                                                            <td colspan="5">
-                                                                <div class="alert alert-warning" role="alert">
-                                                                    ***** NO INVENTORY *****
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="card bg-female p-4 col-6">
-                                            <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-dribbble"></i></span> Suit (Female)</h3>
-                                            <table class="table table-hover table-light">
-                                                <thead class="text-center">
-                                                    <tr class="table-light">
-                                                        <th>Size</th>
-                                                        <th>Last Inventory</th>
-                                                        <th>Date</th>
-                                                        <th>User</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="text-center">
-                                                    <?php
-                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniform_type_id = :uniform_type_id AND gender = :gender");
-                                                    $getreginv->execute(array(":uniform_type_id" => "2", ":gender" => "F"));
-                                                    $reguniform = $getreginv->fetchAll();
-
-                                                    if ($getreginv->rowCount() != 0) {
-                                                        foreach ($reguniform as $reg) {
-                                                    ?>
-                                                            <tr>
-                                                                <td><?php echo $reg["size"] ?></td>
-                                                                <td><?php echo $reg["qty"] ?></td>
-                                                                <td><?php echo $reg["date"] ?></td>
-                                                                <td><?php echo $reg["user"] ?></td>
-                                                                <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
-                                                            </tr>
-                                                        <?php
-                                                        }
-                                                    } else {
-                                                        ?>
-                                                        <tr>
-                                                            <td colspan="4">
-                                                                <div class="alert alert-warning" role="alert">
-                                                                    ***** NO INVENTORY *****
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <!-- End of Second Table Set -->
-
-                                    <!-- Start of Third Table Set -->
-                                    <div class="row row-cols-2 col-12 m-auto justify-content-center">
-                                        <div class="card bg-secondary p-3 col-6">
-                                            <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-bank"></i></span> PE Shirt</h3>
-                                            <table class="table table-hover table-light">
-                                                <thead class="text-center">
-                                                    <tr class="table-light">
-                                                        <th>Size</th>
-                                                        <th>Last Inventory</th>
-                                                        <th>Date</th>
-                                                        <th>User</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="text-center">
-                                                    <?php
-                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniform_type_id = :uniform_type_id AND gender = :gender");
-                                                    $getreginv->execute(array(":uniform_type_id" => "1", ":gender" => "F"));
-                                                    $reguniform = $getreginv->fetchAll();
-
-                                                    if ($getreginv->rowCount() != 0) {
-                                                        foreach ($reguniform as $reg) {
-                                                    ?>
-                                                            <tr>
-                                                                <td><?php echo $reg["size"] ?></td>
-                                                                <td><?php echo $reg["qty"] ?></td>
-                                                                <td><?php echo $reg["date"] ?></td>
-                                                                <td><?php echo $reg["user"] ?></td>
-                                                                <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
-                                                            </tr>
-                                                        <?php
-                                                        }
-                                                    } else {
-                                                        ?>
-                                                        <tr>
-                                                            <td colspan="5">
-                                                                <div class="alert alert-warning" role="alert">
-                                                                    ***** NO INVENTORY *****
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="card bg-secondary p-4 col-6">
-                                            <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-dribbble"></i></span> Jogging Pants</h3>
-                                            <table class="table table-hover table-light">
-                                                <thead class="text-center">
-                                                    <tr class="table-light">
-                                                        <th>Size</th>
-                                                        <th>Last Inventory</th>
-                                                        <th>Date</th>
-                                                        <th>User</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="text-center">
-                                                    <?php
-                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniform_type_id = :uniform_type_id AND gender = :gender");
-                                                    $getreginv->execute(array(":uniform_type_id" => "2", ":gender" => "F"));
-                                                    $reguniform = $getreginv->fetchAll();
-
-                                                    if ($getreginv->rowCount() != 0) {
-                                                        foreach ($reguniform as $reg) {
-                                                    ?>
-                                                            <tr>
-                                                                <td><?php echo $reg["size"] ?></td>
-                                                                <td><?php echo $reg["qty"] ?></td>
-                                                                <td><?php echo $reg["date"] ?></td>
-                                                                <td><?php echo $reg["user"] ?></td>
-                                                                <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
-                                                            </tr>
-                                                        <?php
-                                                        }
-                                                    } else {
-                                                        ?>
-                                                        <tr>
-                                                            <td colspan="4">
-                                                                <div class="alert alert-warning" role="alert">
-                                                                    ***** NO INVENTORY *****
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <!-- End of Third Table Set -->
                                 </div>
                             </div>
                         </div>
-                        <br>
-                        <div class="card col-12">
-                            <div class="row">
-                                <div class="col-12 rounded-bottom card-header bg-warning">
-                                    <h3 class="male pt-2">Highschool Uniform</h3>
-                                </div>
-                                <div class="card-body col-12 pb-0">
-                                    <div class="row row-cols-2 col-12 m-auto justify-content-center">
-                                        <div class="card bg-male p-3 col-6">
-                                            <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-bank"></i></span> Longsleeve Uniform (Male)</h3>
-                                            <table class="table table-hover table-light">
-                                                <thead class="text-center">
-                                                    <tr class="table-light">
-                                                        <th>Size</th>
-                                                        <th>Last Inventory</th>
-                                                        <th>Date</th>
-                                                        <th>User</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="text-center">
-                                                    <?php
-                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniform_type_id = :uniform_type_id AND gender = :gender");
-                                                    $getreginv->execute(array(":uniform_type_id" => "1", ":gender" => "F"));
-                                                    $reguniform = $getreginv->fetchAll();
-
-                                                    if ($getreginv->rowCount() != 0) {
-                                                        foreach ($reguniform as $reg) {
-                                                    ?>
-                                                            <tr>
-                                                                <td><?php echo $reg["size"] ?></td>
-                                                                <td><?php echo $reg["qty"] ?></td>
-                                                                <td><?php echo $reg["date"] ?></td>
-                                                                <td><?php echo $reg["user"] ?></td>
-                                                                <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
-                                                            </tr>
-                                                        <?php
-                                                        }
-                                                    } else {
-                                                        ?>
-                                                        <tr>
-                                                            <td colspan="5">
-                                                                <div class="alert alert-warning" role="alert">
-                                                                    ***** NO INVENTORY *****
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="card bg-female p-4 col-6">
-                                            <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-dribbble"></i></span> Longsleeve Uniform (Female)</h3>
-                                            <table class="table table-hover table-light">
-                                                <thead class="text-center">
-                                                    <tr class="table-light">
-                                                        <th>Size</th>
-                                                        <th>Last Inventory</th>
-                                                        <th>Date</th>
-                                                        <th>User</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="text-center">
-                                                    <?php
-                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniform_type_id = :uniform_type_id AND gender = :gender");
-                                                    $getreginv->execute(array(":uniform_type_id" => "2", ":gender" => "F"));
-                                                    $reguniform = $getreginv->fetchAll();
-
-                                                    if ($getreginv->rowCount() != 0) {
-                                                        foreach ($reguniform as $reg) {
-                                                    ?>
-                                                            <tr>
-                                                                <td><?php echo $reg["size"] ?></td>
-                                                                <td><?php echo $reg["qty"] ?></td>
-                                                                <td><?php echo $reg["date"] ?></td>
-                                                                <td><?php echo $reg["user"] ?></td>
-                                                                <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
-                                                            </tr>
-                                                        <?php
-                                                        }
-                                                    } else {
-                                                        ?>
-                                                        <tr>
-                                                            <td colspan="4">
-                                                                <div class="alert alert-warning" role="alert">
-                                                                    ***** NO INVENTORY *****
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <!-- End of First Table -->
-
-                                    <!-- Second Table Set -->
-                                    <div class="row row-cols-2 col-12 m-auto justify-content-center">
-                                        <div class="card bg-male p-3 col-6">
-                                            <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-bank"></i></span> Suit (Male)</h3>
-                                            <table class="table table-hover table-light">
-                                                <thead class="text-center">
-                                                    <tr class="table-light">
-                                                        <th>Size</th>
-                                                        <th>Last Inventory</th>
-                                                        <th>Date</th>
-                                                        <th>User</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="text-center">
-                                                    <?php
-                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniform_type_id = :uniform_type_id AND gender = :gender");
-                                                    $getreginv->execute(array(":uniform_type_id" => "1", ":gender" => "F"));
-                                                    $reguniform = $getreginv->fetchAll();
-
-                                                    if ($getreginv->rowCount() != 0) {
-                                                        foreach ($reguniform as $reg) {
-                                                    ?>
-                                                            <tr>
-                                                                <td><?php echo $reg["size"] ?></td>
-                                                                <td><?php echo $reg["qty"] ?></td>
-                                                                <td><?php echo $reg["date"] ?></td>
-                                                                <td><?php echo $reg["user"] ?></td>
-                                                                <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
-                                                            </tr>
-                                                        <?php
-                                                        }
-                                                    } else {
-                                                        ?>
-                                                        <tr>
-                                                            <td colspan="5">
-                                                                <div class="alert alert-warning" role="alert">
-                                                                    ***** NO INVENTORY *****
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="card bg-female p-4 col-6">
-                                            <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-dribbble"></i></span> Suit (Female)</h3>
-                                            <table class="table table-hover table-light">
-                                                <thead class="text-center">
-                                                    <tr class="table-light">
-                                                        <th>Size</th>
-                                                        <th>Last Inventory</th>
-                                                        <th>Date</th>
-                                                        <th>User</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="text-center">
-                                                    <?php
-                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniform_type_id = :uniform_type_id AND gender = :gender");
-                                                    $getreginv->execute(array(":uniform_type_id" => "2", ":gender" => "F"));
-                                                    $reguniform = $getreginv->fetchAll();
-
-                                                    if ($getreginv->rowCount() != 0) {
-                                                        foreach ($reguniform as $reg) {
-                                                    ?>
-                                                            <tr>
-                                                                <td><?php echo $reg["size"] ?></td>
-                                                                <td><?php echo $reg["qty"] ?></td>
-                                                                <td><?php echo $reg["date"] ?></td>
-                                                                <td><?php echo $reg["user"] ?></td>
-                                                                <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
-                                                            </tr>
-                                                        <?php
-                                                        }
-                                                    } else {
-                                                        ?>
-                                                        <tr>
-                                                            <td colspan="4">
-                                                                <div class="alert alert-warning" role="alert">
-                                                                    ***** NO INVENTORY *****
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <!-- End of Second Table Set -->
-
-                                    <!-- Start of Third Table Set -->
-                                    <div class="row row-cols-2 col-12 m-auto justify-content-center">
-                                        <div class="card bg-secondary p-3 col-6">
-                                            <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-bank"></i></span> PE Shirt</h3>
-                                            <table class="table table-hover table-light">
-                                                <thead class="text-center">
-                                                    <tr class="table-light">
-                                                        <th>Size</th>
-                                                        <th>Last Inventory</th>
-                                                        <th>Date</th>
-                                                        <th>User</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="text-center">
-                                                    <?php
-                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniform_type_id = :uniform_type_id AND gender = :gender");
-                                                    $getreginv->execute(array(":uniform_type_id" => "1", ":gender" => "F"));
-                                                    $reguniform = $getreginv->fetchAll();
-
-                                                    if ($getreginv->rowCount() != 0) {
-                                                        foreach ($reguniform as $reg) {
-                                                    ?>
-                                                            <tr>
-                                                                <td><?php echo $reg["size"] ?></td>
-                                                                <td><?php echo $reg["qty"] ?></td>
-                                                                <td><?php echo $reg["date"] ?></td>
-                                                                <td><?php echo $reg["user"] ?></td>
-                                                                <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
-                                                            </tr>
-                                                        <?php
-                                                        }
-                                                    } else {
-                                                        ?>
-                                                        <tr>
-                                                            <td colspan="5">
-                                                                <div class="alert alert-warning" role="alert">
-                                                                    ***** NO INVENTORY *****
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="card bg-secondary p-4 col-6">
-                                            <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-dribbble"></i></span> Jogging Pants</h3>
-                                            <table class="table table-hover table-light">
-                                                <thead class="text-center">
-                                                    <tr class="table-light">
-                                                        <th>Size</th>
-                                                        <th>Last Inventory</th>
-                                                        <th>Date</th>
-                                                        <th>User</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="text-center">
-                                                    <?php
-                                                    $getreginv = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniform_type_id = :uniform_type_id AND gender = :gender");
-                                                    $getreginv->execute(array(":uniform_type_id" => "2", ":gender" => "F"));
-                                                    $reguniform = $getreginv->fetchAll();
-
-                                                    if ($getreginv->rowCount() != 0) {
-                                                        foreach ($reguniform as $reg) {
-                                                    ?>
-                                                            <tr>
-                                                                <td><?php echo $reg["size"] ?></td>
-                                                                <td><?php echo $reg["qty"] ?></td>
-                                                                <td><?php echo $reg["date"] ?></td>
-                                                                <td><?php echo $reg["user"] ?></td>
-                                                                <td><button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger">Add New</button></td>
-                                                            </tr>
-                                                        <?php
-                                                        }
-                                                    } else {
-                                                        ?>
-                                                        <tr>
-                                                            <td colspan="4">
-                                                                <div class="alert alert-warning" role="alert">
-                                                                    ***** NO INVENTORY *****
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <!-- End of Third Table Set -->
-                                </div>
                             </div>
                         </div>
                     </div>
                     <!-- form ends !-->
                 </div>
-                <?php include_once "includes/footer.php"; ?>
+                <!-- <?php include_once "includes/footer.php"; ?> -->
             </div>
             <?php include_once "includes/scripts.php"; ?>
         </div>
