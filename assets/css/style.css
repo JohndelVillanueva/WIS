@@ -580,3 +580,10 @@ div.card#table-inventory{
 ::-webkit-scrollbar-thumb:hover {
     background: #555; 
 }
+
+@media screen and (max-width: 1275px) {
+    div.card#table-inventory{
+        height: 100%;
+    }
+    
+}

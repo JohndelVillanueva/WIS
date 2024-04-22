@@ -379,11 +379,11 @@ if (!empty($_POST['uniform_type_id']) && !empty($_POST['uniform_size_id']) && !e
                                     foreach ($uniformTypes as $type) {
 
                                     ?>
-                                        <div class="card bg-male p-3 col-lg-6 col-12 h-100 overflow-auto px-1" id="table-inventory">
-                                            <h3 class="pt-2 text-white"><span class="icon-holder"><i class="anticon anticon-bank"></i></span><?= $type->uniform_type_id ?></h3>
+                                        <div class="card bg-male p-3 col-xl-6 col-lg-12 col-12 overflow-auto px-1" id="table-inventory">
+                                            <h3 class="pt-2 text-white"><span class="icon-holder pr-2"><i class="anticon anticon-bank"></i></span><?= $type->uniform_type_id ?></h3>
                                             <table class="table table-hover table-light" >
                                                 <thead class="text-center">
-                                                    <tr class="table-light">
+                                                    <tr class="table-dark">
                                                         <th>Size</th>
                                                         <th>Last Inventory</th>
                                                         <th>Gender</th>
