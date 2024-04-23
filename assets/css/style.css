@@ -562,6 +562,10 @@ div h3.fem{
     background-color: #e5007d;
 }   
 
+.bg-custom{
+    background-color: grey;
+}
+
 div.card#table-inventory{
     height: 520px!important;
 }
