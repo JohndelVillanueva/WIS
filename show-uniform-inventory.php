@@ -10,25 +10,7 @@ if (!isset($_SESSION['username'])) {
 
 <?php include_once "includes/css.php"; ?>
 
-<?php
-if (!empty($_POST['uniform_type_id']) && !empty($_POST['uniform_size_id']) && !empty($_POST['qty']) && !empty($_POST['gender'])) {
 
-    $insertingToChildTable = $DB_con->prepare("INSERT INTO uniform_inventory (uniform_type_id,uniform_size_id,qty,gender,date,user) VALUES (:uniform_type_id,:uniform_size_id,:qty,:gender,:date,:user)");
-    $result = $insertingToChildTable->execute([
-        ":uniform_type_id" => $_POST['uniform_type_id'],
-        ":uniform_size_id" => $_POST['uniform_size_id'],
-        ":qty" => $_POST['qty'],
-        ":gender" => $_POST['gender'],
-        ":date" => date("Y-m-d H:i:s"),
-        ":user" => $_SESSION['fname'] . " " . $_SESSION['lname']
-    ]);
-    // var_dump($result);
-    // die();
-    header("location: show-uniform-inventory.php");
-}
-
-
-?>
 <div class="app is-folded">
     <div class="layout">
         <?php include_once "includes/heading.php"; ?>
@@ -59,6 +41,23 @@ if (!empty($_POST['uniform_type_id']) && !empty($_POST['uniform_size_id']) && !e
                                 </div>
 
                                 <!-- Add New Modal-->
+                                <?php
+                                    if (!empty($_POST['uniform_type_id']) && !empty($_POST['uniform_size_id']) && !empty($_POST['qty']) && !empty($_POST['gender'])) {
+
+                                        $insertingToChildTable = $DB_con->prepare("INSERT INTO uniform_inventory (uniform_type_id,uniform_size_id,qty,gender,date,user) VALUES (:uniform_type_id,:uniform_size_id,:qty,:gender,:date,:user)");
+                                        $result = $insertingToChildTable->execute([
+                                            ":uniform_type_id" => $_POST['uniform_type_id'],
+                                            ":uniform_size_id" => $_POST['uniform_size_id'],
+                                            ":qty" => $_POST['qty'],
+                                            ":gender" => $_POST['gender'],
+                                            ":date" => date("Y-m-d H:i:s"),
+                                            ":user" => $_SESSION['fname'] . " " . $_SESSION['lname']
+                                        ]);
+                                        // var_dump($result);
+                                        // die();
+                                        header("location: show-uniform-inventory.php");
+                                    }
+                                ?>
                                 <div class="modal fade" tabindex="-1" id="add" data-bs-backdrop="static" data-bs-keyboard="false">
                                     <div class=" modal-dialog modal-xl">
                                         <div class="modal-content">
