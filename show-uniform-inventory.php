@@ -248,6 +248,7 @@ if (!empty($_POST['uniform_type_id']) && !empty($_POST['uniform_size_id']) && !e
                                                             <th style="width: 33%">Uniform Type</th>
                                                             <th style="width: 6.7%">Size</th>
                                                             <th style="width: 6.7%">Quantity</th>
+                                                            <th style="width: auto">Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -273,6 +274,7 @@ if (!empty($_POST['uniform_type_id']) && !empty($_POST['uniform_size_id']) && !e
                                                             <td style="width:auto">
                                                                 <input type="number" name="distribute-qty" id="distribute-qty" required>
                                                             </td>
+                                                            <td style="width:4.3%"><button type="button" class="btn btn-primary btn-md">Add</button></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
