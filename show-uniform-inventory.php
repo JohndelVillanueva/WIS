@@ -252,21 +252,43 @@ if (!empty($_POST['uniform_type_id']) && !empty($_POST['uniform_size_id']) && !e
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+
                                                         <tr>
                                                             <!-- Fetch data for type  -->
                                                             <td style="width: 8.7%">
+                                                                <?php 
+                                                                $getAllUniform = $DB_con->prepare("SELECT * FROM uniform_types");
+                                                                $getAllUniform->execute();
+                                                                $uniforms = $getAllUniform->fetchAll(PDO::FETCH_OBJ);
+                                                                ?>
                                                                 <select name="distribution-type" id="distribution-type" class="form-control form-control-md">
-                                                                    <option value="" selected hidden disabled>Select Size</option>
-                                                                    <option value="Longsleeve Male">Longsleeve Male</option>
-                                                                    <option value="PE Uniform">PE Uniform</option>
-                                                                    <option value="Suit Male">Suit Male</option>
+                                                                    <option value="" selected hidden disabled>Select Uniform</option>
+                                                                    <?php 
+                                                                    foreach($uniforms as $uniform){
+                                                                        ?>
+                                                                        <option value="<?= $uniform->type?>"><?= $uniform->type?></option>
+                                                                        <?php 
+                                                                    }
+                                                                    ?>
                                                                 </select>
                                                             </td>
                                                             <!-- Size Selecton -->
                                                             <td style="width: 21%">
+                                                            <?php
+
+                                                            $getAllSizesQuery = $DB_con->prepare("SELECT * FROM uniform_sizes");
+                                                            $getAllSizesQuery->execute();
+                                                            $sizes = $getAllSizesQuery->fetchAll(PDO::FETCH_OBJ);
+                                                            ?>
                                                                 <select name="distribution-size" id="distribution-size" class="form-control form-control-md">
                                                                     <option value="" selected hidden disabled>Select Size</option>
-                                                                    <option value="small">small</option>
+                                                                    <?php
+                                                                    foreach ($sizes as $size) {
+                                                                        ?>
+                                                                        <option value="<?= $size->size ?>"><?= $size->size ?></option>
+                                                                        <?php 
+                                                                    }
+                                                                    ?>
                                                                     <option value="medium">medium</option>
                                                                     <option value="large">large</option>
                                                                 </select>
