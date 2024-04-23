@@ -91,7 +91,7 @@ if (!empty($_POST['uniform_type_id']) && !empty($_POST['uniform_size_id']) && !e
                                         <div class="modal-content">
                                             <form method="POST">
                                                 <div class="modal-header">
-                                                    <div class="modal-title">
+                                                    <div class="modal-title text-white">
                                                         Add New Uniform
                                                     </div>
                                                 </div>
@@ -103,30 +103,27 @@ if (!empty($_POST['uniform_type_id']) && !empty($_POST['uniform_size_id']) && !e
                                                                     <h3>Uniform Type</h3>
                                                                 </th>
                                                                 <th>
-                                                                    <h3>Quantity</h3>
+                                                                    <h3>Size</h3>
                                                                 </th>
                                                                 <th>
                                                                     <h3>Gender</h3>
                                                                 </th>
                                                                 <th>
-                                                                    <h3>Size</h3>
+                                                                    <h3>Quantity</h3>
                                                                 </th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <?php
-
                                                             $getAllUniformTypeQuery = $DB_con->prepare("SELECT * FROM uniform_types");
                                                             $getAllUniformTypeQuery->execute();
                                                             $types = $getAllUniformTypeQuery->fetchAll(PDO::FETCH_OBJ);
-
                                                             ?>
                                                             <th>
                                                                 <select class="custom-select" id="uniformoption" name="uniform_type_id" required>
                                                                     <option selected disabled hidden value="">Choose Uniform</option>
                                                                     <?php
                                                                     foreach ($types as $type) {
-
                                                                     ?>
                                                                         <option value="<?= $type->type ?>"><?= $type->type ?></option>
                                                                     <?php
@@ -139,8 +136,6 @@ if (!empty($_POST['uniform_type_id']) && !empty($_POST['uniform_size_id']) && !e
                                                             $getAllSizesQuery = $DB_con->prepare("SELECT * FROM uniform_sizes");
                                                             $getAllSizesQuery->execute();
                                                             $sizes = $getAllSizesQuery->fetchAll(PDO::FETCH_OBJ);
-
-
                                                             ?>
                                                             <th>
                                                                 <select class="custom-select" id="sizeoption" name="uniform_size_id" required>
@@ -153,10 +148,9 @@ if (!empty($_POST['uniform_type_id']) && !empty($_POST['uniform_size_id']) && !e
                                                                     <?php
                                                                     }
                                                                     ?>
-
                                                                 </select>
-
                                                             </th>
+
                                                             <th>
                                                                 <select class="custom-select" id="genderoption" name="gender" required>
                                                                     <option selected disabled hidden value="">Gender</option>
@@ -193,41 +187,18 @@ if (!empty($_POST['uniform_type_id']) && !empty($_POST['uniform_size_id']) && !e
                                                     <table class="table text-center">
                                                         <thead>
                                                             <tr>
-                                                                <th>Size</th>
-                                                                <th>Quantity</th>
+                                                                <th>
+                                                                    <h3>Size</h3>
+                                                                </th>
+                                                                <th>
+                                                                    <h3>Quantity</h3>
+                                                                </th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <tr>
                                                                 <th name="">XS</th> <!-- Change to Fetching database size !-->
                                                                 <th><input type="number" placeholder="Quantity" value="0" name="XSqty" required="required"></th>
-                                                                <!-- <th><input type="number" placeholder="Quantity for Female" value="0" name="sqty" required="required"></th>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>SMALL</th>
-                                                                    <th><input type="number" placeholder="Quantity for Male" value="0" name="Sqty" required="required"></th>
-                                                                    <th><input type="number" placeholder="Quantity for Female" value="0" name="sqty" required="required"></th>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>MEDIUM</th>
-                                                                    <th><input type="number" placeholder="Quantity for Male" value="0" required="required"></th>
-                                                                    <th><input type="number" placeholder="Quantity for Female" value="0" required="required"></th>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>LARGE</th>
-                                                                    <th><input type="number" placeholder="Quantity for Male" value="0" required="required"></th>
-                                                                    <th><input type="number" placeholder="Quantity for Female" value="0" required="required"></th>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>XL</th>
-                                                                    <th><input type="number" placeholder="Quantity for Male" value="0" required="required"></th>
-                                                                    <th><input type="number" placeholder="Quantity for Female" value="0" required="required"></th>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>XXL</th>
-                                                                    <th><input type="number" placeholder="Quantity for Male" value="0" required="required"></th>
-                                                                    <th><input type="number" placeholder="Quantity for Female" value="0" required="required"></th>
-                                                                </tr> -->
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -241,7 +212,7 @@ if (!empty($_POST['uniform_type_id']) && !empty($_POST['uniform_size_id']) && !e
                             </div>
 
                             <!-- Release Inventory -->
-                            <div class="modal fade" tabindex="-1" id="release" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="modal1">
+                            <div class="modal fade" tabindex="-1" id="release" data-bs-backdrop="static" data-bs-keyboard="false">
                                 <div class="modal-dialog modal-lg ">
                                     <div class="modal-content ">
                                         <form action="inventory.php">
@@ -264,85 +235,85 @@ if (!empty($_POST['uniform_type_id']) && !empty($_POST['uniform_size_id']) && !e
                                                                 <td>Johndel</td>
                                                                 <td>Villanueva</dh>
                                                                 <td style="width:16%">999</td>
-                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="record" data-bs-toggle="modal"> Release</button></td>
+                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal"> Release</button></td>
                                                             </tr>
                                                             <tr class="align-middle">
                                                                 <td class="">Jerald</td>
                                                                 <td>Balilu</dh>
                                                                 <td>999</td>
-                                                                <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal"> Release</button></td>
                                                             </tr>
                                                             <tr class="align-middle">
                                                                 <td class="">Rose Ann</td>
                                                                 <td>Vino</dh>
                                                                 <td>999</td>
-                                                                <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal"> Release</button></td>
                                                             </tr>
                                                             <tr class="align-middle">
                                                                 <td class="">Myren Josh</td>
                                                                 <td>Tiqui</dh>
                                                                 <td>999</td>
-                                                                <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal"> Release</button></td>
                                                             </tr>
                                                             <tr class="align-middle">
                                                                 <td class="">Johndel</td>
                                                                 <td>Villanueva</dh>
                                                                 <td>999</td>
-                                                                <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal"> Release</button></td>
                                                             </tr>
                                                             <tr class="align-middle">
                                                                 <td class="">Johndel</td>
                                                                 <td>Villanueva</dh>
                                                                 <td>999</td>
-                                                                <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal"> Release</button></td>
                                                             </tr>
                                                             <tr class="align-middle">
                                                                 <td class="">Johndel</td>
                                                                 <td>Villanueva</dh>
                                                                 <td>999</td>
-                                                                <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal"> Release</button></td>
                                                             </tr>
                                                             <tr class="align-middle">
                                                                 <td class="">Johndel</td>
                                                                 <td>Villanueva</dh>
                                                                 <td>999</td>
-                                                                <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal"> Release</button></td>
                                                             </tr>
                                                             <tr class="align-middle">
                                                                 <td class="">Johndel</td>
                                                                 <td>Villanueva</dh>
                                                                 <td>999</td>
-                                                                <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal"> Release</button></td>
                                                             </tr>
                                                             <tr class="align-middle">
                                                                 <td class="">Johndel</td>
                                                                 <td>Villanueva</dh>
                                                                 <td>999</td>
-                                                                <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal"> Release</button></td>
                                                             </tr>
                                                             <tr class="align-middle">
                                                                 <td class="">Johndel</td>
                                                                 <td>Villanueva</dh>
                                                                 <td>999</td>
-                                                                <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal"> Release</button></td>
                                                             </tr>
                                                             <tr class="align-middle">
                                                                 <td class="">Johndel</td>
                                                                 <td>Villanueva</dh>
                                                                 <td>999</td>
-                                                                <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal"> Release</button></td>
                                                             </tr>
                                                             <tr class="align-middle">
                                                                 <td class="">Johndel</td>
                                                                 <td>Villanueva</dh>
                                                                 <td>999</td>
-                                                                <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal"> Release</button></td>
                                                             </tr>
                                                             <tr class="align-middle">
                                                                 <td class="">Johndel</td>
                                                                 <td>Villanueva</dh>
                                                                 <td>999</td>
-                                                                <td><button type="button" class="btn btn-danger"> Release</button></td>
+                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal"> Release</button></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -356,6 +327,56 @@ if (!empty($_POST['uniform_type_id']) && !empty($_POST['uniform_size_id']) && !e
                                     </div>
                                 </div>
                             </div>
+
+
+                            <!-- Record Modal  -->
+                            <div class="modal fade" tabindex="-1" id="record" data-bs-backdrop="static" data-bs-keyboard="false">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <form action="POST">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Distribute Uniform</h5>
+                                            </div>
+                                            <div class="modal-body">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 33%">Uniform Type</th>
+                                                            <th style="width: 6.7%">Size</th>
+                                                            <th style="width: 6.7%">Quantity</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <!-- Fetch data for type  -->
+                                                            <td style="width: 8.7%">
+                                                                    Longsleeve Male
+                                                            </td>
+                                                            <!-- Size Selecton -->
+                                                            <td style="width: 21%">
+                                                                    <select name="distribution-size" id="distribution-size" class="form-control form-control-md">
+                                                                        <option value="" selected hidden disabled>Select Size</option>
+                                                                        <option value="small">small</option>
+                                                                        <option value="medium">medium</option>
+                                                                        <option value="large">large</option>
+                                                                    </select>
+                                                            </td>
+                                                            <td style="width:auto">
+                                                                <input type="number" name="distribute-qty" id="distribute-qty" required>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-success">Distribute</button>
+                                                <button type="reset" class="btn btn-danger" data-bs-dismiss="modal" id="reset">Cancel</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
@@ -380,8 +401,8 @@ if (!empty($_POST['uniform_type_id']) && !empty($_POST['uniform_size_id']) && !e
 
                                     ?>
                                         <div class="card bg-custom p-3 col-xl-6 col-lg-12 col-12 overflow-auto px-1" id="table-inventory">
-                                            <h2 class="m-0 text-white"><span class="icon-holder pr-2"><i class="anticon anticon-bank"></i></span><?= $type->uniform_type_id ?></h2>
-                                            <table class="table table-hover table-light" >
+                                            <h2 class="m-0"><span class="icon-holder pr-2"><i class="anticon anticon-bank"></i></span><?= $type->uniform_type_id ?></h2>
+                                            <table class="table table-hover table-light">
                                                 <thead class="text-center">
                                                     <tr class="table-dark">
                                                         <th>Size</th>
