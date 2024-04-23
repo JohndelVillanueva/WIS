@@ -57,33 +57,6 @@ if (!empty($_POST['uniform_type_id']) && !empty($_POST['uniform_size_id']) && !e
                                         </div>
                                     </div>
                                 </div>
-                                <?php
-
-                                // $uniform_type_id = $_POST['uniform_type_id'];
-                                // $displayAlltheInventoryQuery = $DB_con->prepare("SELECT * FROM uniform_inventory WHERE uniform_type_id = :uniform_type_id");
-                                // $displayAlltheInventoryQuery->execute([":uniform_type_id" => $uniform_type_id]);
-                                // $display = $displayAlltheInventoryQuery->fetch(PDO::FETCH_OBJ);
-
-                                // if ($uniform_type_id == 1) {
-
-                                //     $updateQuery = $DB_con->prepare("UPDATE uniform_inventory SET `qty` = ? WHERE id = ?");
-                                //     $updateQuery->execute([
-                                //         $_POST['XSqty'],
-                                //         $_POST['Sqty'],
-                                //         $_POST['id']
-                                //     ]);
-                                // }
-                                // $insertUniformQuery = $DB_con->prepare("INSERT INTO uniform_inventory (uniform_type_id,size,qty,date,user) VALUES (?,?,?,?,?)");
-                                // $insertUniformQuery->execute([
-                                //     $uniform_type_id = $_POST['uniform_type_id'],
-                                //     $uniform_type_id = $_POST['size'],
-                                //     $uniform_type_id = $_POST['qty'],
-                                //     date("Y/m/d"),
-                                //     $uniform_type_id = $_SESSION['fname'] . " " . $_SESSION['lname']
-                                // ])
-
-
-                                ?>
 
                                 <!-- Add New Modal-->
                                 <div class="modal fade" tabindex="-1" id="add" data-bs-backdrop="static" data-bs-keyboard="false">
@@ -230,92 +203,24 @@ if (!empty($_POST['uniform_type_id']) && !empty($_POST['uniform_size_id']) && !e
                                                                 <th>Actions</th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody>
+                                                        <?php 
+                                                        
+                                                        $fetchingAllStudents = $DB_con->prepare('SELECT * FROM user WHERE position = "Student" ORDER BY grade ASC');
+                                                        $fetchingAllStudents->execute();
+                                                        $students = $fetchingAllStudents->fetchAll(PDO::FETCH_OBJ);
+
+                                                        foreach($students as $student){
+
+                                                        ?>
                                                             <tr class="align-middle">
-                                                                <td>Johndel</td>
-                                                                <td>Villanueva</dh>
-                                                                <td style="width:16%">999</td>
-                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal"> Release</button></td>
+                                                                <td class=""><?= $student->fname ?></td>
+                                                                <td><?= $student->lname ?></dh>
+                                                                <td><?= $student->grade ?></td>
+                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal" value="<?= $student->id ?>" > Release</button></td>
                                                             </tr>
-                                                            <tr class="align-middle">
-                                                                <td class="">Jerald</td>
-                                                                <td>Balilu</dh>
-                                                                <td>999</td>
-                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal"> Release</button></td>
-                                                            </tr>
-                                                            <tr class="align-middle">
-                                                                <td class="">Rose Ann</td>
-                                                                <td>Vino</dh>
-                                                                <td>999</td>
-                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal"> Release</button></td>
-                                                            </tr>
-                                                            <tr class="align-middle">
-                                                                <td class="">Myren Josh</td>
-                                                                <td>Tiqui</dh>
-                                                                <td>999</td>
-                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal"> Release</button></td>
-                                                            </tr>
-                                                            <tr class="align-middle">
-                                                                <td class="">Johndel</td>
-                                                                <td>Villanueva</dh>
-                                                                <td>999</td>
-                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal"> Release</button></td>
-                                                            </tr>
-                                                            <tr class="align-middle">
-                                                                <td class="">Johndel</td>
-                                                                <td>Villanueva</dh>
-                                                                <td>999</td>
-                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal"> Release</button></td>
-                                                            </tr>
-                                                            <tr class="align-middle">
-                                                                <td class="">Johndel</td>
-                                                                <td>Villanueva</dh>
-                                                                <td>999</td>
-                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal"> Release</button></td>
-                                                            </tr>
-                                                            <tr class="align-middle">
-                                                                <td class="">Johndel</td>
-                                                                <td>Villanueva</dh>
-                                                                <td>999</td>
-                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal"> Release</button></td>
-                                                            </tr>
-                                                            <tr class="align-middle">
-                                                                <td class="">Johndel</td>
-                                                                <td>Villanueva</dh>
-                                                                <td>999</td>
-                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal"> Release</button></td>
-                                                            </tr>
-                                                            <tr class="align-middle">
-                                                                <td class="">Johndel</td>
-                                                                <td>Villanueva</dh>
-                                                                <td>999</td>
-                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal"> Release</button></td>
-                                                            </tr>
-                                                            <tr class="align-middle">
-                                                                <td class="">Johndel</td>
-                                                                <td>Villanueva</dh>
-                                                                <td>999</td>
-                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal"> Release</button></td>
-                                                            </tr>
-                                                            <tr class="align-middle">
-                                                                <td class="">Johndel</td>
-                                                                <td>Villanueva</dh>
-                                                                <td>999</td>
-                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal"> Release</button></td>
-                                                            </tr>
-                                                            <tr class="align-middle">
-                                                                <td class="">Johndel</td>
-                                                                <td>Villanueva</dh>
-                                                                <td>999</td>
-                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal"> Release</button></td>
-                                                            </tr>
-                                                            <tr class="align-middle">
-                                                                <td class="">Johndel</td>
-                                                                <td>Villanueva</dh>
-                                                                <td>999</td>
-                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal"> Release</button></td>
-                                                            </tr>
-                                                        </tbody>
+                                                            <?php 
+                                                        }
+                                                            ?>
                                                     </table>
                                                 </div>
                                             </div>
@@ -327,7 +232,6 @@ if (!empty($_POST['uniform_type_id']) && !empty($_POST['uniform_size_id']) && !e
                                     </div>
                                 </div>
                             </div>
-
 
                             <!-- Record Modal  -->
                             <div class="modal fade" tabindex="-1" id="record" data-bs-backdrop="static" data-bs-keyboard="false">
