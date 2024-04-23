@@ -350,19 +350,64 @@ if (!empty($_POST['uniform_type_id']) && !empty($_POST['uniform_size_id']) && !e
                                                         <tr>
                                                             <!-- Fetch data for type  -->
                                                             <td style="width: 8.7%">
-                                                                    Longsleeve Male
+                                                                <select name="distribution-type" id="distribution-type" class="form-control form-control-md">
+                                                                    <option value="" selected hidden disabled>Select Size</option>
+                                                                    <option value="Longsleeve Male">Longsleeve Male</option>
+                                                                    <option value="PE Uniform">PE Uniform</option>
+                                                                    <option value="Suit Male">Suit Male</option>
+                                                                </select>
                                                             </td>
                                                             <!-- Size Selecton -->
                                                             <td style="width: 21%">
-                                                                    <select name="distribution-size" id="distribution-size" class="form-control form-control-md">
-                                                                        <option value="" selected hidden disabled>Select Size</option>
-                                                                        <option value="small">small</option>
-                                                                        <option value="medium">medium</option>
-                                                                        <option value="large">large</option>
-                                                                    </select>
+                                                                <select name="distribution-size" id="distribution-size" class="form-control form-control-md">
+                                                                    <option value="" selected hidden disabled>Select Size</option>
+                                                                    <option value="small">small</option>
+                                                                    <option value="medium">medium</option>
+                                                                    <option value="large">large</option>
+                                                                </select>
                                                             </td>
                                                             <td style="width:auto">
                                                                 <input type="number" name="distribute-qty" id="distribute-qty" required>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                                <hr>
+
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr >
+                                                            <th style="width: 33%">Uniform Type</th>
+                                                            <th style="width: 6.7%">Size</th>
+                                                            <th style="width: 6.7%">Quantity</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <!-- Fetch data for type  -->
+                                                            <td style="width: 8.7%">
+                                                                Longsleeve Male
+                                                            </td>
+                                                            <!-- Size Selecton -->
+                                                            <td style="width: 21%">
+                                                                Large
+                                                            </td>
+                                                            <td style="width:21.2%">
+                                                                1
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <!-- Fetch data for type  -->
+                                                            <td style="width: 8.7%">
+                                                                Longsleeve Male
+                                                            </td>
+                                                            <!-- Size Selecton -->
+                                                            <td style="width: 21%">
+                                                                Large
+                                                            </td>
+                                                            <td style="width:21.2%">
+                                                                1
                                                             </td>
                                                         </tr>
                                                     </tbody>
