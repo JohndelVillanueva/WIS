@@ -50,7 +50,10 @@ if (!isset($_SESSION['username'])) {
                                                     <th scope="col">Reference Number</th>
                                                     <th scope="col">Full Name</th>
                                                     <th scope="col">Grade Level</th>
+                                                    <th scope="col">Exam Date</th>
+                                                    <th scope="col">Interview Date</th>
                                                     <th scope="col">Notes</th>
+                                                    <th scope="col">Recommendations</th>
                                                     <th scope="col">Approval</th>
                                                 </tr>
                                             </thead>
@@ -79,10 +82,29 @@ if (!isset($_SESSION['username'])) {
                                                             <td><?php echo $row["lname"] . ", " . $row["fname"] . " " . $row["mname"]; ?></td>
                                                             <td><?php echo $row["grade"]; ?></td>
                                                             <td>
+                                                                <?php
+                                                                        $checksched = $DB_con->prepare("SELECT * FROM schedule WHERE title LIKE :name");
+                                                                        $checksched->execute(array(":name" => "%".$row["fname"]." ".$row["lname"]."%"));
+                                                                        $sched = $checksched->fetchAll();
+
+                                                                        foreach($sched as $sked) {
+                                                                            echo $sked["start"];
+                                                                        }
+                                                                ?>
+                                                            </td>
+                                                            <td><input class="form-control" type="datetime-local" id="esched" name="esched" required></td>
+                                                            <td><input type="checkbox" id="esl" name="esl" value="">
+                                                                <label for="ESL">ESL</label><br>
+                                                                <input type="checkbox" id="star" name="star" value="">
+                                                                <label for="STAR">STAR</label><br>
+                                                                <input type="checkbox" id="completion" name="completion" value="">
+                                                                <label for="COMPLETION">COMPLETION</label><br></td>
+                                                            <td>
                                                                 <input class="form-control" type="text" id="notes" name="notes" placeholder="Type notes here">
                                                                 <input type="hidden" name="sname" id="sname" value="<?php echo $row['fname'] . " " . $row['lname']; ?>">
                                                                 <input type="hidden" name="stage" id="stage" value="5">
                                                                 <input type="hidden" name="ern" id="ern" value="<?php echo $row["uniqid"]; ?>">
+                                                                <input type="hidden" name="username" id="username" value="<?php echo $row["username"]; ?>">
                                                             </td>
                                                             <td><button type="submit" class="btn btn-success rounded"><span class="icon-holder"><i class="anticon anticon-check"></i></span></button></td>
                                                         </form>

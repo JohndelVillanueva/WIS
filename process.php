@@ -31,6 +31,23 @@ if ($_POST['stage'] <= 8) {
         $process_statement->execute(array(':status' => $_POST['stage'], ':uniqid' => $_POST['ern']));
     }
 
+    // if check esl the value is 1 if not the value is null
+    $esl = isset($_POST['esl']) ? 1 : NULL;
+
+    // if check star the value is 1 if not the value is null
+    $star = isset($_POST['star']) ? 1 : NULL;
+
+    // if check completion the value is 1 if not the value is null
+    $completion = isset($_POST['completion']) ? 1 : NULL;
+
+    $recommendationQuery = $DB_con->prepare("INSERT INTO s_recommendations (user_id, esl, star, completion) VALUES (?, ?, ?, ?)");
+    $recommendationQuery->execute([
+        $_POST['username'], $esl, $star, $completion
+    ]);
+
+    // var_dump($recommendationQuery);
+    // die();
+
     $log = "INSERT INTO logs_enroll ( ern, stage, usertouch, touch, notes ) VALUES ( :ern, :stage, :user, NOW(), :notes )";
     $logstmt = $DB_con->prepare($log);
     $logstmt->execute(array(':ern' => $_POST['ern'], ':stage' => $_POST['stage'], ':user' => $_SESSION['fname'] . " " . $_SESSION['lname'], ':notes' => $_POST['notes']));

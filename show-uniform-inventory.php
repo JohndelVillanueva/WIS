@@ -212,9 +212,9 @@ if (!isset($_SESSION['username'])) {
 
                                                         ?>
                                                             <tr class="align-middle">
-                                                                <td class=""><?= $student->fname ?></td>
-                                                                <td><?= $student->lname ?></dh>
-                                                                <td><?= $student->grade ?></td>
+                                                                <td style="width: 30.66%"><?= $student->fname ?></td>
+                                                                <td style="width: 30.66%"><?= $student->lname ?></dh>
+                                                                <td style="width: 30.66%"><?= $student->grade ?></td>
                                                                 <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal" value="<?= $student->id ?>" > Release</button></td>
                                                             </tr>
                                                             <?php 

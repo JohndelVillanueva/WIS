@@ -51,7 +51,7 @@
             <?php
             }
 
-            if ($_SESSION['level'] == 2 or $_SESSION['level'] == 9) {
+            if ($_SESSION['level'] == 7 or $_SESSION['level'] == 9) {
             ?>
                 <li class="nav-item dropdown">
                     <a class="dropdown-toggle" href="admissions.php">
