@@ -37,7 +37,7 @@ if (!isset($_SESSION['username'])) {
                                         <span class="icon-holder">
                                             <i class="anticon anticon-book"></i>
                                         </span>
-                                        Classes Handled - <?php echo $_SESSION['fname'] . " " . $_SESSION['lname']; ?>
+                                        Classes Handled - <?php echo $_SESSION['fname'] . " " . $_SESSION['lname']." ".$_SESSION['level']; ?>
                                     </h3>
                                 </div>
                                 <div class="card-body">

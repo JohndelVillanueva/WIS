@@ -451,7 +451,7 @@ button.dropdown-btn::before {
 }
 
 /* Custom Properties */
-button:nth-of-type(2)::before {
+.dropdown-content :nth-of-type(2)::before {
     display: inline-block;
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
@@ -461,7 +461,7 @@ button:nth-of-type(2)::before {
 }
 
 /* Custom Properties */
-button:nth-of-type(3)::before {
+.dropdown-content button:nth-of-type(3)::before {
     display: inline-block;
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;

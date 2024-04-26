@@ -13,8 +13,16 @@
                     </a>
                 </li>
             <?php }
-            if ($_SESSION['level'] >= 2) {
+            if ($_SESSION['level'] >= 2 AND $_SESSION["level"] != 8) {
             ?>
+                <li class="nav-item dropdown">
+                    <a class="dropdown-toggle" href="dashboard.php">
+                        <span class="icon-holder">
+                            <i class="anticon anticon-dashboard"></i>
+                        </span>
+                        <span class="title">Dashboard</span>
+                    </a>
+                </li>
                 <li class="nav-item dropdown">
                     <a class="dropdown-toggle" href="application.php">
                         <span class="icon-holder">
@@ -24,6 +32,18 @@
                     </a>
                 </li>
             <?php
+            }
+            if ($_SESSION['level'] == 8 OR $_SESSION['level'] == 9) {
+                ?>
+                <li class="nav-item dropdown">
+                    <a class="dropdown-toggle" href="clinic.php">
+                        <span class="icon-holder">
+                            <i class="anticon anticon-plus-square"></i>
+                        </span>
+                        <span class="title">Clinic</span>
+                    </a>
+                </li>
+                <?php
             }
             if ($_SESSION['level'] == 4 or $_SESSION['level'] == 9) {
             ?>
@@ -64,7 +84,7 @@
             <?php
             }
 
-            if ($_SESSION['level'] == 5 or $_SESSION['level'] == 9) {
+            if ($_SESSION['level'] == 5 or $_SESSION['level'] == 9 or $_SESSION['level'] == 2) {
             ?>
                 <li class="nav-item dropdown">
                     <a class="dropdown-toggle" href="guidance.php">
@@ -77,7 +97,7 @@
             <?php
             }
 
-            if ($_SESSION['level'] == 6 or $_SESSION['level'] == 9) {
+            if ($_SESSION['level'] == 6 or $_SESSION['level'] == 9 or $_SESSION['level'] == 2) {
             ?>
                 <li class="nav-item dropdown">
                     <a class="dropdown-toggle" href="interview.php">
@@ -178,6 +198,29 @@
                 <?php
             }
             ?>
+            <li class="nav-item dropdown">
+                <a class="dropdown-toggle" href="javascript:void(0);">
+                    <span class="icon-holder">
+                        <i class="anticon anticon-star"></i>
+                    </span>
+                    <span class="title">Recommendations</span>
+                    <span class="arrow">
+                        <i class="arrow-icon"></i>
+                    </span>
+                </a>
+                <ul class="dropdown-menu" style="display: none;">
+                    <li>
+                        <a href="star-program.php">Star Program</a>
+                    </li>
+                    <li>
+                        <a href="esl-program.php">ESL Program</a>
+                    </li>
+                    <li>
+                        <a href="completion.php">Completion</a>
+                    </li>
+
+                </ul>
+            </li>
             <li class="nav-item dropdown">
                 <a class="dropdown-toggle" href="javascript:void(0);">
                     <span class="icon-holder">

@@ -26,7 +26,7 @@ if (!isset($_SESSION['username'])) {
                                         <span class="icon-holder">
                                             <i class="anticon anticon-idcard"></i>
                                         </span>
-                                        New Student Application - Completion of Documents
+                                        Student Medical Records
                                     </h4>
                                 </div>
                                 <div class="card-body">
@@ -43,27 +43,31 @@ if (!isset($_SESSION['username'])) {
                                     <?php
                                     }
                                     ?>
-                                    <div class="row">
-                                        <table class="table">
+                                    <div class="row ">
+                                        <div class="col-lg-12">
+                                            <table id="userlist" class="display table table-stripped table-fluid"  >
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">Reference Number</th>
-                                                    <th scope="col">Full Name</th>
-                                                    <th scope="col">Gender</th>
-                                                    <th scope="col">Previous School</th>
-                                                    <th scope="col">Notes</th>
-                                                    <th scope="col">Completed</th>
+                                                    <th scope="col" class="text-center">Reference Number</th>
+                                                    <th scope="col" class="text-center">Full Name</th>
+                                                    <th scope="col" class="text-center">Gender</th>
+                                                    <th scope="col" class="text-center">Grade</th>
+                                                    <th scope="col" class="text-center">Section</th>
+                                                    <th scope="col" class="text-center">Date of Birth</th>
+                                                    <!-- <th scope="col">LRN</th> -->
+                                                    <th scope="col" class="text-center">Profile</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $pdo_statement = $DB_con->prepare("SELECT * FROM users24 WHERE status = 6");
-                                                $pdo_statement->execute();
+                                                $pdo_statement = $DB_con->prepare("SELECT * FROM users24 WHERE position = :position AND status = :status
+                                               ORDER BY `id` DESC");
+                                                $pdo_statement->execute([":position" => "Student" , ":status" => 8]);
                                                 $result = $pdo_statement->fetchAll();
                                                 foreach ($result as $row) {
                                                 ?>
-                                                    <tr>
-                                                        <form method="post" action="process.php">
+                                                    <tr style="padding-top:10px!important; padding-bottom:10px!important;">
+                                                        <form>
                                                             <th scope="row">
                                                                 <div class="col-lg-12">
                                                                     <p><a class="btn btn-primary" data-toggle="collapse" href="#collapseExample<?php echo $row['uniqid']; ?>" role="button" aria-expanded="false" aria-controls="collapseExample<?php echo $row['uniqid']; ?>"><?php echo $row["uniqid"]; ?></a></p>
@@ -72,23 +76,26 @@ if (!isset($_SESSION['username'])) {
                                                                     $logs->execute(array(':ern' => $row['uniqid']));
                                                                     $logsresult = $logs->fetchAll();
                                                                     foreach ($logsresult as $log) {
-                                                                        include "log.php";
+                                                                    ?>
+                                                                        <div class="collapse" id="collapseExample<?php echo $row['uniqid']; ?>">
+                                                                            <div class="card card-body">
+                                                                                <?php echo $log['notes'] . " (" . $log['usertouch'] . "@" . $log['touch'] . ")"; ?>
+                                                                            </div>
+                                                                        </div>
+                                                                    <?php
                                                                     }
                                                                     ?>
                                                                 </div>
                                                             </th>
                                                             <td><?php echo $row["lname"] . ", " . $row["fname"] . " " . $row["mname"]; ?></td>
                                                             <td><?php echo $row["gender"]; ?></td>
-                                                            <td><?php echo $row["prevsch"]; ?></td>
+                                                            <td><?php echo $row["grade"]; ?></td>
+                                                            <td><?php echo $row["section"]; ?></td>
+                                                            <td><?php echo date("F j, Y", strtotime($row["dob"])); ?></td>
+                                                            <!-- <td><?php echo $row["lrn"]; ?></td> -->
                                                             <td>
-                                                                <input class="form-control" type="text" id="notes" name="notes" placeholder="Type notes here">
-                                                                <input type="hidden" name="stage" id="stage" value="7">
-                                                                <input type="hidden" name="ern" id="ern" value="<?php echo $row["uniqid"]; ?>">
-                                                            </td>
-                                                            <td>
-                                                                <button type="submit" name="official" class="btn btn-success rounded"><span class="icon-holder"><i class="anticon anticon-check"></i></span></button>
-                                                                <button type="submit" name="unofficial" class="btn btn-danger rounded"><span class="icon-holder"><i class="anticon anticon-warning"></i></span></button>
-                                                                <a type="button" href="profile.php?id=<?php echo $row["id"]; ?>" class="btn btn-primary rounded"><span class="icon-holder"><i class="anticon anticon-eye"></i></span></a>
+                                                                <a type="button" href="medical-profile.php?id=<?php echo $row["id"]; ?>" class="btn btn-success rounded"><span class="icon-holder"><i class="anticon anticon-eye"></i></span></a>
+
                                                             </td>
                                                         </form>
                                                     </tr>
@@ -97,6 +104,7 @@ if (!isset($_SESSION['username'])) {
                                                 ?>
                                             </tbody>
                                         </table>
+                                    </div>
                                     </div>
                                 </div>
                                 <div class="card-footer bg-light text-center"></div>
@@ -107,9 +115,25 @@ if (!isset($_SESSION['username'])) {
                 </div>
                 <?php include_once "includes/footer.php"; ?>
             </div>
-            <?php include_once "includes/scripts.php"; ?>
+            <?php include_once "script.php"; ?>
+
         </div>
     </div>
+    <script>
+        $(document).ready( function() {
+            $('#userlist').DataTable( {
+                dom: 'frtipB',
+                buttons: [
+                    'copyHtml5',
+                    'excelHtml5',
+                    'csvHtml5',
+                    'pdfHtml5',
+                    'print'
+                ],
+                "pageLength":15
+            } );
+        } );
+    </script>
 </body>
 
 </html>

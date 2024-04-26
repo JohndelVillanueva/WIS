@@ -49,6 +49,8 @@ if (!isset($_SESSION['username'])) {
                                                 <tr>
                                                     <th scope="col">Reference Number</th>
                                                     <th scope="col">Full Name</th>
+                                                    <th scope="col">Recommendations</th>
+                                                    <th scope="col">Uniform</th>
                                                     <th scope="col">Payables</th>
                                                     <th scope="col">Notes</th>
                                                     <th scope="col">Payment</th>
@@ -77,6 +79,32 @@ if (!isset($_SESSION['username'])) {
                                                                 </div>
                                                             </th>
                                                             <td><?php echo $row["lname"] . ", " . $row["fname"] . " " . $row["mname"]; ?></td>
+                                                            <td>
+                                                                <?php
+                                                                $checkrec = $DB_con->prepare("SELECT DISTINCT * FROM s_recommendations WHERE user_id = :userid");
+                                                                $checkrec->execute(array(":userid" => $row["username"]));
+                                                                $recs = $checkrec->fetchAll();
+
+                                                                foreach($recs as $reco) {
+                                                                    if (!empty($reco["esl"])) {
+                                                                        echo "<span class='text-danger'>&check; ESL Required</span><br>";
+                                                                    }
+
+                                                                    if (!empty($reco["star"])) {
+                                                                        echo "<span class='text-danger'>&check; STAR Required</span><br>";
+                                                                    }
+
+                                                                    if (!empty($reco["completion"])) {
+                                                                        echo "<span class='text-danger'>&check; Completion</span>";
+                                                                    }
+                                                                }
+                                                                ?>
+                                                            </td>
+                                                            <td>
+                                                                &check; 2pcs Uniform XL<br>
+                                                                &check; 1pc PE Uniform XL<br>
+                                                                &check; 2pcs Activity XL<br>
+                                                            </td>
                                                             <td>
                                                                 <select class="custom-select" id="tf" class="form-select" name="tf" required>
                                                                     <option value="0" disabled selected>-- select one --</option>

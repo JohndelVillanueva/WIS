@@ -47,7 +47,7 @@ if (isset($_REQUEST['submit'])) {
                         $loginMsg = "Login Successful! Redirecting...";
                         if ($row["level"] == 0) {
                             header("refresh:1; student.php");
-                        } else if ($row["level"] >= 1 or $row["level"] <= 2) {
+                        } else if ($row["level"] == 1 or $row["level"] == 2) {
                             header("refresh:1; teacher.php");
                         } else {
                             header("refresh:1; dashboard.php");

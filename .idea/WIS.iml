@@ -1,7 +1,203 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://Z:">
+      <sourceFolder url="file://Z:/guest/src" isTestSource="false" packagePrefix="UniFi_API" />
+      <sourceFolder url="file://Z:/voucher/src" isTestSource="false" packagePrefix="UniFi_API" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries" isTestSource="false" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/mercadopago/dx-php/src" isTestSource="false" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/mercadopago/dx-php/src/MercadoPago/Entities" isTestSource="false" packagePrefix="MercadoPago" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/mercadopago/dx-php/src/MercadoPago/Entities/Shared" isTestSource="false" packagePrefix="MercadoPago" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/mercadopago/dx-php/src/MercadoPago/Generic" isTestSource="false" packagePrefix="MercadoPago" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/twilio" isTestSource="false" />
+      <sourceFolder url="file://Z:/bsms_ci/tests" isTestSource="true" />
+      <sourceFolder url="file://Z:/properties/tests/Feature" isTestSource="true" />
+      <sourceFolder url="file://Z:/properties/tests/Unit" isTestSource="true" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/annotations/tests" isTestSource="true" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/cache/tests" isTestSource="true" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/collections/tests" isTestSource="true" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/common/tests" isTestSource="true" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/event-manager/tests" isTestSource="true" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/inflector/tests" isTestSource="true" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/lexer/tests" isTestSource="true" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/persistence/tests" isTestSource="true" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/reflection/tests" isTestSource="true" />
+      <sourceFolder url="file://Z:/wisbot/ci/tests" isTestSource="true" />
+      <sourceFolder url="file://Z:/inventory/assests/plugins/fileinput/" isTestSource="false" packagePrefix="kartik\plugins\fileinput\" />
+      <sourceFolder url="file://Z:/properties/app" isTestSource="false" packagePrefix="App\" />
+      <sourceFolder url="file://Z:/properties/database/factories" isTestSource="false" packagePrefix="Database\Factories\" />
+      <sourceFolder url="file://Z:/properties/database/seeders" isTestSource="false" packagePrefix="Database\Seeders\" />
+      <sourceFolder url="file://Z:/properties/tests" isTestSource="true" packagePrefix="Tests\" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/annotations/lib/Doctrine/Common/Annotations" isTestSource="false" packagePrefix="Doctrine\Common\Annotations\" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/annotations/tests/Doctrine/Performance/Common/Annotations" isTestSource="true" packagePrefix="Doctrine\Performance\Common\Annotations\" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/annotations/tests/Doctrine/Tests/Common/Annotations" isTestSource="true" packagePrefix="Doctrine\Tests\Common\Annotations\" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/cache/lib/Doctrine/Common/Cache" isTestSource="false" packagePrefix="Doctrine\Common\Cache\" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/cache/tests/Doctrine/Tests" isTestSource="true" packagePrefix="Doctrine\Tests\" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/collections/lib/Doctrine/Common/Collections" isTestSource="false" packagePrefix="Doctrine\Common\Collections\" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/collections/tests/Doctrine/Tests" isTestSource="true" packagePrefix="Doctrine\Tests\" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/common/lib/Doctrine/Common" isTestSource="false" packagePrefix="Doctrine\Common\" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/common/tests/Doctrine/Tests" isTestSource="true" packagePrefix="Doctrine\Tests\" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/event-manager/lib/Doctrine/Common" isTestSource="false" packagePrefix="Doctrine\Common\" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/event-manager/tests/Doctrine/Tests" isTestSource="true" packagePrefix="Doctrine\Tests\" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/inflector/lib/Doctrine/Common/Inflector" isTestSource="false" packagePrefix="Doctrine\Common\Inflector\" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/inflector/lib/Doctrine/Inflector" isTestSource="false" packagePrefix="Doctrine\Inflector\" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/inflector/tests/Doctrine/Tests/Common/Inflector" isTestSource="true" packagePrefix="Doctrine\Tests\Common\Inflector\" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/inflector/tests/Doctrine/Tests/Inflector" isTestSource="true" packagePrefix="Doctrine\Tests\Inflector\" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/lexer/lib/Doctrine/Common/Lexer" isTestSource="false" packagePrefix="Doctrine\Common\Lexer\" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/lexer/tests/Doctrine" isTestSource="true" packagePrefix="Doctrine\Tests\" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/persistence/lib/Doctrine/Common" isTestSource="false" packagePrefix="Doctrine\Common\" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/persistence/lib/Doctrine/Persistence" isTestSource="false" packagePrefix="Doctrine\Persistence\" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/persistence/tests/Doctrine/Tests" isTestSource="true" packagePrefix="Doctrine\Tests\" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/persistence/tests/Doctrine/Tests_PHP74" isTestSource="true" packagePrefix="Doctrine\Tests_PHP74\" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/reflection/lib/Doctrine/Common" isTestSource="false" packagePrefix="Doctrine\Common\" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/reflection/tests/Doctrine/Tests" isTestSource="true" packagePrefix="Doctrine\Tests\" />
+      <sourceFolder url="file://Z:/wisbot/application/libraries/mercadopago/doctrine/reflection/tests/Doctrine/Tests_PHP74" isTestSource="true" packagePrefix="Doctrine\Tests_PHP74\" />
+      <excludeFolder url="file://Z:/properties/vendor/barryvdh/laravel-debugbar" />
+      <excludeFolder url="file://Z:/properties/vendor/brick/math" />
+      <excludeFolder url="file://Z:/properties/vendor/clue/stream-filter" />
+      <excludeFolder url="file://Z:/properties/vendor/composer" />
+      <excludeFolder url="file://Z:/properties/vendor/dflydev/dot-access-data" />
+      <excludeFolder url="file://Z:/properties/vendor/doctrine/annotations" />
+      <excludeFolder url="file://Z:/properties/vendor/doctrine/cache" />
+      <excludeFolder url="file://Z:/properties/vendor/doctrine/common" />
+      <excludeFolder url="file://Z:/properties/vendor/doctrine/dbal" />
+      <excludeFolder url="file://Z:/properties/vendor/doctrine/deprecations" />
+      <excludeFolder url="file://Z:/properties/vendor/doctrine/event-manager" />
+      <excludeFolder url="file://Z:/properties/vendor/doctrine/inflector" />
+      <excludeFolder url="file://Z:/properties/vendor/doctrine/instantiator" />
+      <excludeFolder url="file://Z:/properties/vendor/doctrine/lexer" />
+      <excludeFolder url="file://Z:/properties/vendor/doctrine/persistence" />
+      <excludeFolder url="file://Z:/properties/vendor/docusign/esign-client" />
+      <excludeFolder url="file://Z:/properties/vendor/docusign/esign-laravel" />
+      <excludeFolder url="file://Z:/properties/vendor/dragonmantank/cron-expression" />
+      <excludeFolder url="file://Z:/properties/vendor/egulias/email-validator" />
+      <excludeFolder url="file://Z:/properties/vendor/fakerphp/faker" />
+      <excludeFolder url="file://Z:/properties/vendor/filp/whoops" />
+      <excludeFolder url="file://Z:/properties/vendor/firebase/php-jwt" />
+      <excludeFolder url="file://Z:/properties/vendor/fruitcake/php-cors" />
+      <excludeFolder url="file://Z:/properties/vendor/graham-campbell/result-type" />
+      <excludeFolder url="file://Z:/properties/vendor/guzzlehttp/guzzle" />
+      <excludeFolder url="file://Z:/properties/vendor/guzzlehttp/promises" />
+      <excludeFolder url="file://Z:/properties/vendor/guzzlehttp/psr7" />
+      <excludeFolder url="file://Z:/properties/vendor/guzzlehttp/uri-template" />
+      <excludeFolder url="file://Z:/properties/vendor/hamcrest/hamcrest-php" />
+      <excludeFolder url="file://Z:/properties/vendor/laravel/framework" />
+      <excludeFolder url="file://Z:/properties/vendor/laravel/pint" />
+      <excludeFolder url="file://Z:/properties/vendor/laravel/sail" />
+      <excludeFolder url="file://Z:/properties/vendor/laravel/sanctum" />
+      <excludeFolder url="file://Z:/properties/vendor/laravel/serializable-closure" />
+      <excludeFolder url="file://Z:/properties/vendor/laravel/tinker" />
+      <excludeFolder url="file://Z:/properties/vendor/laravel/ui" />
+      <excludeFolder url="file://Z:/properties/vendor/league/commonmark" />
+      <excludeFolder url="file://Z:/properties/vendor/league/config" />
+      <excludeFolder url="file://Z:/properties/vendor/league/flysystem" />
+      <excludeFolder url="file://Z:/properties/vendor/league/flysystem-local" />
+      <excludeFolder url="file://Z:/properties/vendor/league/mime-type-detection" />
+      <excludeFolder url="file://Z:/properties/vendor/maximebf/debugbar" />
+      <excludeFolder url="file://Z:/properties/vendor/mercadopago/dx-php" />
+      <excludeFolder url="file://Z:/properties/vendor/mockery/mockery" />
+      <excludeFolder url="file://Z:/properties/vendor/mollie/laravel-mollie" />
+      <excludeFolder url="file://Z:/properties/vendor/mollie/mollie-api-php" />
+      <excludeFolder url="file://Z:/properties/vendor/moneyphp/money" />
+      <excludeFolder url="file://Z:/properties/vendor/monolog/monolog" />
+      <excludeFolder url="file://Z:/properties/vendor/myclabs/deep-copy" />
+      <excludeFolder url="file://Z:/properties/vendor/nesbot/carbon" />
+      <excludeFolder url="file://Z:/properties/vendor/nette/schema" />
+      <excludeFolder url="file://Z:/properties/vendor/nette/utils" />
+      <excludeFolder url="file://Z:/properties/vendor/nikic/php-parser" />
+      <excludeFolder url="file://Z:/properties/vendor/nunomaduro/collision" />
+      <excludeFolder url="file://Z:/properties/vendor/nunomaduro/termwind" />
+      <excludeFolder url="file://Z:/properties/vendor/omnipay/common" />
+      <excludeFolder url="file://Z:/properties/vendor/omnipay/paypal" />
+      <excludeFolder url="file://Z:/properties/vendor/phar-io/manifest" />
+      <excludeFolder url="file://Z:/properties/vendor/phar-io/version" />
+      <excludeFolder url="file://Z:/properties/vendor/php-http/discovery" />
+      <excludeFolder url="file://Z:/properties/vendor/php-http/guzzle7-adapter" />
+      <excludeFolder url="file://Z:/properties/vendor/php-http/httplug" />
+      <excludeFolder url="file://Z:/properties/vendor/php-http/message" />
+      <excludeFolder url="file://Z:/properties/vendor/php-http/message-factory" />
+      <excludeFolder url="file://Z:/properties/vendor/php-http/promise" />
+      <excludeFolder url="file://Z:/properties/vendor/phpoption/phpoption" />
+      <excludeFolder url="file://Z:/properties/vendor/phpunit/php-code-coverage" />
+      <excludeFolder url="file://Z:/properties/vendor/phpunit/php-file-iterator" />
+      <excludeFolder url="file://Z:/properties/vendor/phpunit/php-invoker" />
+      <excludeFolder url="file://Z:/properties/vendor/phpunit/php-text-template" />
+      <excludeFolder url="file://Z:/properties/vendor/phpunit/php-timer" />
+      <excludeFolder url="file://Z:/properties/vendor/phpunit/phpunit" />
+      <excludeFolder url="file://Z:/properties/vendor/psr/cache" />
+      <excludeFolder url="file://Z:/properties/vendor/psr/container" />
+      <excludeFolder url="file://Z:/properties/vendor/psr/event-dispatcher" />
+      <excludeFolder url="file://Z:/properties/vendor/psr/http-client" />
+      <excludeFolder url="file://Z:/properties/vendor/psr/http-factory" />
+      <excludeFolder url="file://Z:/properties/vendor/psr/http-message" />
+      <excludeFolder url="file://Z:/properties/vendor/psr/log" />
+      <excludeFolder url="file://Z:/properties/vendor/psr/simple-cache" />
+      <excludeFolder url="file://Z:/properties/vendor/psy/psysh" />
+      <excludeFolder url="file://Z:/properties/vendor/ralouphie/getallheaders" />
+      <excludeFolder url="file://Z:/properties/vendor/ramsey/collection" />
+      <excludeFolder url="file://Z:/properties/vendor/ramsey/uuid" />
+      <excludeFolder url="file://Z:/properties/vendor/razorpay/razorpay" />
+      <excludeFolder url="file://Z:/properties/vendor/rmccue/requests" />
+      <excludeFolder url="file://Z:/properties/vendor/sebastian/cli-parser" />
+      <excludeFolder url="file://Z:/properties/vendor/sebastian/code-unit" />
+      <excludeFolder url="file://Z:/properties/vendor/sebastian/code-unit-reverse-lookup" />
+      <excludeFolder url="file://Z:/properties/vendor/sebastian/comparator" />
+      <excludeFolder url="file://Z:/properties/vendor/sebastian/complexity" />
+      <excludeFolder url="file://Z:/properties/vendor/sebastian/diff" />
+      <excludeFolder url="file://Z:/properties/vendor/sebastian/environment" />
+      <excludeFolder url="file://Z:/properties/vendor/sebastian/exporter" />
+      <excludeFolder url="file://Z:/properties/vendor/sebastian/global-state" />
+      <excludeFolder url="file://Z:/properties/vendor/sebastian/lines-of-code" />
+      <excludeFolder url="file://Z:/properties/vendor/sebastian/object-enumerator" />
+      <excludeFolder url="file://Z:/properties/vendor/sebastian/object-reflector" />
+      <excludeFolder url="file://Z:/properties/vendor/sebastian/recursion-context" />
+      <excludeFolder url="file://Z:/properties/vendor/sebastian/resource-operations" />
+      <excludeFolder url="file://Z:/properties/vendor/sebastian/type" />
+      <excludeFolder url="file://Z:/properties/vendor/sebastian/version" />
+      <excludeFolder url="file://Z:/properties/vendor/spatie/backtrace" />
+      <excludeFolder url="file://Z:/properties/vendor/spatie/flare-client-php" />
+      <excludeFolder url="file://Z:/properties/vendor/spatie/ignition" />
+      <excludeFolder url="file://Z:/properties/vendor/spatie/laravel-ignition" />
+      <excludeFolder url="file://Z:/properties/vendor/spatie/laravel-permission" />
+      <excludeFolder url="file://Z:/properties/vendor/stripe/stripe-php" />
+      <excludeFolder url="file://Z:/properties/vendor/symfony/console" />
+      <excludeFolder url="file://Z:/properties/vendor/symfony/css-selector" />
+      <excludeFolder url="file://Z:/properties/vendor/symfony/deprecation-contracts" />
+      <excludeFolder url="file://Z:/properties/vendor/symfony/error-handler" />
+      <excludeFolder url="file://Z:/properties/vendor/symfony/event-dispatcher" />
+      <excludeFolder url="file://Z:/properties/vendor/symfony/event-dispatcher-contracts" />
+      <excludeFolder url="file://Z:/properties/vendor/symfony/finder" />
+      <excludeFolder url="file://Z:/properties/vendor/symfony/http-foundation" />
+      <excludeFolder url="file://Z:/properties/vendor/symfony/http-kernel" />
+      <excludeFolder url="file://Z:/properties/vendor/symfony/mailer" />
+      <excludeFolder url="file://Z:/properties/vendor/symfony/mime" />
+      <excludeFolder url="file://Z:/properties/vendor/symfony/polyfill-ctype" />
+      <excludeFolder url="file://Z:/properties/vendor/symfony/polyfill-intl-grapheme" />
+      <excludeFolder url="file://Z:/properties/vendor/symfony/polyfill-intl-idn" />
+      <excludeFolder url="file://Z:/properties/vendor/symfony/polyfill-intl-normalizer" />
+      <excludeFolder url="file://Z:/properties/vendor/symfony/polyfill-mbstring" />
+      <excludeFolder url="file://Z:/properties/vendor/symfony/polyfill-php72" />
+      <excludeFolder url="file://Z:/properties/vendor/symfony/polyfill-php80" />
+      <excludeFolder url="file://Z:/properties/vendor/symfony/polyfill-php83" />
+      <excludeFolder url="file://Z:/properties/vendor/symfony/polyfill-uuid" />
+      <excludeFolder url="file://Z:/properties/vendor/symfony/process" />
+      <excludeFolder url="file://Z:/properties/vendor/symfony/routing" />
+      <excludeFolder url="file://Z:/properties/vendor/symfony/service-contracts" />
+      <excludeFolder url="file://Z:/properties/vendor/symfony/string" />
+      <excludeFolder url="file://Z:/properties/vendor/symfony/translation" />
+      <excludeFolder url="file://Z:/properties/vendor/symfony/translation-contracts" />
+      <excludeFolder url="file://Z:/properties/vendor/symfony/uid" />
+      <excludeFolder url="file://Z:/properties/vendor/symfony/var-dumper" />
+      <excludeFolder url="file://Z:/properties/vendor/symfony/yaml" />
+      <excludeFolder url="file://Z:/properties/vendor/theseer/tokenizer" />
+      <excludeFolder url="file://Z:/properties/vendor/tijsverkoyen/css-to-inline-styles" />
+      <excludeFolder url="file://Z:/properties/vendor/twilio/sdk" />
+      <excludeFolder url="file://Z:/properties/vendor/vlucas/phpdotenv" />
+      <excludeFolder url="file://Z:/properties/vendor/voku/portable-ascii" />
+      <excludeFolder url="file://Z:/properties/vendor/webmozart/assert" />
+      <excludeFolder url="file://Z:/properties/vendor/yajra/laravel-datatables-oracle" />
+      <excludeFolder url="file://Z:/properties/vendor/zainiklab/zai-installer" />
+    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>

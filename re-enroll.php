@@ -12,7 +12,7 @@ session_start();
             <?php include_once "includes/heading.php"; ?>
             <?php include_once "includes/sidemenu.php"; ?>
             <?php
-            $pdo_statement = $DB_con->prepare("SELECT * FROM users24 u WHERE u.id = :id");
+            $pdo_statement = $DB_con->prepare("SELECT * FROM user WHERE id = :id");
             $pdo_statement->execute(array(":id" => $_GET['id']));
             $result = $pdo_statement->fetchAll();
             foreach ($result as $row) {
@@ -76,7 +76,6 @@ session_start();
                                                 <div class="col-lg-1">
                                                     <label for="house">House</label>
                                                     <select class="custom-select" id="house" name="house">
-                                                        <option value="<?php echo $row["house"]; ?>"><?php echo $row["house"]; ?></option>
                                                         <option value="Bulls">Bulls</option>
                                                         <option value="Owls">Owls</option>
                                                         <option value="Wolves">Wolves</option>
@@ -585,7 +584,7 @@ session_start();
                                                 <div class="col-lg-1">
                                                     <label for="gradelevel">Level Applied for:</label>
                                                     <select class="custom-select" id="gradelevel" class="form-select" name="gradelevel" required>
-                                                        <option value="<?php echo $row["grade"]; ?>""><?php echo ucfirst($row["grade"]); ?></option>
+                                                        <option value="<?php echo $row["grade"]+1; ?>""><?php echo ucfirst($row["grade"]+1); ?></option>
                                                 <option value="">-- select one --</option>
                                                 <option value=" Nursery">Nursery</option>
                                                         <option value="Toddler">Toddler</option>

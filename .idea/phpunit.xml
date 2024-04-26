@@ -14,6 +14,8 @@
         <option value="Z:/wisbot/application/libraries/mercadopago/doctrine/cache/tests" />
         <option value="Z:/wisbot/application/libraries/mercadopago/doctrine/annotations/tests" />
         <option value="Z:/wisbot/application/libraries/mercadopago/doctrine/persistence/tests" />
+        <option value="Z:/properties/tests/Unit" />
+        <option value="Z:/properties/tests/Feature" />
       </list>
     </option>
   </component>

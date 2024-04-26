@@ -30,9 +30,13 @@
                     <div class="avatar avatar-image  m-h-10 m-r-15">
                         <img src="assets/images/avatars/<?php
 												if(empty($_SESSION["photo"]))	{
-													echo "avatar.jpg";
+													echo "avatar";
 												} else {
-													echo $_SESSION["photo"];
+                                                    if(file_exists("assets/images/avatars/".$_SESSION["photo"])) {
+                                                        echo $_SESSION["photo"];
+                                                    } else {
+                                                        echo "avatar";
+                                                    }
 												}
 											?>.jpg"  alt="">
                     </div>

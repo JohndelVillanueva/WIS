@@ -2,6 +2,10 @@
 include_once "includes/config.php";
 session_start();
 
+$delete = $DB_con->prepare("DELETE FROM studentdetails WHERE uniqid = :uniqid");
+$delete->execute(array(":uniqid"=>$_POST["uniqid"]));
+
+
 $studentdetailsQuery =
 	"INSERT INTO studentdetails 
 		(uniqid,visa,
@@ -133,7 +137,8 @@ $updateUserQuery =
 		prevschcountry = :oldschoolctry, 
 		nationality = :nationality,
 		grade = :gradelevel, 
-		section = :section
+		section = :section,
+		house = :house
 		WHERE uniqid = :uniqid";	
 
 $userprocess_statement = $DB_con->prepare( $updateUserQuery );
@@ -156,7 +161,8 @@ $userprocess_statement->execute(
 		':section' => $_POST[ 'section' ],
 		':guardian' => $_POST[ 'guardian' ],
 		':guardianemail' => $_POST[ 'guardianemail' ],
-		':guardianphone' => $_POST[ 'guardianphone' ]
+		':guardianphone' => $_POST[ 'guardianphone' ],
+        ':house' => $_POST[ 'house' ]
 	));
 
 	if($userprocess_statement){

@@ -56,7 +56,6 @@ if (!isset($_SESSION['username'])) {
                                                 <th scope="col">PT</th>
                                                 <th scope="col">QE</th>
                                                 <th scope="col">Assigned By</th>
-                                                <th scope="col">Reassign</th>
                                                 <th scope="col">Action</th>
 
                                             </tr>
@@ -69,7 +68,7 @@ if (!isset($_SESSION['username'])) {
                                             foreach ($result as $row) {
                                             ?>
                                                 <tr>
-                                                    <form>
+                                                    <form >
                                                         <th scope="row"><?php echo $row["code"]; ?></th>
                                                         <td><?php echo $row["subjlevel"]; ?></td>
                                                         <td><?php echo $row["subjsection"]; ?></td>
@@ -79,26 +78,7 @@ if (!isset($_SESSION['username'])) {
                                                         <td><?php echo $row["percentpt"]; ?></td>
                                                         <td><?php echo $row["percentqt"]; ?></td>
                                                         <td><?php echo $row["assignedby"]; ?></td>
-                                                        <td>
-                                                            <?php
-                                                            if ($_SESSION['level'] == 9 or $_SESSION['level'] == 2 or $_SESSION['level'] == 4) {
-                                                            ?>
-                                                                <select class="form-control form-select" aria-label="Reassign">
-                                                                    <option selected>Select</option>
-                                                                    <?php
-                                                                    $teacher = $DB_con->prepare("SELECT * FROM user WHERE position LIKE '%Teacher%' ORDER BY lname ASC");
-                                                                    $teacher->execute();
-                                                                    $tresult = $teacher->fetchAll();
-                                                                    foreach ($tresult as $trow) {
-                                                                        echo "<option value=\"" . $trow["rfid"] . "\">" . $trow["lname"] . ", " . $trow["fname"] . "</option>";
-                                                                    }
-                                                                    ?>
-                                                                </select>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                        </td>
-                                                        <td><a href="edit-subject.php?id=<?php echo $row['code']; ?>" type="button" class="btn btn-primary rounded"><span class="icon-holder"><i class="anticon anticon-check"></i></span></a></td>
+                                                        <td><a href="edit-assignment.php?id=<?php echo $row["code"]?>" class="btn btn-primary">Edit Subject</a> </td>
                                                     </form>
                                                 </tr>
                                             <?php

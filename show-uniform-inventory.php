@@ -193,7 +193,7 @@ if (!isset($_SESSION['username'])) {
                                             </div>
                                             <div class="modal-body">
                                                 <div class=" col-12 p-2">
-                                                    <table class="table table-bordered table-hover" id="studentInventory">
+                                                    <table class="table table-bordered table-hover w-100" id="studentInventory">
                                                         <thead>
                                                             <tr>
                                                                 <th>First Name</th>
@@ -212,9 +212,9 @@ if (!isset($_SESSION['username'])) {
 
                                                         ?>
                                                             <tr class="align-middle">
-                                                                <td style="width: 30.66%"><?= $student->fname ?></td>
-                                                                <td style="width: 30.66%"><?= $student->lname ?></dh>
-                                                                <td style="width: 30.66%"><?= $student->grade ?></td>
+                                                                <td class=""><?= $student->fname ?></td>
+                                                                <td><?= $student->lname ?></dh>
+                                                                <td><?= $student->grade ?></td>
                                                                 <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal" value="<?= $student->id ?>" > Release</button></td>
                                                             </tr>
                                                             <?php 

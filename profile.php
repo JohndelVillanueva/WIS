@@ -589,6 +589,12 @@ if (!isset($_SESSION['username'])) {
                                                     </div>
                                                 <?php } ?>
                                                 </div>
+                                            <div class="row pt-2">
+                                                <div class="col-lg-12 text-center">
+                                                    <label for="conforme">Conforme:</label>
+                                                    <input type="text" class="form-control form-control-lg" id="conforme" name="conforme">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 

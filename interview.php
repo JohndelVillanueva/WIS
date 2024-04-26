@@ -49,6 +49,8 @@ if (!isset($_SESSION['username'])) {
                                                 <tr>
                                                     <th scope="col">Reference Number</th>
                                                     <th scope="col">Full Name</th>
+                                                    <th scope="col">Interview Date</th>
+                                                    <th scope="col">Recommendation(s)</th>
                                                     <th scope="col">Previous School</th>
                                                     <th scope="col">Country</th>
                                                     <th scope="col">Notes</th>
@@ -78,11 +80,44 @@ if (!isset($_SESSION['username'])) {
                                                                 </div>
                                                             </th>
                                                             <td><?php echo $row["lname"] . ", " . $row["fname"] . " " . $row["mname"]; ?></td>
+                                                            <td>
+                                                                <?php
+                                                                $checksched = $DB_con->prepare("SELECT * FROM schedule WHERE title LIKE :name");
+                                                                $checksched->execute(array(":name" => "%".$row["fname"]." ".$row["lname"]."%"));
+                                                                $sched = $checksched->fetchAll();
+
+                                                                foreach($sched as $sked) {
+                                                                    echo $sked["start"];
+                                                                }
+                                                                ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php
+                                                                $checkrec = $DB_con->prepare("SELECT DISTINCT * FROM s_recommendations WHERE user_id = :userid");
+                                                                $checkrec->execute(array(":userid" => $row["username"]));
+                                                                $recs = $checkrec->fetchAll();
+
+                                                                foreach($recs as $reco) {
+                                                                    if (!empty($reco["esl"])) {
+                                                                        echo "<span class='text-danger'>&check; ESL Required</span><br>";
+                                                                    }
+
+                                                                    if (!empty($reco["star"])) {
+                                                                        echo "<span class='text-danger'>&check; STAR Required</span><br>";
+                                                                    }
+
+                                                                    if (!empty($reco["completion"])) {
+                                                                        echo "<span class='text-danger'>&check; Completion</span>";
+                                                                    }
+                                                                }
+                                                                ?>
+                                                            </td>
                                                             <td><?php echo $row["prevsch"]; ?></td>
                                                             <td><?php echo $row["prevschcountry"]; ?></td>
                                                             <td>
                                                                 <input class="form-control" type="text" id="notes" name="notes" placeholder="Type notes here">
                                                                 <input type="hidden" name="stage" id="stage" value="6">
+                                                                <input type="hidden" name="sname" id="sname" value="<?php echo $row['fname'] . " " . $row['lname']; ?>">
                                                                 <input type="hidden" name="ern" id="ern" value="<?php echo $row["uniqid"]; ?>">
                                                             </td>
                                                             <td>

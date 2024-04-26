@@ -35,6 +35,7 @@ if (!isset($_SESSION['username'])) {
                                     <label for="applicationtype">Type</label>
                                     <select class="custom-select" id="applicationtype" name="applicationtype" required autofocus>
                                         <option value="Student">New Student</option>
+                                        <option value="Old Student">Old Student</option>
                                         <option value="visiting">Visiting Student</option>
                                         <option value="non-credit">Non-credit</option>
                                         <option value="alp">ALP</option>
@@ -443,6 +444,14 @@ if (!isset($_SESSION['username'])) {
             $('#strand').prop('hidden',false);
         }
     });
+
+    // CHECK STUDENT
+    $("#applicationtype").change(function(e){
+        if($(this).val() == "Old Student") {
+            window.location.replace("old-students-enroll.php");
+        }
+    });
+
 </script>
 </div>
 </div>

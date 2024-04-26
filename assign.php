@@ -1,16 +1,14 @@
 <?php 
 include_once("./includes/config.php");
-if(isset($_POST['teacher'])){
-    if(!empty($_POST['teacher'])) {
-        $selected = $_POST['teacher'];
-        $assign_statement = $DB_con->prepare("UPDATE `assignment` SET `teacher`='$selected'");
-        $assign_statement->execute();
-    } else {
-        echo 'Please select the value.';
-    }
-}
+session_start();
 
-header("Location: assignTeacher.php?assign=success");
-die();  
-
-?>
+$update = $DB_con->prepare("UPDATE s_subjects SET tid = :tid, assignedby = :assignedby, assigndate = NOW(), percentww = :percentww, percentpt = :percentpt, percentqt = :percentqt WHERE code = :code");
+$update->execute(array(
+    ":tid" => $_POST["teacher"],
+    ":assignedby" => $_SESSION["fname"]." ".$_SESSION["lname"],
+    ":percentww" => $_POST["percentww"],
+    ":percentpt" => $_POST["percentpt"],
+    ":percentqt" => $_POST["percentqt"],
+    ":code" => $_POST["code"]
+));
+header("Location: assignsubj.php");
