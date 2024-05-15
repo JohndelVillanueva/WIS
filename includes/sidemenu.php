@@ -134,30 +134,9 @@
                 </li>
             <?php
             }
-            if ($_SESSION['level'] >= 2) {
+            
             ?>
-                <li class="nav-item dropdown">
-                    <a class="dropdown-toggle" href="completed.php">
-                        <span class="icon-holder">
-                            <i class="anticon anticon-database"></i>
-                        </span>
-                        <span class="title">Enrolled</span>
-                    </a>
-                </li>
-            <?php
-            }
-            if ($_SESSION['level'] == 4 or $_SESSION['level'] == 9) {
-                ?>
-                    <li class="nav-item dropdown">
-                        <a class="dropdown-toggle" href="student_verification.php">
-                            <span class="icon-holder">
-                                <i class="anticon anticon-book"></i>
-                            </span>
-                            <span class="title">Grades</span>
-                        </a>
-                    </li>
                 <?php
-                }
             if ($_SESSION['level'] == 0) {
             ?>
                 <li class="nav-item dropdown">
@@ -221,12 +200,38 @@
 
                 </ul>
             </li>
+            <?php
+            if ($_SESSION['level'] == 4 or $_SESSION['level'] == 9) {
+            ?>
+            <li class="nav-item dropdown ">
+                <a class="dropdown-toggle" href="javascript:void(0);">
+                    <span class="icon-holder">
+                        <i class="bi bi-person-fill"></i>
+                    </span>
+                    <span class="title">Students</span>
+                    <span class="arrow">
+                        <i class="arrow-icon"></i>
+                    </span>
+                </a>
+                <ul class="dropdown-menu" style="display: none;">
+                    <li>
+                        <a href="student_verification.php">Grades</a>
+                    </li>
+                    <li>
+                        <a href="completed.php">Enrolled</a>
+                    </li>
+
+                </ul>
+            </li>
+            <?php 
+            }
+            ?>
             <li class="nav-item dropdown">
                 <a class="dropdown-toggle" href="javascript:void(0);">
                     <span class="icon-holder">
                         <i class="anticon anticon-form"></i>
                     </span>
-                    <span class="title">Parameters</span>
+                    <span class="title">Other</span>
                     <span class="arrow">
                         <i class="arrow-icon"></i>
                     </span>

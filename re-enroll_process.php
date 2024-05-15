@@ -2,8 +2,8 @@
 include_once "includes/config.php";
 session_start();
 
-$delete = $DB_con->prepare("DELETE FROM studentdetails WHERE uniqid = :uniqid");
-$delete->execute(array(":uniqid"=>$_POST["uniqid"]));
+// $delete = $DB_con->prepare("DELETE FROM studentdetails WHERE uniqid = :uniqid");
+// $delete->execute(array(":uniqid"=>$_POST["uniqid"]));
 
 
 $studentdetailsQuery =
@@ -20,7 +20,7 @@ $studentdetailsQuery =
 		englishrw, englishv,
 		languages, advclasses,
 		remedial, skill,
-		ashtma, ashtmar
+		ashtma, ashtmar,
 		allergy, allergyr,
 		drug, drugr,
 		speech, speechr,
@@ -124,47 +124,32 @@ $process_statement->execute(
 		}
 
 	}
-$updateUserQuery = 
-	"UPDATE users24 SET
-		photo = :photo,
-		fname = :fname, lname = :lname,
-		mname = :mname, gender = :gender,
-		guardianname = :guardian,
-		guardianemail = :guardianemail,
-		guardianphone = :guardianphone, 
-		tf = :tf, status = :status,
-		lrn = :lrn, prevsch = :oldschool,
-		prevschcountry = :oldschoolctry, 
-		nationality = :nationality,
-		grade = :gradelevel, 
-		section = :section,
-		house = :house
-		WHERE uniqid = :uniqid";	
+    $insertUserQuery = "INSERT INTO users24 
+	(photo, fname, lname, mname, gender, guardianname, guardianemail, guardianphone, tf, status, lrn, prevsch, prevschcountry, nationality, grade, section, house, uniqid) 
+	VALUES 
+	(:photo, :fname, :lname, :mname, :gender, :guardian, :guardianemail, :guardianphone, :tf, :status, :lrn, :oldschool, :oldschoolctry, :nationality, :gradelevel, :section, :house, :uniqid)";
 
-$userprocess_statement = $DB_con->prepare( $updateUserQuery );
-$userprocess_statement->execute(
-	array(
-		':photo' => $updateFileName,
-		':status' => $_POST[ 'stage' ],
-		':tf' => $_POST[ 'tf' ],
-		':uniqid' => $_POST[ 'ern' ],
-		':lname' => $_POST[ 'lastname' ],
-		':fname' => $_POST[ 'firstname' ],
-		':mname' => $_POST[ 'middlename' ],
-		':gender' => $_POST[ 'gender' ],
-		// ':dob' => $_POST[ 'dob' ],
-		':lrn' => $_POST[ 'lrn' ],
-		':oldschool' => $_POST[ 'oldschool' ],
-		':oldschoolctry' => $_POST[ 'oldschoolctry' ],
-		':nationality' => $_POST[ 'nationality' ],
-		':gradelevel' => $_POST[ 'gradelevel' ],
-		':section' => $_POST[ 'section' ],
-		':guardian' => $_POST[ 'guardian' ],
-		':guardianemail' => $_POST[ 'guardianemail' ],
-		':guardianphone' => $_POST[ 'guardianphone' ],
-        ':house' => $_POST[ 'house' ]
-	));
-
+    $userprocess_statement = $DB_con->prepare($insertUserQuery);
+    $userprocess_statement->execute(array(
+        ':photo' => $updateFileName,
+        ':status' => $_POST['stage'],
+        ':tf' => $_POST['tf'],
+        ':uniqid' => $_POST['ern'],
+        ':lname' => $_POST['lastname'],
+        ':fname' => $_POST['firstname'],
+        ':mname' => $_POST['middlename'],
+        ':gender' => $_POST['gender'],
+        ':lrn' => $_POST['lrn'],
+        ':oldschool' => $_POST['oldschool'],
+        ':oldschoolctry' => $_POST['oldschoolctry'],
+        ':nationality' => $_POST['nationality'],
+        ':gradelevel' => $_POST['gradelevel'],
+        ':section' => $_POST['section'],
+        ':guardian' => $_POST['guardian'],
+        ':guardianemail' => $_POST['guardianemail'],
+        ':guardianphone' => $_POST['guardianphone'],
+        ':house' => $_POST['house']
+    ));
 	if($userprocess_statement){
 		if($_FILES['photo']['name'] !=''){
 			move_uploaded_file($_FILES['photo']['tmp_name'],"assets/images/avatars/".$_FILES['photo']['name']);
@@ -174,5 +159,4 @@ $userprocess_statement->execute(
 		echo "Image Uploading Failed";
 	}
 
-header( "Location: edit-profile.php?id=" . $_POST[ 'id' ] );
-die();
+header( "Location: old-students-enroll.php"  );

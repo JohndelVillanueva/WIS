@@ -20,7 +20,7 @@ session_start();
                 <div class="page-container">
                     <div class="main-content">
                         <!-- form starts !-->
-                        <form action="edit.php" method="post" enctype="multipart/form-data" id="mainForm">
+                        <form action="re-enroll_process.php" method="post" enctype="multipart/form-data" id="mainForm">
                             <input type="hidden" name="ern" value="<?php echo $row['uniqid'] ?>">
                             <input type="hidden" name="stage" value="<?php echo $row['status'] ?>">
                             <input type="hidden" name="tf" value="<?php echo $row['tf'] ?>">
@@ -1600,8 +1600,6 @@ session_start();
         </div>
     </div>
     </div>
-
-    </form>
     <!-- form ends !-->
     </div>
                     <?php
