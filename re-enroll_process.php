@@ -5,7 +5,15 @@ session_start();
 // $delete = $DB_con->prepare("DELETE FROM studentdetails WHERE uniqid = :uniqid");
 // $delete->execute(array(":uniqid"=>$_POST["uniqid"]));
 
+	// $gettingSpecificId = $DB_con->prepare("SELECT * FROM user WHERE uniqid = :id");
+	// $gettingSpecificId->execute([":id" => $row[ 'uniqid' ]]);
+	// $result = $gettingSpecificId->fetch(PDO::FETCH_OBJ);
 
+// $uniqId = $DB_con->prepare("SELECT * FROM studentdetails WHERE uniqid = :uniq");
+// $uniqId->execute([":uniq" => $_POST["uniqid"]]);
+// $getUniqID = $uniqId->fetch(PDO::FETCH_OBJ);
+
+$uniqid = uniqid('WNS-');
 $studentdetailsQuery =
 	"INSERT INTO studentdetails 
 		(uniqid,visa,
@@ -60,7 +68,7 @@ $studentdetailsQuery =
 $process_statement = $DB_con->prepare( $studentdetailsQuery );
 $process_statement->execute(
 	array(
-		':uniqid' => $_POST[ 'ern' ],
+		':uniqid' => $uniqid,
 		':visa' => $_POST[ 'visa' ],
 		':street' => $_POST[ 'street' ],
 		':barangay' => $_POST[ 'barangay' ],
@@ -122,19 +130,21 @@ $process_statement->execute(
 				echo $filename. "Already Exist";
 			}
 		}
-
+		
 	}
+
     $insertUserQuery = "INSERT INTO users24 
-	(photo, fname, lname, mname, gender, guardianname, guardianemail, guardianphone, tf, status, lrn, prevsch, prevschcountry, nationality, grade, section, house, uniqid) 
+	(photo,position, fname, lname, mname, gender, guardianname, guardianemail, guardianphone, tf, status, lrn, prevsch, prevschcountry, nationality, grade, section, house, uniqid) 
 	VALUES 
-	(:photo, :fname, :lname, :mname, :gender, :guardian, :guardianemail, :guardianphone, :tf, :status, :lrn, :oldschool, :oldschoolctry, :nationality, :gradelevel, :section, :house, :uniqid)";
+	(:photo, :postion, :fname, :lname, :mname, :gender, :guardian, :guardianemail, :guardianphone, :tf, :status, :lrn, :oldschool, :oldschoolctry, :nationality, :gradelevel, :section, :house, :uniqid)";
 
     $userprocess_statement = $DB_con->prepare($insertUserQuery);
     $userprocess_statement->execute(array(
         ':photo' => $updateFileName,
+		':position' => "Student",
         ':status' => $_POST['stage'],
         ':tf' => $_POST['tf'],
-        ':uniqid' => $_POST['ern'],
+        ':uniqid' =>  $uniqid,
         ':lname' => $_POST['lastname'],
         ':fname' => $_POST['firstname'],
         ':mname' => $_POST['middlename'],
