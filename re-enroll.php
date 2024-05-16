@@ -7,6 +7,11 @@ session_start();
 <?php include_once "includes/css.php"; ?>
 
 <body>
+    <style>
+        .hidden { 
+            display: none;
+        }
+    </style>
     <div class="app">
         <div class="layout">
             <?php include_once "includes/heading.php"; ?>
@@ -26,6 +31,7 @@ session_start();
                             <input type="hidden" name="tf" value="<?php echo $row['tf'] ?>">
                             <input type="hidden" name="id" value="<?php echo $_GET['id'] ?>">
                             <div class="row">
+                                
                                 <div class="col-lg-12">
                                     <div class="card">
                                         <div class="card-header bg-warning rounded-top pt-2">
@@ -36,6 +42,7 @@ session_start();
                                                 Student Profile
                                             </h4>
                                         </div>
+                                        <section id="personal-information">
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-lg-2">
@@ -648,200 +655,211 @@ session_start();
                                                         <option value="Employment Visa">Employment Visa</option>
                                                     </select>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-lg-12 mt-5 text-center">
-                                                    <p class="h2">Additional Details</p>
-                                                    <hr>
-                                                </div>
-                                            </div>
-                                            <?php
-                                                $checkdetails = $DB_con->prepare("SELECT * FROM studentdetails WHERE uniqid = :uniqid");
-                                                $checkdetails->execute(array(":uniqid"=>$row["uniqid"]));
-                                                $deets = $checkdetails->fetchAll();
+                                            </div><br>
+                                            <button type="button" onclick="showNextSection('additional-details')">Next</button>
+                                            </section>
 
-                                                if (!empty($deets)) {
-                                                foreach($deets as $irow) {
-                                            ?>
-                                            <div class="row my-3">
-                                                <div class="col-lg-3">
-                                                    <label for="street">Number and Street</label>
-                                                    <input type="text" class="form-control" id="street" name="street" placeholder="Number and Street" value="<?php if (!empty($irow['street'])) {
+                                            <section id="additional-details" class="hidden">
+                                                <div class="row">
+                                                    <div class="col-lg-12 mt-5 text-center">
+                                                        <p class="h2">Additional Details</p>
+                                                        <hr>
+                                                    </div>
+                                                </div>
+                                                <?php
+                                                    $checkdetails = $DB_con->prepare("SELECT * FROM studentdetails WHERE uniqid = :uniqid");
+                                                    $checkdetails->execute(array(":uniqid"=>$row["uniqid"]));
+                                                    $deets = $checkdetails->fetchAll();
+
+                                                    if (!empty($deets)) {
+                                                    foreach($deets as $irow) {
+                                                ?>
+                                                <div class="row my-3">
+                                                    <div class="col-lg-3">
+                                                        <label for="street">Number and Street</label>
+                                                        <input type="text" class="form-control" id="street" name="street" placeholder="Number and Street" value="<?php if (!empty($irow['street'])) {
+                                                                                                                                                                                echo $irow['street'];
+                                                                                                                                                                            } ?>">
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <label for="barangay">Barangay / Subdivision</label>
+                                                        <input type="text" class="form-control" id="barangay" name="barangay" placeholder="Barangay" value="<?php if (!empty($irow['barangay'])) {
+                                                                                                                                                                                echo $irow['barangay'];
+                                                                                                                                                                            } ?>">
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <label for="city">City</label>
+                                                        <input type="text" class="form-control" id="city" name="city" placeholder="City"value="<?php if (!empty($irow['city'])) {
+                                                                                                                                                                echo $irow['city'];
+                                                                                                                                                            } ?>">
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <label for="postal">Postal Code</label>
+                                                        <input type="text" class="form-control" id="postal" name="postal" placeholder="Postal Code" value="<?php if (!empty($irow['postal'])) {
+                                                                                                                                                                        echo $irow['postal'];
+                                                                                                                                                                    } ?>">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-2">
+                                                        <label for="father">Father's Name</label>
+                                                        <input type="text" class="form-control" id="father" name="father" placeholder="Father's Name" value="<?php if (!empty($irow['street'])) {
                                                                                                                                                                             echo $irow['street'];
                                                                                                                                                                         } ?>">
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <label for="barangay">Barangay / Subdivision</label>
-                                                    <input type="text" class="form-control" id="barangay" name="barangay" placeholder="Barangay" value="<?php if (!empty($irow['barangay'])) {
-                                                                                                                                                                            echo $irow['barangay'];
-                                                                                                                                                                        } ?>">
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <label for="city">City</label>
-                                                    <input type="text" class="form-control" id="city" name="city" placeholder="City"value="<?php if (!empty($irow['city'])) {
-                                                                                                                                                            echo $irow['city'];
-                                                                                                                                                        } ?>">
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <label for="postal">Postal Code</label>
-                                                    <input type="text" class="form-control" id="postal" name="postal" placeholder="Postal Code" value="<?php if (!empty($irow['postal'])) {
-                                                                                                                                                                    echo $irow['postal'];
-                                                                                                                                                                } ?>">
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-lg-2">
-                                                    <label for="father">Father's Name</label>
-                                                    <input type="text" class="form-control" id="father" name="father" placeholder="Father's Name" value="<?php if (!empty($irow['street'])) {
-                                                                                                                                                                        echo $irow['street'];
-                                                                                                                                                                    } ?>">
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <label for="fathermail">Father's Email</label>
-                                                    <input type="text" class="form-control" id="fathermail" name="fathermail" placeholder="Father's Email" value="<?php if (!empty($irow['fathermail'])) {
-                                                                                                                                                                                echo $irow['fathermail'];
-                                                                                                                                                                            } ?>">
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <label for="fatherphone">Father's Phone Number</label>
-                                                    <input type="text" class="form-control" id="fatherphone" name="fatherphone" placeholder="Father's Phone Number" value="<?php if (!empty($irow['fathernumber'])) {
-                                                                                                                                                                                        echo $irow['fathernumber'];
-                                                                                                                                                                                    } ?>">
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <label for="fatherwork">Father's Occupation</label>
-                                                    <input type="text" class="form-control" id="fatherwork" name="fatherwork" placeholder="Father's Occupation" value="<?php if (!empty($irow['fatherwork'])) {
-                                                                                                                                                                                    echo $irow['fatherwork'];
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <label for="fathermail">Father's Email</label>
+                                                        <input type="text" class="form-control" id="fathermail" name="fathermail" placeholder="Father's Email" value="<?php if (!empty($irow['fathermail'])) {
+                                                                                                                                                                                    echo $irow['fathermail'];
                                                                                                                                                                                 } ?>">
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <label for="fathercompany">Father's Company</label>
-                                                    <input type="text" class="form-control" id="fathercompany" name="fathercompany" placeholder="Father's Company" value="<?php if (!empty($irow['fatherwork'])) {
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <label for="fatherphone">Father's Phone Number</label>
+                                                        <input type="text" class="form-control" id="fatherphone" name="fatherphone" placeholder="Father's Phone Number" value="<?php if (!empty($irow['fathernumber'])) {
+                                                                                                                                                                                            echo $irow['fathernumber'];
+                                                                                                                                                                                        } ?>">
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <label for="fatherwork">Father's Occupation</label>
+                                                        <input type="text" class="form-control" id="fatherwork" name="fatherwork" placeholder="Father's Occupation" value="<?php if (!empty($irow['fatherwork'])) {
                                                                                                                                                                                         echo $irow['fatherwork'];
                                                                                                                                                                                     } ?>">
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <label for="fsalaryrange">Average Monthly Salary</label>
-                                                    <select class="custom-select" id="fsalaryrange" class="form-select" name="fsalaryrange">
-                                                        <option value="<?php if (!empty($irow['fsalary'])) {
-                                                                            echo $irow['fsalary'];
-                                                                        } ?>" selected><?php if (!empty($irow['fsalary'])) {
-                                                                                            echo $irow['fsalary'];
-                                                                                        } ?></option>
-                                                        <option value="">-- select one --</option>
-                                                        <option value="P 0 - P 50 000">P 0 - P 50 000</option>
-                                                        <option value="P 50 001 - P 100 000">P 50 001 - P 100 000</option>
-                                                        <option value="P 100 001 - P 200 000">P 100 001 - P 200 000</option>
-                                                        <option value="P 200 001 - P 500 000">P 200 001 - P 500 000</option>
-                                                        <option value="P 500 001 - UP">P 500 001 - UP</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="row my-3">
-                                                <div class="col-lg-2">
-                                                    <label for="mother">Mother's Name</label>
-                                                    <input type="text" class="form-control" id="mother" name="mother" placeholder="Mother's Name" value="<?php if (!empty($irow['mother'])) {
-                                                                                                                                                                        echo $irow['mother'];
-                                                                                                                                                                    } ?>">
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <label for="mothermail">Mother's Email</label>
-                                                    <input type="text" class="form-control" id="mothermail" name="mothermail" placeholder="Mother's Email" value="<?php if (!empty($irow['mothermail'])) {
-                                                                                                                                                                                echo $irow['mothermail'];
-                                                                                                                                                                            } ?>">
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <label for="motherphone">Mothers's Phone Number</label>
-                                                    <input type="text" class="form-control" id="motherphone" name="motherphone" placeholder="Mothers's Phone Number" value="<?php if (!empty($irow['mothernumber'])) {
-                                                                                                                                                                                            echo $irow['mothernumber'];
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <label for="fathercompany">Father's Company</label>
+                                                        <input type="text" class="form-control" id="fathercompany" name="fathercompany" placeholder="Father's Company" value="<?php if (!empty($irow['fatherwork'])) {
+                                                                                                                                                                                            echo $irow['fatherwork'];
                                                                                                                                                                                         } ?>">
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <label for="fsalaryrange">Average Monthly Salary</label>
+                                                        <select class="custom-select" id="fsalaryrange" class="form-select" name="fsalaryrange">
+                                                            <option value="<?php if (!empty($irow['fsalary'])) {
+                                                                                echo $irow['fsalary'];
+                                                                            } ?>" selected><?php if (!empty($irow['fsalary'])) {
+                                                                                                echo $irow['fsalary'];
+                                                                                            } ?></option>
+                                                            <option value="">-- select one --</option>
+                                                            <option value="P 0 - P 50 000">P 0 - P 50 000</option>
+                                                            <option value="P 50 001 - P 100 000">P 50 001 - P 100 000</option>
+                                                            <option value="P 100 001 - P 200 000">P 100 001 - P 200 000</option>
+                                                            <option value="P 200 001 - P 500 000">P 200 001 - P 500 000</option>
+                                                            <option value="P 500 001 - UP">P 500 001 - UP</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                                <div class="col-lg-2">
-                                                    <label for="motherwork">Mother's Occupation</label>
-                                                    <input type="text" class="form-control" id="motherwork" name="motherwork" placeholder="Mother's Occupation" value="<?php if (!empty($irow['motherwork'])) {
-                                                                                                                                                                                    echo $irow['motherwork'];
+                                                <div class="row my-3">
+                                                    <div class="col-lg-2">
+                                                        <label for="mother">Mother's Name</label>
+                                                        <input type="text" class="form-control" id="mother" name="mother" placeholder="Mother's Name" value="<?php if (!empty($irow['mother'])) {
+                                                                                                                                                                            echo $irow['mother'];
+                                                                                                                                                                        } ?>">
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <label for="mothermail">Mother's Email</label>
+                                                        <input type="text" class="form-control" id="mothermail" name="mothermail" placeholder="Mother's Email" value="<?php if (!empty($irow['mothermail'])) {
+                                                                                                                                                                                    echo $irow['mothermail'];
                                                                                                                                                                                 } ?>">
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <label for="mothercompany">Mother's Company</label>
-                                                    <input type="text" class="form-control" id="mothercompany" name="mothercompany" placeholder="Mother's Company" value="<?php if (!empty($irow['mcompany'])) {
-                                                                                                                                                                                        echo $irow['mcompany'];
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <label for="motherphone">Mothers's Phone Number</label>
+                                                        <input type="text" class="form-control" id="motherphone" name="motherphone" placeholder="Mothers's Phone Number" value="<?php if (!empty($irow['mothernumber'])) {
+                                                                                                                                                                                                echo $irow['mothernumber'];
+                                                                                                                                                                                            } ?>">
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <label for="motherwork">Mother's Occupation</label>
+                                                        <input type="text" class="form-control" id="motherwork" name="motherwork" placeholder="Mother's Occupation" value="<?php if (!empty($irow['motherwork'])) {
+                                                                                                                                                                                        echo $irow['motherwork'];
                                                                                                                                                                                     } ?>">
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <label for="mothercompany">Mother's Company</label>
+                                                        <input type="text" class="form-control" id="mothercompany" name="mothercompany" placeholder="Mother's Company" value="<?php if (!empty($irow['mcompany'])) {
+                                                                                                                                                                                            echo $irow['mcompany'];
+                                                                                                                                                                                        } ?>">
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <label for="msalaryrange">Average Monthly Salary</label>
+                                                        <select class="custom-select" id="msalaryrange" class="form-select" name="msalaryrange">
+                                                            <option value="<?php if (!empty($irow['msalary'])) {
+                                                                                echo $irow['msalary'];
+                                                                            } ?>" selected><?php if (!empty($irow['msalary'])) {
+                                                                                                echo $irow['msalary'];
+                                                                                            } ?></option>
+                                                            <option value="">-- select one --</option>
+                                                            <option value="P 0 - P 50 000">P 0 - P 50 000</option>
+                                                            <option value="P 50 001 - P 100 000">P 50 001 - P 100 000</option>
+                                                            <option value="P 100 001 - P 200 000">P 100 001 - P 200 000</option>
+                                                            <option value="P 200 001 - P 500 000">P 200 001 - P 500 000</option>
+                                                            <option value="P 500 001 - UP">P 500 001 - UP</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                                <div class="col-lg-2">
-                                                    <label for="msalaryrange">Average Monthly Salary</label>
-                                                    <select class="custom-select" id="msalaryrange" class="form-select" name="msalaryrange">
-                                                        <option value="<?php if (!empty($irow['msalary'])) {
-                                                                            echo $irow['msalary'];
-                                                                        } ?>" selected><?php if (!empty($irow['msalary'])) {
-                                                                                            echo $irow['msalary'];
-                                                                                        } ?></option>
-                                                        <option value="">-- select one --</option>
-                                                        <option value="P 0 - P 50 000">P 0 - P 50 000</option>
-                                                        <option value="P 50 001 - P 100 000">P 50 001 - P 100 000</option>
-                                                        <option value="P 100 001 - P 200 000">P 100 001 - P 200 000</option>
-                                                        <option value="P 200 001 - P 500 000">P 200 001 - P 500 000</option>
-                                                        <option value="P 500 001 - UP">P 500 001 - UP</option>
-                                                    </select>
+                                                <hr>
+                                                <div class="row my-3">
+                                                    <div class="col-lg-2">
+                                                        <label for="english1">English Reading and Writing</label>
+                                                        <select class="custom-select" id="english1" class="form-select" name="english1">
+                                                            <option value="<?php if (!empty($irow['englishrw'])) {
+                                                                                echo $irow['englishrw'];
+                                                                            } ?>" selected><?php if (!empty($irow['englishrw'])) {
+                                                                                                echo $irow['englishrw'];
+                                                                                            } ?></option>
+                                                            <option value="" disabled>-- select one --</option>
+                                                            <option value="Good">Good</option>
+                                                            <option value="Fair">Fair</option>
+                                                            <option value="Limited">Limited</option>
+                                                            <option value="None">None</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <label for="english2">English Verbal Proficiency</label>
+                                                        <select class="custom-select" id="english2" class="form-select" name="english2" >
+                                                            <option value="<?php if (!empty($irow['englishv'])) {
+                                                                                echo $irow['englishv'];
+                                                                            } ?>" selected><?php if (!empty($irow['englishv'])) {
+                                                                                                echo $irow['englishv'];
+                                                                                            } ?></option>
+                                                            <option value="" disabled>-- select one --</option>
+                                                            <option value="Good">Good</option>
+                                                            <option value="Fair">Fair</option>
+                                                            <option value="Limited">Limited</option>
+                                                            <option value="None">None</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <label for="lang">Major Languages at home</label>
+                                                        <input type="text" class="form-control" id="lang" name="lang" placeholder="Major Languages at home" value="<?php if (!empty($irow['languages'])) {
+                                                                                                                                                                                echo $irow['languages'];
+                                                                                                                                                                            } ?>">
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <label for="alc">ALC</label>
+                                                        <input type="text" class="form-control" id="alc" name="alc" placeholder="ALC" value="<?php if (!empty($irow['advclasses'])) {
+                                                                                                                                                            echo $irow['advclasses'];
+                                                                                                                                                        } ?>">
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <label for="remedial">Remedial School</label>
+                                                        <input type="text" class="form-control" id="remedial" name="remedial" placeholder="Remedial School"  value="<?php if (!empty($irow['remedial'])) {
+                                                                                                                                                                                echo $irow['remedial'];
+                                                                                                                                                                            } ?>">
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <label for="skill">Special Skill</label>
+                                                        <input type="text" class="form-control" id="skill" name="skill" placeholder="Special Skill"  value="<?php if (!empty($irow['skill'])) {
+                                                                                                                                                                        echo $irow['skill'];
+                                                                                                                                                                    } ?>">
+                                                    </div>
+                                                    <div>
+                                                    <button type="button" onclick="showNextSection('medical-info')">Next</button>
                                                 </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row my-3">
-                                                <div class="col-lg-2">
-                                                    <label for="english1">English Reading and Writing</label>
-                                                    <select class="custom-select" id="english1" class="form-select" name="english1">
-                                                        <option value="<?php if (!empty($irow['englishrw'])) {
-                                                                            echo $irow['englishrw'];
-                                                                        } ?>" selected><?php if (!empty($irow['englishrw'])) {
-                                                                                            echo $irow['englishrw'];
-                                                                                        } ?></option>
-                                                        <option value="" disabled>-- select one --</option>
-                                                        <option value="Good">Good</option>
-                                                        <option value="Fair">Fair</option>
-                                                        <option value="Limited">Limited</option>
-                                                        <option value="None">None</option>
-                                                    </select>
                                                 </div>
-                                                <div class="col-lg-2">
-                                                    <label for="english2">English Verbal Proficiency</label>
-                                                    <select class="custom-select" id="english2" class="form-select" name="english2" >
-                                                        <option value="<?php if (!empty($irow['englishv'])) {
-                                                                            echo $irow['englishv'];
-                                                                        } ?>" selected><?php if (!empty($irow['englishv'])) {
-                                                                                            echo $irow['englishv'];
-                                                                                        } ?></option>
-                                                        <option value="" disabled>-- select one --</option>
-                                                        <option value="Good">Good</option>
-                                                        <option value="Fair">Fair</option>
-                                                        <option value="Limited">Limited</option>
-                                                        <option value="None">None</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <label for="lang">Major Languages at home</label>
-                                                    <input type="text" class="form-control" id="lang" name="lang" placeholder="Major Languages at home" value="<?php if (!empty($irow['languages'])) {
-                                                                                                                                                                            echo $irow['languages'];
-                                                                                                                                                                        } ?>">
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <label for="alc">ALC</label>
-                                                    <input type="text" class="form-control" id="alc" name="alc" placeholder="ALC" value="<?php if (!empty($irow['advclasses'])) {
-                                                                                                                                                        echo $irow['advclasses'];
-                                                                                                                                                    } ?>">
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <label for="remedial">Remedial School</label>
-                                                    <input type="text" class="form-control" id="remedial" name="remedial" placeholder="Remedial School"  value="<?php if (!empty($irow['remedial'])) {
-                                                                                                                                                                            echo $irow['remedial'];
-                                                                                                                                                                        } ?>">
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <label for="skill">Special Skill</label>
-                                                    <input type="text" class="form-control" id="skill" name="skill" placeholder="Special Skill"  value="<?php if (!empty($irow['skill'])) {
-                                                                                                                                                                    echo $irow['skill'];
-                                                                                                                                                                } ?>">
-                                                </div>
-                                            </div>
+
+                                            </section>
+                                            
+                                            <section id="medical-info" class="hidden">
                                             <div class="row">
                                                 <div class="col-lg-12 mt-5 text-center">
                                                     <p class="h2">Medical Information and Health History</p>
@@ -1117,6 +1135,8 @@ session_start();
                                                         <option value="No">No</option>
                                                     </select>
                                                 </div>
+                        
+
                                                 <?php // } 
                                                 ?>
                                             </div>
@@ -1132,11 +1152,14 @@ session_start();
                                         <div class="card-footer bg-light text-center">
                                             <button class="btn btn-primary btn-lg" type="submit" name="Submit" >Commit Changes</button>
                                         </div>
+                                        
                                     </div>
                                 </div>
+                                </section>
                             </div>
 
                         </form>
+                                                                                    
                         <!-- form ends !-->
                     </div>
                 <?php
@@ -1321,7 +1344,14 @@ session_start();
                                 echo $irow['skill'];
                             } ?>">
                         </div>
-                    </div>
+                        </div class="col-lg-12 d-flex flex-row justify-content-center">
+                            <button type="button" onclick="showNextSection('medical-info')">Next</button>
+                            </span>
+                        </div>
+                        </div>
+
+
+                    <section  id="medical-info" class="hidden">
                     <div class="row">
                         <div class="col-lg-12 mt-5 text-center">
                             <p class="h2">Medical Information and Health History</p>
@@ -1593,7 +1623,10 @@ session_start();
                         <?php // }
                         ?>
                     </div>
+                    </section>
                 </div>
+                </section>
+                
             <div class="card-footer bg-light text-center">
                 <button class="btn btn-primary btn-lg" type="submit" name="Submit" >Commit Changes</button>
             </div>
@@ -1616,6 +1649,19 @@ session_start();
             return false;
         }
     });
+    
+</script>
+<script>
+    function showNextSection(nextSectionId) {
+            document.getElementById(nextSectionId).classList.remove('hidden');
+    }
+    function submitForm() {
+        document.getElementById('myForm').submit();
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+            showNextSection('personal-info');
+        })
 </script>
 </body>
 

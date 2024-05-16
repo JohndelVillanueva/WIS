@@ -136,7 +136,7 @@ $process_statement->execute(
     $insertUserQuery = "INSERT INTO users24 
 	(photo,position, fname, lname, mname, gender, guardianname, guardianemail, guardianphone, tf, status, lrn, prevsch, prevschcountry, nationality, grade, section, house, uniqid) 
 	VALUES 
-	(:photo, :postion, :fname, :lname, :mname, :gender, :guardian, :guardianemail, :guardianphone, :tf, :status, :lrn, :oldschool, :oldschoolctry, :nationality, :gradelevel, :section, :house, :uniqid)";
+	(:photo, :position, :fname, :lname, :mname, :gender, :guardian, :guardianemail, :guardianphone, :tf, :status, :lrn, :oldschool, :oldschoolctry, :nationality, :gradelevel, :section, :house, :uniqid)";
 
     $userprocess_statement = $DB_con->prepare($insertUserQuery);
     $userprocess_statement->execute(array(
