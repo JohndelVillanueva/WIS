@@ -567,7 +567,7 @@ div h3.fem{
 }
 
 div.card#table-inventory{
-    height: 520px!important;
+    height: auto!important;
 }
 
 /* Custom Scrollbar */

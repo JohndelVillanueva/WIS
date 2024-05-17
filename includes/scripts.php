@@ -108,6 +108,11 @@
     }
 
 
+    new DataTable ('#studentInventory', {
+        lengthChange:false
+    });
+
+
     //Auto Incremential ID elements
     var i = 0;
     $('.inventorylist').each(function() {

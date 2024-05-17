@@ -191,7 +191,7 @@ if (!isset($_SESSION['username'])) {
                                             <div class="modal-header">
                                                 <h5 class="modal-title">Students List</h5>
                                             </div>
-                                            <div class="modal-body">
+                                            <div class="modal-body p-2">
                                                 <div class=" col-12 p-2">
                                                     <table class="table table-bordered table-hover w-100" id="studentInventory">
                                                         <thead>
@@ -372,7 +372,7 @@ if (!isset($_SESSION['username'])) {
                                     foreach ($uniformTypes as $type) {
 
                                     ?>
-                                        <div class="card bg-custom p-3 col-xl-6 col-lg-12 col-12 overflow-auto px-1" id="table-inventory">
+                                        <div class="card bg-custom pt-2 col-xl-6 col-lg-12 col-12 px-3" id="table-inventory">
                                             <h2 class="m-0"><span class="icon-holder pr-2"><i class="anticon anticon-bank"></i></span><?= $type->uniform_type_id ?></h2>
                                             <table class="inventorylist table table-hover table-light">
                                                 <thead class="text-center">
