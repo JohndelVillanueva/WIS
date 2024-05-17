@@ -658,8 +658,8 @@ session_start();
                                                 </div>
                                                 <br>
                                                 <div class="row">
-                                                    <div class="col-lg-12 text-center">
-                                                        <button type="button" onclick="showNextSection('additional-details')" class="btn btn-success">Next</button>
+                                                    <div class="col-lg-12 d-flex flex-row justify-content-center">
+                                                        <button type="button" onclick="showNextSection('additional-details')" class="btn btn-warning btn-lg col-2">Next</button>
                                                     </div>
                                                 </div>
                                         </section>
@@ -859,8 +859,8 @@ session_start();
                                                             </div>
                                                         </div>
                                                         <div class="row">
-                                                            <div class="col-lg-12 text-center">
-                                                                <button type="button" onclick="showNextSection('medical-info')" class="btn btn-success">Next</button>
+                                                            <div class="col-lg-12 d-flex flex-row justify-content-center">
+                                                                <button type="button" onclick="showNextSection('medical-info')" class="btn btn-warning btn-lg col-2">Next</button>
                                                             </div>
                                                         </div>
                                         </section>
@@ -1349,8 +1349,8 @@ session_start();
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-12 text-center">
-                        <button type="button" onclick="showNextSection('medical-info')" class="btn btn-success">Next</button>
+                    <div class="col-lg-12 d-flex flex-row justify-content-center">
+                        <button type="button" onclick="showNextSection('medical-info')" class="btn btn-warning btn-lg col-2">Next</button>
                     </div>
                 </div>
                 </section>
