@@ -21,42 +21,23 @@ if (!isset($_SESSION['username'])) {
                 <div class="row flex-nowrap overflow-auto">
                     <div class="col-lg-12">
                         <div class="card">
-                            <div class="card-header bg-warning">
-                                <h3 class="pt-2"><span class="icon-holder"><i class="anticon anticon-tags"></i></span> Uniform Inventory</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="btn-group float-right">
-                                            <div class="dropdown">
-                                                <button class=" dropdown-btn btn btn-danger" type="button" onclick="drpFunction()"> Options </button>
-                                                <div id="dropdown-list" class="dropdown-content">
-                                                    <button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger"> Add New</button>
-                                                    <button type="button" data-bs-toggle="modal" data-bs-target="#release" class="btn btn-danger">Release Inventory</button>
-                                                    <button type="button" class="btn btn-danger">Reports</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
                                 <!-- Add New Modal-->
                                 <?php
-                                    if (!empty($_POST['uniform_type_id']) && !empty($_POST['uniform_size_id']) && !empty($_POST['qty']) && !empty($_POST['gender'])) {
+                                if (!empty($_POST['uniform_type_id']) && !empty($_POST['uniform_size_id']) && !empty($_POST['qty']) && !empty($_POST['gender'])) {
 
-                                        $insertingToChildTable = $DB_con->prepare("INSERT INTO uniform_inventory (uniform_type_id,uniform_size_id,qty,gender,date,user) VALUES (:uniform_type_id,:uniform_size_id,:qty,:gender,:date,:user)");
-                                        $result = $insertingToChildTable->execute([
-                                            ":uniform_type_id" => $_POST['uniform_type_id'],
-                                            ":uniform_size_id" => $_POST['uniform_size_id'],
-                                            ":qty" => $_POST['qty'],
-                                            ":gender" => $_POST['gender'],
-                                            ":date" => date("Y-m-d H:i:s"),
-                                            ":user" => $_SESSION['fname'] . " " . $_SESSION['lname']
-                                        ]);
-                                        // var_dump($result);
-                                        // die();
-                                        header("location: show-uniform-inventory.php");
-                                    }
+                                    $insertingToChildTable = $DB_con->prepare("INSERT INTO uniform_inventory (uniform_type_id,uniform_size_id,qty,gender,date,user) VALUES (:uniform_type_id,:uniform_size_id,:qty,:gender,:date,:user)");
+                                    $result = $insertingToChildTable->execute([
+                                        ":uniform_type_id" => $_POST['uniform_type_id'],
+                                        ":uniform_size_id" => $_POST['uniform_size_id'],
+                                        ":qty" => $_POST['qty'],
+                                        ":gender" => $_POST['gender'],
+                                        ":date" => date("Y-m-d H:i:s"),
+                                        ":user" => $_SESSION['fname'] . " " . $_SESSION['lname']
+                                    ]);
+                                    // var_dump($result);
+                                    // die();
+                                    header("location: show-uniform-inventory.php");
+                                }
                                 ?>
                                 <div class="modal fade" tabindex="-1" id="add" data-bs-backdrop="static" data-bs-keyboard="false">
                                     <div class=" modal-dialog modal-xl">
@@ -181,56 +162,6 @@ if (!isset($_SESSION['username'])) {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <!-- Release Inventory -->
-                            <div class="modal fade" tabindex="-1" id="release" data-bs-backdrop="static" data-bs-keyboard="false">
-                                <div class="modal-dialog modal-lg ">
-                                    <div class="modal-content ">
-                                        <form action="inventory.php">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Students List</h5>
-                                            </div>
-                                            <div class="modal-body p-2">
-                                                <div class=" col-12 p-2">
-                                                    <table class="table table-bordered table-hover w-100" id="studentInventory">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>First Name</th>
-                                                                <th>Last Name</th>
-                                                                <th>Grade Level</th>
-                                                                <th>Actions</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <?php 
-                                                        
-                                                        $fetchingAllStudents = $DB_con->prepare('SELECT * FROM user WHERE position = "Student" ORDER BY grade ASC');
-                                                        $fetchingAllStudents->execute();
-                                                        $students = $fetchingAllStudents->fetchAll(PDO::FETCH_OBJ);
-
-                                                        foreach($students as $student){
-
-                                                        ?>
-                                                            <tr class="align-middle">
-                                                                <td class=""><?= $student->fname ?></td>
-                                                                <td><?= $student->lname ?></dh>
-                                                                <td><?= $student->grade ?></td>
-                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal" value="<?= $student->id ?>" > Release</button></td>
-                                                            </tr>
-                                                            <?php 
-                                                        }
-                                                            ?>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="submit" class="btn btn-success">Save changes</button>
-                                                <button type="reset" class="btn btn-danger" data-bs-dismiss="modal" id="reset">Cancel</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
 
                             <!-- Record Modal  -->
                             <div class="modal fade" tabindex="-1" id="record" data-bs-backdrop="static" data-bs-keyboard="false">
@@ -255,41 +186,42 @@ if (!isset($_SESSION['username'])) {
                                                         <tr>
                                                             <!-- Fetch data for type  -->
                                                             <td style="width: 8.7%">
-                                                                <?php 
+                                                                <?php
                                                                 $getAllUniform = $DB_con->prepare("SELECT * FROM uniform_types");
                                                                 $getAllUniform->execute();
                                                                 $uniforms = $getAllUniform->fetchAll(PDO::FETCH_OBJ);
                                                                 ?>
                                                                 <select name="distribution-type" id="distribution-type" class="form-control form-control-md">
                                                                     <option value="" selected hidden disabled>Select Uniform</option>
-                                                                    <?php 
-                                                                    foreach($uniforms as $uniform){
-                                                                        ?>
-                                                                        <option value="<?= $uniform->type?>"><?= $uniform->type?></option>
-                                                                        <?php 
+                                                                    <?php
+                                                                    foreach ($uniforms as $uniform) {
+                                                                    ?>
+                                                                        <option value="<?= $uniform->type ?>"><?= $uniform->type ?></option>
+                                                                    <?php
                                                                     }
                                                                     ?>
                                                                 </select>
                                                             </td>
                                                             <!-- Size Selecton -->
                                                             <td style="width: 21%">
-                                                            <?php
+                                                                <?php
 
-                                                            $getAllSizesQuery = $DB_con->prepare("SELECT * FROM uniform_sizes");
-                                                            $getAllSizesQuery->execute();
-                                                            $sizes = $getAllSizesQuery->fetchAll(PDO::FETCH_OBJ);
-                                                            ?>
+                                                                $getAllSizesQuery = $DB_con->prepare("SELECT * FROM uniform_sizes");
+                                                                $getAllSizesQuery->execute();
+                                                                $sizes = $getAllSizesQuery->fetchAll(PDO::FETCH_OBJ);
+                                                                ?>
                                                                 <select name="distribution-size" id="distribution-size" class="form-control form-control-md">
                                                                     <option value="" selected hidden disabled>Select Size</option>
                                                                     <?php
                                                                     foreach ($sizes as $size) {
-                                                                        ?>
+                                                                    ?>
                                                                         <option value="<?= $size->size ?>"><?= $size->size ?></option>
-                                                                        <?php 
+                                                                    <?php
                                                                     }
                                                                     ?>
                                                                     <option value="medium">medium</option>
                                                                     <option value="large">large</option>
+
                                                                 </select>
                                                             </td>
                                                             <td style="width:auto">
@@ -304,7 +236,7 @@ if (!isset($_SESSION['username'])) {
 
                                                 <table class="table table-hover">
                                                     <thead>
-                                                        <tr >
+                                                        <tr>
                                                             <th style="width: 33%">Uniform Type</th>
                                                             <th style="width: 6.7%">Size</th>
                                                             <th style="width: 6.7%">Quantity</th>
@@ -362,8 +294,68 @@ if (!isset($_SESSION['username'])) {
                     ?>
                     <div class="card col-12">
                         <div class="row">
-                            <div class="col-12 rounded-bottom card-header bg-warning">
-                                <h3 class="male pt-2">Stock</h3>
+                            <div class="card-header col-12 rounded-bottom bg-warning-subtle  d-flex flex-row justify-content-between py-2">
+                                <h3 class="pt-2 d-flex "><span class="icon-holder"><i class="anticon anticon-tags"></i></span> Uniform Inventory</h3>
+                                <div class="btn-group d-flex ">
+                                    <div class="dropdown d-flex flex-column align-items-center justify-content-center  ">
+                                        <button class=" dropdown-btn btn btn-danger" type="button" onclick="drpFunction()"> Options </button>
+                                        <div id="dropdown-list" class="dropdown-content">
+                                            <button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-danger"> Add New</button>
+                                            <button type="button" data-bs-toggle="modal" data-bs-target="#release" class="btn btn-danger">Release Inventory</button>
+                                            <button type="button" class="btn btn-danger">Reports</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            <!-- Release Inventory -->
+                            <div class="modal fade" tabindex="-1" id="release" data-bs-backdrop="static" data-bs-keyboard="false">
+                                <div class="modal-dialog modal-lg ">
+                                    <div class="modal-content ">
+                                        <form action="inventory.php">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Students List</h5>
+                                            </div>
+                                            <div class="modal-body p-2">
+                                                <div class=" col-12 p-2">
+                                                    <table class="table table-bordered table-hover w-100" id="studentInventory">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>First Name</th>
+                                                                <th>Last Name</th>
+                                                                <th>Grade Level</th>
+                                                                <th>Actions</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <?php
+
+                                                        $fetchingAllStudents = $DB_con->prepare('SELECT * FROM user WHERE position = "Student" ORDER BY grade ASC');
+                                                        $fetchingAllStudents->execute();
+                                                        $students = $fetchingAllStudents->fetchAll(PDO::FETCH_OBJ);
+
+                                                        foreach ($students as $student) {
+
+                                                        ?>
+                                                            <tr class="align-middle">
+                                                                <td class=""><?= $student->fname ?></td>
+                                                                <td><?= $student->lname ?></dh>
+                                                                <td><?= $student->grade ?></td>
+                                                                <td style="width:8.33%"><button type="button" class="btn btn-danger" data-bs-target="#record" data-bs-toggle="modal" value="<?= $student->id ?>"> Release</button></td>
+                                                            </tr>
+                                                        <?php
+                                                        }
+                                                        ?>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-success">Save changes</button>
+                                                <button type="reset" class="btn btn-danger" data-bs-dismiss="modal" id="reset">Cancel</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
                             </div>
                             <div class="card-body col-12 pb-0 px-0">
                                 <div class="row row-cols-2 col-12 m-auto justify-content-center">
@@ -377,12 +369,12 @@ if (!isset($_SESSION['username'])) {
                                             <table class="inventorylist table table-hover table-light">
                                                 <thead class="text-center">
                                                     <tr class="table-dark">
-                                                        <th>Size</th>
-                                                        <th>Last Inventory</th>
-                                                        <th>Gender</th>
-                                                        <th>Date</th>
-                                                        <th>User</th>
-                                                        <th>Actions</th>
+                                                        <th class="text-center">Size</th>
+                                                        <th class="text-center">Last Inventory</th>
+                                                        <th class="text-center">Gender</th>
+                                                        <th class="text-center">Date</th>
+                                                        <th class="text-center">User</th>
+                                                        <th class="text-center">Actions</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="text-center">
