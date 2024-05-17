@@ -374,7 +374,7 @@ if (!isset($_SESSION['username'])) {
                                     ?>
                                         <div class="card bg-custom p-3 col-xl-6 col-lg-12 col-12 overflow-auto px-1" id="table-inventory">
                                             <h2 class="m-0"><span class="icon-holder pr-2"><i class="anticon anticon-bank"></i></span><?= $type->uniform_type_id ?></h2>
-                                            <table class="table table-hover table-light">
+                                            <table class="inventorylist table table-hover table-light">
                                                 <thead class="text-center">
                                                     <tr class="table-dark">
                                                         <th>Size</th>
