@@ -62,54 +62,8 @@
         }
     }
 
-
-    function adaptColor() {
-        // Change Color 
-        if (document.getElementById("reg").checked) {
-            document.querySelector('.modal-header').style.background = '#007bff'; // Bootstrap primary color
-            document.querySelector('.modal-footer').style.background = '#007bff';
-            document.querySelector('#modal-header-body').style.background = '#007bff';
-            document.querySelectorAll('.modal-body input[type="number"]').forEach(input => {
-                input.style.background = '#fff'; // Change input background color
-                input.style.color = '#000'; // Change input text color
-            })
-        }
-        // Change Color 
-        if (document.getElementById("phyedu").checked) {
-            document.querySelector('.modal-header').style.background = '#30C6CC';
-            document.querySelector('.modal-footer').style.background = '#30C6CC';
-            document.querySelector('#modal-header-body').style.background = '#30C6CC';
-            document.querySelectorAll('.modal-body input[type="number"]').forEach(input => {
-                input.style.background = '#fff';
-                input.style.color = '#000';
-            })
-        }
-        // Change Color 
-        if (document.getElementById("afterschool").checked) {
-            document.querySelector('.modal-header').style.background = '#866CE8';
-            document.querySelector('.modal-footer').style.background = '#866CE8';
-            document.querySelector('#modal-header-body').style.background = '#866CE8';
-            document.querySelectorAll('.modal-body input[type="number"]').forEach(input => {
-                input.style.background = '#fff';
-                input.style.color = '#000';
-            })
-        }
-
-        //Reset to Default Color
-        document.getElementById("reset").addEventListener("click", function() {
-            document.querySelector('.modal-header').style.background = '#ffc107'; // Bootstrap warning color
-            document.querySelector('.modal-footer').style.background = '#ffc107';
-            document.querySelector('#modal-header-body').style.background = '#ffc107';
-            document.querySelectorAll('.modal-body input[type="number"]').forEach(input => {
-                input.style.background = '#fff'; // Reset input background color
-                input.style.color = '#000'; // Reset input text color
-            });
-        });
-    }
-
-
     new DataTable ('#studentInventory', {
-        lengthChange:false
+        lengthChange:false,
     });
 
 
@@ -125,7 +79,7 @@
         pageLength: 5,
         lengthChange: false,
         searching: false,
-        ordering: false
+        ordering: false,
     });
     });
 </script>

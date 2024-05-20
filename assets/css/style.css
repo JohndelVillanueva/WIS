@@ -479,8 +479,7 @@ button.dropdown-btn::before {
 /* Hide/Show Toggler */
 .showdrpdwn {
     display:block;
-    position:fixed;
-    top:190px;
+    top:44px;
 }
 
 /* Modal Properties*/
