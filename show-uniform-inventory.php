@@ -36,9 +36,13 @@ if (!isset($_SESSION['username'])) {
                                 ]);
                                 // var_dump($result);
                                 // die();
-                                header("location: show-uniform-inventory.php");
+                                // header("location: show-uniform-inventory.php");
+                                // echo "successfully Inserted " . $_POST['uniform_type_id'];
                             }
                             ?>
+                            <script>
+                                window.location.replace("show-uniform-inventory.php");  
+                            </script>
                             <div class="modal fade" tabindex="-1" id="add" data-bs-backdrop="static" data-bs-keyboard="false">
                                 <div class=" modal-dialog modal-xl">
                                     <div class="modal-content">
@@ -372,12 +376,12 @@ if (!isset($_SESSION['username'])) {
                                                     <table class="inventorylist table table-hover table-light">
                                                         <thead class="text-center">
                                                             <tr class="table-dark">
-                                                                <th>Size</th>
-                                                                <th>Last Inventory</th>
-                                                                <th>Gender</th>
-                                                                <th>Date</th>
-                                                                <th>User</th>
-                                                                <th>Actions</th>
+                                                                <th  class="text-center">Size</th>
+                                                                <th class="text-center">Last Inventory</th>
+                                                                <th class="text-center">Gender</th>
+                                                                <th class="text-center">Date</th>
+                                                                <th class="text-center">User</th>
+                                                                <th class="text-center">Actions</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody class="text-center">
