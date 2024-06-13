@@ -13,9 +13,13 @@ if ($recordExists == 0) {
 	// No record found, perform INSERT
 	$studentdetailsQuery = "
         INSERT INTO studentdetails 
-        (uniqid, visa, street, barangay, city, postal, father, fathermail, fathernumber, fatherwork, fcompany, fsalary, mother, mothermail, mothernumber, motherwork, mcompany, msalary, englishrw, englishv, languages, advclasses, remedial, skill, ashtma, ashtmar, allergy, allergyr, drug, drugr, speech, speechr, vision, visionr, hearing, hearingr, adhd, adhdr, healthcond, hospitalization, injuries, medication, general, generaldets, psych, psychdets, minor, emergency, hospital, otc) 
+        (uniqid, visa, street, barangay, city, postal, father, fathermail, fathernumber, fatherwork, fcompany, fsalary, mother, mothermail, mothernumber, 
+		motherwork, mcompany, msalary, englishrw, englishv, languages, advclasses, remedial, skill, ashtma, ashtmar, allergy, allergyr, drug, drugr, speech, 
+		speechr, vision, visionr, hearing, hearingr, adhd, adhdr, healthcond, hospitalization, injuries, medication, general, generaldets, psych, psychdets, minor, emergency, hospital, otc) 
         VALUES 
-        (:uniqid, :visa, :street, :barangay, :city, :postal, :father, :fathermail, :fatherphone, :fatherwork, :fathercompany, :fsalaryrange, :mother, :mothermail, :motherphone, :motherwork, :mothercompany, :msalaryrange, :english1, :english2, :lang, :alc, :remedial, :skill, :asthma, :asthmadets, :allergies, :allergiesdets, :dallergies, :dallergiesdets, :speech, :speechdets, :vision, :visiondets, :hearing, :hearingdets, :adhd, :adhddets, :healthcond, :hospitalization, :injuries, :medication, :general, :generaldets, :psych, :psychdets, :minor, :emergency, :hospital, :otc)";
+        (:uniqid, :visa, :street, :barangay, :city, :postal, :father, :fathermail, :fatherphone, :fatherwork, :fathercompany, :fsalaryrange, :mother, :mothermail, :motherphone,
+		 :motherwork, :mothercompany, :msalaryrange, :english1, :english2, :lang, :alc, :remedial, :skill, :asthma, :asthmadets, :allergies, :allergiesdets, :dallergies, :dallergiesdets, :speech, 
+		 :speechdets, :vision, :visiondets, :hearing, :hearingdets, :adhd, :adhddets, :healthcond, :hospitalization, :injuries, :medication, :general, :generaldets, :psych, :psychdets, :minor, :emergency, :hospital, :otc)";
 
 	$process_statement = $DB_con->prepare($studentdetailsQuery);
 	$process_statement->execute(array(
