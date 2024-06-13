@@ -174,7 +174,7 @@ if (!isset($_SESSION['username'])) {
                             <div class="modal fade" tabindex="-1" id="record" data-bs-backdrop="static" data-bs-keyboard="false">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
-                                        <form action="POST">
+                                        <form method="POST" action="">
                                             <div class="modal-header">
                                                 <h5 class="modal-title">Distribute Uniform</h5>
                                             </div>
@@ -226,8 +226,8 @@ if (!isset($_SESSION['username'])) {
                                                                     <?php
                                                                     }
                                                                     ?>
-                                                                    <option value="medium">medium</option>
-                                                                    <option value="large">large</option>
+                                                                    <!-- <option value="medium">medium</option>
+                                                                    <option value="large">large</option> -->
 
                                                                 </select>
                                                             </td>

@@ -20,7 +20,7 @@ $studentdetailsQuery =
 		englishrw, englishv,
 		languages, advclasses,
 		remedial, skill,
-		ashtma, ashtmar
+		ashtma, ashtmar,
 		allergy, allergyr,
 		drug, drugr,
 		speech, speechr,
