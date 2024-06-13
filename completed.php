@@ -108,11 +108,11 @@ if (!isset($_SESSION['username'])) {
                                                             <td><?php echo $row["section"]; ?></td>
                                                             <td><?php echo $row["house"]; ?></td>
                                                             <td>
-                                                                <a type="button" href="profile.php?id=<?php echo $row["id"]; ?>" class="btn btn-success rounded"><span class="icon-holder"><i class="anticon anticon-eye"></i></span></a>
+                                                                <a type="button" href="profile.php?id=<?php echo $row["id"]; ?>&uniqid=<?php echo $row["uniqid"]; ?>" class="btn btn-success rounded"><span class="icon-holder"><i class="anticon anticon-eye"></i></span></a>
                                                                 <?php
                                                                 if ($_SESSION['level'] == 9 or $_SESSION['level'] == 2 or $_SESSION['level'] == 4) {
                                                                 ?>
-                                                                    <a href="edit-profile.php?id=<?php echo $row['id']; ?>" type="button" class="btn btn-primary rounded"><span class="icon-holder"><i class="anticon anticon-edit"></i></span></a>
+                                                                    <a href="edit-profile.php?id=<?php echo $row['id']; ?>&uniqid=<?php echo $row["uniqid"]; ?>" type="button" class="btn btn-primary rounded"><span class="icon-holder"><i class="anticon anticon-edit"></i></span></a>
                                                                 <?php
                                                                 }
                                                                 if ($_SESSION['level'] == 9 or $_SESSION['level'] == 3) {

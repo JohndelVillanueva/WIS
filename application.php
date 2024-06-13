@@ -415,11 +415,12 @@ if (!isset($_SESSION['username'])) {
 
         function fnStrand() {
             if (document.getElementById("gradelevel").value == "grade11") {
-                document.getElementById("row12").style.display = "none";
+                document.getElementById("row11").style.display = "none";
                 document.getElementById("row11").style.display = null;
                 document.getElementById("row11").style.display = "block";
-            } else if (document.getElementById("gradelevel").value == "grade12") {
-                document.getElementById("row11").style.display = "none";
+            }  
+            if (document.getElementById("gradelevel").value == "grade12") {
+                document.getElementById("row12").style.display = "none";
                 document.getElementById("row12").style.display = null;
                 document.getElementById("row12").style.display = "block";
             }
@@ -436,14 +437,15 @@ if (!isset($_SESSION['username'])) {
     });
 
     $('#gradelevel').change(function(e){
-        if($(this).val() != "Grade 11" || $(this).val() != "Grade 11"){
-            $('#strand').prop('hidden',true);
-            $('#strandlbl').prop('hidden',true);
-        }
-        else {
-            $('#strand').prop('hidden',false);
-        }
-    });
+    if($(this).val() != "Grade 11" && $(this).val() != "Grade 12"){
+        $('#strand').prop('hidden',true);
+        $('#strandlbl').prop('hidden',true);
+    }
+    else {
+        $('#strand').prop('hidden',false);
+        $('#strandlbl').prop('hidden',false);
+    }
+});
 
     // CHECK STUDENT
     $("#applicationtype").change(function(e){
