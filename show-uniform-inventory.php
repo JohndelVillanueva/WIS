@@ -25,7 +25,7 @@ if (!isset($_SESSION['username'])) {
                             <div class="modal fade" tabindex="-1" id="add" data-bs-backdrop="static" data-bs-keyboard="false">
                                 <div class=" modal-dialog modal-xl">
                                     <div class="modal-content">
-                                        <form method="POST" action="uniformProcess.php">
+                                        <form method="POST" action="addUniformProcess.php">
                                             <div class="modal-header">
                                                 <div class="modal-title text-white">
                                                     Add New Uniform
