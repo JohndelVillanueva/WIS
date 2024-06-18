@@ -56,7 +56,7 @@ if (!isset($_SESSION['username'])) {
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $pdo_statement = $DB_con->prepare("SELECT * FROM users24 WHERE status = 2");
+                                                $pdo_statement = $DB_con->prepare("SELECT * FROM users24 WHERE status = 1");
                                                 $pdo_statement->execute();
                                                 $result = $pdo_statement->fetchAll();
                                                 foreach ($result as $row) {
@@ -88,7 +88,7 @@ if (!isset($_SESSION['username'])) {
                                                             </td>
                                                             <td>
                                                                 <input class="form-control" type="text" id="notes" name="notes" placeholder="Type notes here">
-                                                                <input type="hidden" name="stage" id="stage" value="3">
+                                                                <input type="hidden" name="stage" id="stage" value="2">
                                                                 <input type="hidden" name="ern" id="ern" value="<?php echo $row["uniqid"]; ?>">
                                                             </td>
                                                             <td><button type="submit" class="btn btn-success rounded"><span class="icon-holder"><i class="anticon anticon-check"></i></span></button></td>
