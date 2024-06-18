@@ -253,6 +253,14 @@
                     </li>
                 </ul>
             </li>
+            <li class="nav-item dropdown">
+                <a class="dropdown-toggle" href="logs.php">
+                    <span class="icon-holder">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    </span>
+                    <span class="title">Logs</span>
+                </a>
+            </li>
             <?php
             if ($_SESSION['level'] == 3 or $_SESSION['level'] == 9) {
             ?>
