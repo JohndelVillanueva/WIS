@@ -33,18 +33,19 @@
                 </li>
             <?php
             }
-            if ($_SESSION['level'] == 8 OR $_SESSION['level'] == 9) {
+            if ($_SESSION['level'] == 3 or $_SESSION['level'] == 9) {
                 ?>
-                <li class="nav-item dropdown">
-                    <a class="dropdown-toggle" href="clinic.php">
-                        <span class="icon-holder">
-                            <i class="anticon anticon-plus-square"></i>
-                        </span>
-                        <span class="title">Clinic</span>
-                    </a>
-                </li>
+                    <li class="nav-item dropdown">
+                        <a class="dropdown-toggle" href="cashier.php">
+                            <span class="icon-holder">
+                                <i class="anticon anticon-exception"></i>
+                            </span>
+                            <span class="title">Application Fee</span>
+                        </a>
+                    </li>
                 <?php
-            }
+                }
+
             if ($_SESSION['level'] == 4 or $_SESSION['level'] == 9) {
             ?>
                 <li class="nav-item dropdown">
@@ -58,18 +59,7 @@
             <?php
             }
 
-            if ($_SESSION['level'] == 3 or $_SESSION['level'] == 9) {
-            ?>
-                <li class="nav-item dropdown">
-                    <a class="dropdown-toggle" href="cashier.php">
-                        <span class="icon-holder">
-                            <i class="anticon anticon-exception"></i>
-                        </span>
-                        <span class="title">Application Fee</span>
-                    </a>
-                </li>
-            <?php
-            }
+
 
             if ($_SESSION['level'] == 7 or $_SESSION['level'] == 9) {
             ?>
@@ -172,6 +162,18 @@
                         <i class="anticon anticon-tags"></i>
                     </span>
                         <span class="title">Uniforms</span>
+                    </a>
+                </li>
+                <?php
+            }
+            if ($_SESSION['level'] == 8 OR $_SESSION['level'] == 9) {
+                ?>
+                <li class="nav-item dropdown">
+                    <a class="dropdown-toggle" href="clinic.php">
+                        <span class="icon-holder">
+                            <i class="anticon anticon-plus-square"></i>
+                        </span>
+                        <span class="title">Clinic</span>
                     </a>
                 </li>
                 <?php
