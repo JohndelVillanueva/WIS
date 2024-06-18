@@ -32,79 +32,107 @@ if (!isset($_SESSION['username'])) {
                                     </h4>
                                 </div>
                                 <div class="card-body">
-                                    <div class="row">
+                                    <!-- <div class="row">
                                         <div class="col-lg-12">
                                             <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#classList">
                                                 Class List
                                             </button>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="row ">
                                         <div class="col-lg-12">
-                                            <table id="userlist" class="display table table-stripped table-fluid"  >
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">Reference Number</th>
-                                                    <th scope="col">Full Name</th>
-                                                    <th scope="col">Gender</th>
-                                                    <th scope="col">Date of Birth</th>
-                                                    <th scope="col">Grade</th>
-                                                    <th scope="col">Section</th>
-                                                    <th scope="col">House</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php
-                                                $pdo_statement = $DB_con->prepare("SELECT * FROM users24 WHERE position = :position AND status != :status ORDER BY `id` DESC");
-                                                $pdo_statement->execute([":position" => "Student", ":status" => 8]);
-                                                $result = $pdo_statement->fetchAll();
-                                                foreach ($result as $row) {
-                                                    if($row["isofficial"] == 0) {
-                                                        $style = "bg-dangerous";
-                                                    } else {
-                                                        $style = "bg-complete";
-                                                    }
-                                                ?>
-                                                    <tr class="<?php echo $style; ?>">
-                                                        <form>
-                                                            <th scope="row">
-                                                                <div class="col-lg-12">
-                                                                    <p><a class="btn btn-primary" data-toggle="collapse" href="#collapseExample<?php echo $row['uniqid']; ?>" role="button" aria-expanded="false" aria-controls="collapseExample<?php echo $row['uniqid']; ?>"><?php echo $row["uniqid"]; ?></a></p>
-                                                                    <?php
-                                                                    $logs = $DB_con->prepare("SELECT * FROM logs_enroll WHERE ern = :ern");
-                                                                    $logs->execute(array(':ern' => $row['uniqid']));
-                                                                    $logsresult = $logs->fetchAll();
-                                                                    foreach ($logsresult as $log) {
-                                                                    ?>
-                                                                        <div class="collapse" id="collapseExample<?php echo $row['uniqid']; ?>">
-                                                                            <div class="card card-body">
-                                                                                <?php echo $log['notes'] . " (" . $log['usertouch'] . "@" . $log['touch'] . ")"; ?>
-                                                                            </div>
-                                                                        </div>
-                                                                    <?php
-                                                                    }
-                                                                    ?>
-                                                                </div>
-                                                            </th>
-                                                            <td><strong><?php echo $row["lname"] . ", " . $row["fname"] . " " . $row["mname"]; ?>
-                                                            &nbsp;
-                                                                <?php
-                                                                    if($row["isofficial"] == 0) {
-                                                                        ?>
-                                                                        <span class="icon-holder">
-                                                                            <i class="anticon anticon-warning"></i>
-                                                                        </span>
+                                            <table id="userlist" class="display table table-stripped table-fluid">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Reference Number</th>
+                                                        <th scope="col">Full Name</th>
+                                                        <th scope="col">Gender</th>
+                                                        <th scope="col">Date of Birth</th>
+                                                        <th scope="col">Grade</th>
+                                                        <th scope="col">Section</th>
+                                                        <th scope="col">House</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    $pdo_statement = $DB_con->prepare("SELECT * FROM users24 WHERE position = :position AND status != :status ORDER BY `id` DESC");
+                                                    $pdo_statement->execute([":position" => "Student", ":status" => 8]);
+                                                    $result = $pdo_statement->fetchAll();
+                                                    foreach ($result as $row) {
+                                                        if ($row["isofficial"] == 0) {
+                                                            $style = "bg-dangerous";
+                                                        } else {
+                                                            $style = "bg-complete";
+                                                        }
+                                                    ?>
+                                                        <tr class="<?php echo $style; ?>">
+                                                            <form>
+                                                                <th scope="row">
+                                                                    <div class="col-lg-12">
+                                                                        <p><a class="btn btn-primary" data-toggle="collapse" href="#collapseExample<?php echo $row['uniqid']; ?>" role="button" aria-expanded="false" aria-controls="collapseExample<?php echo $row['uniqid']; ?>"><?php echo $row["uniqid"]; ?></a> <?= " " . $status = $row['status']. "/8 "; // This is an example variable, you can change it to any number from 1 to 8
+
+                                                                                                                                                                                                                                                                                                                        switch ($row['status']) {
+                                                                                                                                                                                                                                                                                                                            case 1:
+                                                                                                                                                                                                                                                                                                                                echo "Application Fee";
+                                                                                                                                                                                                                                                                                                                                break;
+                                                                                                                                                                                                                                                                                                                            case 2:
+                                                                                                                                                                                                                                                                                                                                echo "Registrar";
+                                                                                                                                                                                                                                                                                                                                break;
+                                                                                                                                                                                                                                                                                                                            case 3:
+                                                                                                                                                                                                                                                                                                                                echo "Admission";
+                                                                                                                                                                                                                                                                                                                                break;
+                                                                                                                                                                                                                                                                                                                            case 4:
+                                                                                                                                                                                                                                                                                                                                echo "Guidance";
+                                                                                                                                                                                                                                                                                                                                break;
+                                                                                                                                                                                                                                                                                                                            case 5:
+                                                                                                                                                                                                                                                                                                                                echo "Interview";
+                                                                                                                                                                                                                                                                                                                                break;
+                                                                                                                                                                                                                                                                                                                            case 6:
+                                                                                                                                                                                                                                                                                                                                echo "Registrar";
+                                                                                                                                                                                                                                                                                                                                break;
+                                                                                                                                                                                                                                                                                                                            case 7:
+                                                                                                                                                                                                                                                                                                                                echo "Cashier";
+                                                                                                                                                                                                                                                                                                                                break;
+                                                                                                                                                                                                                                                                                                                            default:
+                                                                                                                                                                                                                                                                                                                                echo "Default: Number is not between 1 and 7";
+                                                                                                                                                                                                                                                                                                                                break;
+                                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                                        ?></p>
                                                                         <?php
-                                                                    }
-                                                                ?></strong>
-                                                            </td>
-                                                            <td><?php echo $row["gender"]; ?></td>
-                                                            <td><?php echo date("F j, Y", strtotime($row["dob"])); ?></td>
-                                                            <!-- <td><?php echo $row["lrn"]; ?></td> -->
-                                                            <td><?php echo $row["grade"]; ?></td>
-                                                            <td><?php echo $row["section"]; ?></td>
-                                                            <td><?php echo $row["house"]; ?></td>
-                                                            <!-- <td>
+                                                                        $logs = $DB_con->prepare("SELECT * FROM logs_enroll WHERE ern = :ern");
+                                                                        $logs->execute(array(':ern' => $row['uniqid']));
+                                                                        $logsresult = $logs->fetchAll();
+                                                                        foreach ($logsresult as $log) {
+                                                                        ?>
+                                                                            <div class="collapse" id="collapseExample<?php echo $row['uniqid']; ?>">
+                                                                                <div class="card card-body">
+                                                                                    <?= $log['notes'] . " " . "<h5>" . $log['usertouch'] . "</h5>" . $log['touch']; ?>
+                                                                                </div>
+                                                                            </div>
+                                                                        <?php
+                                                                        }
+                                                                        ?>
+                                                                    </div>
+                                                                </th>
+                                                                <td><strong><?php echo $row["lname"] . ", " . $row["fname"] . " " . $row["mname"]; ?>
+                                                                        &nbsp;
+                                                                        <?php
+                                                                        if ($row["isofficial"] == 0) {
+                                                                        ?>
+                                                                            <span class="icon-holder">
+                                                                                <i class="anticon anticon-warning"></i>
+                                                                            </span>
+                                                                        <?php
+                                                                        }
+                                                                        ?></strong>
+                                                                </td>
+                                                                <td><?php echo $row["gender"]; ?></td>
+                                                                <td><?php echo date("F j, Y", strtotime($row["dob"])); ?></td>
+                                                                <!-- <td><?php echo $row["lrn"]; ?></td> -->
+                                                                <td><?php echo $row["grade"]; ?></td>
+                                                                <td><?php echo $row["section"]; ?></td>
+                                                                <td><?php echo $row["house"]; ?></td>
+                                                                <!-- <td>
                                                                 <a type="button" href="profile.php?id=<?php echo $row["id"]; ?>&uniqid=<?php echo $row["uniqid"]; ?>" class="btn btn-success rounded"><span class="icon-holder"><i class="anticon anticon-eye"></i></span></a>
                                                                 <?php
                                                                 if ($_SESSION['level'] == 9 or $_SESSION['level'] == 2 or $_SESSION['level'] == 4) {
@@ -113,23 +141,23 @@ if (!isset($_SESSION['username'])) {
                                                                 <?php
                                                                 }
                                                                 if ($_SESSION['level'] == 9 or $_SESSION['level'] == 3) {
-                                                                    if($row["isofficial"] ==0) {
-                                                                    ?>
+                                                                    if ($row["isofficial"] == 0) {
+                                                                ?>
                                                                     <a href="mark-complete.php?id=<?php echo $row['uniqid']; ?>" type="button" class="btn btn-info rounded"><span class="icon-holder"><i class="anticon anticon-check"></i></span></a>
                                                                     <?php
                                                                     }
                                                                 }
-                                                                ?>
+                                                                    ?>
                                                             </td> -->
 
-                                                        </form>
-                                                    </tr>
-                                                <?php
-                                                }
-                                                ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                                            </form>
+                                                        </tr>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="card-footer bg-light text-center"></div>
@@ -145,8 +173,8 @@ if (!isset($_SESSION['username'])) {
         </div>
     </div>
     <script>
-        $(document).ready( function() {
-            $('#userlist').DataTable( {
+        $(document).ready(function() {
+            $('#userlist').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
                     'copyHtml5',
@@ -155,9 +183,9 @@ if (!isset($_SESSION['username'])) {
                     'pdfHtml5',
                     'print'
                 ],
-                "pageLength":15
-            } );
-        } );
+                "pageLength": 15
+            });
+        });
     </script>
 
     <!-- <div class="modal fade" id="classList" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
