@@ -128,7 +128,7 @@ session_start(); ?>
 
 
 									$log_enrollQuery = $DB_con->prepare('INSERT INTO logs_enroll (ern,stage,usertouch,touch,notes) VALUES (?, ?, ?, ?, ? )');
-									$log_enrollQuery->execute([$uniqid, "Verification", $_SESSION['username'], date("Y-m-d H:i:s"), "Application Form"]);
+									$log_enrollQuery->execute([$uniqid, "Verification", $_SESSION['fname']. " " .$_SESSION['lname'], date("Y-m-d H:i:s"), "Application Form"]);
 
 										
 								?>
