@@ -70,7 +70,7 @@ if (!isset($_SESSION['username'])) {
                                                                 <th scope="row">
                                                                     <div class="col-lg-12">
                                                                         <p><a class="btn btn-primary" data-toggle="collapse" href="#collapseExample<?php echo $row['uniqid']; ?>" role="button" aria-expanded="false" aria-controls="collapseExample<?php echo $row['uniqid']; ?>"><?php echo $row["uniqid"]; ?></a> 
-                                                                        <?= " " . $status = $row['status']. "/7 ";
+                                                                        <?= " " . $status = $row['status']. "/8 ";
                                                                             switch ($row['status']) {
                                                                                 case 1:
                                                                                     echo "Application Fee";

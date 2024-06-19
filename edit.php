@@ -187,12 +187,14 @@ if ($recordExists == 0) {
 
 if (isset($_POST['Submit'])) {
 	$newImage = $_FILES['photo']['name'];
+	$uploadDirectory = "assets/images/avatars/";
 
 	if ($newImage != '') {
-		$updateFileName = $newImage;
-		if (file_exists("assets/images/avatars" . $_FILES['photo']['name'])) {
-			$filename = $_FILES['photo']['name'];
-			echo $filename . "Already Exist";
+		$updateFileName = $_POST['firstname'] . $_POST['lastname'] . '.' . pathinfo($newImage, PATHINFO_EXTENSION);
+		$uploadPath = $uploadDirectory . $updateFileName;
+		if (file_exists($uploadPath)) {
+            echo $updateFileName . " already exists. Please choose a different filename or image.";
+			// echo $filename . "Already Exist";
 		}
 	}
 }
@@ -240,7 +242,7 @@ $userprocess_statement->execute(
 
 if ($userprocess_statement) {
 	if ($_FILES['photo']['name'] != '') {
-		move_uploaded_file($_FILES['photo']['tmp_name'], "assets/images/avatars/" . $_FILES['photo']['name']);
+		move_uploaded_file($_FILES['photo']['tmp_name'], $uploadPath);
 	}
 	echo "Image Successful";
 } else {
