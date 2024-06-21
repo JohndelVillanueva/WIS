@@ -80,35 +80,35 @@ if (!isset($_SESSION['username'])) {
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr>
-                                                                    <td>
-                                                                        <input type="text" class="form-control" name="name" required>
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="text" class="form-control" name="grade" required>
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="text" class="form-control" name="complaint" required>
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="text" class="form-control" name="diagnose" required>
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="text" class="form-control" name="treatment" required>
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="text" class="form-control" name="vital_signs" required>
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="time" class="form-control" name="time_in" required>
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="time" class="form-control" name="time_out" required>
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="hidden" class="form-control" name="remark" required>
-                                                                    </td>
-                                                                </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <input type="text" class="form-control border-dark form-control-custom" name="name" required>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="form-control border-dark form-control-custom" name="grade" required>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="form-control border-dark form-control-custom" name="complaint" required>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="form-control border-dark form-control-custom" name="diagnose" required>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="form-control border-dark form-control-custom" name="treatment" required>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="form-control border-dark form-control-custom" name="vital_signs" required>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="time" class="form-control border-dark form-control-custom" name="time_in" required>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="time" class="form-control border-dark form-control-custom" name="time_out" required>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="hidden" class="form-control border-dark form-control-custom" name="remark" required>
+                                                                </td>
+                                                            </tr>
                                                             </tbody>
                                                         </table>
                                                     </div>
