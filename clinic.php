@@ -10,6 +10,16 @@ if (!isset($_SESSION['username'])) {
 
 <?php include_once "includes/css.php"; ?>
 
+<head>
+    <style>
+        .modal-dialog-custom {
+            max-width: 80%; /* Adjust the percentage as needed */
+            width: 80%;
+        }
+
+    </style>
+</head>
+
 <body>
     <div class="app">
         <div class="layout">
@@ -30,98 +40,155 @@ if (!isset($_SESSION['username'])) {
                                     </h4>
                                 </div>
                                 <div class="card-body">
-                                    <?php
-                                    if (isset($_GET['ern'])) {
-                                    ?>
-                                        <div class="row" id="alertmsg">
-                                            <div class="col-lg-12">
-                                                <div class="alert alert-success" role="alert">
-                                                    Successfully processed ERN <?php echo $_GET['ern']; ?>
-                                                </div>
+                                    <div class="modal fade" tabindex="-1" id="add" data-bs-backdrop="static" data-bs-keyboard="false">
+                                        <div class="modal-dialog modal-dialog-centered modal-dialog-custom">
+                                            <div class="modal-content modal-content-custom">
+                                                <form method="POST" action="addClinicProcess.php">
+                                                    <div class="modal-header float-center">
+                                                        <div class="modal-title text-black ">
+                                                            <b>Add New Student Health Record</b>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <table class="table text-center">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>
+                                                                        <h3>Fullname</h3>
+                                                                    </th>
+                                                                    <th>
+                                                                        <h3>Grade And Section</h3>
+                                                                    </th>
+                                                                    <th>
+                                                                        <h3>Complaint</h3>
+                                                                    </th>
+                                                                    <th>
+                                                                        <h3>Diagnose</h3>
+                                                                    </th>
+                                                                    <th>
+                                                                        <h3>Treatment</h3>
+                                                                    </th>
+                                                                    <th>
+                                                                        <h3>Vital Signs</h3>
+                                                                    </th>
+                                                                    <th>
+                                                                        <h3>Time-in</h3>
+                                                                    </th>
+                                                                    <th>
+                                                                        <h3>Time-out</h3>
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <input type="text" class="form-control" name="name" required>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control" name="grade" required>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control" name="complaint" required>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control" name="diagnose" required>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control" name="treatment" required>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control" name="vital_signs" required>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="time" class="form-control" name="time_in" required>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="time" class="form-control" name="time_out" required>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="hidden" class="form-control" name="remark" required>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-success">Save changes</button>
+                                                        <button type="reset" class="btn btn-danger" data-bs-dismiss="modal" id="reset">Cancel</button>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
-                                    <?php
-                                    }
-                                    ?>
-                                    <div class="row ">
-                                        <div class="col-lg-12">
-                                            <table id="userlist" class="display table table-stripped table-fluid"  >
-                                            <thead>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-primary float-right"> Add New</button>
+                                    </div>
+                                </div>
+                                <?php
+                                $selectAllStudents = $DB_con->prepare("SELECT * FROM clinic_history");
+                                $selectAllStudents->execute();
+                                $students = $selectAllStudents->fetchAll(PDO::FETCH_OBJ);
+                                ?>
+  
+                                <div class="row ">
+                                    <div class="col-lg-12">
+                                        <table id="userlist" class="display table table-stripped table-fluid">
+                                            <thead text-center>
                                                 <tr>
-                                                    <th scope="col" class="text-center">Reference Number</th>
                                                     <th scope="col" class="text-center">Full Name</th>
-                                                    <th scope="col" class="text-center">Gender</th>
-                                                    <th scope="col" class="text-center">Grade</th>
-                                                    <th scope="col" class="text-center">Section</th>
-                                                    <th scope="col" class="text-center">Date of Birth</th>
-                                                    <!-- <th scope="col">LRN</th> -->
-                                                    <th scope="col" class="text-center">Profile</th>
+                                                    <th scope="col" class="text-center">Grade And Section</th>
+                                                    <th scope="col" class="text-center">Complaint</th>
+                                                    <th scope="col" class="text-center">Diagnose</th>
+                                                    <th scope="col" class="text-center">Treatment</th>
+                                                    <th scope="col" class="text-center">Vital Signs</th>
+                                                    <th scope="col" class="text-center">Time-in</th>
+                                                    <th scope="col" class="text-center">Time-out</th>
+                                                    <th scope="col" class="text-center">Remarks</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <?php
-                                                $pdo_statement = $DB_con->prepare("SELECT * FROM users24 WHERE position = :position AND status = :status
-                                               ORDER BY `id` DESC");
-                                                $pdo_statement->execute([":position" => "Student" , ":status" => 8]);
-                                                $result = $pdo_statement->fetchAll();
-                                                foreach ($result as $row) {
+                                            <tbody class="text-center fs-1">
+                                                <?php 
+                                                foreach ($students as $student): { 
                                                 ?>
                                                     <tr style="padding-top:10px!important; padding-bottom:10px!important;">
-                                                        <form>
-                                                            <th scope="row">
-                                                                <div class="col-lg-12">
-                                                                    <p><a class="btn btn-primary" data-toggle="collapse" href="#collapseExample<?php echo $row['uniqid']; ?>" role="button" aria-expanded="false" aria-controls="collapseExample<?php echo $row['uniqid']; ?>"><?php echo $row["uniqid"]; ?></a></p>
-                                                                    <?php
-                                                                    $logs = $DB_con->prepare("SELECT * FROM logs_enroll WHERE ern = :ern");
-                                                                    $logs->execute(array(':ern' => $row['uniqid']));
-                                                                    $logsresult = $logs->fetchAll();
-                                                                    foreach ($logsresult as $log) {
-                                                                    ?>
-                                                                        <div class="collapse" id="collapseExample<?php echo $row['uniqid']; ?>">
-                                                                            <div class="card card-body">
-                                                                                <?php echo $log['notes'] . " (" . $log['usertouch'] . "@" . $log['touch'] . ")"; ?>
-                                                                            </div>
-                                                                        </div>
-                                                                    <?php
-                                                                    }
-                                                                    ?>
-                                                                </div>
-                                                            </th>
-                                                            <td><?php echo $row["lname"] . ", " . $row["fname"] . " " . $row["mname"]; ?></td>
-                                                            <td><?php echo $row["gender"]; ?></td>
-                                                            <td><?php echo $row["grade"]; ?></td>
-                                                            <td><?php echo $row["section"]; ?></td>
-                                                            <td><?php echo date("F j, Y", strtotime($row["dob"])); ?></td>
-                                                            <!-- <td><?php echo $row["lrn"]; ?></td> -->
-                                                            <td>
-                                                                <a type="button" href="medical-profile.php?id=<?php echo $row["id"]; ?>" class="btn btn-success rounded"><span class="icon-holder"><i class="anticon anticon-eye"></i></span></a>
-
-                                                            </td>
-                                                        </form>
+                                                            <td><?= $student->name ?></td>
+                                                            <td><?= $student->grade ?></td>
+                                                            <td><?= $student->complaint ?></td>
+                                                            <td><?= $student->diagnose ?></td>
+                                                            <td><?= $student->treatment ?></td>
+                                                            <td><?= $student->vital_signs ?></td>
+                                                            <td><?= $student->time_in ?></td>
+                                                            <td><?= $student->time_out ?></td>
+                                                            <td><?= $student->remarks ?></td>
                                                     </tr>
-                                                <?php
-                                                }
+                                                    <?php 
+                                                } 
+                                                endforeach; 
                                                 ?>
+                                                    
                                             </tbody>
                                         </table>
                                     </div>
-                                    </div>
                                 </div>
-                                <div class="card-footer bg-light text-center"></div>
                             </div>
+                            <div class="card-footer bg-light text-center"></div>
                         </div>
                     </div>
-                    <!-- form ends !-->
                 </div>
-                <?php include_once "includes/footer.php"; ?>
+                <!-- form ends !-->
             </div>
-            <?php include_once "script.php"; ?>
-
+            <?php include_once "includes/footer.php"; ?>
         </div>
+        <?php include_once "script.php"; ?>
+
+    </div>
     </div>
     <script>
-        $(document).ready( function() {
-            $('#userlist').DataTable( {
+        $(document).ready(function() {
+            $('#userlist').DataTable({
                 dom: 'frtipB',
                 buttons: [
                     'copyHtml5',
@@ -130,9 +197,9 @@ if (!isset($_SESSION['username'])) {
                     'pdfHtml5',
                     'print'
                 ],
-                "pageLength":15
-            } );
-        } );
+                "pageLength": 15
+            });
+        });
     </script>
 </body>
 
