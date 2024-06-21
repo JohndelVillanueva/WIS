@@ -2,10 +2,11 @@
 require_once("config/config.php");
 session_start();
 
+// Redirect to index if not logged in
 if (!isset($_SESSION["username"])) {
     header("location: index.php");
+    exit();
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,15 +24,13 @@ if (!isset($_SESSION["username"])) {
     <link rel="stylesheet" href="css/custom.css">
 </head>
 <body class="login">
-
 <div class="main">
-
     <form action="amount.php" method="post">
         <section class="sign-in">
             <div class="container">
                 <div class="signin-content">
                     <div class="signin-image">
-                        <figure><img src="images/badge.png" alt="sing up image"></figure>
+                        <figure><img src="images/badge.png" alt="sign up image"></figure>
                     </div>
 
                     <div class="signin-form">
@@ -47,35 +46,30 @@ if (!isset($_SESSION["username"])) {
                             </div>
                         </form>
                         <?php
-                        if(isset($_GET['error'])){
-                            switch($_GET['error']){
+                        if (isset($_GET['error'])) {
+                            switch ($_GET['error']) {
                                 case 1:
-                                    echo "
-                                            <h1 class=\"alert alert-warning\">Invalid RFID!</h1>
-                                        ";
+                                    echo '<h1 class="alert alert-warning">Invalid RFID!</h1>';
                                     break;
                             }
                         }
 
-                        if(isset($_GET['success'])){
-                            switch($_GET['success']){
+                        if (isset($_GET['success'])) {
+                            switch ($_GET['success']) {
                                 case 0:
-                                    echo "
-                                            <h1 class=\"alert alert-warning\">Insufficient Balance!</h1>
-                                        ";
+                                    echo '<h1 class="alert alert-warning">Insufficient Balance!</h1>';
                                     break;
                                 case 1:
-                                    echo "
-                                            <h1 class=\"alert alert-success\">Transaction Complete!</h1>
-                                        ";
+                                    echo '<h1 class="alert alert-success">Transaction Complete!</h1>';
                                     break;
                             }
                         }
-
-                      ?>
+                        ?>
                         <div class="social-login">
                             <span class="social-label">Copyright &copy; WIS ICT.</span>
-                            <a class="social-label"><a href="dashboard.php"><i class="align-middle" data-feather="trello"></i> DASHBOARD</a></span>
+                            <a class="social-label" href="dashboard.php">
+                                <i class="align-middle" data-feather="trello"></i> DASHBOARD
+                            </a>
                         </div>
                     </div>
                 </div>

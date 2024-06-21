@@ -42,7 +42,7 @@ include_once ("headers.php");
                                     </thead>
                                     <tbody>
                                     <?php
-                                    $pdo_statement = $DB_con->prepare("SELECT wispay.*, user.fname AS fname, user.lname AS lname FROM wispay INNER JOIN user ON wispay.rfid = user.rfid WHERE position = 'Student' ORDER by wispay.id DESC LIMIT 50");
+                                    $pdo_statement = $DB_con->prepare("SELECT wispay.*, user.fname AS fname, user.lname AS lname FROM wispay INNER JOIN user ON wispay.rfid = user.rfid  ORDER by wispay.id DESC LIMIT 50");
                                     $pdo_statement->execute();
                                     $result = $pdo_statement->fetchAll();
                                     foreach($result as $row) {
