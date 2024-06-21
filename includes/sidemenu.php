@@ -246,7 +246,7 @@
                         <a href="classes.php">Grade Levels</a>
                     </li>
                     <li>
-                        <a href="updateStudentRfid.php">Update Rfid</a>
+                        <a href="update-rfid.php">Update Rfid</a>
                     </li>
                     <li>
                         <a href="changePassword.php">Change Password </a>
