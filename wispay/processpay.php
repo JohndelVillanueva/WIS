@@ -2,45 +2,58 @@
 require_once("config/config.php");
 session_start();
 
-// Redirect to login page if not logged in
 if (!isset($_SESSION["username"])) {
     header("location: index.php");
-    exit;
+    exit();
 }
 
-$processedby = $_SESSION['fname'] . " " . $_SESSION['lname'];
-$refcode = uniqid("WIS-");
+if (isset($_POST['submit']) && !empty($_POST['amount']) && !empty($_POST['rfid'])) {
+    $processedby = $_SESSION['fname'] . " " . $_SESSION['lname'];
+    $refcode = uniqid("WIS-");
 
-// Calculate the current balance
-$bal = $DB_con->prepare("SELECT SUM(credit) - SUM(debit) AS ctot FROM wispay WHERE rfid = :rfid");
-$bal->execute([':rfid' => $_POST['rfid']]);
-$rbal = $bal->fetch(PDO::FETCH_ASSOC);
+    // Get user details
+    $user_details = $DB_con->prepare('SELECT fname, lname FROM user WHERE rfid = :rfid');
+    $user_details->execute([
+        ':rfid' => $_POST['rfid']
+    ]);
+    $user = $user_details->fetch(PDO::FETCH_OBJ);
 
-if ($rbal !== false) {
-    $current_balance = $rbal['ctot'];
-    $new_balance = $current_balance - $_POST['amount'];
-
-    // Check if the new balance is at least -1000
-    if ($new_balance >= -1000) {
-        // Insert the payment record
-        $pay = "INSERT INTO wispay (debit, rfid, refcode, transdate, processedby) 
-                VALUES (:debit, :rfid, :refcode, NOW(), :processedby)";
-        $pay_statement = $DB_con->prepare($pay);
-        $pay_statement->execute([
-            ':debit' => $_POST['amount'],
-            ':rfid' => $_POST['rfid'],
-            ':refcode' => $refcode,
-            ':processedby' => $processedby
+    if ($user) {
+        $firstname = $user->fname;
+        $lastname = $user->lname;
+        
+        // Check if the new balance is at least -1000
+        $bal = $DB_con->prepare("SELECT sum(debit)-sum(credit) as ctot FROM wispay WHERE rfid = :rfid");
+        $bal->execute([
+            ':rfid', $_POST['rfid']
         ]);
+        $rbal = $bal->fetch(PDO::FETCH_ASSOC);
 
-        header("location: pay.php?success=1");
-        exit;
+        if ($rbal) {
+            // inserting to wispay if success
+            if ($rbal['ctot'] >= $_POST['amount'] || $rbal['ctot'] <= -1000) {
+                $pay = "INSERT INTO wispay (credit, rfid, refcode, empid, transdate, processedby) 
+                        VALUES (:credit, :rfid, :refcode, :empid, NOW(), :processedby)";
+                $pay_statement = $DB_con->prepare($pay);
+                $pay_statement->execute([
+                    ':credit' => $_POST['amount'],
+                    ':rfid' => $_POST['rfid'],
+                    ':refcode' => $refcode,
+                    ':empid' => $firstname . " " . $lastname,
+                    ':processedby' => $processedby
+                ]);
+                header("Location: pay.php?success=1");
+                exit();
+            } else {
+                header("Location: pay.php?success=0");
+                exit();
+            }
+        } else {
+            header("Location: pay.php?error=no_balance");
+            exit();
+        }
     } else {
-        header("location: pay.php?success=0");
-        exit;
+        header("Location: pay.php?error=user_not_found");
+        exit();
     }
-} else {
-    header("location: pay.php?success=0");
-    exit;
 }
-?>
