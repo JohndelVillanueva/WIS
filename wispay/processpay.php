@@ -25,7 +25,7 @@ if (isset($_POST['submit']) && !empty($_POST['amount']) && !empty($_POST['rfid']
         // Check if the new balance is at least -1000
         $bal = $DB_con->prepare("SELECT sum(debit)-sum(credit) as ctot FROM wispay WHERE rfid = :rfid");
         $bal->execute([
-            ':rfid', $_POST['rfid']
+            ':rfid' => $_POST['rfid']
         ]);
         $rbal = $bal->fetch(PDO::FETCH_ASSOC);
 
