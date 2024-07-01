@@ -1,6 +1,8 @@
 <?php
 include_once "includes/config.php";
 session_start();
+$_SESSION['data'] = $_POST['data'];
+// $_SESSION['data_another'] = $_POST['data_another'];
 if (!isset($_SESSION['username'])) {
     header("location: login.php");
 }
