@@ -23,15 +23,15 @@ if (isset($_POST['submit']) && !empty($_POST['amount']) && !empty($_POST['rfid']
         $lastname = $user->lname;
         
         // Check if the new balance is at least -1000
-        $bal = $DB_con->prepare("SELECT sum(debit)-sum(credit) as ctot FROM wispay WHERE rfid = :rfid");
-        $bal->execute([
+        $balanceQuery = $DB_con->prepare("SELECT sum(debit)-sum(credit) as ctot FROM wispay WHERE rfid = :rfid");
+        $balanceQuery->execute([
             ':rfid' => $_POST['rfid']
         ]);
-        $rbal = $bal->fetch(PDO::FETCH_ASSOC);
+        $remainingBalance = $balanceQuery->fetch(PDO::FETCH_ASSOC);
 
-        if ($rbal) {
+        if ($remainingBalance) {
             // inserting to wispay if success
-            if ($rbal['ctot'] >= $_POST['amount'] || $rbal['ctot'] <= -1000) {
+            if ($remainingBalance['ctot'] >= $_POST['amount'] || $remainingBalance['ctot'] <= -1000) {
                 $pay = "INSERT INTO wispay (credit, rfid, refcode, empid, transdate, processedby) 
                         VALUES (:credit, :rfid, :refcode, :empid, NOW(), :processedby)";
                 $pay_statement = $DB_con->prepare($pay);
