@@ -132,9 +132,9 @@ if (!isset($_SESSION['username'])) {
                                                 <label for="gradelevel">Grade</label>
                                                 <select class="custom-select" id="gradelevel" class="form-select" name="gradelevel" required>
                                                     <option value="">-- select one --</option>
-                                                    <option value="Nursery">Nursery</option>
-                                                    <option value="Toddler">Toddler</option>
-                                                    <option value="Preschool">Preschool</option>
+                                                    <option value="Nursery">Toddler</option>
+                                                    <option value="Toddler">Nursery</option>
+                                                    <option value="Preschool">Pre-Kinder</option>
                                                     <option value="Kinder">Kinder</option>
                                                     <option value="Grade 1">Grade 1</option>
                                                     <option value="Grade 2">Grade 2</option>
@@ -148,7 +148,8 @@ if (!isset($_SESSION['username'])) {
                                                     <option value="Grade 10">Grade 10</option>
                                                     <option value="Grade 11">Grade 11</option>
                                                     <option value="Grade 12">Grade 12</option>
-                                                    <option value="CAIE">CAIE</option>
+                                                    <option value="CAIE-AS">CAIE - AS level</option>
+                                                    <option value="CAIE-A">CAIE - A level</option>
                                                 </select>
                                             </div>
                                             <div class="col-lg-1" id="row12">

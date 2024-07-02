@@ -3,13 +3,36 @@ include_once "includes/config.php";
 session_start();
 
 if ($_POST['stage'] <= 8) {
-  $process = "UPDATE users24 SET status = :status, tf = :tf WHERE uniqid = :uniqid";
+  $process = "UPDATE users24 SET status = :status WHERE uniqid = :uniqid";
   $process_statement = $DB_con->prepare($process);
-  $process_statement->execute(array(':status' => $_POST['stage'], ':tf' => $_POST['tf'], ':uniqid' => $_POST['ern']));
+  $process_statement->execute(array(':status' => $_POST['stage'], ':uniqid' => $_POST['ern']));
 
   $log = "INSERT INTO logs_enroll ( ern, stage, usertouch, touch, notes ) VALUES ( :ern, :stage, :user, NOW(), :notes )";
   $logstmt = $DB_con->prepare($log);
   $logstmt->execute(array(':ern' => $_POST['ern'], ':stage' => $_POST['stage'], ':user' => $_SESSION['fname'] . " " . $_SESSION['lname'], ':notes' => $_POST['notes']));
+
+
+  // store into the s_payables table
+  $applicationFee = isset($_POST['applicationFee']) ? 1 : NULL;
+  $afTuitionFee = isset($_POST['afTuitionFee']) ? 1 : NULL;
+  $afTfOtherFees = isset($_POST['afTfOtherFees']) ? 1 : NULL;
+  $assessmentFee = isset($_POST['assessmentFee']) ? 1 : NULL;
+  $registrationFee = isset($_POST['registrationFee']) ? 1 : NULL;
+  $specialPermit = isset($_POST['specialPermit']) ? 1 : NULL;
+  $internationalFee = isset($_POST['internationalFee']) ? 1 : NULL;
+
+  // s_payables Query
+  $studentPayableQuery = $DB_con->prepare("INSERT INTO s_payables (user_id, application_fee, tuition_fee, other_fee, assessment_fee, registration_fee, special_permit, international_fee) VALUES (?,?,?,?,?,?,?,?)");
+  $studentPayableQuery->execute([
+    $_POST['ern'],
+    $applicationFee,
+    $afTuitionFee,
+    $afTfOtherFees,
+    $assessmentFee,
+    $registrationFee,
+    $specialPermit,
+    $internationalFee
+  ]);
   /*$message = "
 									<center>
 										<img src='https://westfields.edu.ph/wp-content/uploads/2021/11/logo1x-1.png'>

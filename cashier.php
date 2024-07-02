@@ -78,13 +78,56 @@ if (!isset($_SESSION['username'])) {
                                                             </th>
                                                             <td><?php echo $row["lname"] . ", " . $row["fname"] . " " . $row["mname"]; ?></td>
                                                             <td>
-                                                                <select class="custom-select" id="tf" class="form-select" name="tf" required>
-                                                                    <option value="0" disabled selected>-- select one --</option>
-                                                                    <option value="1">Application Fee</option>
-                                                                    <option value="2">AF + Tuition Fee</option>
-                                                                    <option value="3">AF + TF + Other Fees</option>
-                                                                    <option value="4">Others</option>
-                                                                </select>
+                                                                <div class="row">
+                                                                    <div class="col-4">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" name="applicationFee" id="applicationFee">
+                                                                            <label class="form-check-label" for="applicationFee">
+                                                                                Application Fee
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" name="afTuitionFee" id="afTuitionFee">
+                                                                            <label class="form-check-label" for="afTuitionFee">
+                                                                                Tuition Fee
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" name="afTfOtherFees" id="afTfOtherFees">
+                                                                            <label class="form-check-label" for="afTfOtherFees">
+                                                                                Other Fees
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" name="assessmentFee" id="assessmentFee">
+                                                                            <label class="form-check-label" for="assessmentFee">
+                                                                                Assessment Fee
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" name="registrationFee" id="registrationFee">
+                                                                            <label class="form-check-label" for="registrationFee">
+                                                                                Registration Fee
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" name="specialPermit" id="sspValidIcard">
+                                                                            <label class="form-check-label" for="specialPermit">
+                                                                                SSP special study permit
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" name="internationalFee" id="internationalFee">
+                                                                            <label class="form-check-label" for="internationalFee">
+                                                                                International Student fee
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4"></div>
+                                                                </div>
                                                             </td>
                                                             <td>
                                                                 <input class="form-control" type="text" id="notes" name="notes" placeholder="Type notes here">
