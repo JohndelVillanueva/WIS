@@ -81,9 +81,9 @@ if (!isset($_SESSION['username'])) {
                                                                 <div class="row">
                                                                     <div class="col-4">
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="checkbox" name="applicationFee" id="applicationFee">
-                                                                            <label class="form-check-label" for="applicationFee">
-                                                                                Application Fee
+                                                                            <input class="form-check-input" type="checkbox" name="assessmentFee" id="assessmentFee">
+                                                                            <label class="form-check-label" for="assessmentFee">
+                                                                                Assessment Fee
                                                                             </label>
                                                                         </div>
                                                                         <div class="form-check">
@@ -99,9 +99,9 @@ if (!isset($_SESSION['username'])) {
                                                                             </label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="checkbox" name="assessmentFee" id="assessmentFee">
-                                                                            <label class="form-check-label" for="assessmentFee">
-                                                                                Assessment Fee
+                                                                            <input class="form-check-input" type="checkbox" name="applicationFee" id="applicationFee">
+                                                                            <label class="form-check-label" for="applicationFee">
+                                                                                Reservation Fee
                                                                             </label>
                                                                         </div>
                                                                     </div>
@@ -120,9 +120,15 @@ if (!isset($_SESSION['username'])) {
                                                                             </label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="checkbox" name="internationalFee" id="internationalFee">
+                                                                            <input class="form-check-input" type="checkbox" name="internationalFeeOld" id="internationalFee">
                                                                             <label class="form-check-label" for="internationalFee">
-                                                                                International Student fee
+                                                                            int'l student fee OLD
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" name="internationalFeeNew" id="internationalFee">
+                                                                            <label class="form-check-label" for="internationalFee">
+                                                                            int'l student fee NEW
                                                                             </label>
                                                                         </div>
                                                                     </div>

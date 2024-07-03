@@ -12,27 +12,70 @@ if ($_POST['stage'] <= 8) {
   $logstmt->execute(array(':ern' => $_POST['ern'], ':stage' => $_POST['stage'], ':user' => $_SESSION['fname'] . " " . $_SESSION['lname'], ':notes' => $_POST['notes']));
 
 
-  // store into the s_payables table
-  $applicationFee = isset($_POST['applicationFee']) ? 1 : NULL;
-  $afTuitionFee = isset($_POST['afTuitionFee']) ? 1 : NULL;
-  $afTfOtherFees = isset($_POST['afTfOtherFees']) ? 1 : NULL;
-  $assessmentFee = isset($_POST['assessmentFee']) ? 1 : NULL;
-  $registrationFee = isset($_POST['registrationFee']) ? 1 : NULL;
-  $specialPermit = isset($_POST['specialPermit']) ? 1 : NULL;
-  $internationalFee = isset($_POST['internationalFee']) ? 1 : NULL;
+// Retrieve values from POST request
+$applicationFee = isset($_POST['applicationFee']) ? 1 : NULL;
+$afTuitionFee = isset($_POST['afTuitionFee']) ? 1 : NULL;
+$afTfOtherFees = isset($_POST['afTfOtherFees']) ? 1 : NULL;
+$assessmentFee = isset($_POST['assessmentFee']) ? 1 : NULL;
+$registrationFee = isset($_POST['registrationFee']) ? 1 : NULL;
+$specialPermit = isset($_POST['specialPermit']) ? 1 : NULL;
+$internationalFeeOld = isset($_POST['internationalFeeOld']) ? 1 : NULL;
+$internationalFeeNew = isset($_POST['internationalFeeNew']) ? 1 : NULL;
 
-  // s_payables Query
-  $studentPayableQuery = $DB_con->prepare("INSERT INTO s_payables (user_id, application_fee, tuition_fee, other_fee, assessment_fee, registration_fee, special_permit, international_fee) VALUES (?,?,?,?,?,?,?,?)");
-  $studentPayableQuery->execute([
-    $_POST['ern'],
-    $applicationFee,
-    $afTuitionFee,
-    $afTfOtherFees,
-    $assessmentFee,
-    $registrationFee,
-    $specialPermit,
-    $internationalFee
-  ]);
+// Initialize query parts
+$setClause = [];
+$params = [];
+
+// Dynamically build SET clause and parameters array
+if ($applicationFee !== NULL) {
+    $setClause[] = "reservation_fee = ?";
+    $params[] = $applicationFee;
+}
+if ($afTuitionFee !== NULL) {
+    $setClause[] = "tuition_fee = ?";
+    $params[] = $afTuitionFee;
+}
+if ($afTfOtherFees !== NULL) {
+    $setClause[] = "other_fee = ?";
+    $params[] = $afTfOtherFees;
+}
+if ($assessmentFee !== NULL) {
+    $setClause[] = "assessment_fee = ?";
+    $params[] = $assessmentFee;
+}
+if ($registrationFee !== NULL) {
+    $setClause[] = "registration_fee = ?";
+    $params[] = $registrationFee;
+}
+if ($specialPermit !== NULL) {
+    $setClause[] = "special_permit = ?";
+    $params[] = $specialPermit;
+}
+if ($internationalFeeOld !== NULL) {
+    $setClause[] = "international_fee_old = ?";
+    $params[] = $internationalFeeOld;
+}
+if ($internationalFeeNew !== NULL) {
+  $setClause[] = "international_fee_new = ?";
+  $params[] = $internationalFeeNew;
+}
+
+// Add user_id to parameters array
+$params[] = $_POST['ern'];  // Assuming 'ern' is the user_id
+
+// Check if there are any fields to update
+if (!empty($setClause)) {
+    // Convert setClause array to string
+    $setClauseString = implode(", ", $setClause);
+    
+    // Prepare the update query
+    $studentPayableQuery = $DB_con->prepare("UPDATE s_payables SET $setClauseString WHERE user_id = ?");
+    
+    // Execute the query with the parameters
+    $studentPayableQuery->execute($params);
+}
+
+
   /*$message = "
 									<center>
 										<img src='https://westfields.edu.ph/wp-content/uploads/2021/11/logo1x-1.png'>

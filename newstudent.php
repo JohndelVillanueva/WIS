@@ -125,10 +125,43 @@ session_start(); ?>
 										'Reply-To: ' . $from . "\r\n" .
 										'X-Mailer: PHP/' . phpversion();
 
+									  // store into the s_payables table
+									$applicationFee = isset($_POST['applicationFee']) ? 1 : NULL;
+									$afTuitionFee = isset($_POST['afTuitionFee']) ? 1 : NULL;
+									$afTfOtherFees = isset($_POST['afTfOtherFees']) ? 1 : NULL;
+									$assessmentFee = isset($_POST['assessmentFee']) ? 1 : NULL;
+									$registrationFee = isset($_POST['registrationFee']) ? 1 : NULL;
+									$specialPermit = isset($_POST['specialPermit']) ? 1 : NULL;
+									$internationalFeeOld = isset($_POST['internationalFeeOld']) ? 1 : NULL;
+									$internationalFeeNew = isset($_POST['internationalFeeNew']) ? 1 : NULL;
 
+									// s_payables Query
+									$studentPayableQuery = $DB_con->prepare("INSERT INTO s_payables (user_id, reservation_fee, tuition_fee, other_fee, assessment_fee, registration_fee, special_permit, international_fee_old,international_fee_new) VALUES (?,?,?,?,?,?,?,?,?)");
+									$studentPayableQuery->execute([
+										$uniqid,
+										$applicationFee,
+										$afTuitionFee,
+										$afTfOtherFees,
+										$assessmentFee,
+										$registrationFee,
+										$specialPermit,
+										$internationalFeeOld,
+										$internationalFeeNew
+									]);
 
 									$log_enrollQuery = $DB_con->prepare('INSERT INTO logs_enroll (ern,stage,usertouch,touch,notes) VALUES (?, ?, ?, ?, ? )');
-									$log_enrollQuery->execute([$uniqid, "Verification", $_SESSION['fname']. " " .$_SESSION['lname'], date("Y-m-d H:i:s"), "Application Form"]);
+									$log_enrollQuery->execute([$uniqid, "Verification", $_SESSION['fname']. " " .$_SESSION['lname'], date("Y-m-d H:i:s"), $_POST['notes']]);
+
+									// var_dump([
+									// 	'Notes' => $notes,
+									// 	'Application' => $applicationFee,
+									// 	'Tuition' => $afTuitionFee,
+                                    //     'Other' => $afTfOtherFees,
+                                    //     'Assessment' => $assessmentFee,
+                                    //     'Registration' => $registrationFee,
+                                    //     'Special Permit' => $specialPermit
+									// ]);
+									// 	die();
 
 										
 								?>
@@ -169,7 +202,7 @@ session_start(); ?>
 								}
 
 								?>
-								<script>
+								<!-- <script>
 									function pageRedirect() {
 										var delay = 3000;
 										setTimeout(function() {
@@ -177,7 +210,7 @@ session_start(); ?>
 										}, delay);
 									}
 									pageRedirect();
-								</script>
+								</script> -->
 							</div>
 						</div>
 					</form>
