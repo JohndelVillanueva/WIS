@@ -62,7 +62,7 @@ if (!isset($_SESSION['username'])) {
                                                 foreach ($result as $row) {
                                                 ?>
                                                     <tr>
-                                                        <form method="post" action="pay.php">
+                                                        <form id="myForm"method="post" action="pay.php">
                                                             <th scope="row">
                                                                 <div class="col-lg-12">
                                                                     <p><a class="btn btn-primary" data-toggle="collapse" href="#collapseExample<?php echo $row['uniqid']; ?>" role="button" aria-expanded="false" aria-controls="collapseExample<?php echo $row['uniqid']; ?>"><?php echo $row["uniqid"]; ?></a></p>
@@ -140,7 +140,7 @@ if (!isset($_SESSION['username'])) {
                                                                 <input type="hidden" name="stage" id="stage" value="2">
                                                                 <input type="hidden" name="ern" id="ern" value="<?php echo $row["uniqid"]; ?>">
                                                             </td>
-                                                            <td><button type="submit" class="btn btn-success rounded"><span class="icon-holder"><i class="anticon anticon-check"></i></span></button></td>
+                                                            <td><button type="submit" class="btn btn-success rounded" onclick="return confirmSubmission()"><span class="icon-holder"><i class="anticon anticon-check"></i></span></button></td>
                                                         </form>
                                                     </tr>
                                                 <?php
@@ -153,6 +153,16 @@ if (!isset($_SESSION['username'])) {
                                 <div class="card-footer bg-light text-center"></div>
                             </div>
                         </div>
+                        <script>
+                            function confirmSubmission(){
+                                if(confirm("Are you sure you want to submit?")){
+                                    console.log("Are you sure you want to submit?");
+                                    return true;
+                                }else{
+                                    return false
+                                }
+                            }
+                        </script>
                     </div>
                     <!-- form ends !-->
                 </div>
