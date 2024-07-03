@@ -45,10 +45,10 @@
                              && $theNullValue['international_fee_old'] !== NULL 
                              && $theNullValue['international_fee_new'] !== NULL):?>
                              
-                        <p><?php echo htmlspecialchars("None"); ?></p><br>
+                       <?php echo htmlspecialchars("None"); ?><br>
                     <?php endif; ?>
                 <?php else: ?>
-                    <label><?php echo htmlspecialchars("No payables found for this user."); ?> </label>
+                    <?php echo htmlspecialchars("No payables found for this user."); ?>
                 <?php endif; ?>
             </div>
 
