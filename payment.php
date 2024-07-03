@@ -64,7 +64,7 @@ if (!isset($_SESSION['username'])) {
                                                 foreach ($result as $row) {
                                                 ?>
                                                     <tr>
-                                                        <form method="post" action="pay.php">
+                                                        <form id="myForm" method="post" action="pay.php">
                                                             <th scope="row">
                                                                 <div class="col-lg-12">
                                                                     <p><a class="btn btn-primary" data-toggle="collapse" href="#collapseExample<?php echo $row['uniqid']; ?>" role="button" aria-expanded="false" aria-controls="collapseExample<?php echo $row['uniqid']; ?>"><?php echo $row["uniqid"]; ?></a></p>
@@ -106,20 +106,69 @@ if (!isset($_SESSION['username'])) {
                                                                 &check; 2pcs Activity XL<br>
                                                             </td>
                                                             <td>
-                                                                <select class="custom-select" id="tf" class="form-select" name="tf" required>
-                                                                    <option value="0" disabled selected>-- select one --</option>
-                                                                    <option value="1">Application Fee</option>
-                                                                    <option value="2">AF + Tuition Fee</option>
-                                                                    <option value="3">AF + TF + Other Fees</option>
-                                                                    <option value="4">Others</option>
-                                                                </select>
+                                                                <div class="row">
+                                                                    <div class="col-4">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" name="assessmentFee" id="assessmentFee">
+                                                                            <label class="form-check-label" for="assessmentFee">
+                                                                                Assessment Fee
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" name="afTuitionFee" id="afTuitionFee">
+                                                                            <label class="form-check-label" for="afTuitionFee">
+                                                                                Tuition Fee
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" name="afTfOtherFees" id="afTfOtherFees">
+                                                                            <label class="form-check-label" for="afTfOtherFees">
+                                                                                Other Fees
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" name="applicationFee" id="applicationFee">
+                                                                            <label class="form-check-label" for="applicationFee">
+                                                                                Reservation Fee
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" name="registrationFee" id="registrationFee">
+                                                                            <label class="form-check-label" for="registrationFee">
+                                                                                Registration Fee
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" name="specialPermit" id="sspValidIcard">
+                                                                            <label class="form-check-label" for="specialPermit">
+                                                                                Special study permit
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" name="internationalFeeOld" id="internationalFee">
+                                                                            <label class="form-check-label" for="internationalFee">
+                                                                            int'l student fee OLD
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" name="internationalFeeNew" id="internationalFee">
+                                                                            <label class="form-check-label" for="internationalFee">
+                                                                            int'l student fee NEW
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4"></div>
+                                                                </div>
                                                             </td>
                                                             <td>
                                                                 <input class="form-control" type="text" id="notes" name="notes" placeholder="Type notes here">
                                                                 <input type="hidden" name="stage" id="stage" value="8">
                                                                 <input type="hidden" name="ern" id="ern" value="<?php echo $row["uniqid"]; ?>">
                                                             </td>
-                                                            <td><button type="submit" class="btn btn-success rounded"><span class="icon-holder"><i class="anticon anticon-check"></i></span></button></td>
+                                                            <td><button type="submit" class="btn btn-success rounded" onclick="return confirmSubmission()"><span class="icon-holder"><i class="anticon anticon-check"></i></span></button></td>
                                                         </form>
                                                     </tr>
                                                 <?php
@@ -133,6 +182,15 @@ if (!isset($_SESSION['username'])) {
                             </div>
                         </div>
                     </div>
+                    <script>
+                        function confirmSubmission(){
+                            if(confirm("Are you sure you want to submit?")){
+                                return true;
+                            }else{
+                                return false;
+                            }
+                        }
+                    </script>
                     <!-- form ends !-->
                 </div>
                 <?php include_once "includes/footer.php"; ?>

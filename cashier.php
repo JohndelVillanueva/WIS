@@ -62,7 +62,7 @@ if (!isset($_SESSION['username'])) {
                                                 foreach ($result as $row) {
                                                 ?>
                                                     <tr>
-                                                        <form id="myForm"method="post" action="pay.php">
+                                                        <form id="myForm" method="post" action="pay.php">
                                                             <th scope="row">
                                                                 <div class="col-lg-12">
                                                                     <p><a class="btn btn-primary" data-toggle="collapse" href="#collapseExample<?php echo $row['uniqid']; ?>" role="button" aria-expanded="false" aria-controls="collapseExample<?php echo $row['uniqid']; ?>"><?php echo $row["uniqid"]; ?></a></p>

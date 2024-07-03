@@ -1,7 +1,7 @@
 <?php
 include_once "includes/config.php";
 session_start();
-$_SESSION['data'] = $_POST['data'];
+// $_SESSION['data'] = $_POST['data'];
 // $_SESSION['data_another'] = $_POST['data_another'];
 if (!isset($_SESSION['username'])) {
     header("location: login.php");
@@ -20,7 +20,7 @@ if (!isset($_SESSION['username'])) {
             <div class="page-container">
                 <div class="main-content">
                     <!-- form starts !-->
-                    <form action="newstudent.php" method="post">
+                    <form id="myForm" action="newstudent.php" method="post">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="card">
@@ -460,7 +460,7 @@ if (!isset($_SESSION['username'])) {
                                     </div>
                                 </div>
                                 <div class="card-footer bg-light text-center">
-                                    <button class="btn btn-primary btn-lg">Submit Application</button>
+                                    <button class="btn btn-primary btn-lg" onclick="return confirmSubmission()">Submit Application</button>
                                 </div>
                             </div>
                         </div>
@@ -472,6 +472,15 @@ if (!isset($_SESSION['username'])) {
         </div>
         <?php include_once "includes/scripts.php"; ?>
         <script>
+            function confirmSubmission(){
+                if(confirm("Are you sure you want to submit?")){
+                    console.log("Are you sure you want to submit?");
+                    return true;
+                }else{
+                    return false
+                }
+            }
+
             function fnCalculateAge() {
                 var userDateinput = document.getElementById("dob").value;
                 var birthDate = new Date(userDateinput);

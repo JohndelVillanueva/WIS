@@ -63,7 +63,7 @@ if (!isset($_SESSION['username'])) {
                                                 foreach ($result as $row) {
                                                 ?>
                                                     <tr>
-                                                        <form method="post" action="process.php">
+                                                        <form id="myForm" method="post" action="process.php">
                                                             <th scope="row">
                                                                 <div class="col-lg-12">
                                                                     <p><a class="btn btn-primary" data-toggle="collapse" href="#collapseExample<?php echo $row['uniqid']; ?>" role="button" aria-expanded="false" aria-controls="collapseExample<?php echo $row['uniqid']; ?>"><?php echo $row["uniqid"]; ?></a></p>
@@ -86,8 +86,8 @@ if (!isset($_SESSION['username'])) {
                                                                 <input type="hidden" name="ern" id="ern" value="<?php echo $row["uniqid"]; ?>">
                                                             </td>
                                                             <td>
-                                                                <button type="submit" name="official" class="btn btn-success rounded"><span class="icon-holder"><i class="anticon anticon-check"></i></span></button>
-                                                                <button type="submit" name="unofficial" class="btn btn-danger rounded"><span class="icon-holder"><i class="anticon anticon-warning"></i></span></button>
+                                                                <button type="submit" name="official" onclick="return confirmSubmission()" class="btn btn-success rounded"><span class="icon-holder" ><i class="anticon anticon-check"></i></span></button>
+                                                                <button type="submit" name="unofficial" onclick="return confirmSubmission()" class="btn btn-danger rounded"><span class="icon-holder"><i class="anticon anticon-warning"></i></span></button>
                                                                 <a type="button" href="profile.php?id=<?php echo $row["id"]; ?>" class="btn btn-primary rounded"><span class="icon-holder"><i class="anticon anticon-eye"></i></span></a>
                                                             </td>
                                                         </form>
@@ -100,6 +100,15 @@ if (!isset($_SESSION['username'])) {
                                     </div>
                                 </div>
                                 <div class="card-footer bg-light text-center"></div>
+                                <script>
+                                    function confirmSubmission(){
+                                        if(confirm("Are you sure you want to submit?")){
+                                            return true;
+                                        }else {
+                                            return false;
+                                        }
+                                    }
+                                </script>
                             </div>
                         </div>
                     </div>

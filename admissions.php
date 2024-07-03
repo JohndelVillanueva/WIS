@@ -67,7 +67,7 @@ if (!isset($_SESSION['username'])) {
                                                 foreach ($result as $row) {
                                                 ?>
                                                     <tr>
-                                                        <form method="post" action="process.php">
+                                                        <form id="myForm" method="post" action="process.php">
                                                             <th scope="row">
                                                                 <div class="col-lg-12">
                                                                     <p><a class="btn btn-primary" data-toggle="collapse" href="#collapseExample<?php echo $row['uniqid']; ?>" role="button" aria-expanded="false" aria-controls="collapseExample<?php echo $row['uniqid']; ?>"><?php echo $row["uniqid"]; ?></a></p>
@@ -90,7 +90,7 @@ if (!isset($_SESSION['username'])) {
                                                                 <input type="hidden" name="ern" id="ern" value="<?php echo $row["uniqid"]; ?>" required>
                                                             </td>
                                                             <td>
-                                                                <button type="submit" class="btn btn-success rounded"><span class="icon-holder"><i class="anticon anticon-check"></i></span></button>
+                                                                <button type="submit" class="btn btn-success rounded" onclick="return confirmSubmission()"><span class="icon-holder"><i class="anticon anticon-check"></i></span></button>
                                                                 <a href="edit-profile.php?id=<?php echo $row['id']; ?>" type="button" class="btn btn-primary rounded"><span class="icon-holder"><i class="anticon anticon-edit"></i></span></a>
                                                             </td>
                                                         </form>
@@ -129,6 +129,15 @@ if (!isset($_SESSION['username'])) {
             </div>
         </div>
     </div>
+    <script>
+        function confirmSubmission(){
+            if(confirm("Are you sure you want to submit?")){
+                return true;
+            }else {
+                return false;
+            }
+        }
+    </script>
 </body>
 
 </html>
