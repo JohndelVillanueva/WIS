@@ -249,5 +249,5 @@ if ($userprocess_statement) {
 	echo "Image Uploading Failed";
 }
 
-header("Location: dashboard.php");
+header("Location: admissions.php");
 die();
