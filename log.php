@@ -11,46 +11,40 @@
                 $theNullValue = $selectTheNullValue->fetch(PDO::FETCH_ASSOC);
             ?>
             <div>
-                <?php if ($theNullValue): ?>
-                    <?php if ($theNullValue['reservation_fee'] === NULL): ?>
-                        <label>• Reservation Fee</label><br>
-                    <?php endif; ?>
-                    <?php if ($theNullValue['tuition_fee'] === NULL): ?>
-                        <label>• Tuition Fee</label><br>
-                    <?php endif; ?>
-                    <?php if ($theNullValue['other_fee'] === NULL): ?>
-                        <label>• Other Fee</label><br>
-                    <?php endif; ?>
-                    <?php if ($theNullValue['assessment_fee'] === NULL): ?>
-                        <label>• Assessment Fee</label><br>
-                    <?php endif; ?>
-                    <?php if ($theNullValue['registration_fee'] === NULL): ?>
-                        <label>• Registration Fee</label><br>
-                    <?php endif; ?>
-                    <?php if ($theNullValue['special_permit'] === NULL): ?>
-                        <label>• Special Permit</label><br>
-                    <?php endif; ?>
-                    <?php if ($theNullValue['international_fee_old'] === NULL): ?>
-                        <label>• International Fee OLD</label><br>
-                    <?php endif; ?>
-                    <?php if ($theNullValue['international_fee_new'] === NULL): ?>
-                        <label>• International Fee NEW</label><br>
-                    <?php endif; ?>
-                    <?php if ($theNullValue['reservation_fee'] !== NULL 
-                             && $theNullValue['tuition_fee'] !== NULL 
-                             && $theNullValue['other_fee'] !== NULL 
-                             && $theNullValue['assessment_fee'] !== NULL 
-                             && $theNullValue['registration_fee'] !== NULL 
-                             && $theNullValue['special_permit'] !== NULL 
-                             && $theNullValue['international_fee_old'] !== NULL 
-                             && $theNullValue['international_fee_new'] !== NULL):?>
-                             
-                       <?php echo htmlspecialchars("None"); ?><br>
-                    <?php endif; ?>
-                <?php else: ?>
-                    <?php echo htmlspecialchars("No payables found for this user."); ?>
-                <?php endif; ?>
-            </div>
+    <?php if ($theNullValue): ?>
+        <?php
+        $fees = [
+            'reservation_fee' => 'Reservation Fee',
+            'tuition_fee' => 'Tuition Fee',
+            'other_fee' => 'Other Fee',
+            'assessment_fee' => 'Assessment Fee',
+            'registration_fee' => 'Registration Fee',
+            'special_permit' => 'Special Permit',
+            'international_fee_old' => 'International Fee OLD',
+            'international_fee_new' => 'International Fee NEW'
+        ];
+
+        $allNotNull = true;
+
+        foreach ($fees as $key => $label):
+            if ($theNullValue[$key] === NULL):
+        ?>
+                <label>• <?php echo htmlspecialchars($label); ?></label><br>
+        <?php
+                $allNotNull = false;
+            endif;
+        endforeach;
+
+        if ($allNotNull):
+        ?>
+            <?php echo htmlspecialchars("None"); ?><br>
+        <?php endif; ?>
+
+    <?php else: ?>
+        <?php echo htmlspecialchars("No payables found for this user."); ?>
+    <?php endif; ?>
+</div>
+
 
 		<hr>
             

@@ -99,15 +99,15 @@ if (!isset($_SESSION['username'])) {
 
                                                                 foreach($recs as $reco) {
                                                                     if (!empty($reco["esl"])) {
-                                                                        echo "<span class='text-danger'>&check; ESL Required</span><br>";
+                                                                        echo "<span class='text-primary'>&check; ESL Required</span><br>";
                                                                     }
 
                                                                     if (!empty($reco["star"])) {
-                                                                        echo "<span class='text-danger'>&check; STAR Required</span><br>";
+                                                                        echo "<span class='text-primary'>&check; STAR Required</span><br>";
                                                                     }
 
                                                                     if (!empty($reco["completion"])) {
-                                                                        echo "<span class='text-danger'>&check; Completion</span>";
+                                                                        echo "<span class='text-primary'>&check; Completion</span>";
                                                                     }
                                                                 }
                                                                 ?>
