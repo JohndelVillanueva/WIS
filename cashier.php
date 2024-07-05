@@ -88,14 +88,14 @@ if (!isset($_SESSION['username'])) {
                                                                 <div class="row">
                                                                     <?php foreach ($records as $record) : ?>
                                                                         <div class="col-4">
-                                                                            <?php if (empty($record["assessment_fee"])) : ?>
+                                                                            <?php if (!empty($record["assessment_fee"])) : ?>
                                                                                 <input class="form-check-input" type="checkbox" name="assessmentFee" id="assessmentFee">
                                                                                 <label class="form-check-label" for="assessmentFee">Assessment Fee</label>
                                                                             <?php else : ?>
                                                                                 <label class="text-primary">&check; Assessment Fee</label>
                                                                             <?php endif; ?>
                                                                             <div class="form-check">
-                                                                                <?php if (empty($record["tuition_fee"])) : ?>
+                                                                                <?php if (!empty($record["tuition_fee"])) : ?>
                                                                                     <input class="form-check-input" type="checkbox" name="afTuitionFee" id="afTuitionFee">
                                                                                     <label class="form-check-label" for="afTuitionFee">Tuition Fee</label>
                                                                                 <?php else : ?>
@@ -103,7 +103,7 @@ if (!isset($_SESSION['username'])) {
                                                                                 <?php endif; ?>
                                                                             </div>
                                                                             <div class="form-check">
-                                                                                <?php if (empty($record["other_fee"])) : ?>
+                                                                                <?php if (!empty($record["other_fee"])) : ?>
                                                                                     <input class="form-check-input" type="checkbox" name="afTfOtherFees" id="afTfOtherFees">
                                                                                     <label class="form-check-label" for="afTfOtherFees">Other Fees</label>
                                                                                 <?php else : ?>
@@ -111,7 +111,7 @@ if (!isset($_SESSION['username'])) {
                                                                                 <?php endif; ?>
                                                                             </div>
                                                                             <div class="form-check">
-                                                                                <?php if (empty($record["reservation_fee"])) : ?>
+                                                                                <?php if (!empty($record["reservation_fee"])) : ?>
                                                                                     <input class="form-check-input" type="checkbox" name="applicationFee" id="applicationFee">
                                                                                     <label class="form-check-label" for="applicationFee">Reservation Fee</label>
                                                                                 <?php else : ?>
@@ -121,7 +121,7 @@ if (!isset($_SESSION['username'])) {
                                                                         </div>
                                                                         <div class="col-4">
                                                                             <div class="form-check">
-                                                                                <?php if (empty($record["registration_fee"])) : ?>
+                                                                                <?php if (!empty($record["registration_fee"])) : ?>
                                                                                     <input class="form-check-input" type="checkbox" name="registrationFee" id="registrationFee">
                                                                                     <label class="form-check-label" for="registrationFee">Registration Fee</label>
                                                                                 <?php else : ?>
@@ -129,7 +129,7 @@ if (!isset($_SESSION['username'])) {
                                                                                 <?php endif; ?>
                                                                             </div>
                                                                             <div class="form-check">
-                                                                                <?php if (empty($record["special_permit"])) : ?>
+                                                                                <?php if (!empty($record["special_permit"])) : ?>
                                                                                     <input class="form-check-input" type="checkbox" name="specialPermit" id="sspValidIcard">
                                                                                     <label class="form-check-label" for="specialPermit">SSP special study permit</label>
                                                                                 <?php else : ?>
@@ -137,7 +137,7 @@ if (!isset($_SESSION['username'])) {
                                                                                 <?php endif; ?>
                                                                             </div>
                                                                             <div class="form-check">
-                                                                                <?php if (empty($record["international_fee_old"])) : ?>
+                                                                                <?php if (!empty($record["international_fee_old"])) : ?>
                                                                                     <input class="form-check-input" type="checkbox" name="internationalFeeOld" id="internationalFee">
                                                                                     <label class="form-check-label" for="internationalFee">int'l student fee OLD</label>
                                                                                 <?php else : ?>
@@ -145,11 +145,11 @@ if (!isset($_SESSION['username'])) {
                                                                                 <?php endif; ?>
                                                                             </div>
                                                                             <div class="form-check">
-                                                                                <?php if (empty($record["international_fee_new"])) : ?>
+                                                                                <?php if (!empty($record["international_fee_new"])) : ?>
                                                                                     <input class="form-check-input" type="checkbox" name="internationalFeeNew" id="internationalFee">
                                                                                     <label class="form-check-label" for="internationalFee">int'l student fee NEW</label>
                                                                                 <?php else : ?>
-                                                                                    <label class="text-primary">&check; int'l student fee NEW</label>
+                                                                                    <label class="text-danger"> int'l student fee NEW</label>
                                                                                 <?php endif; ?>
                                                                             </div>
                                                                         </div>
