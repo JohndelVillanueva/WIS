@@ -202,7 +202,7 @@ session_start(); ?>
 								}
 
 								?>
-								<!-- <script>
+								<script>
 									function pageRedirect() {
 										var delay = 3000;
 										setTimeout(function() {
@@ -210,7 +210,7 @@ session_start(); ?>
 										}, delay);
 									}
 									pageRedirect();
-								</script> -->
+								</script>
 							</div>
 						</div>
 					</form>
