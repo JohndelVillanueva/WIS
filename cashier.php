@@ -92,14 +92,14 @@ if (!isset($_SESSION['username'])) {
                                                                                 <input class="form-check-input" type="checkbox" name="assessmentFee" id="assessmentFee">
                                                                                 <label class="form-check-label" for="assessmentFee">Assessment Fee</label>
                                                                             <?php else : ?>
-                                                                                <label class="text-primary">&check; Assessment Fee</label>
+                                                                                <label class="text-danger"> Assessment Fee</label>
                                                                             <?php endif; ?>
                                                                             <div class="form-check">
                                                                                 <?php if (!empty($record["tuition_fee"])) : ?>
                                                                                     <input class="form-check-input" type="checkbox" name="afTuitionFee" id="afTuitionFee">
                                                                                     <label class="form-check-label" for="afTuitionFee">Tuition Fee</label>
                                                                                 <?php else : ?>
-                                                                                    <label class="text-primary">&check; Tuition Fee</label>
+                                                                                    <label class="text-danger"> Tuition Fee</label>
                                                                                 <?php endif; ?>
                                                                             </div>
                                                                             <div class="form-check">
@@ -107,7 +107,7 @@ if (!isset($_SESSION['username'])) {
                                                                                     <input class="form-check-input" type="checkbox" name="afTfOtherFees" id="afTfOtherFees">
                                                                                     <label class="form-check-label" for="afTfOtherFees">Other Fees</label>
                                                                                 <?php else : ?>
-                                                                                    <label class="text-primary">&check; Other Fees</label>
+                                                                                    <label class="text-danger">Other Fees</label>
                                                                                 <?php endif; ?>
                                                                             </div>
                                                                             <div class="form-check">
@@ -115,7 +115,7 @@ if (!isset($_SESSION['username'])) {
                                                                                     <input class="form-check-input" type="checkbox" name="applicationFee" id="applicationFee">
                                                                                     <label class="form-check-label" for="applicationFee">Reservation Fee</label>
                                                                                 <?php else : ?>
-                                                                                    <label class="text-primary">&check; Reservation Fee</label>
+                                                                                    <label class="text-danger"> Reservation Fee</label>
                                                                                 <?php endif; ?>
                                                                             </div>
                                                                         </div>
@@ -125,7 +125,7 @@ if (!isset($_SESSION['username'])) {
                                                                                     <input class="form-check-input" type="checkbox" name="registrationFee" id="registrationFee">
                                                                                     <label class="form-check-label" for="registrationFee">Registration Fee</label>
                                                                                 <?php else : ?>
-                                                                                    <label class="text-primary">&check; Registration Fee</label>
+                                                                                    <label class="text-danger"> Registration Fee</label>
                                                                                 <?php endif; ?>
                                                                             </div>
                                                                             <div class="form-check">
@@ -133,7 +133,7 @@ if (!isset($_SESSION['username'])) {
                                                                                     <input class="form-check-input" type="checkbox" name="specialPermit" id="sspValidIcard">
                                                                                     <label class="form-check-label" for="specialPermit">SSP special study permit</label>
                                                                                 <?php else : ?>
-                                                                                    <label class="text-primary">&check; SSP special study permit</label>
+                                                                                    <label class="text-danger"> SSP special study permit</label>
                                                                                 <?php endif; ?>
                                                                             </div>
                                                                             <div class="form-check">
@@ -141,7 +141,7 @@ if (!isset($_SESSION['username'])) {
                                                                                     <input class="form-check-input" type="checkbox" name="internationalFeeOld" id="internationalFee">
                                                                                     <label class="form-check-label" for="internationalFee">int'l student fee OLD</label>
                                                                                 <?php else : ?>
-                                                                                    <label class="text-primary">&check; int'l student fee OLD</label>
+                                                                                    <label class="text-danger"> int'l student fee OLD</label>
                                                                                 <?php endif; ?>
                                                                             </div>
                                                                             <div class="form-check">

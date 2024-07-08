@@ -125,7 +125,7 @@ session_start(); ?>
 										'Reply-To: ' . $from . "\r\n" .
 										'X-Mailer: PHP/' . phpversion();
 
-									  // store into the s_payables table
+									// store into the s_payables table
 									$applicationFee = isset($_POST['applicationFee']) ? 1 : NULL;
 									$afTuitionFee = isset($_POST['afTuitionFee']) ? 1 : NULL;
 									$afTfOtherFees = isset($_POST['afTfOtherFees']) ? 1 : NULL;

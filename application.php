@@ -250,11 +250,11 @@ if (!isset($_SESSION['username'])) {
                                                     <label class="form-check-label" for="specialPermit">SSP special study permit</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="internationalFee" id="internationalFee">
+                                                    <input class="form-check-input" type="checkbox" name="internationalFeeOld" id="internationalFee">
                                                     <label class="form-check-label" for="internationalFeeOld">int'l student fee OLD</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="internationalFee" id="internationalFee">
+                                                    <input class="form-check-input" type="checkbox" name="internationalFeeNew" id="internationalFee">
                                                     <label class="form-check-label" for="internationalFeeNew">int'l student fee NEW</label>
                                                 </div>
                                             </div>
