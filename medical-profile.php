@@ -285,7 +285,7 @@ if (!isset($_SESSION['username'])) {
                                             </div>
                                             <div class="row my-3">
                                                 <div class="col-lg-6">
-                                                    <label for="healthcond">Any other health condition that te school should be aware of?</label>
+                                                    <label for="healthcond">Any other health condition that the school should be aware of?</label>
                                                     <input type="text" class="form-control" id="healthcond" name="healthcond" placeholder="Other Conditions" value="<?php if (!empty($irow['healthcond'])) {
                                                         echo $irow['healthcond'];
                                                     } ?>">
