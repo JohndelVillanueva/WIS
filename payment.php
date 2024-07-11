@@ -50,7 +50,7 @@ if (!isset($_SESSION['username'])) {
                                                     <th scope="col">Reference Number</th>
                                                     <th scope="col">Full Name</th>
                                                     <th scope="col">Recommendations</th>
-                                                    <th scope="col">Uniform</th>
+                                                    <!-- <th scope="col">Uniform</th> -->
                                                     <th scope="col">Payables</th>
                                                     <th scope="col">Notes</th>
                                                     <th scope="col">Payment</th>
@@ -101,11 +101,6 @@ if (!isset($_SESSION['username'])) {
                                                                 ?>
                                                             </td>
                                                             <td>
-                                                                <!-- &check; 2pcs Uniform XL<br>
-                                                                &check; 1pc PE Uniform XL<br>
-                                                                &check; 2pcs Activity XL<br> -->
-                                                            </td>
-                                                            <td>
                                                                 <?php
                                                                 // Fetch records from the database
                                                                 $checkRecords = $DB_con->prepare("SELECT * FROM s_payables WHERE user_id = :userid");
@@ -116,28 +111,32 @@ if (!isset($_SESSION['username'])) {
                                                                 <div class="row">
                                                                     <?php foreach ($recordss as $record) : ?>
                                                                         <div class="col-4">
-                                                                            <?php if (empty($record["assessment_fee"])) : ?>
-                                                                                <label class="text-primary">&check; Assessment Fee</label>
+                                                                            <?php if (!empty($record["assessment_fee"])) : ?>
+                                                                                <input class="form-check-input" type="checkbox" name="assessmentFee" id="assessmentFee">
+                                                                                <label class="form-check-label" for="assessmentFee">Assessment Fee</label>
                                                                             <?php else : ?>
                                                                                 <label class="text-danger"> Assessment Fee</label>
                                                                             <?php endif; ?>
                                                                             <div class="form-check">
-                                                                                <?php if (empty($record["tuition_fee"])) : ?>
-                                                                                    <label class="text-primary">&check; Tuition Fee</label>
+                                                                                <?php if (!empty($record["tuition_fee"])) : ?>
+                                                                                    <input class="form-check-input" type="checkbox" name="afTuitionFee" id="afTuitionFee">
+                                                                                    <label class="form-check-label" for="afTuitionFee">Tuition Fee</label>
                                                                                 <?php else : ?>
                                                                                     <label class="text-danger">; Tuition Fee</label>
                                                                                 <?php endif; ?>
                                                                             </div>
                                                                             <div class="form-check">
-                                                                                <?php if (empty($record["other_fee"])) : ?>
-                                                                                    <label class="text-primary">&check; Other Fees</label>
+                                                                                <?php if (!empty($record["other_fee"])) : ?>
+                                                                                    <input class="form-check-input" type="checkbox" name="afTfOtherFees" id="afTfOtherFees">
+                                                                                    <label class="form-check-label" for="afTfOtherFees">Other Fees</label>
                                                                                 <?php else : ?>
                                                                                     <label class="text-danger"> Other Fees</label>
                                                                                 <?php endif; ?>
                                                                             </div>
                                                                             <div class="form-check">
-                                                                                <?php if (empty($record["reservation_fee"])) : ?>
-                                                                                    <label class="text-primary">&check; Reservation Fee</label>
+                                                                                <?php if (!empty($record["reservation_fee"])) : ?>
+                                                                                    <input class="form-check-input" type="checkbox" name="applicationFee" id="applicationFee">
+                                                                                    <label class="form-check-label" for="applicationFee">Reservation Fee</label>
                                                                                 <?php else : ?>
                                                                                     <label class="text-danger"> Reservation Fee</label>
                                                                                 <?php endif; ?>
@@ -145,29 +144,33 @@ if (!isset($_SESSION['username'])) {
                                                                         </div>
                                                                         <div class="col-4">
                                                                             <div class="form-check">
-                                                                                <?php if (empty($record["registration_fee"])) : ?>
-                                                                                    <label class="text-primary">&check; Registration Fee</label>
+                                                                                <?php if (!empty($record["registration_fee"])) : ?>
+                                                                                    <input class="form-check-input" type="checkbox" name="registrationFee" id="registrationFee">
+                                                                                    <label class="form-check-label" for="registrationFee">Registration Fee</label>
                                                                                 <?php else : ?>
                                                                                     <label class="text-danger"> Registration Fee</label>
                                                                                 <?php endif; ?>
                                                                             </div>
                                                                             <div class="form-check">
-                                                                                <?php if (empty($record["special_permit"])) : ?>
-                                                                                    <label class="text-primary">&check; SSP special study permit</label>
+                                                                                <?php if (!empty($record["special_permit"])) : ?>
+                                                                                    <input class="form-check-input" type="checkbox" name="specialPermit" id="sspValidIcard">
+                                                                                    <label class="form-check-label" for="specialPermit">SSP special study permit</label>
                                                                                 <?php else : ?>
                                                                                     <label class="text-danger"> SSP special study permit</label>
                                                                                 <?php endif; ?>
                                                                             </div>
                                                                             <div class="form-check">
-                                                                                <?php if (empty($record["international_fee_old"])) : ?>
-                                                                                    <label class="text-primary">&check; int'l student fee OLD</label>
+                                                                                <?php if (!empty($record["international_fee_old"])) : ?>
+                                                                                    <input class="form-check-input" type="checkbox" name="internationalFeeOld" id="internationalFee">
+                                                                                    <label class="form-check-label" for="internationalFee">int'l student fee OLD</label>
                                                                                 <?php else : ?>
                                                                                     <label class="text-danger"> int'l student fee OLD</label>
                                                                                 <?php endif; ?>
                                                                             </div>
                                                                             <div class="form-check">
-                                                                                <?php if (empty($record["international_fee_new"])) : ?>
-                                                                                    <label class="text-primary">&check; int'l student fee NEW</label>
+                                                                                <?php if (!empty($record["international_fee_new"])) : ?>
+                                                                                    <input class="form-check-input" type="checkbox" name="internationalFeeNew" id="internationalFee">
+                                                                                    <label class="form-check-label" for="internationalFee">int'l student fee NEW</label>
                                                                                 <?php else : ?>
                                                                                     <label class="text-danger"> int'l student fee NEW</label>
                                                                                 <?php endif; ?>
