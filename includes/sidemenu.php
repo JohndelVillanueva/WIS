@@ -179,6 +179,20 @@
                 <?php
             }
             ?>
+            <?php
+            if ($_SESSION['level'] == 8 OR $_SESSION['level'] == 9) {
+                ?>
+                <li class="nav-item dropdown">
+                    <a class="dropdown-toggle" href="student_health.php">
+                        <span class="icon-holder">
+                            <i class="anticon anticon-plus-square"></i>
+                        </span>
+                        <span class="title">Health</span>
+                    </a>
+                </li>
+                <?php
+            }
+            ?>
             <li class="nav-item dropdown">
                 <a class="dropdown-toggle" href="javascript:void(0);">
                     <span class="icon-holder">

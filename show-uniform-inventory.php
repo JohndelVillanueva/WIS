@@ -297,7 +297,7 @@ if (!isset($_SESSION['username'])) {
                                 <div class="modal fade" tabindex="-1" id="release" data-bs-backdrop="static" data-bs-keyboard="false">
                                     <div class="modal-dialog modal-lg ">
                                         <div class="modal-content ">
-                                            <form action="inventory.php">
+                                            <form action="inventory.php"> 
                                                 <div class="modal-header">
                                                     <h5 class="modal-title">Students List</h5>
                                                 </div>

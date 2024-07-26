@@ -77,6 +77,9 @@ if (!isset($_SESSION['username'])) {
                                                                     <th>
                                                                         <h3>Time-out</h3>
                                                                     </th>
+                                                                    <th>
+                                                                        <h3>Remarks</h3>
+                                                                    </th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -106,7 +109,7 @@ if (!isset($_SESSION['username'])) {
                                                                     <input type="time" class="form-control border-dark form-control-custom" name="time_out" required>
                                                                 </td>
                                                                 <td>
-                                                                    <input type="hidden" class="form-control border-dark form-control-custom" name="remark" required>
+                                                                    <input type="text" class="form-control border-dark form-control-custom" name="remark" required>
                                                                 </td>
                                                             </tr>
                                                             </tbody>
