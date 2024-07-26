@@ -28,7 +28,7 @@ if (!empty($_POST['name']) && !empty($_POST['grade']) && !empty($_POST['complain
             ":vital_signs" => $_POST['vital_signs'],
             ":time_in" => $_POST['time_in'],
             ":time_out" => $_POST['time_out'],
-            ":remark" => $_SESSION['fname'] . " " . $_SESSION['lname']
+            ":remark" => $_POST['remark']
         ]);
 
         // Check the result
