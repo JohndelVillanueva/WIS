@@ -183,22 +183,24 @@ if ($recordExists == 0) {
 		':otc' => $_POST['otc']
 	));
 }
-
-
 if (isset($_POST['Submit'])) {
 	$newImage = $_FILES['photo']['name'];
 	$uploadDirectory = "assets/images/avatars/";
 
 	if ($newImage != '') {
-		$updateFileName = $_POST['firstname'] . $_POST['lastname'] . '.' . pathinfo($newImage, PATHINFO_EXTENSION);
+		$updateFileName =  $_POST['firstname'] . $_POST['lastname'] ."-". uniqid() . '.' . pathinfo($newImage, PATHINFO_EXTENSION);
 		$uploadPath = $uploadDirectory . $updateFileName;
 		if (file_exists($uploadPath)) {
-            echo $updateFileName . " already exists. Please choose a different filename or image.";
-			// echo $filename . "Already Exist";
+			echo $updateFileName . " already exists. Please choose a different filename or image.";
+			exit;
 		}
+	} else {
+		// If no new image is uploaded, use the existing image name from the database
+		$updateFileName = $_POST['existing_photo'];
 	}
 }
-$updateUserQuery =
+
+$updateUserQuery = 
 	"UPDATE users24 SET
 		photo = :photo,
 		fname = :fname, lname = :lname,
@@ -226,7 +228,6 @@ $userprocess_statement->execute(
 		':fname' => $_POST['firstname'],
 		':mname' => $_POST['middlename'],
 		':gender' => $_POST['gender'],
-		// ':dob' => $_POST[ 'dob' ],
 		':lrn' => $_POST['lrn'],
 		':oldschool' => $_POST['oldschool'],
 		':oldschoolctry' => $_POST['oldschoolctry'],
@@ -241,13 +242,14 @@ $userprocess_statement->execute(
 );
 
 if ($userprocess_statement) {
-	if ($_FILES['photo']['name'] != '') {
+	if ($newImage != '') {
 		move_uploaded_file($_FILES['photo']['tmp_name'], $uploadPath);
 	}
 	echo "Image Successful";
 } else {
 	echo "Image Uploading Failed";
 }
+
 
 header("Location: admissions.php");
 die();

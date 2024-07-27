@@ -38,19 +38,19 @@ session_start();
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-lg-2">
-                                                    <?php
-                                                    if (empty($row["photo"])) {
-                                                    ?>
-                                                        <label for="photo"><img class="rounded" style="max-width: 128px!important;" src="assets/images/avatars/avatar-upload.jpg"></label>
-                                                        <input type="file" id="photo" name="photo" hidden>
-                                                    <?php
-                                                    } else {
-                                                    ?>
-                                                        <img class="rounded" src="assets/images/avatars/<?php echo $row["photo"]; ?>" style="width:128px!important;">
-													<?php
-                                                    }
-                                                    ?>
+                                            <div class="col-lg-2">
+                                            <?php if (empty($row["photo"])) { ?>
+                                                <label for="photo">
+                                                    <img class="rounded" style="max-width: 128px!important;" src="assets/images/avatars/avatar-upload.jpg">
+                                                </label>
+                                                <input type="file" id="photo" name="photo" hidden>
+                                            <?php } else { ?>
+                                                <label for="photo">
+                                                    <img class="rounded" src="assets/images/avatars/<?php echo $row["photo"]; ?>" style="width:128px!important;">
+                                                </label>
+                                                <input type="file" id="photo" name="photo" hidden>
+                                                <input type="hidden" name="existing_photo" value="<?= $row["photo"]; ?>">
+                                            <?php } ?>
                                         </div>
                                         <div class=" col-lg-3">
                                                         <label for="lastname">Last Name</label>
