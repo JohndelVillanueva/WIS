@@ -37,7 +37,7 @@ if (!isset($_SESSION["username"])) {
                         <h2 class="form-title wisfont">Scan ID</h2>
                         <form method="POST" class="register-form" id="login-form">
                             <div class="form-group">
-                                <input class="wisfont" type="password" name="rfid" id="rfid"
+                                <input class="wisfont" type="text" name="rfid" id="rfid"
                                        placeholder="RFID" autofocus/>
                             </div>
                             <div class="form-group form-button">

@@ -9,7 +9,6 @@ if (!isset($_SESSION["username"])) {
 if (empty($_POST['rfid'])) {
     header("location: pay.php?error=1");
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,6 +24,32 @@ if (empty($_POST['rfid'])) {
     <!-- Main css -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/custom.css">
+    <style>
+        .add-button, .remove-button {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        .remove-button {
+            background-color: #f44336;
+        }
+
+        .add-button:hover, .remove-button:hover {
+            opacity: 0.8;
+        }
+
+        .input-group {
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body class="login">
 
@@ -35,7 +60,7 @@ if (empty($_POST['rfid'])) {
             <div class="container">
                 <div class="signin-content">
                     <div class="signin-image">
-                        <figure><img src="images/badge.png" alt="sing up image"></figure>
+                        <figure><img src="images/badge.png" alt="sign up image"></figure>
                     </div>
 
                     <div class="signin-form">
@@ -47,12 +72,18 @@ if (empty($_POST['rfid'])) {
                                 $result = $pdo_statement->fetch();
                                 echo $result['fname']." ".$result['lname'];
                                 ?></span></h3>
-                            <div class="form-group">
-                                <input class="wisfont" type="text" name="amount" id="amount"
-                                       placeholder="Amount" autofocus/>
-                                <input class="wisfont" type="hidden" name="rfid" id="rfid"
-                                       placeholder="RFID" value="<?php echo $_POST['rfid'];?>"/>
+                            <div class="form-group" id="dynamic-inputs">
+                                <div class="input-group">
+                                    <input class="wisfont" type="text" name="product[]" id="product"
+                                           placeholder="Product" autofocus required/>
+                                    <input class="wisfont" type="text" name="amount[]" id="amount"
+                                           placeholder="Amount" required/>
+                                    <button type="button" class="remove-button">Remove</button>
+                                </div>
                             </div>
+                            <button type="button" class="add-button">Add</button>
+                            <input class="wisfont" type="hidden" name="rfid" id="rfid"
+                                   placeholder="RFID" value="<?php echo $_POST['rfid'];?>"/>
                             <div class="form-group form-button">
                                 <input type="submit" name="submit" id="submit" class="form-submit wisfont"
                                        value="Pay"/>
@@ -84,5 +115,22 @@ if (empty($_POST['rfid'])) {
 <!-- JS -->
 <script src="vendor/jquery.min.js"></script>
 <script src="js/main.js"></script>
+<script>
+    $(document).ready(function(){
+        $(document).on('click', '.add-button', function(){
+            var html = '';
+            html += '<div class="input-group">';
+            html += '<input class="wisfont" type="text" name="product[]" id="product" placeholder="Product" autofocus required/>';
+            html += '<input class="wisfont" type="text" name="amount[]" id="amount" placeholder="Amount" required/>';
+            html += '<button type="button" class="remove-button">Remove</button>';
+            html += '</div>';
+            $('#dynamic-inputs').append(html);
+        });
+
+        $(document).on('click', '.remove-button', function(){
+            $(this).closest('.input-group').remove();
+        });
+    });
+</script>
 </body>
 </html>
