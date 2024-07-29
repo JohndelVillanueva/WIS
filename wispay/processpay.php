@@ -34,14 +34,14 @@ if (isset($_POST['submit']) && !empty($_POST['rfid']) && !empty($_POST['product'
             // Check if the transaction is allowed based on the remaining balance
             if ($remainingBalance['ctot'] >= $totalAmount || $remainingBalance['ctot'] <= -1000) {
                 // Insert each product and amount into the database
-                $pay = "INSERT INTO wispay (product, credit, rfid, refcode, empid, transdate, processedby) 
-                        VALUES (:products, :credit, :rfid, :refcode, :empid, NOW(), :processedby)";
+                $pay = "INSERT INTO wispay (product, debit, rfid, refcode, empid, transdate, processedby) 
+                        VALUES (:product, :debit, :rfid, :refcode, :empid, NOW(), :processedby)";
                 $pay_statement = $DB_con->prepare($pay);
 
                 for ($i = 0; $i < count($_POST['product']); $i++) {
                     $pay_statement->execute([
                         ':product' => $_POST['product'][$i],
-                        ':credit' => $_POST['amount'][$i],
+                        ':debit' => $_POST['amount'][$i],
                         ':rfid' => $_POST['rfid'],
                         ':refcode' => $refcode,
                         ':empid' => $firstname . " " . $lastname,

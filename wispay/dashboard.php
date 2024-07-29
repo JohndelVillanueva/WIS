@@ -35,6 +35,7 @@ include_once ("headers.php");
                                     <tr>
                                         <th>Name</th>
                                         <th>Reference Code</th>
+                                        <th>Product</th>
                                         <th>Credit</th>
                                         <th>Debit</th>
                                         <th>Transaction Date</th>
@@ -56,6 +57,7 @@ include_once ("headers.php");
                                         <tr>
                                             <td><?php echo $row['fname']." ".$row['lname']." (".$row['rfid'].")"; ?></td>
                                             <td><?php echo $row['refcode']; ?></td>
+                                            <td><?= $row['product']?></td>
                                             <td><span class="text-success"><?php echo $credit = $row['credit']==0 ? "" : $row['credit']; ?></span></td>
                                             <td><span class="text-danger"><?php echo $debit = $row['debit']==0 ? "" : $row['debit']; ?></span></td>
                                             <td><?php echo $mysqldate; ?></td>

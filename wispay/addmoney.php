@@ -25,7 +25,7 @@ include_once ("headers.php");
                 <?php
 
                 $pdo_statement = $DB_con->prepare("SELECT * FROM user WHERE rfid = :rfid");
-                $pdo_statement->execute([':rfid', $_GET['rfid']]);
+                $pdo_statement->execute([':rfid' => $_GET['rfid']]);
                 $result = $pdo_statement->fetchAll();
                 foreach($result as $row) {
                 ?>
