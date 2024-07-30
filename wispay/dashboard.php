@@ -39,6 +39,7 @@ include_once ("headers.php");
                                         <th>Credit</th>
                                         <th>Debit</th>
                                         <th>Transaction Date</th>
+                                        <th>Processed By</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -61,6 +62,7 @@ include_once ("headers.php");
                                             <td><span class="text-success"><?php echo $credit = $row['credit']==0 ? "" : $row['credit']; ?></span></td>
                                             <td><span class="text-danger"><?php echo $debit = $row['debit']==0 ? "" : $row['debit']; ?></span></td>
                                             <td><?php echo $mysqldate; ?></td>
+                                            <td><?= $row['processedby']; ?></td>
                                         </tr>
                                         <?php
                                     }
