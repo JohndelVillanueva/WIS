@@ -1,7 +1,7 @@
 <nav id="sidebar" class="sidebar js-sidebar">
     <div class="sidebar-content js-simplebar">
         <a class="sidebar-brand" href="index.php">
-            <img src="images/badge.png" style="max-width: 36px;margin-top: -10px;" alt="WIS Logo"> <span class="align-middle wisfont">WISPay</span>
+            <img src="images/avatar.png" style="max-width: 90px !important;margin-top: -10px;" alt="WIS Logo"> <span class="align-middle wisfont">WISPay</span>
         </a>
 
         <ul class="sidebar-nav">

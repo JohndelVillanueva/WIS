@@ -73,7 +73,7 @@ if (isset($_REQUEST['submit'])) {
             <div class="container">
                 <div class="signin-content">
                     <div class="signin-image">
-                        <figure><img src="images/badge.png" alt="sing up image"></figure>
+                        <figure><img src="images/pay-logo.png" alt="sing up image"></figure>
                     </div>
 
                     <div class="signin-form">

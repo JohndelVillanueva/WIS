@@ -165,11 +165,11 @@ input[type=radio] {
   -ms-appearance: radio !important; }
 
 img {
-  max-width: 100%;
+  max-width: 120% !important;
   height: auto; }
 
 figure {
-  margin: 0; }
+  margin: 5; }
 
 p {
   margin-bottom: 0px;
