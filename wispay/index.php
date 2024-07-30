@@ -32,6 +32,7 @@ if (isset($_REQUEST['submit'])) {
                         $_SESSION["rfid"] = $row["rfid"];
                         $_SESSION["email"] = $row["email"];
                         $_SESSION["photo"] = $row["photo"];
+                        $_SESSION["level"] = $row["level"];
                         $loginMsg = "Login Successful! Redirecting...";
                         header("refresh:2; dashboard.php");
                     } else {
