@@ -21,8 +21,8 @@ if (isset($_POST['submit']) && !empty($_POST['rfid']) && !empty($_POST['product'
     if ($user) {
         $firstname = $user->fname;
         $lastname = $user->lname;
-        
-        // Check if the new balance is at least -1000
+
+        // Check the current balance
         $balanceQuery = $DB_con->prepare("SELECT sum(debit)-sum(credit) as ctot FROM wispay WHERE rfid = :rfid");
         $balanceQuery->execute([':rfid' => $_POST['rfid']]);
         $remainingBalance = $balanceQuery->fetch(PDO::FETCH_ASSOC);
@@ -31,8 +31,8 @@ if (isset($_POST['submit']) && !empty($_POST['rfid']) && !empty($_POST['product'
             // Calculate the total amount
             $totalAmount = array_sum($_POST['amount']);
 
-            // Check if the transaction is allowed based on the remaining balance
-            if ($remainingBalance['ctot'] >= $totalAmount || $remainingBalance['ctot'] <= -1000) {
+            // Check if the new balance would be -1000 or lower
+            if ($remainingBalance['ctot'] - $totalAmount <= -1000) {
                 // Insert each product and amount into the database
                 $pay = "INSERT INTO wispay (product, debit, rfid, refcode, empid, transdate, processedby) 
                         VALUES (:product, :debit, :rfid, :refcode, :empid, NOW(), :processedby)";

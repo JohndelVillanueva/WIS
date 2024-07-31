@@ -21,6 +21,8 @@ if (empty($_POST['rfid'])) {
 
     <!-- Font Icon -->
     <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <!-- Main css -->
     <link rel="stylesheet" href="css/style.css">
@@ -30,14 +32,19 @@ if (empty($_POST['rfid'])) {
         .remove-button {
             display: inline-block;
             margin-top: 10px;
-            padding: 10px 20px;
-            background-color: #4CAF50;
+            padding: 10px;
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 50%;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 18px;
+            line-height: 18px;
+            text-align: center;
             font-family: 'Times New Roman', Times, serif;
+        }
+
+        .add-button {
+            background-color: #4CAF50;
         }
 
         .remove-button {
@@ -51,6 +58,17 @@ if (empty($_POST['rfid'])) {
 
         .input-group {
             margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-group input {
+            margin-right: 10px;
+            flex: 1;
+        }
+
+        .icon {
+            font-size: 16px;
         }
     </style>
 </head>
@@ -80,11 +98,15 @@ if (empty($_POST['rfid'])) {
                                     <div class="input-group">
                                         <input class="wisfont" type="text" name="product[]" id="product" placeholder="Product" autofocus required />
                                         <input class="wisfont" type="text" name="amount[]" id="amount" placeholder="Amount" required />
-                                        <button type="button" class="remove-button">Remove</button>
+                                        <button type="button" class="remove-button"><i class="fas fa-minus icon"></i></button>
                                     </div>
                                 </div>
-                                <button type="button" class="add-button">Add</button>
+                                <button type="button" class="add-button"><i class="fas fa-plus icon"></i></button>
                                 <input class="wisfont" type="hidden" name="rfid" id="rfid" placeholder="RFID" value="<?php echo $_POST['rfid']; ?>" />
+                                <div class="form-group">
+                                    <label for="total-amount">Total Amount: </label><br>
+                                    <span id="total-amount">0</span>
+                                </div>
                                 <div class="form-group form-button">
                                     <input type="submit" name="submit" id="submit" class="form-submit wisfont" value="Pay" />
                                 </div>
@@ -102,7 +124,6 @@ if (empty($_POST['rfid'])) {
 
                             ?>
                             <div class="social-login">
-                                <span class="social-label">Copyright &copy; WIS ICT.</span>
                                 <a class="social-label"><a href="dashboard.php"><i class="align-middle" data-feather="trello"></i> DASHBOARD</a></span>
                             </div>
                         </div>
@@ -116,20 +137,38 @@ if (empty($_POST['rfid'])) {
     <script src="vendor/jquery.min.js"></script>
     <script src="js/main.js"></script>
     <script>
+        function updateTotalAmount() {
+            let total = 0;
+            $('input[name="amount[]"]').each(function() {
+                let amount = parseFloat($(this).val());
+                if (!isNaN(amount)) {
+                    total += amount;
+                }
+            });
+            $('#total-amount').text(total.toFixed(2));
+        }
+
         $(document).ready(function() {
             $(document).on('click', '.add-button', function() {
                 var html = '';
                 html += '<div class="input-group">';
                 html += '<input class="wisfont" type="text" name="product[]" id="product" placeholder="Product" autofocus required/>';
                 html += '<input class="wisfont" type="text" name="amount[]" id="amount" placeholder="Amount" required/>';
-                html += '<button type="button" class="remove-button">Remove</button>';
+                html += '<button type="button" class="remove-button"><i class="fas fa-minus icon"></i></button>';
                 html += '</div>';
                 $('#dynamic-inputs').append(html);
             });
 
             $(document).on('click', '.remove-button', function() {
                 $(this).closest('.input-group').remove();
+                updateTotalAmount();
             });
+
+            $(document).on('input', 'input[name="amount[]"]', function() {
+                updateTotalAmount();
+            });
+
+            updateTotalAmount(); // Initial call to set total amount when the page loads
         });
     </script>
 </body>
