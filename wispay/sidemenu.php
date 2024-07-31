@@ -17,7 +17,7 @@
             </li>
             <li class="sidebar-item">
                 <a class="sidebar-link" href="pay.php">
-                    <i class="align-middle" data-feather="dollar-sign"></i> <span class="align-middle">WISPay</span>
+                    <i class="align-middle" data-feather="dollar-sign"></i> <span class="align-middle">Payment</span>
                 </a>
             </li>
             <li class="sidebar-item">
