@@ -24,16 +24,24 @@ if (isset($_POST['submit']) && !empty($_POST['rfid']) && !empty($_POST['product'
             $lastname = $user->lname;
 
             // Check the current balance
-            $balanceQuery = $DB_con->prepare("SELECT sum(debit)-sum(credit) as ctot FROM wispay WHERE rfid = :rfid");
+            $balanceQuery = $DB_con->prepare("SELECT sum(credit) - sum(debit) as ctot FROM wispay WHERE rfid = :rfid");
             $balanceQuery->execute([':rfid' => $_POST['rfid']]);
             $remainingBalance = $balanceQuery->fetch(PDO::FETCH_ASSOC);
 
+            // var_dump($remainingBalance);
+            // die();
+
             if ($remainingBalance) {
                 // Calculate the total amount
+                $remainingBalance = floatval($remainingBalance['ctot']);
                 $totalAmount = array_sum($_POST['amount']);
-
-                // Check if the new balance would be -1000 or lower
-                if ($remainingBalance['ctot'] - $totalAmount <= -1000) {
+                // var_dump([
+                //     "Total Amount" => $totalAmount,
+                //     "Remaining Balance" => $remainingBalance,
+                //     "Total" => $remainingBalance - $totalAmount
+                // ]);
+                // Check if the new balance would be -1000 or higher
+                if ($remainingBalance - $totalAmount >= 0 ) {
                     // Insert each product and amount into the database
                     $pay = "INSERT INTO wispay (product, debit, rfid, refcode, empid, transdate, processedby) 
                             VALUES (:product, :debit, :rfid, :refcode, :empid, NOW(), :processedby)";
@@ -49,10 +57,11 @@ if (isset($_POST['submit']) && !empty($_POST['rfid']) && !empty($_POST['product'
                             ':processedby' => $processedby
                         ]);
                     }
-
+                    // die("Success!");
                     header("Location: pay.php?success=1");
                     exit();
                 } else {
+                    // die("fail!");
                     header("Location: pay.php?success=0");
                     exit();
                 }
