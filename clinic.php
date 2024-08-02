@@ -12,9 +12,21 @@ if (!isset($_SESSION['username'])) {
 
 <head>
     <style>
+        .modal-content-custom {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+        }
         .modal-dialog-custom {
-            max-width: 80%; /* Adjust the percentage as needed */
-            width: 80%;
+            max-width: 80%;
+        }
+        .form-control-custom {
+            background-color: #fff;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            padding: 10px;
+        }
+        .table th, .table td {
+            vertical-align: middle;
         }
 
     </style>
@@ -44,8 +56,8 @@ if (!isset($_SESSION['username'])) {
                                         <div class="modal-dialog modal-dialog-centered modal-dialog-custom">
                                             <div class="modal-content modal-content-custom">
                                                 <form method="POST" action="addClinicProcess.php">
-                                                    <div class="modal-header float-center">
-                                                        <div class="modal-title text-black ">
+                                                    <div class="modal-header">
+                                                        <div class="modal-title text-black">
                                                             <b>Add New Student Health Record</b>
                                                         </div>
                                                     </div>
@@ -53,65 +65,30 @@ if (!isset($_SESSION['username'])) {
                                                         <table class="table text-center">
                                                             <thead>
                                                                 <tr>
-                                                                    <th>
-                                                                        <h3>Fullname</h3>
-                                                                    </th>
-                                                                    <th>
-                                                                        <h3>Grade And Section</h3>
-                                                                    </th>
-                                                                    <th>
-                                                                        <h3>Complaint</h3>
-                                                                    </th>
-                                                                    <th>
-                                                                        <h3>Diagnose</h3>
-                                                                    </th>
-                                                                    <th>
-                                                                        <h3>Treatment</h3>
-                                                                    </th>
-                                                                    <th>
-                                                                        <h3>Vital Signs</h3>
-                                                                    </th>
-                                                                    <th>
-                                                                        <h3>Time-in</h3>
-                                                                    </th>
-                                                                    <th>
-                                                                        <h3>Time-out</h3>
-                                                                    </th>
-                                                                    <th>
-                                                                        <h3>Remarks</h3>
-                                                                    </th>
+                                                                    <th><h3>Fullname</h3></th>
+                                                                    <th><h3>Grade And Section</h3></th>
+                                                                    <th><h3>Complaint</h3></th>
+                                                                    <th><h3>Diagnose</h3></th>
+                                                                    <th><h3>Treatment</h3></th>
+                                                                    <th><h3>Vital Signs</h3></th>
+                                                                    <th><h3>Time-in</h3></th>
+                                                                    <th><h3>Time-out</h3></th>
+                                                                    <th><h3>Remarks</h3></th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    <input type="text" class="form-control border-dark form-control-custom" name="name" required>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control border-dark form-control-custom" name="grade" required>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control border-dark form-control-custom" name="complaint" required>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control border-dark form-control-custom" name="diagnose" required>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control border-dark form-control-custom" name="treatment" required>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control border-dark form-control-custom" name="vital_signs" required>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="time" class="form-control border-dark form-control-custom" name="time_in" required>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="time" class="form-control border-dark form-control-custom" name="time_out" required>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control border-dark form-control-custom" name="remark" required>
-                                                                </td>
-                                                            </tr>
+                                                                <tr>
+                                                                    <td><input type="text" class="form-control border-dark form-control-custom" name="name" required></td>
+                                                                    <td><input type="text" class="form-control border-dark form-control-custom" name="grade" required></td>
+                                                                    <td><input type="text" class="form-control border-dark form-control-custom" name="complaint" required></td>
+                                                                    <td><input type="text" class="form-control border-dark form-control-custom" name="diagnose" required></td>
+                                                                    <td><input type="text" class="form-control border-dark form-control-custom" name="treatment" required></td>
+                                                                    <td><input type="text" class="form-control border-dark form-control-custom" name="vital_signs" required></td>
+                                                                    <td><input type="time" class="form-control border-dark form-control-custom" name="time_in" required></td>
+                                                                    <td><input type="time" class="form-control border-dark form-control-custom" name="time_out" required></td>
+                                                                    <td><input type="text" class="form-control border-dark form-control-custom" name="remark" required></td>
+                                                                    <td><input type="hidden" class="form-control border-dark form-control-custom" name="date"></td>
+                                                                </tr>
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -124,7 +101,6 @@ if (!isset($_SESSION['username'])) {
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-primary float-right"> Add New</button>
@@ -149,6 +125,7 @@ if (!isset($_SESSION['username'])) {
                                                     <th scope="col" class="text-center">Vital Signs</th>
                                                     <th scope="col" class="text-center">Time-in</th>
                                                     <th scope="col" class="text-center">Time-out</th>
+                                                    <th scope="col" class="text-center">Date</th>
                                                     <th scope="col" class="text-center">Remarks</th>
                                                 </tr>
                                             </thead>
@@ -165,6 +142,7 @@ if (!isset($_SESSION['username'])) {
                                                             <td><?= $student->vital_signs ?></td>
                                                             <td><?= $student->time_in ?></td>
                                                             <td><?= $student->time_out ?></td>
+                                                            <td><?= $student->date ?></td>
                                                             <td><?= $student->remarks ?></td>
                                                     </tr>
                                                     <?php 
@@ -189,6 +167,9 @@ if (!isset($_SESSION['username'])) {
 
     </div>
     </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#userlist').DataTable({

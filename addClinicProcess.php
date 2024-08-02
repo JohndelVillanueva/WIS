@@ -15,8 +15,13 @@ if (!empty($_POST['name']) && !empty($_POST['grade']) && !empty($_POST['complain
 
     try {
         // Prepare the SQL statement
-        $insertingStudent = $DB_con->prepare("INSERT INTO clinic_history (name, grade, complaint, diagnose, treatment, vital_signs, time_in, time_out, remarks) VALUES 
-        (:name, :grade, :complaint, :diagnose, :treatment, :vital_signs, :time_in, :time_out, :remark)");
+
+        // $data = [
+        //     ":date" => date('F d, Y') // The date is stored as a string
+        // ];
+
+        $insertingStudent = $DB_con->prepare("INSERT INTO clinic_history (name, grade, complaint, diagnose, treatment, vital_signs, time_in, time_out, date, remarks) VALUES 
+        (:name, :grade, :complaint, :diagnose, :treatment, :vital_signs, :time_in, :time_out, :date, :remark)");
 
         // Execute the statement with the bound parameters
         $result = $insertingStudent->execute([
@@ -28,11 +33,14 @@ if (!empty($_POST['name']) && !empty($_POST['grade']) && !empty($_POST['complain
             ":vital_signs" => $_POST['vital_signs'],
             ":time_in" => $_POST['time_in'],
             ":time_out" => $_POST['time_out'],
+            ":date" => date('F d, Y'),
             ":remark" => $_POST['remark']
         ]);
 
         // Check the result
         if ($result) {
+            // var_dump($data);
+            // die();
             header("location: clinic.php");
             exit();
         } else {
