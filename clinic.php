@@ -29,7 +29,8 @@ if (!isset($_SESSION['username'])) {
             vertical-align: middle;
         }
     </style>
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.3/css/dataTables.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.0/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.1/css/buttons.dataTables.min.css">
 </head>
 
 <body>
@@ -103,7 +104,7 @@ if (!isset($_SESSION['username'])) {
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-primary float-right">Add New</button>
+                                        <button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-primary float-right">Add New</button><br><br><br>
                                     </div>
                                 </div>
                                 <?php
@@ -163,15 +164,26 @@ if (!isset($_SESSION['username'])) {
         <?php include_once "script.php"; ?>
     </div>
 
-    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.0/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.3.1/js/dataTables.buttons.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.3.1/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.3.1/js/buttons.print.min.js"></script> -->
-    <script src="https://cdn.datatables.net/2.1.3/js/dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.1/js/buttons.print.min.js"></script>
     <script>
-        let table = new DataTable('#userlist');
+        $(document).ready(function() {
+            $('#userlist').DataTable({
+                dom: 'frtipB',
+                buttons: [
+                    'copyHtml5',
+                    'excelHtml5',
+                    'csvHtml5',
+                    'pdfHtml5',
+                    'print'
+                ],
+                pageLength: 15
+            });
+        });
     </script>
 </body>
 
