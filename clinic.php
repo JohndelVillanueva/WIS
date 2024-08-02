@@ -3,14 +3,14 @@ include_once "includes/config.php";
 session_start();
 if (!isset($_SESSION['username'])) {
     header("location: login.php");
+    exit();
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
-<?php include_once "includes/css.php"; ?>
-
 <head>
+    <?php include_once "includes/css.php"; ?>
     <style>
         .modal-content-custom {
             background-color: #f8f9fa;
@@ -28,8 +28,8 @@ if (!isset($_SESSION['username'])) {
         .table th, .table td {
             vertical-align: middle;
         }
-
     </style>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.3/css/dataTables.dataTables.min.css">
 </head>
 
 <body>
@@ -39,7 +39,7 @@ if (!isset($_SESSION['username'])) {
             <?php include_once "includes/sidemenu.php"; ?>
             <div class="page-container">
                 <div class="main-content">
-                    <!-- form starts !-->
+                    <!-- form starts -->
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="card">
@@ -103,19 +103,18 @@ if (!isset($_SESSION['username'])) {
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-primary float-right"> Add New</button>
+                                        <button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-primary float-right">Add New</button>
                                     </div>
                                 </div>
                                 <?php
-                                $selectAllStudents = $DB_con->prepare("SELECT * FROM clinic_history");
+                                $selectAllStudents = $DB_con->prepare("SELECT * FROM clinic_history ORDER BY date DESC");
                                 $selectAllStudents->execute();
                                 $students = $selectAllStudents->fetchAll(PDO::FETCH_OBJ);
                                 ?>
-  
-                                <div class="row ">
+                                <div class="row">
                                     <div class="col-lg-12">
                                         <table id="userlist" class="display table table-stripped table-fluid">
-                                            <thead text-center>
+                                            <thead class="text-center">
                                                 <tr>
                                                     <th scope="col" class="text-center">Full Name</th>
                                                     <th scope="col" class="text-center">Grade And Section</th>
@@ -131,25 +130,23 @@ if (!isset($_SESSION['username'])) {
                                             </thead>
                                             <tbody class="text-center fs-1">
                                                 <?php 
-                                                foreach ($students as $student): { 
+                                                foreach ($students as $student): 
                                                 ?>
                                                     <tr style="padding-top:10px!important; padding-bottom:10px!important;">
-                                                            <td><?= $student->name ?></td>
-                                                            <td><?= $student->grade ?></td>
-                                                            <td><?= $student->complaint ?></td>
-                                                            <td><?= $student->diagnose ?></td>
-                                                            <td><?= $student->treatment ?></td>
-                                                            <td><?= $student->vital_signs ?></td>
-                                                            <td><?= $student->time_in ?></td>
-                                                            <td><?= $student->time_out ?></td>
-                                                            <td><?= $student->date ?></td>
-                                                            <td><?= $student->remarks ?></td>
+                                                        <td><?= $student->name ?></td>
+                                                        <td><?= $student->grade ?></td>
+                                                        <td><?= $student->complaint ?></td>
+                                                        <td><?= $student->diagnose ?></td>
+                                                        <td><?= $student->treatment?></td>
+                                                        <td><?= $student->vital_signs ?></td>
+                                                        <td><?= $student->time_in ?></td>
+                                                        <td><?= $student->time_out ?></td>
+                                                        <td><?= $student->date ?></td>
+                                                        <td><?= $student->remarks ?></td>
                                                     </tr>
-                                                    <?php 
-                                                } 
+                                                <?php 
                                                 endforeach; 
                                                 ?>
-                                                    
                                             </tbody>
                                         </table>
                                     </div>
@@ -159,31 +156,22 @@ if (!isset($_SESSION['username'])) {
                         </div>
                     </div>
                 </div>
-                <!-- form ends !-->
+                <!-- form ends -->
             </div>
             <?php include_once "includes/footer.php"; ?>
         </div>
         <?php include_once "script.php"; ?>
+    </div>
 
-    </div>
-    </div>
-    
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.0/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.1/js/buttons.print.min.js"></script> -->
+    <script src="https://cdn.datatables.net/2.1.3/js/dataTables.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('#userlist').DataTable({
-                dom: 'frtipB',
-                buttons: [
-                    'copyHtml5',
-                    'excelHtml5',
-                    'csvHtml5',
-                    'pdfHtml5',
-                    'print'
-                ],
-                "pageLength": 15
-            });
-        });
+        let table = new DataTable('#userlist');
     </script>
 </body>
 
