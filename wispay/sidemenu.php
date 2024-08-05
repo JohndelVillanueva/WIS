@@ -21,6 +21,11 @@
                 </a>
             </li>
             <li class="sidebar-item">
+                <a class="sidebar-link" href="product_list.php">
+                    <i class="align-middle" data-feather="dollar-sign"></i> <span class="align-middle">Products</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
                 <a class="sidebar-link" href="report.php">
                     <i class="align-middle" data-feather="table"></i> <span class="align-middle">Reports</span>
                 </a>

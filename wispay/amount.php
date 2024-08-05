@@ -88,26 +88,40 @@ if (empty($_POST['rfid'])) {
                         <div class="signin-form">
                             <h2 class="form-title wisfont">Enter Amount</h2>
                             <form method="POST" class="register-form" id="login-form">
-                                <h3 class="form-title wisfont">Scanned RFID : <span style="color:red"><?php
-                                    $pdo_statement = $DB_con->prepare("SELECT * FROM user WHERE rfid=?");
-                                    $pdo_statement->execute([$_POST['rfid']]);
-                                    $result = $pdo_statement->fetch();
-                                    echo $result['fname'] . " " . $result['lname'] . " " ;
-                                    $balanceQuery = $DB_con->prepare("SELECT sum(credit)-sum(debit) as ctot FROM wispay WHERE rfid = :rfid");
-                                    $balanceQuery->execute([':rfid' => $_POST['rfid']]);
-                                    $remainingBalance = $balanceQuery->fetch(PDO::FETCH_ASSOC);
-
-                                    // var_dump($remainingBalance);
-                                    // die();
-                                    ?></span>
+                                <h3 class="form-title wisfont">Scanned RFID :
+                                    <span style="color:red">
+                                        <?php
+                                        $pdo_statement = $DB_con->prepare("SELECT * FROM user WHERE rfid=?");
+                                        $pdo_statement->execute([$_POST['rfid']]);
+                                        $result = $pdo_statement->fetch();
+                                        echo $result['fname'] . " " . $result['lname'] . " ";
+                                        $balanceQuery = $DB_con->prepare("SELECT sum(credit)-sum(debit) as ctot FROM wispay WHERE rfid = :rfid");
+                                        $balanceQuery->execute([':rfid' => $_POST['rfid']]);
+                                        $remainingBalance = $balanceQuery->fetch(PDO::FETCH_ASSOC);
+                                        // var_dump($remainingBalance);
+                                        // die();
+                                        ?>
+                                    </span>
                                 </h3>
                                 <div class="form-group" id="dynamic-inputs">
                                     <div class="input-group">
-                                        <input class="wisfont" type="text" name="product[]" id="product" placeholder="Product" autofocus required />
+                                        <?php 
+                                            $getProductsQuery = $DB_con->prepare("SELECT * FROM type_of_products");
+                                            $getProductsQuery->execute();
+                                            $products = $getProductsQuery->fetchAll(PDO::FETCH_OBJ);
+                                        ?>
+                                        <select class="wisfont" name="product[]" id="product" required>
+                                            <option value="" disabled selected>Select a product</option>
+                                            <?php foreach($products as $product): ?>
+                                                <option value="<?= $product->id ?>"><?= $product->name ?></option>
+                                            <?php endforeach; ?>
+                                            <!-- Add more options as needed -->
+                                        </select>
                                         <input class="wisfont" type="text" name="amount[]" id="amount" placeholder="Amount" required />
                                         <button type="button" class="remove-button"><i class="fas fa-minus icon"></i></button>
                                     </div>
                                 </div>
+
                                 <button type="button" class="add-button"><i class="fas fa-plus icon"></i></button>
                                 <input class="wisfont" type="hidden" name="rfid" id="rfid" placeholder="RFID" value="<?php echo $_POST['rfid']; ?>" />
                                 <div class="form-group">
