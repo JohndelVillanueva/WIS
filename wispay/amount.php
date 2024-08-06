@@ -28,8 +28,7 @@ if (empty($_POST['rfid'])) {
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/custom.css">
     <style>
-        .add-button,
-        .remove-button {
+        .add-button {
             display: inline-block;
             margin-top: 10px;
             padding: 10px;
@@ -62,13 +61,44 @@ if (empty($_POST['rfid'])) {
             align-items: center;
         }
 
+        .input-group select,
         .input-group input {
             margin-right: 10px;
-            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .input-group select:focus,
+        .input-group input:focus {
+            outline: none;
+            border-color: #4CAF50;
         }
 
         .icon {
             font-size: 16px;
+        }
+
+        .form-title {
+            margin-bottom: 20px;
+        }
+
+        #total-amount {
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .input-group select[name="type[]"] {
+            width: 150px;
+        }
+
+        .input-group select[name="product[]"] {
+            width: 200px;
+        }
+
+        .input-group input[name="qty[]"] {
+            width: 50px;
         }
     </style>
 </head>
@@ -82,10 +112,10 @@ if (empty($_POST['rfid'])) {
                 <div class="container">
                     <div class="signin-content">
                         <div class="signin-image">
-                            <figure><img src="images/pay-logo.png" alt="sign up image"></figure>
+                            <figure><img src="images/pay-logo.png" alt="sign up image" style="margin-left: -80px; padding-top: 100px"></figure>
                         </div>
 
-                        <div class="signin-form">
+                        <div class="signin-form" style="margin-left: -20px;">
                             <h2 class="form-title wisfont">Enter Amount</h2>
                             <form method="POST" class="register-form" id="login-form">
                                 <h3 class="form-title wisfont">Scanned RFID :
@@ -98,38 +128,44 @@ if (empty($_POST['rfid'])) {
                                         $balanceQuery = $DB_con->prepare("SELECT sum(credit)-sum(debit) as ctot FROM wispay WHERE rfid = :rfid");
                                         $balanceQuery->execute([':rfid' => $_POST['rfid']]);
                                         $remainingBalance = $balanceQuery->fetch(PDO::FETCH_ASSOC);
-                                        // var_dump($remainingBalance);
-                                        // die();
                                         ?>
                                     </span>
                                 </h3>
                                 <div class="form-group" id="dynamic-inputs">
                                     <div class="input-group">
-                                        <?php 
-                                            $getProductsQuery = $DB_con->prepare("SELECT * FROM type_of_products");
-                                            $getProductsQuery->execute();
-                                            $products = $getProductsQuery->fetchAll(PDO::FETCH_OBJ);
+                                        <?php
+                                        $getTypesQuery = $DB_con->prepare("SELECT DISTINCT(type_of_product) as type FROM products");
+                                        $getTypesQuery->execute();
+                                        $types = $getTypesQuery->fetchAll(PDO::FETCH_OBJ);
                                         ?>
-                                        <select class="wisfont" name="product[]" id="product" required>
-                                            <option value="" disabled selected>Select a product</option>
-                                            <?php foreach($products as $product): ?>
-                                                <option value="<?= $product->id ?>"><?= $product->name ?></option>
+                                        <select class="wisfont" name="type[]" id="type" required>
+                                            <option value="" disabled selected>Type</option>
+                                            <?php foreach ($types as $type) : ?>
+                                                <option value="<?= htmlspecialchars($type->type) ?>"><?= htmlspecialchars($type->type) ?></option>
                                             <?php endforeach; ?>
-                                            <!-- Add more options as needed -->
                                         </select>
-                                        <input class="wisfont" type="text" name="amount[]" id="amount" placeholder="Amount" required />
-                                        <button type="button" class="remove-button"><i class="fas fa-minus icon"></i></button>
+
+                                        <select class="wisfont" name="product[]" id="product" required>
+                                            <option value="" disabled selected>Products</option>
+                                        </select>
+
+                                        <input class="wisfont" type="hidden" name="amount[]" id="amount" placeholder="Amount" required />
+                                        <input class="wisfont" type="number" name="qty[]" id="qty" placeholder="qty" required />
                                     </div>
                                 </div>
+
+                                <script>
+
+                                </script>
 
                                 <button type="button" class="add-button"><i class="fas fa-plus icon"></i></button>
                                 <input class="wisfont" type="hidden" name="rfid" id="rfid" placeholder="RFID" value="<?php echo $_POST['rfid']; ?>" />
                                 <div class="form-group">
-                                    <label for="total-amount">Total Amount: </label><br>
+                                    <label for="total-amount">Total Amount: </label><br><br>
                                     <span id="total-amount">0</span>
                                 </div>
                                 <div class="form-group form-button">
-                                    <input type="submit" name="submit" id="submit" class="form-submit wisfont" value="Pay" />
+                                    <input type="submit" name="submit" id="submit" class="form-submit wisfont" onclick="return confirm('Check the product and the quantity. Lets proceed?')" value="Pay"  />
                                 </div>
                             </form>
                             <?php
@@ -142,7 +178,6 @@ if (empty($_POST['rfid'])) {
                                         break;
                                 }
                             }
-
                             ?>
                             <div class="social-login">
                                 <a class="social-label"><a href="dashboard.php"><i class="align-middle" data-feather="trello"></i> DASHBOARD</a></span>
@@ -158,40 +193,61 @@ if (empty($_POST['rfid'])) {
     <script src="vendor/jquery.min.js"></script>
     <script src="js/main.js"></script>
     <script>
-        function updateTotalAmount() {
-            let total = 0;
-            $('input[name="amount[]"]').each(function() {
-                let amount = parseFloat($(this).val());
-                if (!isNaN(amount)) {
-                    total += amount;
-                }
-            });
-            $('#total-amount').text(total.toFixed(2));
-        }
-
-        $(document).ready(function() {
-            $(document).on('click', '.add-button', function() {
-                var html = '';
-                html += '<div class="input-group">';
-                html += '<input class="wisfont" type="text" name="product[]" id="product" placeholder="Product" autofocus required/>';
-                html += '<input class="wisfont" type="text" name="amount[]" id="amount" placeholder="Amount" required/>';
-                html += '<button type="button" class="remove-button"><i class="fas fa-minus icon"></i></button>';
-                html += '</div>';
-                $('#dynamic-inputs').append(html);
-            });
-
-            $(document).on('click', '.remove-button', function() {
-                $(this).closest('.input-group').remove();
-                updateTotalAmount();
-            });
-
-            $(document).on('input', 'input[name="amount[]"]', function() {
-                updateTotalAmount();
-            });
-
-            updateTotalAmount(); // Initial call to set total amount when the page loads
+    function updateTotalAmount() {
+        let total = 0;
+        $('.input-group').each(function() {
+            let price = parseFloat($(this).find('select[name="product[]"]').val()) || 0;
+            let qty = parseInt($(this).find('input[name="qty[]"]').val()) || 0;
+            let amount = price * qty;
+            $(this).find('input[name="amount[]"]').val(amount.toFixed(2));
+            total += amount;
         });
-    </script>
+        $('#total-amount').text(total.toFixed(2));
+    }
+
+    $(document).ready(function() {
+        $(document).on('click', '.add-button', function() {
+            var typeOptions = $('#type').html();
+            var html = '<div class="input-group">' +
+                '<select class="wisfont" name="type[]" required>' + typeOptions + '</select>' +
+                '<select class="wisfont" name="product[]" required>' +
+                '<option value="" disabled selected>Products</option>' +
+                '</select>' +
+                '<input class="wisfont" type="hidden" name="amount[]" placeholder="Amount" required />' +
+                '<input class="wisfont" type="number" name="qty[]" placeholder="qty" required />' +
+                '</div>';
+            $('#dynamic-inputs').append(html);
+        });
+
+        $(document).on('change', 'select[name="type[]"]', function() {
+            var selectType = this.value;
+            var productSelect = $(this).closest('.input-group').find('select[name="product[]"]');
+
+            // Clear previous products
+            productSelect.html('<option value="" disabled selected>Products</option>');
+
+            fetch('amount2.php?type=' + encodeURIComponent(selectType))
+                .then(response => response.json())
+                .then(products => {
+                    products.forEach(product => {
+                        var option = $('<option></option>');
+                        option.val(product.price_of_product + " - " + product.name_of_product);
+                        option.text(product.name_of_product);
+                        productSelect.append(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+
+        $(document).on('change', 'select[name="product[]"], input[name="qty[]"]', function() {
+            updateTotalAmount();
+        });
+
+        updateTotalAmount(); // Initial call to set total amount when the page loads
+    });
+</script>
 </body>
 
 </html>

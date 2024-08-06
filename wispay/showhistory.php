@@ -63,6 +63,7 @@ include_once ("headers.php");
                                     <tr>
                                         <th>Reference Code</th>
                                         <th>Product</th>
+                                        <th>Quantity</th>
                                         <th>Debit</th>
                                         <th>Credit</th>
                                         <th>Transaction Date</th>
@@ -79,7 +80,8 @@ include_once ("headers.php");
                                         ?>
                                         <tr>
                                             <td><?php echo $row['refcode']; ?></td>
-                                            <td><?= $row['product'] ?></td>
+                                            <td><?= $row['product_name'] ?></td>
+                                            <td><?= $row['quantity'] ?></td>
                                             <td><span class="text-danger"><?php echo $debit = $row['debit']==0 ? "" : $row['debit']; ?></span></td>
                                             <td><span class="text-success"><?php echo $credit = $row['credit']==0 ? "" : $row['credit']; ?></span></td>
                                             <td><?php echo $row['transdate']; ?></td>

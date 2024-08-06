@@ -9,7 +9,7 @@ if (!isset($_SESSION["username"])) {
 }
 
 // Check if the form is submitted and required fields are not empty
-if (isset($_POST['submit']) && !empty($_POST['rfid']) && !empty($_POST['product']) && !empty($_POST['amount'])) {
+if (isset($_POST['submit']) && !empty($_POST['rfid']) && !empty($_POST['product']) && !empty($_POST['type']) && !empty($_POST['qty'])) {
     $processedby = $_SESSION['fname'] . " " . $_SESSION['lname'];
     $refcode = uniqid("WIS-");
 
@@ -43,13 +43,15 @@ if (isset($_POST['submit']) && !empty($_POST['rfid']) && !empty($_POST['product'
                 // Check if the new balance would be -1000 or higher
                 if ($remainingBalance - $totalAmount >= 0 ) {
                     // Insert each product and amount into the database
-                    $pay = "INSERT INTO wispay (product, debit, rfid, refcode, empid, transdate, processedby) 
-                            VALUES (:product, :debit, :rfid, :refcode, :empid, NOW(), :processedby)";
+                    $pay = "INSERT INTO wispay (product_name, quantity, product_type, debit, rfid, refcode, empid, transdate, processedby) 
+                            VALUES (:product, :qty, :product_type, :debit, :rfid, :refcode, :empid, NOW(), :processedby)";
                     $pay_statement = $DB_con->prepare($pay);
 
                     for ($i = 0; $i < count($_POST['product']); $i++) {
                         $pay_statement->execute([
                             ':product' => $_POST['product'][$i],
+                            ':qty' => $_POST['qty'][$i],
+                            ':product_type' => $_POST['type'][$i],
                             ':debit' => $_POST['amount'][$i],
                             ':rfid' => $_POST['rfid'],
                             ':refcode' => $refcode,
@@ -77,6 +79,8 @@ if (isset($_POST['submit']) && !empty($_POST['rfid']) && !empty($_POST['product'
         // Log the error and show a generic error message
         error_log($e->getMessage());
         header("Location: pay.php?error=database_error");
+        // var_dump(["hello" => $pay_statement]);
+        // die();
         exit();
     }
 } else {

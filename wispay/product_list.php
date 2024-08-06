@@ -31,7 +31,7 @@ include_once("headers.php");
                                 <div class="modal-body">
                                     <div class="mb-3">
                                         <label for="addProductCode" class="form-label">Product Code</label>
-                                        <input type="text" class="form-control" id="addProductCode" name="product_code" required>
+                                        <input type="text" class="form-control" id="addProductCode" name="product_code" placeholder="ex. Mil" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="addProductType" class="form-label">Product Type</label>
@@ -52,11 +52,11 @@ include_once("headers.php");
                                     </div>
                                     <div class="mb-3">
                                         <label for="addProductName" class="form-label">Product Name</label>
-                                        <input type="text" class="form-control" id="addProductName" name="name_of_product" required>
+                                        <input type="text" class="form-control" id="addProductName" name="name_of_product" placeholder="ex. Milktea" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="addProductPrice" class="form-label">Price</label>
-                                        <input type="number" class="form-control" id="addProductPrice" name="price_of_product" required>
+                                        <input type="number" class="form-control" id="addProductPrice" name="price_of_product" placeholder="240" required>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -138,7 +138,7 @@ include_once("headers.php");
                                             <tr>
                                                 <th>Product Code</th>
                                                 <th>Product Type</th>
-                                                <th>Product</th>
+                                                <th>Product Name</th>
                                                 <th>Price</th>
                                                 <th>Date Created</th>
                                                 <th>Mark by</th>
