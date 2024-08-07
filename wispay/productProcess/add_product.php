@@ -1,5 +1,5 @@
 <?php 
-include_once("config/config.php");
+include_once("../config/config.php");
 //ini_set('display_errors', 0);
 //error_reporting(E_ERROR | E_WARNING | E_PARSE);
 session_start();
@@ -21,8 +21,10 @@ if (isset($_POST['product_code'], $_POST['type_of_product'], $_POST['name_of_pro
         $_SESSION['fname'] . ' ' . $_SESSION['lname'],
     ]);
 
+    sleep(1);
+
     // Redirect back to the products page or display a success message
-    header('Location: product_list.php');
+    header('Location: ../product_list.php');
     exit();
 } else {
     echo 'Required POST data is missing';

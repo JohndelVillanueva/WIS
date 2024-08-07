@@ -35,7 +35,7 @@ include_once ("headers.php");
                                     <tr>
                                         <th>Name</th>
                                         <th>Reference Code</th>
-                                        <th>Product</th>
+                                        <th>Price & Product</th>
                                         <th>Quantity</th>
                                         <th>Credit</th>
                                         <th>Debit</th>

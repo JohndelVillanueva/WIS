@@ -94,11 +94,26 @@ if (empty($_POST['rfid'])) {
         }
 
         .input-group select[name="product[]"] {
-            width: 200px;
+            width: 130px;
         }
 
         .input-group input[name="qty[]"] {
             width: 50px;
+        }
+        .add-button {
+        background-color: purple; /* Background color of the button */
+        border: none; /* Remove border */
+        padding: 10px; /* Adjust padding as needed */
+        border-radius: 5px; /* Optional: rounded corners */
+        float: right;
+        }
+
+        .add-button .icon {
+        color: black; /* Color of the plus sign */
+        font-size: 16px; /* Adjust the size of the icon */
+        }
+        .form-title {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Adjust shadow properties as needed */
         }
     </style>
 </head>
@@ -111,10 +126,10 @@ if (empty($_POST['rfid'])) {
             <section class="sign-in">
                 <div class="container">
                     <div class="signin-content">
-                        <div class="signin-image">
-                            <figure><img src="images/pay-logo.png" alt="sign up image" style="margin-left: -80px; padding-top: 100px"></figure>
+                        <div class="signin-image" style="border:slategrey">
+                            <figure><img src="images/pay-logo.png" alt="sign up image" style="margin-left: -80px; padding-top: 100px;"></figure>
                         </div>
-
+                        
                         <div class="signin-form" style="margin-left: -20px;">
                             <h2 class="form-title wisfont">Enter Amount</h2>
                             <form method="POST" class="register-form" id="login-form">
@@ -129,7 +144,7 @@ if (empty($_POST['rfid'])) {
                                         $balanceQuery->execute([':rfid' => $_POST['rfid']]);
                                         $remainingBalance = $balanceQuery->fetch(PDO::FETCH_ASSOC);
                                         ?>
-                                    </span>
+                                    </span><button type="button" class="add-button"><i class=" fa-plus "></i></button><br><br>
                                 </h3>
                                 <div class="form-group" id="dynamic-inputs">
                                     <div class="input-group">
@@ -154,18 +169,13 @@ if (empty($_POST['rfid'])) {
                                     </div>
                                 </div>
 
-                                <script>
-
-                                </script>
-
-                                <button type="button" class="add-button"><i class="fas fa-plus icon"></i></button>
                                 <input class="wisfont" type="hidden" name="rfid" id="rfid" placeholder="RFID" value="<?php echo $_POST['rfid']; ?>" />
                                 <div class="form-group">
                                     <label for="total-amount">Total Amount: </label><br><br>
                                     <span id="total-amount">0</span>
                                 </div>
                                 <div class="form-group form-button">
-                                    <input type="submit" name="submit" id="submit" class="form-submit wisfont" onclick="return confirm('Check the product and the quantity. Lets proceed?')" value="Pay"  />
+                                    <input type="submit" name="submit" id="submit" class="form-submit wisfont" onclick="return confirm('Check the product and the quantity. Do you want to proceed?')" value="Pay"  />
                                 </div>
                             </form>
                             <?php
@@ -226,7 +236,7 @@ if (empty($_POST['rfid'])) {
             // Clear previous products
             productSelect.html('<option value="" disabled selected>Products</option>');
 
-            fetch('amount2.php?type=' + encodeURIComponent(selectType))
+            fetch('productProcess/fetch_product.php?type=' + encodeURIComponent(selectType))
                 .then(response => response.json())
                 .then(products => {
                     products.forEach(product => {
