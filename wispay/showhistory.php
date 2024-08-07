@@ -62,7 +62,7 @@ include_once ("headers.php");
                                     <thead>
                                     <tr>
                                         <th>Reference Code</th>
-                                        <th>Product</th>
+                                        <th>Price & Product</th>
                                         <th>Quantity</th>
                                         <th>Debit</th>
                                         <th>Credit</th>

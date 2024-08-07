@@ -30,7 +30,7 @@ if (!isset($_SESSION["username"])) {
             <div class="container">
                 <div class="signin-content">
                     <div class="signin-image">
-                        <figure><img src="images/pay-logo.png" alt="sign up image"></figure>
+                        <figure><img src="images/pay-logo.png" alt="sign up image" style="margin-left: -20px"></figure>
                     </div>
 
                     <div class="signin-form">
