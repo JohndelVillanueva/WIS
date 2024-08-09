@@ -8,6 +8,7 @@
     <!-- Boxicons CSS -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>Document</title>
+
 </head>
 <body>
     <!-- Sidebar -->
@@ -35,61 +36,54 @@
                     </li>
                 <ul class="menu-links">
                     <li class="nav-link">
-                        <a href="index.php">
-                            <i class='bx bx-home-alt icon'></i>
-                            <span class="text nav-text">Dashboard</span>
+                        <a href="#">
+                        <i class='bx bx-home-alt icon' ></i>
+                        <span class="text nav-text">Dashboard</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="pay.php">
-                            <i class='bx bx-dollar icon'></i>
-                            <span class="text nav-text">Payment</span>
+                        <a href="#">
+                        <i class='bx bx-dollar icon' ></i>
+                        <span class="text nav-text">Payment</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="product_list.php">
-                            <i class='bx bx-food-menu icon'></i>
-                            <span class="text nav-text">Products</span>
+                        <a href="#">
+                        <i class='bx bx-food-menu icon' ></i>
+                        <span class="text nav-text">Products</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="report.php">
-                            <i class='bx bx-memory-card icon'></i>
-                            <span class="text nav-text">Reports</span>
+                        <a href="#">
+                        <i class='bx bx-memory-card icon' ></i>
+                        <span class="text nav-text">Reports</span>
                         </a>
                     </li>
-                    <?php 
-                    if ($_SESSION['level'] == 3 or $_SESSION['level'] == 9) {
-                        ?>
-                            <li class="nav-link">
-                                <a href="users.php">
-                                    <i class='bx bx-user icon'></i>
-                                    <span class="text nav-text">Students</span>
-                                </a>
-                            </li>
-                            
-                            <li class="nav-link">
-                                <a href="employees.php">
-                                    <i class='bx bx-user-check icon'></i>
-                                    <span class="text nav-text">Employees</span>
-                                </a>
-                            </li>
-                        <?php 
-                        }
-                    ?>
+                    <li class="nav-link">
+                        <a href="#">
+                        <i class='bx bx-user icon'></i>
+                        <span class="text nav-text">Students</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="#">
+                        <i class='bx bx-user-check icon' ></i>
+                        <span class="text nav-text">Employees</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div class="bottom-content">
                 <li class="nav-link">
-                    <a href="logout.php">
-                        <i class='bx bx-log-out icon'></i>
-                        <span class="text nav-text">Logout</span>
+                    <a href="#">
+                    <i class='bx bx-log-out icon' ></i>
+                    <span class="text nav-text">Logout</span>
                     </a>
                 </li>
                 <li class="mode">
                     <div class="moon-sun">
-                        <i class='bx bx-moon icon moon'></i>
-                        <i class='bx bx-sun icon sun'></i>
+                        <i class='bx bx-moon icon moon' ></i>
+                        <i class='bx bx-sun icon sun' ></i>
                     </div>
                     <span class="mode-text text">Dark Mode</span>
 
@@ -101,12 +95,13 @@
         </div>
      </nav>
 
-     <!-- <section class="home">
+     <section class="home">
         <div class="text">
             Dashboard
         </div>
-     </section> -->
+     </section>
 
-     <script src="js/side.js"></script>
+     <script src="js/side.js" ></script>
+    
 </body>
 </html>
