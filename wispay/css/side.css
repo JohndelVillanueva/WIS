@@ -264,7 +264,7 @@ body.dark .switch::before{
     left: 24px;
 }
 
-.content{
+.card{
     position: relative;
     height: 100vh;
     left: 250px; /* This shifts the content to the right by the width of the sidebar */
@@ -273,14 +273,14 @@ body.dark .switch::before{
     transition: var(--tran-05);
 }
 
-.content .text{
+.card .text{
     font-size: 30px;
     font-weight: 500;
     color: var(--text-color);
     padding: 8px 40px;
 }
 
-.sidebar.close ~ .content{
+.sidebar.close ~ .card{
     left: 88px; /* Adjust based on the width of the collapsed sidebar */
     width: calc(100% - 88px); /* Content takes up the remaining space when sidebar is collapsed */
 }
