@@ -1,7 +1,7 @@
 <style>
   .circle-img {
-    width: 100px; /* Adjust the size as needed */
-    height: 100px; /* Adjust the size as needed */
+    width: 60px; /* Adjust the size as needed */
+    height: 60px; /* Adjust the size as needed */
     border-radius: 50%;
     object-fit: cover; /* Ensures the image covers the area while maintaining aspect ratio */
   }
@@ -11,6 +11,9 @@
     <a class="sidebar-toggle js-sidebar-toggle">
         <i class="hamburger align-self-center"></i>
     </a>
+    <div>
+        <b><h3>WESTFIELDS INTERNATIONAL SCHOOL</h3></b>
+    </div>
 
     <div class="navbar-collapse collapse">
         <ul class="navbar-nav navbar-align">
