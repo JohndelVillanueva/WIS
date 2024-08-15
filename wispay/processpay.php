@@ -64,7 +64,7 @@ if (isset($_POST['submit']) && !empty($_POST['rfid']) && !empty($_POST['product'
                     exit();
                 } else {
                     // die("fail!");
-                    header("Location: pay.php?success=0");
+                    header("Location: pay.php?fail=1");
                     exit();
                 }
             } else {

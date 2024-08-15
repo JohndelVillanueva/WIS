@@ -46,22 +46,13 @@ if (!isset($_SESSION["username"])) {
                         </form>
                         <?php
                         if (isset($_GET['error'])) {
-                            switch ($_GET['error']) {
-                                case 1:
-                                    echo '<h1 class="alert alert-warning">Invalid RFID!</h1>';
-                                    break;
-                            }
+                            echo '<h1 class="alert alert-warning">Invalid RFID!</h1>';
                         }
-
                         if (isset($_GET['success'])) {
-                            switch ($_GET['success']) {
-                                case 0:
-                                    echo '<h1 class="alert alert-warning">Insufficient Balance!</h1>';
-                                    break;
-                                case 1:
-                                    echo '<h1 class="alert alert-success">Transaction Complete!</h1>';
-                                    break;
-                            }
+                            echo '<h1 class="alert alert-success">Transaction Complete!</h1>';
+                        }
+                        if (isset($_GET['fail'])) {
+                            echo '<h1 class="alert alert-warning">Insufficient Balance!</h1>';
                         }
                         ?>
                         <div class="social-login">
