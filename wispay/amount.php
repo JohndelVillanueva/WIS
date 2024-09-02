@@ -136,13 +136,21 @@ if (empty($_POST['rfid'])) {
                                 <h3 class="form-title wisfont">Scanned RFID :
                                     <span style="color:red">
                                         <?php
-                                        $pdo_statement = $DB_con->prepare("SELECT * FROM user WHERE rfid=?");
-                                        $pdo_statement->execute([$_POST['rfid']]);
-                                        $result = $pdo_statement->fetch();
-                                        echo $result['fname'] . " " . $result['lname'] . " ";
-                                        $balanceQuery = $DB_con->prepare("SELECT sum(credit)-sum(debit) as ctot FROM wispay WHERE rfid = :rfid");
-                                        $balanceQuery->execute([':rfid' => $_POST['rfid']]);
-                                        $remainingBalance = $balanceQuery->fetch(PDO::FETCH_ASSOC);
+                                            $pdo_statement = $DB_con->prepare("SELECT * FROM user WHERE rfid=?");
+                                            $pdo_statement->execute([$_POST['rfid']]);
+                                            $result = $pdo_statement->fetch();
+
+                                            if ($result) {
+                                                echo $result['fname'] . " " . $result['lname'] . " ";
+
+                                                $balanceQuery = $DB_con->prepare("SELECT sum(credit)-sum(debit) as ctot FROM wispay WHERE rfid = :rfid");
+                                                $balanceQuery->execute([':rfid' => $_POST['rfid']]);
+                                                $remainingBalance = $balanceQuery->fetch(PDO::FETCH_ASSOC);
+
+                                                echo "<p style='color:black;'>Remaining Balance: <span style='color: red;'>" . ($remainingBalance['ctot'] !== null ? htmlspecialchars($remainingBalance['ctot']) : '0') . "</span></p>";
+                                            } else {
+                                                echo "No user found.";
+                                            }
                                         ?>
                                     </span><button type="button" class="add-button"><i class=" fa-plus "></i></button><br><br>
                                 </h3>
