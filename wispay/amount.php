@@ -115,6 +115,20 @@ if (empty($_POST['rfid'])) {
         .form-title {
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Adjust shadow properties as needed */
         }
+        .delete-button {
+            background-color: #f44336; /* Red background */
+            color: white; /* White icon */
+            border: none; /* Remove border */
+            padding: 10px; /* Adjust padding */
+            border-radius: 50%; /* Rounded button */
+            cursor: pointer; /* Pointer on hover */
+            font-size: 16px; /* Icon size */
+            margin-left: 10px; /* Space between the button and quantity input */
+        }
+
+        .delete-button:hover {
+            opacity: 0.8; /* Slightly transparent on hover */
+        }
     </style>
 </head>
 
@@ -174,6 +188,7 @@ if (empty($_POST['rfid'])) {
 
                                         <input class="wisfont" type="hidden" name="amount[]" id="amount" placeholder="Amount" required />
                                         <input class="wisfont" type="number" name="qty[]" id="qty" placeholder="qty" required />
+                                        <button type="button" class="delete-button"><i class="fas fa-trash"></i></button>
                                     </div>
                                 </div>
 
@@ -233,6 +248,7 @@ if (empty($_POST['rfid'])) {
                 '</select>' +
                 '<input class="wisfont" type="hidden" name="amount[]" placeholder="Amount" required />' +
                 '<input class="wisfont" type="number" name="qty[]" placeholder="qty" required />' +
+                '<button type="button" class="delete-button"><i class="fas fa-trash"></i></button>'
                 '</div>';
             $('#dynamic-inputs').append(html);
         });
@@ -264,6 +280,10 @@ if (empty($_POST['rfid'])) {
         });
 
         updateTotalAmount(); // Initial call to set total amount when the page loads
+    });
+        $(document).on('click', '.delete-button', function() {
+        $(this).closest('.input-group').remove();
+        updateTotalAmount(); // Recalculate the total amount after removing an item
     });
 </script>
 </body>
