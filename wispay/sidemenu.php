@@ -30,23 +30,17 @@
                 <i class='bx bx-home-alt icon' ></i> <span class="align-middle">Reports</span>
                 </a>
             </li>
-            <?php 
-            if ($_SESSION['level'] == 3 or $_SESSION['level'] == 9) {
-                ?>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="users.php">
-                        <i class='bx bx-home-alt icon' ></i> <span class="align-middle">Students</span>
-                        </a>
-                    </li>
-                    
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="employees.php">
-                        <i class='bx bx-home-alt icon' ></i> <span class="align-middle">Employees</span>
-                        </a>
-                    </li>
-                <?php 
-                }
-            ?>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="users.php">
+                <i class='bx bx-home-alt icon' ></i> <span class="align-middle">Students</span>
+                </a>
+            </li>
+            
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="employees.php">
+                <i class='bx bx-home-alt icon' ></i> <span class="align-middle">Employees</span>
+                </a>
+            </li>
             <li class="sidebar-item">
                 <a class="sidebar-link" href="logout.php">
                 <i class='bx bx-home-alt icon' ></i> <span class="align-middle">Logout</span>

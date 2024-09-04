@@ -48,8 +48,53 @@ include_once("headers.php");
                                             <?php foreach ($types as $type) : ?>
                                                 <option value="<?= $type->name ?>"><?= $type->name ?></option>
                                             <?php endforeach; ?>
-                                            <!-- Add more options as needed -->
+                                            <option value="add_new_type" style="font-weight: bold;">+ Add New Type</option>
                                         </select>
+
+                                        <script>
+                                        document.getElementById('addProductType').addEventListener('change', function() {
+                                            var select = this;
+                                            var selectedValue = select.value;
+
+                                            if (selectedValue === 'add_new_type') {
+                                                var newType = prompt("Enter the new product type:");
+
+                                                if (newType) {
+                                                    // Create a new option element
+                                                    var option = document.createElement('option');
+                                                    option.value = newType;
+                                                    option.text = newType;
+
+                                                    // Make an AJAX call to insert the new type into the database
+                                                    var xhr = new XMLHttpRequest();
+                                                    xhr.open('POST', 'add_type.php', true);
+                                                    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                                                    xhr.onreadystatechange = function() {
+                                                        if (xhr.readyState === 4 && xhr.status === 200) {
+                                                            var response = xhr.responseText.trim();
+
+                                                            if (response === 'success') {
+                                                                // Add the new option to the dropdown before the "Add New Type" option
+                                                                var lastOptionIndex = select.options.length - 1;
+                                                                select.add(option, select.options[lastOptionIndex]);
+
+                                                                // Set the new option as selected
+                                                                select.value = newType;
+                                                            } else {
+                                                                alert("Error: " + response);
+                                                            }
+                                                        }
+                                                    };
+                                                    xhr.send('new_type=' + encodeURIComponent(newType));
+                                                } else {
+                                                    // If no new type is entered, reset the dropdown to the default value
+                                                    select.value = '';
+                                                }
+                                            }
+                                        });
+                                        </script>
+
+
                                     </div>
                                     <div class="mb-3">
                                         <label for="addProductName" class="form-label">Product Name</label>
@@ -132,7 +177,7 @@ include_once("headers.php");
                                         <tbody>
                                             <?php
                                             // Fetch data from the database
-                                            $pdo_statement = $DB_con->prepare("SELECT * FROM products LIMIT 50");
+                                            $pdo_statement = $DB_con->prepare("SELECT * FROM products");
                                             $pdo_statement->execute();
                                             $result = $pdo_statement->fetchAll(PDO::FETCH_OBJ);
 
