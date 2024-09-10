@@ -61,7 +61,7 @@ include_once ("headers.php");
                                 <table id="userlist" class="display table table-striped" style="width:100%">
                                     <thead>
                                     <tr>
-                                        <th>Reference Code</th>
+                                        <th>Name</th>
                                         <th>Price & Product</th>
                                         <th>Quantity</th>
                                         <th>Debit</th>
@@ -79,7 +79,7 @@ include_once ("headers.php");
                                     foreach($result as $row) {
                                         ?>
                                         <tr>
-                                            <td><?php echo $row['refcode']; ?></td>
+                                            <td><?php echo $row['empid']; ?></td>
                                             <td><?= $row['product_name'] ?></td>
                                             <td><?= $row['quantity'] ?></td>
                                             <td><span class="text-danger"><?php echo $debit = $row['debit']==0 ? "" : $row['debit']; ?></span></td>
