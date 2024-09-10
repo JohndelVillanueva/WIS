@@ -42,6 +42,11 @@
                 </a>
             </li>
             <li class="sidebar-item">
+                <a class="sidebar-link" href="other_payment.php">
+                <i class='bx bx-home-alt icon' ></i> <span class="align-middle">Others</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
                 <a class="sidebar-link" href="logout.php">
                 <i class='bx bx-home-alt icon' ></i> <span class="align-middle">Logout</span>
                 </a>
