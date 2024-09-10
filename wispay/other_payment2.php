@@ -35,13 +35,14 @@ if (isset($_POST['submit']) && !empty($_POST['amount']) && !empty($_POST['rfid']
                 $notPaidAmount =  $_POST['amount'];
                 // inserting to wispay if the new balance is greater than or equal to -1000
                 if ($newBalance - $notPaidAmount >= 0) {
-                    $pay = "INSERT INTO wispay (debit, rfid, refcode, empid, transdate, processedby) 
-                            VALUES (:debit, :rfid, :refcode, :empid, NOW(), :processedby)";
+                    $pay = "INSERT INTO wispay (debit, rfid, refcode, product_name, empid, transdate, processedby) 
+                            VALUES (:debit, :rfid, :refcode, :product_type, :empid, NOW(), :processedby)";
                     $pay_statement = $DB_con->prepare($pay);
                     $pay_statement->execute([
-                        ':debit' => $_POST['amount'],
+                        ':debit' => $notPaidAmount,
                         ':rfid' => $_POST['rfid'],
                         ':refcode' => $refcode,
+                        ':product_type' => "Other Item",
                         ':empid' => $firstname . " " . $lastname,
                         ':processedby' => $processedby
                     ]);
