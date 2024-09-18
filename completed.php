@@ -59,7 +59,7 @@ if (!isset($_SESSION['username'])) {
                                                 <?php
                                                 $pdo_statement = $DB_con->prepare("SELECT * FROM users24 WHERE position = :position AND status = :status
                                                ORDER BY `id` DESC");
-                                                $pdo_statement->execute([":position" => "Student" , ":status" => 8]);
+                                                $pdo_statement->execute([":position" => "Student" , ":status" => 9]);
                                                 $result = $pdo_statement->fetchAll();
                                                 foreach ($result as $row) {
                                                     if($row["isofficial"] == 0) {

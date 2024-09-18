@@ -49,14 +49,14 @@ if (!isset($_SESSION['username'])) {
                                                 <tr>
                                                     <th scope="col">Reference Number</th>
                                                     <th scope="col">Full Name</th>
-                                                    <th scope="col">Payables</th>
+                                                    <!-- <th scope="col">Payables</th> -->
                                                     <th scope="col">Notes</th>
                                                     <th scope="col">Payment</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $pdo_statement = $DB_con->prepare("SELECT * FROM users24 WHERE status = 1");
+                                                $pdo_statement = $DB_con->prepare("SELECT * FROM users24 WHERE status = 2");
                                                 $pdo_statement->execute();
                                                 $result = $pdo_statement->fetchAll();
                                                 foreach ($result as $row) {
@@ -77,7 +77,7 @@ if (!isset($_SESSION['username'])) {
                                                                 </div>
                                                             </th>
                                                             <td><?php echo $row["lname"] . ", " . $row["fname"] . " " . $row["mname"]; ?></td>
-                                                            <td>
+                                                            <!-- <td>
                                                                 <?php
                                                                 // Fetch records from the database
                                                                 $checkRecord = $DB_con->prepare("SELECT * FROM s_payables WHERE user_id = :userid");
@@ -156,10 +156,10 @@ if (!isset($_SESSION['username'])) {
                                                                         <div class="col-4"></div>
                                                                     <?php endforeach; ?>
                                                                 </div>
-                                                            </td>
+                                                            </td> -->
                                                             <td>
                                                                 <input class="form-control" type="text" id="notes" name="notes" placeholder="Type notes here">
-                                                                <input type="hidden" name="stage" id="stage" value="2">
+                                                                <input type="hidden" name="stage" id="stage" value="3">
                                                                 <input type="hidden" name="ern" id="ern" value="<?php echo $row["uniqid"]; ?>">
                                                             </td>
                                                             <td><button type="submit" class="btn btn-success rounded" onclick="return confirmSubmission()"><span class="icon-holder"><i class="anticon anticon-check"></i></span></button></td>

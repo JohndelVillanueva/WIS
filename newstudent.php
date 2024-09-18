@@ -60,8 +60,9 @@ session_start(); ?>
 									// die();
 
 									$uniqid = uniqid('WNS-');
-									$newstudent = "INSERT INTO users24 ( position, empno, sy, gender, username, password, apptype, lname, fname, mname, grade, dob, lrn, prevsch, prevschcountry, uniqid, status, strand, nationality, guardianname, guardianemail, guardianphone, referral, visa, tos, earlybird, modelrelease, feepolicy, refund ) VALUES ( :position, :empno, :sy, :gender, :username, :password, :apptype, :lname, :fname, :mname, :grade, :dob, :lrn, :prevsch, :prevschcountry, :uniqid, :status, :strand, :nationality, :guardianname, :guardianemail, :guardianphone, :referral, :visa, :tos, :earlybird, :modelrelease, :feepolicy, :refund )";
+									$newstudent = "INSERT INTO users24 ( position, empno, sy, gender, username, password, apptype, lname, fname, mname, grade, dob, lrn, prevsch, prevschcountry, uniqid, status, strand, nationality, guardianname, guardianemail, guardianphone, referral, visa ) VALUES ( :position, :empno, :sy, :gender, :username, :password, :apptype, :lname, :fname, :mname, :grade, :dob, :lrn, :prevsch, :prevschcountry, :uniqid, :status, :strand, :nationality, :guardianname, :guardianemail, :guardianphone, :referral, :visa )";
 									$studqry = $DB_con->prepare($newstudent);
+									//  tos, earlybird, modelrelease, feepolicy, refund , :tos, :earlybird, :modelrelease, :feepolicy, :refund
 									$studqry->execute(array(
 										':position' => $_POST['applicationtype'],
 										':empno' => $insertNewStudent,
@@ -87,12 +88,12 @@ session_start(); ?>
 										':guardianemail' => $_POST['guardianemail'],
 										':guardianphone' => $_POST['guardianphone'],
 										':referral' => ucwords(strtolower($_POST['referral'])),
-										':visa' => $_POST['visa'],
-										':tos' => $_POST['tos'],
-										':earlybird' => $_POST['earlybird'],
-										':modelrelease' => $_POST['modelrelease'],
-										':feepolicy' => $_POST['feepolicy'],
-										':refund' => $_POST['refundpolicy'],
+										':visa' => $_POST['visa']
+										// ':tos' => $_POST['tos'],
+										// ':earlybird' => $_POST['earlybird'],
+										// ':modelrelease' => $_POST['modelrelease'],
+										// ':feepolicy' => $_POST['feepolicy'],
+										// ':refund' => $_POST['refundpolicy'],
 									));
 
 									$message = "
@@ -126,31 +127,31 @@ session_start(); ?>
 										'X-Mailer: PHP/' . phpversion();
 
 									// store into the s_payables table
-									$applicationFee = isset($_POST['applicationFee']) ? 1 : NULL;
-									$afTuitionFee = isset($_POST['afTuitionFee']) ? 1 : NULL;
-									$afTfOtherFees = isset($_POST['afTfOtherFees']) ? 1 : NULL;
-									$assessmentFee = isset($_POST['assessmentFee']) ? 1 : NULL;
-									$registrationFee = isset($_POST['registrationFee']) ? 1 : NULL;
-									$specialPermit = isset($_POST['specialPermit']) ? 1 : NULL;
-									$internationalFeeOld = isset($_POST['internationalFeeOld']) ? 1 : NULL;
-									$internationalFeeNew = isset($_POST['internationalFeeNew']) ? 1 : NULL;
+									// $applicationFee = isset($_POST['applicationFee']) ? 1 : NULL;
+									// $afTuitionFee = isset($_POST['afTuitionFee']) ? 1 : NULL;
+									// $afTfOtherFees = isset($_POST['afTfOtherFees']) ? 1 : NULL;
+									// $assessmentFee = isset($_POST['assessmentFee']) ? 1 : NULL;
+									// $registrationFee = isset($_POST['registrationFee']) ? 1 : NULL;
+									// $specialPermit = isset($_POST['specialPermit']) ? 1 : NULL;
+									// $internationalFeeOld = isset($_POST['internationalFeeOld']) ? 1 : NULL;
+									// $internationalFeeNew = isset($_POST['internationalFeeNew']) ? 1 : NULL;
 
-									// s_payables Query
-									$studentPayableQuery = $DB_con->prepare("INSERT INTO s_payables (user_id, reservation_fee, tuition_fee, other_fee, assessment_fee, registration_fee, special_permit, international_fee_old,international_fee_new) VALUES (?,?,?,?,?,?,?,?,?)");
-									$studentPayableQuery->execute([
-										$uniqid,
-										$applicationFee,
-										$afTuitionFee,
-										$afTfOtherFees,
-										$assessmentFee,
-										$registrationFee,
-										$specialPermit,
-										$internationalFeeOld,
-										$internationalFeeNew
-									]);
+									// // s_payables Query
+									// $studentPayableQuery = $DB_con->prepare("INSERT INTO s_payables (user_id, reservation_fee, tuition_fee, other_fee, assessment_fee, registration_fee, special_permit, international_fee_old,international_fee_new) VALUES (?,?,?,?,?,?,?,?,?)");
+									// $studentPayableQuery->execute([
+									// 	$uniqid,
+									// 	$applicationFee,
+									// 	$afTuitionFee,
+									// 	$afTfOtherFees,
+									// 	$assessmentFee,
+									// 	$registrationFee,
+									// 	$specialPermit,
+									// 	$internationalFeeOld,
+									// 	$internationalFeeNew
+									// ]);
 
-									$log_enrollQuery = $DB_con->prepare('INSERT INTO logs_enroll (ern,stage,usertouch,touch,notes) VALUES (?, ?, ?, ?, ? )');
-									$log_enrollQuery->execute([$uniqid, "Verification", $_SESSION['fname']. " " .$_SESSION['lname'], date("Y-m-d H:i:s"), $_POST['notes']]);
+									// $log_enrollQuery = $DB_con->prepare('INSERT INTO logs_enroll (ern,stage,usertouch,touch,notes) VALUES (?, ?, ?, ?, ? )');
+									// $log_enrollQuery->execute([$uniqid, "Verification", $_SESSION['fname']. " " .$_SESSION['lname'], date("Y-m-d H:i:s"), $_POST['notes']]);
 
 									// var_dump([
 									// 	'Notes' => $notes,

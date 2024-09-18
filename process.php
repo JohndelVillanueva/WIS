@@ -56,6 +56,17 @@ if ($_POST['stage'] <= 8) {
         $getstudentdetails = $DB_con->prepare("SELECT * FROM users24 WHERE uniqid = :uniqid");
         $getstudentdetails->execute(array(':uniqid' => $_POST['ern']));
         $result = $getstudentdetails->fetchAll();
+    } elseif($_POST['stage'] == '9') {
+        $process = "UPDATE users24 SET status = :status WHERE uniqid = :uniqid";
+        $process_statement = $DB_con->prepare($process);
+        $process_statement->execute(array(':status' => $_POST['stage'], ':uniqid' => $_POST['ern']));
+
+        $getstudentdetails = $DB_con->prepare("SELECT * FROM users24 WHERE uniqid = :uniqid");
+        $getstudentdetails->execute(array(':uniqid' => $_POST['ern']));
+        $result = $getstudentdetails->fetchAll();
+        var_dump($_POST);
+        die();
+
 
         foreach($result as $row) {
             $to = "newstudent@westfields.edu.ph";

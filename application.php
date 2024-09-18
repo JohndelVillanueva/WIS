@@ -205,7 +205,7 @@ if (!isset($_SESSION['username'])) {
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="row py-3">
+                                        <!-- <div class="row py-3">
                                             <div class="col-lg-12">
                                                 <h3 class="text-center">Need to Pay</h3>
                                             </div>
@@ -265,11 +265,11 @@ if (!isset($_SESSION['username'])) {
                                                 <input type="text" class="form-control" name="notes" id="" placeholder="Notes here..">
                                             </div>
                                             <div class="col-lg-2"></div>
-                                        </div>
+                                        </div> -->
 
                                     </div>
                                 </div>
-                                <div class="row">
+                                <!-- <div class="row">
                                     <div class="col-lg-12">
                                         <div class="row pt-5">
                                             <div class="col-lg-12">
@@ -458,7 +458,7 @@ if (!isset($_SESSION['username'])) {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="card-footer bg-light text-center">
                                     <button class="btn btn-primary btn-lg" onclick="return confirmSubmission()">Submit Application</button>
                                 </div>

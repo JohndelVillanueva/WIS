@@ -33,6 +33,18 @@
                 </li>
             <?php
             }
+            if ($_SESSION['level'] == 4 or $_SESSION['level'] == 9) {
+            ?>
+                <li class="nav-item dropdown">
+                    <a class="dropdown-toggle" href="registrardocs.php">
+                        <span class="icon-holder">
+                            <i class="anticon anticon-container"></i>
+                        </span>
+                        <span class="title">Verification</span>
+                    </a>
+                </li>
+            <?php
+            }
             if ($_SESSION['level'] == 3 or $_SESSION['level'] == 9) {
                 ?>
                     <li class="nav-item dropdown">
@@ -46,29 +58,16 @@
                 <?php
                 }
 
-            if ($_SESSION['level'] == 4 or $_SESSION['level'] == 9) {
-            ?>
-                <li class="nav-item dropdown">
-                    <a class="dropdown-toggle" href="registrardocs.php">
-                        <span class="icon-holder">
-                            <i class="anticon anticon-container"></i>
-                        </span>
-                        <span class="title">Verification</span>
-                    </a>
-                </li>
-            <?php
-            }
 
 
-
-            if ($_SESSION['level'] == 7 or $_SESSION['level'] == 9) {
+            if ($_SESSION['level'] == 5 or $_SESSION['level'] == 9) {
             ?>
                 <li class="nav-item dropdown">
                     <a class="dropdown-toggle" href="admissions.php">
                         <span class="icon-holder">
                             <i class="anticon anticon-bank"></i>
                         </span>
-                        <span class="title">Admissions</span>
+                        <span class="title">Guidance</span>
                     </a>
                 </li>
             <?php
@@ -124,6 +123,18 @@
                 </li>
             <?php
             }
+            if ($_SESSION['level'] == 4 or $_SESSION['level'] == 9) {
+                ?>
+                    <li class="nav-item dropdown">
+                        <a class="dropdown-toggle" href="registrar2.php">
+                            <span class="icon-holder">
+                                <i class="anticon anticon-dollar "></i>
+                            </span>
+                            <span class="title">Completion</span>
+                        </a>
+                    </li>
+                <?php
+                }
             
             ?>
                 <?php

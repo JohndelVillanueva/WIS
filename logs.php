@@ -73,16 +73,16 @@ if (!isset($_SESSION['username'])) {
                                                                         <?= " " . $status = $row['status']. "/8 ";
                                                                             switch ($row['status']) {
                                                                                 case 1:
-                                                                                    echo "Application Fee";
+                                                                                    echo "Verification";
                                                                                     break;
                                                                                 case 2:
-                                                                                    echo "Registrar";
+                                                                                    echo "Application Fee";
                                                                                     break;
                                                                                 case 3:
-                                                                                    echo "Admission";
+                                                                                    echo "Guidance";
                                                                                     break;
                                                                                 case 4:
-                                                                                    echo "Guidance";
+                                                                                    echo "Examination";
                                                                                     break;
                                                                                 case 5:
                                                                                     echo "Interview";
@@ -93,8 +93,11 @@ if (!isset($_SESSION['username'])) {
                                                                                 case 7:
                                                                                     echo "Cashier";
                                                                                     break;
+                                                                                case 8:
+                                                                                    echo "Completion";
+                                                                                    break;
                                                                                 default:
-                                                                                    echo "Default: Number is not between 1 and 7";
+                                                                                    echo "Default: Number is not between 1 and 8";
                                                                                     break;
                                                                             }
                                                                             ?></p>
