@@ -52,7 +52,7 @@ if(!isset($_SESSION['username']))
                                                 <th scope="col">Full Name</th>
                                                 <th scope="col">Gender</th>
                                                 <th scope="col">Previous School</th>
-                                                <th scope="col">LRN</th>
+                                                <!-- <th scope="col">LRN</th> -->
                                                 <th scope="col">Notes</th>
                                                 <th scope="col">Completed</th>
                                             </tr>
@@ -82,7 +82,7 @@ if(!isset($_SESSION['username']))
                                                         <td><?php echo $row["lname"].", ".$row["fname"]." ".$row["mname"];?></td>
                                                         <td><?php echo $row["gender"];?></td>
                                                         <td><?php echo $row["prevsch"];?></td>
-                                                        <td><?php echo $row["lrn"];?></td>
+                                                        <!-- <td><?php echo $row["lrn"];?></td> -->
                                                         <td>
                                                             <input class="form-control" type="text" id="notes" name="notes" placeholder="Type notes here">
                                                             <input type="hidden" name="stage" id="stage" value="2">

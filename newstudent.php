@@ -1,4 +1,9 @@
 <?php include_once "includes/config.php";
+require 'vendor/autoload.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -96,35 +101,64 @@ session_start(); ?>
 										// ':refund' => $_POST['refundpolicy'],
 									));
 
-									$message = "
-									<center>
-										<img src='https://westfields.edu.ph/wp-content/uploads/2021/11/logo1x-1.png'>
-										<h1>Congratulations!</h1>
-										<h2>Your child's application has been received!</h2><br>
-										<hr>
-									</center>
-									<p style='font-size:1.2em;'>
-										Here are the details of your application:
-										<br><br>
-										Reference Number: <strong>" . $uniqid . "</strong>
-										Name: <strong>" . strtoupper($_POST['lastname'] . ", " . $_POST['firstname'] . " " . $_POST['middlename']) . "</strong><br>
-										
-										<h4>Your Westfields Portal Account Details</h4>
-										Username : <strong style='color:red;'>" . str_replace(' ', '', strtolower($_POST['lastname'] . $_POST['firstname'])) . "</strong><br>
-										Password : <strong style='color:red;'>" . $uniqid . "</strong>
-									</p>
+									// Include PHPMailer classes
+
+
+									// Create a new PHPMailer instance
+									$mail = new PHPMailer(true);
+
+									try {
+										// Server settings
+										$mail->isSMTP();
+										$mail->Host = 'smtp.gmail.com'; // Set the SMTP server to send through (e.g., Gmail)
+										$mail->SMTPAuth = true;
+										$mail->Username = 'no-reply@westfields.edu.ph'; // SMTP username
+										$mail->Password = 'nbju azpy ssgx sfpn'; // SMTP password (or app password if using 2FA)
+										$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+										$mail->Port = 587; // TCP port to connect to
+
+										// Recipients
+										$mail->setFrom('no-reply@westfields.edu.ph', 'Westfields'); // From email address and name
+										$mail->addAddress($_POST['guardianemail']); // Add recipient
+
+										// Content
+										$mail->isHTML(true); // Set email format to HTML
+										$mail->Subject = 'Thankyou for choosing Westfields!';
+
+										$message = "
+										<center>
+											<img src='../assets/images/logo/west.png'>
+											<h1>Congratulations!</h1>
+											<h2>Your child's application has been received!</h2><br>
+											<hr>
+										</center>
+										<p style='font-size:1.2em;'>
+											Here are the details of your application:
+											<br><br>
+											Reference Number: <strong>" . $uniqid . "</strong><br>
+											Name: <strong>" . strtoupper($_POST['lastname'] . ', ' . $_POST['firstname'] . ' ' . $_POST['middlename']) . "</strong><br>
+											<h4>Your Westfields Portal Account Details</h4>
+											Username: <strong style='color:black;'>" . str_replace(' ', '', strtolower($_POST['lastname'] . $_POST['firstname'])) . "</strong><br>
+											Password: <strong style='color:black;'>" . $uniqid . "</strong>
+										</p>
 									";
+										$mail->Body = $message;
 
-									$to = $_POST['guardianemail'];
-									$subject = 'Congratulations on choosing Westfields!';
-									$from = 'no-reply@westfields.edu.ph';
+										// Send email
+										$mail->send();
+										// echo 'Email sent successfully.';
+									} catch (Exception $e) {
+										echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+									}
 
-									$headers  = 'MIME-Version: 1.0' . "\r\n";
-									$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+									// Use the mail() function to send the email
+									// if (mail($to, $subject, $message, $headers)) {
+									// 	echo "Email sent successfully.";
+									// } else {
+									// 	echo "Failed to send email.";
+									// }
+									// var_dump($message);
 
-									$headers .= 	'From: ' . $from . "\r\n" .
-										'Reply-To: ' . $from . "\r\n" .
-										'X-Mailer: PHP/' . phpversion();
 
 									// store into the s_payables table
 									// $applicationFee = isset($_POST['applicationFee']) ? 1 : NULL;
@@ -157,14 +191,14 @@ session_start(); ?>
 									// 	'Notes' => $notes,
 									// 	'Application' => $applicationFee,
 									// 	'Tuition' => $afTuitionFee,
-                                    //     'Other' => $afTfOtherFees,
-                                    //     'Assessment' => $assessmentFee,
-                                    //     'Registration' => $registrationFee,
-                                    //     'Special Permit' => $specialPermit
+									//     'Other' => $afTfOtherFees,
+									//     'Assessment' => $assessmentFee,
+									//     'Registration' => $registrationFee,
+									//     'Special Permit' => $specialPermit
 									// ]);
 									// 	die();
 
-										
+
 								?>
 									<div class="card">
 										<div class="card-header bg-primary rounded-top pt-2">
@@ -185,13 +219,13 @@ session_start(); ?>
 												<div class="col-lg-12">
 													<h1>
 														<?php
-														if (mail($to, $subject, $message, $headers, '-f no-reply@westfields.edu.ph -F "Westfields Admissions"')) {
-															echo 'A confirmation email has been sent to ' . $_POST['guardianemail'];
-															die();
-														} else {
-															echo 'Cannot reach you at ' . $_POST['guardianemail'];
-															// die();
-														}
+														// if (mail($to, $subject, $message, $headers, '-f no-reply@westfields.edu.ph -F "Westfields Admissions"')) {
+														// 	echo 'A confirmation email has been sent to ' . $_POST['guardianemail'];
+														// 	die();
+														// } else {
+														// 	echo 'Cannot reach you at ' . $_POST['guardianemail'];
+														// 	// die();
+														// }
 														?>
 													</h1>
 												</div>
