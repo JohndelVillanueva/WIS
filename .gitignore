@@ -1,3 +1,4 @@
+.env
 log *
 assets/images/avatar/
 voucher/

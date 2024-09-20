@@ -3,6 +3,8 @@ require 'vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use Dotenv\Dotenv;
+
 
 session_start(); ?>
 <!DOCTYPE html>
@@ -94,28 +96,26 @@ session_start(); ?>
 										':guardianphone' => $_POST['guardianphone'],
 										':referral' => ucwords(strtolower($_POST['referral'])),
 										':visa' => $_POST['visa']
-										// ':tos' => $_POST['tos'],
-										// ':earlybird' => $_POST['earlybird'],
-										// ':modelrelease' => $_POST['modelrelease'],
-										// ':feepolicy' => $_POST['feepolicy'],
-										// ':refund' => $_POST['refundpolicy'],
 									));
-
-									// Include PHPMailer classes
-
 
 									// Create a new PHPMailer instance
 									$mail = new PHPMailer(true);
 
 									try {
 										// Server settings
+										$dotenv = Dotenv::createImmutable(__DIR__);
+										$dotenv->load();
+
 										$mail->isSMTP();
-										$mail->Host = 'smtp.gmail.com'; // Set the SMTP server to send through (e.g., Gmail)
+										$mail->Host = $_ENV['SMTP_HOST'];  // smtp.gmail.com
 										$mail->SMTPAuth = true;
-										$mail->Username = 'no-reply@westfields.edu.ph'; // SMTP username
-										$mail->Password = 'nbju azpy ssgx sfpn'; // SMTP password (or app password if using 2FA)
-										$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-										$mail->Port = 587; // TCP port to connect to
+										$mail->Username = $_ENV['SMTP_USERNAME']; 
+										$mail->Password = $_ENV['SMTP_PASSWORD'];
+										$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; 
+										$mail->Port = $_ENV['SMTP_PORT'];  // 587 for TLS, or 465 for SSL
+
+										// var_dump(["HOST" => $_ENV['SMTP_HOST']]);
+										// die();
 
 										// Recipients
 										$mail->setFrom('no-reply@westfields.edu.ph', 'Westfields'); // From email address and name
@@ -127,7 +127,7 @@ session_start(); ?>
 
 										$message = "
 										<center>
-											<img src='../assets/images/logo/west.png'>
+											<img src='assets/images/logo/logo.png'>
 											<h1>Congratulations!</h1>
 											<h2>Your child's application has been received!</h2><br>
 											<hr>
@@ -150,15 +150,6 @@ session_start(); ?>
 									} catch (Exception $e) {
 										echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 									}
-
-									// Use the mail() function to send the email
-									// if (mail($to, $subject, $message, $headers)) {
-									// 	echo "Email sent successfully.";
-									// } else {
-									// 	echo "Failed to send email.";
-									// }
-									// var_dump($message);
-
 
 									// store into the s_payables table
 									// $applicationFee = isset($_POST['applicationFee']) ? 1 : NULL;
@@ -184,8 +175,8 @@ session_start(); ?>
 									// 	$internationalFeeNew
 									// ]);
 
-									// $log_enrollQuery = $DB_con->prepare('INSERT INTO logs_enroll (ern,stage,usertouch,touch,notes) VALUES (?, ?, ?, ?, ? )');
-									// $log_enrollQuery->execute([$uniqid, "Verification", $_SESSION['fname']. " " .$_SESSION['lname'], date("Y-m-d H:i:s"), $_POST['notes']]);
+									$log_enrollQuery = $DB_con->prepare('INSERT INTO logs_enroll (ern,stage,usertouch,touch,notes) VALUES (?, ?, ?, ?, ? )');
+									$log_enrollQuery->execute([$uniqid, "Verification", $_SESSION['fname']. " " .$_SESSION['lname'], date("Y-m-d H:i:s"), $_POST['notes']]);
 
 									// var_dump([
 									// 	'Notes' => $notes,
@@ -239,7 +230,7 @@ session_start(); ?>
 								?>
 								<script>
 									function pageRedirect() {
-										var delay = 3000;
+										var delay = 10000;
 										setTimeout(function() {
 											window.location = "registrardocs.php";
 										}, delay);

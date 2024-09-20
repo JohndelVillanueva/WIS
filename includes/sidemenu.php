@@ -128,7 +128,7 @@
                     <li class="nav-item dropdown">
                         <a class="dropdown-toggle" href="registrar2.php">
                             <span class="icon-holder">
-                                <i class="anticon anticon-dollar "></i>
+                                <i class="bi bi-file-person-fill"></i>
                             </span>
                             <span class="title">Completion</span>
                         </a>

@@ -258,14 +258,14 @@ if (!isset($_SESSION['username'])) {
                                                     <label class="form-check-label" for="internationalFeeNew">int'l student fee NEW</label>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>-->
                                         <div class="row py-3">
                                             <div class="col-lg-2"></div>
                                             <div class="col-lg-8 text-center">
                                                 <input type="text" class="form-control" name="notes" id="" placeholder="Notes here..">
                                             </div>
                                             <div class="col-lg-2"></div>
-                                        </div> -->
+                                        </div> 
 
                                     </div>
                                 </div>
