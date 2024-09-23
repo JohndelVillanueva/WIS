@@ -118,7 +118,7 @@ session_start(); ?>
 										// die();
 
 										// Recipients
-										$mail->setFrom('no-reply@westfields.edu.ph', 'Westfields'); // From email address and name
+										$mail->setFrom('no-reply@westfields.edu.ph', 'Westfields International School'); // From email address and name
 										$mail->addAddress($_POST['guardianemail']); // Add recipient
 
 										// Content
@@ -206,22 +206,6 @@ session_start(); ?>
 													<h1>Student Name: <span class="text-success"><?php echo strtoupper($_POST['lastname'] . ", " . $_POST['firstname'] . " " . $_POST['middlename']); ?></span></h1>
 												</div>
 											</div>
-											<div class="row">
-												<div class="col-lg-12">
-													<h1>
-														<?php
-														// if (mail($to, $subject, $message, $headers, '-f no-reply@westfields.edu.ph -F "Westfields Admissions"')) {
-														// 	echo 'A confirmation email has been sent to ' . $_POST['guardianemail'];
-														// 	die();
-														// } else {
-														// 	echo 'Cannot reach you at ' . $_POST['guardianemail'];
-														// 	// die();
-														// }
-														?>
-													</h1>
-												</div>
-											</div>
-										</div>
 										<div class="card-footer text-center"><span class="icon-holder"><i class="anticon anticon-loading"></i></span> Redirecting in 5 seconds...</div>
 									</div>
 								<?php
@@ -230,7 +214,7 @@ session_start(); ?>
 								?>
 								<script>
 									function pageRedirect() {
-										var delay = 10000;
+										var delay = 5000;
 										setTimeout(function() {
 											window.location = "registrardocs.php";
 										}, delay);

@@ -1,8 +1,20 @@
 <?php
 include_once "includes/config.php";
+require 'vendor/autoload.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use Dotenv\Dotenv;
 session_start();
 
-if ($_POST['stage'] <= 8) {
+
+if ($_POST['stage'] <= 9) {
+    $getSpecificUser = $DB_con->prepare("SELECT * FROM users24 WHERE uniqid = :uniqid");
+    $getSpecificUser->execute([':uniqid' => $_POST['ern']]);
+    $student = $getSpecificUser->fetch(PDO::FETCH_OBJ);
+
+    $studentFname = htmlspecialchars($student->fname);
+    $studentLname = htmlspecialchars($student->lname);
+
   $process = "UPDATE users24 SET status = :status WHERE uniqid = :uniqid";
   $process_statement = $DB_con->prepare($process);
   $process_statement->execute(array(':status' => $_POST['stage'], ':uniqid' => $_POST['ern']));
@@ -10,6 +22,43 @@ if ($_POST['stage'] <= 8) {
   $log = "INSERT INTO logs_enroll ( ern, stage, usertouch, touch, notes ) VALUES ( :ern, :stage, :user, NOW(), :notes )";
   $logstmt = $DB_con->prepare($log);
   $logstmt->execute(array(':ern' => $_POST['ern'], ':stage' => $_POST['stage'], ':user' => $_SESSION['fname'] . " " . $_SESSION['lname'], ':notes' => $_POST['notes']));
+
+  $mail = new PHPMailer(true);
+
+    try {
+        $dotenv = Dotenv::createImmutable(__DIR__);
+        $dotenv->load();
+        
+        $mail->isSMTP();
+        $mail->Host = $_ENV['SMTP_HOST'];
+        $mail->SMTPAuth = true;
+        $mail->Username = $_ENV['SMTP_USERNAME'];
+        $mail->Password = $_ENV['SMTP_PASSWORD'];
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = $_ENV['SMTP_PORT'];
+
+        $mail->setFrom('no-reply@westfields.edu.ph', 'Westfields International School');
+        $guidance = $_ENV['GUIDANCE']; //
+        $mail->addAddress($guidance);
+
+        $mail->isHTML(true);
+        $mail->Subject = 'Stage 2 Completed: Set a interview';
+
+        $message = "
+            <center>
+                <img src='assets/images/logo/logo.png'>
+                <h1>Stage 2: Cashier </h1>
+                <p>Time to set a interview for a new student:</p>
+                <p>Name: <strong>" . strtoupper($studentFname . ', ' . $studentLname) . "</strong></p>
+            </center>
+        ";
+        $mail->Body = $message;
+
+        $mail->send();
+        echo 'Email sent successfully for stage 3.';
+    } catch (Exception $e) {
+        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    }
 
 
 // Retrieve values from POST request

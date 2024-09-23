@@ -6,6 +6,7 @@ if(!isset($_SESSION['username']))
     header("location: login.php");
 
 }
+
 ?><!DOCTYPE html>
 <html lang="en">
 
@@ -98,6 +99,9 @@ if(!isset($_SESSION['username']))
                                         </table>
                                     </div>
                                 </div>
+                                <?php 
+
+                                ?>
                                 <div class="card-footer bg-light text-center"></div>
                             </div>
                         </div>
