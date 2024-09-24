@@ -1,9 +1,11 @@
 <?php
 include_once "includes/config.php";
 require 'vendor/autoload.php';
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use Dotenv\Dotenv;
+
 session_start();
 
 
@@ -15,20 +17,20 @@ if ($_POST['stage'] <= 9) {
     $studentFname = htmlspecialchars($student->fname);
     $studentLname = htmlspecialchars($student->lname);
 
-  $process = "UPDATE users24 SET status = :status WHERE uniqid = :uniqid";
-  $process_statement = $DB_con->prepare($process);
-  $process_statement->execute(array(':status' => $_POST['stage'], ':uniqid' => $_POST['ern']));
+    $process = "UPDATE users24 SET status = :status WHERE uniqid = :uniqid";
+    $process_statement = $DB_con->prepare($process);
+    $process_statement->execute(array(':status' => $_POST['stage'], ':uniqid' => $_POST['ern']));
 
-  $log = "INSERT INTO logs_enroll ( ern, stage, usertouch, touch, notes ) VALUES ( :ern, :stage, :user, NOW(), :notes )";
-  $logstmt = $DB_con->prepare($log);
-  $logstmt->execute(array(':ern' => $_POST['ern'], ':stage' => $_POST['stage'], ':user' => $_SESSION['fname'] . " " . $_SESSION['lname'], ':notes' => $_POST['notes']));
+    $log = "INSERT INTO logs_enroll ( ern, stage, usertouch, touch, notes ) VALUES ( :ern, :stage, :user, NOW(), :notes )";
+    $logstmt = $DB_con->prepare($log);
+    $logstmt->execute(array(':ern' => $_POST['ern'], ':stage' => $_POST['stage'], ':user' => $_SESSION['fname'] . " " . $_SESSION['lname'], ':notes' => $_POST['notes']));
 
-  $mail = new PHPMailer(true);
+    $mail = new PHPMailer(true);
 
     try {
         $dotenv = Dotenv::createImmutable(__DIR__);
         $dotenv->load();
-        
+
         $mail->isSMTP();
         $mail->Host = $_ENV['SMTP_HOST'];
         $mail->SMTPAuth = true;
@@ -37,7 +39,7 @@ if ($_POST['stage'] <= 9) {
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = $_ENV['SMTP_PORT'];
 
-        $mail->setFrom('no-reply@westfields.edu.ph', 'Westfields International School');
+        $mail->setFrom($_ENV['SMTP_USERNAME'], 'Westfields International School');
         $guidance = $_ENV['GUIDANCE']; //
         $mail->addAddress($guidance);
 
@@ -47,7 +49,7 @@ if ($_POST['stage'] <= 9) {
         $message = "
             <center>
                 <img src='assets/images/logo/logo.png'>
-                <h1>Stage 2: Cashier </h1>
+                <h1>Stage 3: Guidance </h1>
                 <p>Time to set a interview for a new student:</p>
                 <p>Name: <strong>" . strtoupper($studentFname . ', ' . $studentLname) . "</strong></p>
             </center>
@@ -61,71 +63,71 @@ if ($_POST['stage'] <= 9) {
     }
 
 
-// Retrieve values from POST request
-$applicationFee = isset($_POST['applicationFee']) ? 1 : NULL;
-$afTuitionFee = isset($_POST['afTuitionFee']) ? 1 : NULL;
-$afTfOtherFees = isset($_POST['afTfOtherFees']) ? 1 : NULL;
-$assessmentFee = isset($_POST['assessmentFee']) ? 1 : NULL;
-$registrationFee = isset($_POST['registrationFee']) ? 1 : NULL;
-$specialPermit = isset($_POST['specialPermit']) ? 1 : NULL;
-$internationalFeeOld = isset($_POST['internationalFeeOld']) ? 1 : NULL;
-$internationalFeeNew = isset($_POST['internationalFeeNew']) ? 1 : NULL;
+    // Retrieve values from POST request
+    $applicationFee = isset($_POST['applicationFee']) ? 1 : NULL;
+    $afTuitionFee = isset($_POST['afTuitionFee']) ? 1 : NULL;
+    $afTfOtherFees = isset($_POST['afTfOtherFees']) ? 1 : NULL;
+    $assessmentFee = isset($_POST['assessmentFee']) ? 1 : NULL;
+    $registrationFee = isset($_POST['registrationFee']) ? 1 : NULL;
+    $specialPermit = isset($_POST['specialPermit']) ? 1 : NULL;
+    $internationalFeeOld = isset($_POST['internationalFeeOld']) ? 1 : NULL;
+    $internationalFeeNew = isset($_POST['internationalFeeNew']) ? 1 : NULL;
 
-// Initialize query parts
-$setClause = [];
-$params = [];
+    // Initialize query parts
+    $setClause = [];
+    $params = [];
 
-// Dynamically build SET clause and parameters array
-if ($applicationFee !== NULL) {
-    $setClause[] = "reservation_fee = ?";
-    $params[] = $applicationFee;
-}
-if ($afTuitionFee !== NULL) {
-    $setClause[] = "tuition_fee = ?";
-    $params[] = $afTuitionFee;
-}
-if ($afTfOtherFees !== NULL) {
-    $setClause[] = "other_fee = ?";
-    $params[] = $afTfOtherFees;
-}
-if ($assessmentFee !== NULL) {
-    $setClause[] = "assessment_fee = ?";
-    $params[] = $assessmentFee;
-}
-if ($registrationFee !== NULL) {
-    $setClause[] = "registration_fee = ?";
-    $params[] = $registrationFee;
-}
-if ($specialPermit !== NULL) {
-    $setClause[] = "special_permit = ?";
-    $params[] = $specialPermit;
-}
-if ($internationalFeeOld !== NULL) {
-    $setClause[] = "international_fee_old = ?";
-    $params[] = $internationalFeeOld;
-}
-if ($internationalFeeNew !== NULL) {
-  $setClause[] = "international_fee_new = ?";
-  $params[] = $internationalFeeNew;
-}
+    // Dynamically build SET clause and parameters array
+    if ($applicationFee !== NULL) {
+        $setClause[] = "reservation_fee = ?";
+        $params[] = $applicationFee;
+    }
+    if ($afTuitionFee !== NULL) {
+        $setClause[] = "tuition_fee = ?";
+        $params[] = $afTuitionFee;
+    }
+    if ($afTfOtherFees !== NULL) {
+        $setClause[] = "other_fee = ?";
+        $params[] = $afTfOtherFees;
+    }
+    if ($assessmentFee !== NULL) {
+        $setClause[] = "assessment_fee = ?";
+        $params[] = $assessmentFee;
+    }
+    if ($registrationFee !== NULL) {
+        $setClause[] = "registration_fee = ?";
+        $params[] = $registrationFee;
+    }
+    if ($specialPermit !== NULL) {
+        $setClause[] = "special_permit = ?";
+        $params[] = $specialPermit;
+    }
+    if ($internationalFeeOld !== NULL) {
+        $setClause[] = "international_fee_old = ?";
+        $params[] = $internationalFeeOld;
+    }
+    if ($internationalFeeNew !== NULL) {
+        $setClause[] = "international_fee_new = ?";
+        $params[] = $internationalFeeNew;
+    }
 
-// Add user_id to parameters array
-$params[] = $_POST['ern'];  // Assuming 'ern' is the user_id
+    // Add user_id to parameters array
+    $params[] = $_POST['ern'];  // Assuming 'ern' is the user_id
 
-// Check if there are any fields to update
-if (!empty($setClause)) {
-    // Convert setClause array to string
-    $setClauseString = implode(", ", $setClause);
-    
-    // Prepare the update query
-    $studentPayableQuery = $DB_con->prepare("UPDATE s_payables SET $setClauseString WHERE user_id = ?");
-    
-    // Execute the query with the parameters
-    $studentPayableQuery->execute($params);
-}
+    // Check if there are any fields to update
+    if (!empty($setClause)) {
+        // Convert setClause array to string
+        $setClauseString = implode(", ", $setClause);
+
+        // Prepare the update query
+        $studentPayableQuery = $DB_con->prepare("UPDATE s_payables SET $setClauseString WHERE user_id = ?");
+
+        // Execute the query with the parameters
+        $studentPayableQuery->execute($params);
+    }
 
 
-  /*$message = "
+    /*$message = "
 									<center>
 										<img src='https://westfields.edu.ph/wp-content/uploads/2021/11/logo1x-1.png'>
 										<h1>Here comes a new challenger!</h1>
@@ -159,9 +161,9 @@ if (!empty($setClause)) {
     die();
   }*/
 
-  header("Location: cashier.php?ern=" . $_POST['ern']);
-  die();
+    header("Location: cashier.php?ern=" . $_POST['ern']);
+    die();
 } else {
-  header("Location: cashier.php?ern=" . $_POST['ern'] . "&err=1");
-  die();
+    header("Location: cashier.php?ern=" . $_POST['ern'] . "&err=1");
+    die();
 }

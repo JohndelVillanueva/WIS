@@ -116,10 +116,11 @@ session_start(); ?>
 
 										// var_dump(["HOST" => $_ENV['SMTP_HOST']]);
 										// die();
+										$registrar = $_ENV['REGISTRAR'];
 
 										// Recipients
 										$mail->setFrom('no-reply@westfields.edu.ph', 'Westfields International School'); // From email address and name
-										$mail->addAddress($_POST['guardianemail']); // Add recipient
+										$mail->addAddress($registrar, $_POST['guardianemail']); // Add recipient
 
 										// Content
 										$mail->isHTML(true); // Set email format to HTML
