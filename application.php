@@ -239,6 +239,10 @@ if (!isset($_SESSION['username'])) {
                                                     <input class="form-check-input" type="checkbox" name="applicationFee" id="applicationFee">
                                                     <label class="form-check-label" for="applicationFee">Reservation Fee</label>
                                                 </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="pta" id="pta">
+                                                    <label class="form-check-label" for="pta">PTA</label>
+                                                </div>
                                             </div>
                                             <div class="col-lg-6 text-center">
                                                 <div class="form-check">
@@ -257,6 +261,7 @@ if (!isset($_SESSION['username'])) {
                                                     <input class="form-check-input" type="checkbox" name="internationalFeeNew" id="internationalFee">
                                                     <label class="form-check-label" for="internationalFeeNew">int'l student fee NEW</label>
                                                 </div>
+
                                             </div>
                                         </div>
                                         <div class="row py-3">

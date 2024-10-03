@@ -53,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $specialPermit = isset($_POST['specialPermit']) ? 1 : $currentValues['special_permit'];
         $internationalFeeOld = isset($_POST['internationalFeeOld']) ? 1 : $currentValues['international_fee_old'];
         $internationalFeeNew = isset($_POST['internationalFeeNew']) ? 1 : $currentValues['international_fee_new'];
+        $pta = isset($_POST['pta']) ? 1 : $currentValues['pta'];
 
         // Update the corresponding fields in the database
         $updateQuery = $DB_con->prepare("
@@ -65,7 +66,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 registration_fee = :registrationFee, 
                 special_permit = :specialPermit, 
                 international_fee_old = :internationalFeeOld, 
-                international_fee_new = :internationalFeeNew
+                international_fee_new = :internationalFeeNew,
+                pta = :pta
             WHERE user_id = :userId
         ");
 
@@ -79,6 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':specialPermit' => $specialPermit,
             ':internationalFeeOld' => $internationalFeeOld,
             ':internationalFeeNew' => $internationalFeeNew,
+            ':pta' => $pta,
             ':userId' => $userId
         ]);
     }

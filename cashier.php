@@ -118,6 +118,14 @@ if (!isset($_SESSION['username'])) {
                                                                                     <label class="text-danger"> Reservation Fee</label>
                                                                                 <?php endif; ?>
                                                                             </div>
+                                                                            <div class="form-check">
+                                                                                <?php if (!empty($record["pta"])) : ?>
+                                                                                    <input class="form-check-input" type="checkbox" name="pta" id="pta">
+                                                                                    <label class="form-check-label" for="pta">PTA</label>
+                                                                                <?php else : ?>
+                                                                                    <label class="text-danger">PTA</label>
+                                                                                <?php endif; ?>
+                                                                            </div>
                                                                         </div>
                                                                         <div class="col-4">
                                                                             <div class="form-check">

@@ -161,9 +161,10 @@ session_start(); ?>
 									$specialPermit = isset($_POST['specialPermit']) ? 1 : NULL;
 									$internationalFeeOld = isset($_POST['internationalFeeOld']) ? 1 : NULL;
 									$internationalFeeNew = isset($_POST['internationalFeeNew']) ? 1 : NULL;
+									$pta = isset($_POST['pta']) ? 1 : NULL;
 
 									// s_payables Query
-									$studentPayableQuery = $DB_con->prepare("INSERT INTO s_payables (user_id, reservation_fee, tuition_fee, other_fee, assessment_fee, registration_fee, special_permit, international_fee_old,international_fee_new) VALUES (?,?,?,?,?,?,?,?,?)");
+									$studentPayableQuery = $DB_con->prepare("INSERT INTO s_payables (user_id, reservation_fee, tuition_fee, other_fee, assessment_fee, registration_fee, special_permit, international_fee_old,international_fee_new,pta) VALUES (?,?,?,?,?,?,?,?,?,?)");
 									$studentPayableQuery->execute([
 										$uniqid,
 										$applicationFee,
@@ -173,7 +174,8 @@ session_start(); ?>
 										$registrationFee,
 										$specialPermit,
 										$internationalFeeOld,
-										$internationalFeeNew
+										$internationalFeeNew,
+										$pta
 									]);
 
 									$log_enroll_query = $DB_con->prepare('INSERT INTO logs_enroll (ern,stage,usertouch,touch,notes) VALUES (?, ?, ?, ?, ? )');

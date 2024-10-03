@@ -72,6 +72,7 @@ if ($_POST['stage'] <= 9) {
     $specialPermit = isset($_POST['specialPermit']) ? 1 : NULL;
     $internationalFeeOld = isset($_POST['internationalFeeOld']) ? 1 : NULL;
     $internationalFeeNew = isset($_POST['internationalFeeNew']) ? 1 : NULL;
+    $pta = isset($_POST['internationalFeeNew']) ? 1 : NULL;
 
     // Initialize query parts
     $setClause = [];
@@ -107,6 +108,10 @@ if ($_POST['stage'] <= 9) {
         $params[] = $internationalFeeOld;
     }
     if ($internationalFeeNew !== NULL) {
+        $setClause[] = "international_fee_new = ?";
+        $params[] = $internationalFeeNew;
+    }
+    if ($pta !== NULL) {
         $setClause[] = "international_fee_new = ?";
         $params[] = $internationalFeeNew;
     }
