@@ -205,7 +205,7 @@ if (!isset($_SESSION['username'])) {
                                                 </select>
                                             </div>
                                         </div>
-                                        <!-- <div class="row py-3">
+                                        <div class="row py-3">
                                             <div class="col-lg-12">
                                                 <h3 class="text-center">Need to Pay</h3>
                                             </div>
@@ -258,7 +258,7 @@ if (!isset($_SESSION['username'])) {
                                                     <label class="form-check-label" for="internationalFeeNew">int'l student fee NEW</label>
                                                 </div>
                                             </div>
-                                        </div>-->
+                                        </div>
                                         <div class="row py-3">
                                             <div class="col-lg-2"></div>
                                             <div class="col-lg-8 text-center">

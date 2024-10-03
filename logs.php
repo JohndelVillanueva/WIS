@@ -70,7 +70,7 @@ if (!isset($_SESSION['username'])) {
                                                                 <th scope="row">
                                                                     <div class="col-lg-12">
                                                                         <p><a class="btn btn-primary" data-toggle="collapse" href="#collapseExample<?php echo $row['uniqid']; ?>" role="button" aria-expanded="false" aria-controls="collapseExample<?php echo $row['uniqid']; ?>"><?php echo $row["uniqid"]; ?></a> 
-                                                                        <?= " " . $status = $row['status']. "/8 ";
+                                                                        <?= " " . $status = $row['status']. "/9 ";
                                                                             switch ($row['status']) {
                                                                                 case 1:
                                                                                     echo "Verification";
@@ -95,6 +95,9 @@ if (!isset($_SESSION['username'])) {
                                                                                     break;
                                                                                 case 8:
                                                                                     echo "Completion";
+                                                                                    break;
+                                                                                case 9:
+                                                                                    echo "Enrolled";
                                                                                     break;
                                                                                 default:
                                                                                     echo "Default: Number is not between 1 and 8";

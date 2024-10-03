@@ -35,6 +35,57 @@ function sendEmail($mail, $to, $subject, $body)
     $mail->send();
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $userId = $_POST['ern'];
+
+    // Fetch the current values from the database
+    $query = $DB_con->prepare("SELECT * FROM s_payables WHERE user_id = :userId");
+    $query->execute([':userId' => $userId]);
+    $currentValues = $query->fetch(PDO::FETCH_ASSOC);
+
+    if ($currentValues) {
+        // Prepare the new values, falling back to the current values if no checkbox is checked
+        $assessmentFee = isset($_POST['assessmentFee']) ? 1 : $currentValues['assessment_fee'];
+        $tuitionFee = isset($_POST['afTuitionFee']) ? 1 : $currentValues['tuition_fee'];
+        $otherFee = isset($_POST['afTfOtherFees']) ? 1 : $currentValues['other_fee'];
+        $reservationFee = isset($_POST['applicationFee']) ? 1 : $currentValues['reservation_fee'];
+        $registrationFee = isset($_POST['registrationFee']) ? 1 : $currentValues['registration_fee'];
+        $specialPermit = isset($_POST['specialPermit']) ? 1 : $currentValues['special_permit'];
+        $internationalFeeOld = isset($_POST['internationalFeeOld']) ? 1 : $currentValues['international_fee_old'];
+        $internationalFeeNew = isset($_POST['internationalFeeNew']) ? 1 : $currentValues['international_fee_new'];
+
+        // Update the corresponding fields in the database
+        $updateQuery = $DB_con->prepare("
+            UPDATE s_payables 
+            SET 
+                assessment_fee = :assessmentFee, 
+                tuition_fee = :tuitionFee, 
+                other_fee = :otherFee, 
+                reservation_fee = :reservationFee, 
+                registration_fee = :registrationFee, 
+                special_permit = :specialPermit, 
+                international_fee_old = :internationalFeeOld, 
+                international_fee_new = :internationalFeeNew
+            WHERE user_id = :userId
+        ");
+
+        // Execute the query with the provided data
+        $updateQuery->execute([
+            ':assessmentFee' => $assessmentFee,
+            ':tuitionFee' => $tuitionFee,
+            ':otherFee' => $otherFee,
+            ':reservationFee' => $reservationFee,
+            ':registrationFee' => $registrationFee,
+            ':specialPermit' => $specialPermit,
+            ':internationalFeeOld' => $internationalFeeOld,
+            ':internationalFeeNew' => $internationalFeeNew,
+            ':userId' => $userId
+        ]);
+    }
+}
+// var_dump($_POST);
+// die();
+
 if ($_POST['stage'] <= 9) {
 
     $getSpecificUser = $DB_con->prepare("SELECT * FROM users24 WHERE uniqid = :uniqid");

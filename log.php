@@ -27,7 +27,7 @@
         $allNotNull = true;
 
         foreach ($fees as $key => $label):
-            if ($theNullValue[$key] !== NULL):
+            if ($theNullValue[$key] == NULL):
         ?>
                 <label>• <?php echo htmlspecialchars($label); ?></label><br>
         <?php
@@ -37,7 +37,7 @@
 
         if ($allNotNull):
         ?>
-            <?php echo htmlspecialchars("None"); ?><br>
+            <?php echo htmlspecialchars("Paid"); ?><br>
         <?php endif; ?>
 
     <?php else: ?>

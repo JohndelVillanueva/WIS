@@ -1118,8 +1118,6 @@ session_start();
                                                         <option value="No">No</option>
                                                     </select>
                                                 </div>
-                                                <?php // } 
-                                                ?>
                                             </div>
                                         </div>
                                         <div class="row py-2">

@@ -49,7 +49,7 @@ if (!isset($_SESSION['username'])) {
                                                 <tr>
                                                     <th scope="col">Reference Number</th>
                                                     <th scope="col">Full Name</th>
-                                                    <!-- <th scope="col">Payables</th> -->
+                                                    <th scope="col">Payables</th>
                                                     <th scope="col">Notes</th>
                                                     <th scope="col">Payment</th>
                                                 </tr>
@@ -77,7 +77,7 @@ if (!isset($_SESSION['username'])) {
                                                                 </div>
                                                             </th>
                                                             <td><?php echo $row["lname"] . ", " . $row["fname"] . " " . $row["mname"]; ?></td>
-                                                            <!-- <td>
+                                                            <td>
                                                                 <?php
                                                                 // Fetch records from the database
                                                                 $checkRecord = $DB_con->prepare("SELECT * FROM s_payables WHERE user_id = :userid");
@@ -156,7 +156,7 @@ if (!isset($_SESSION['username'])) {
                                                                         <div class="col-4"></div>
                                                                     <?php endforeach; ?>
                                                                 </div>
-                                                            </td> -->
+                                                            </td>
                                                             <td>
                                                                 <input class="form-control" type="text" id="notes" name="notes" placeholder="Type notes here">
                                                                 <input type="hidden" name="stage" id="stage" value="3">
