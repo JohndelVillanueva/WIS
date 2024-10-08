@@ -79,7 +79,7 @@ include_once ("headers.php");
                                     foreach($result as $row) {
                                         ?>
                                         <tr>
-                                            <td><?php echo $row['empid']; ?></td>
+                                            <td><?php echo $row['username']; ?></td>
                                             <td><?= $row['product_name'] ?></td>
                                             <td><?= $row['quantity'] ?></td>
                                             <td><span class="text-danger"><?php echo $debit = $row['debit']==0 ? "" : $row['debit']; ?></span></td>

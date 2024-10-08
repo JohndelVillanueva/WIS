@@ -1,5 +1,10 @@
 <?php
 include_once "includes/config.php";
+// include "process.php";
+require 'vendor/autoload.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use Dotenv\Dotenv;
 session_start();
 
 // $delete = $DB_con->prepare("DELETE FROM studentdetails WHERE uniqid = :uniqid");
@@ -12,6 +17,74 @@ session_start();
 // $uniqId = $DB_con->prepare("SELECT * FROM studentdetails WHERE uniqid = :uniq");
 // $uniqId->execute([":uniq" => $_POST["uniqid"]]);
 // $getUniqID = $uniqId->fetch(PDO::FETCH_OBJ);
+
+try {
+	$mail = new PHPMailer(true);
+	// $getSpecificUser = $DB_con->prepare("SELECT `fname`,`lname` FROM user WHERE id = :id");
+	// $getSpecificUser->execute([':id' => $_GET['id']]);
+	// $student = $getSpecificUser->fetch(PDO::FETCH_OBJ);
+
+	// $studentFname = htmlspecialchars();
+    // $studentLname = htmlspecialchars();
+
+	// if ($student) {
+    //     echo "Student: " . $studentFname . " " . $studentLname;
+    // } else {
+    //     echo "No student found with the provided ID.";
+    // }
+
+	// var_dump(["CheckPing:" => $student]);
+	// die();
+
+
+
+	// Load SMTP settings from .env file
+	$dotenv = Dotenv::createImmutable(__DIR__);
+	$dotenv->load();
+
+	$mail->isSMTP();
+	$mail->Host = $_ENV['SMTP_HOST'];
+	$mail->SMTPAuth = true;
+	$mail->Username = $_ENV['SMTP_USERNAME'];
+	$mail->Password = $_ENV['SMTP_PASSWORD'];
+	$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+	$mail->Port = $_ENV['SMTP_PORT'];
+
+	$mail->setFrom($_ENV['SMTP_USERNAME'], 'Westfields International School');
+
+	// Get enrolled students' email addresses from .env
+	$old_students = explode(',', $_ENV['OLD_STUDENT']);
+
+	// Loop through each student email
+	foreach ($old_students as $old) {
+		$mail->addAddress($old);
+	}
+
+	// Construct email content with student details
+	$message = "
+	<center>
+		
+		<p>Name: <strong>" . strtoupper($_POST['firstname'] . ' ' . $_POST['lastname']) . "</strong></p>
+		<h1> is Finally Enrolled </h1>
+	</center>
+	";
+
+	// Email content settings
+	$mail->isHTML(true);
+	$mail->Subject = 'Old Studen';
+	$mail->Body = $message;
+
+	// Send the email
+	if ($mail->send()) {
+		echo "Email sent successfully.";
+	} else {
+		echo "Failed to send email.";
+	}
+
+}catch(Exception $e){
+	echo "Mailer Error: {$mail->ErrorInfo}";
+
+}
 
 $uniqid = uniqid('WNS-');
 $studentdetailsQuery =
@@ -120,18 +193,36 @@ $process_statement->execute(
 		':otc' => $_POST[ 'otc' ]
 	));
 
-	if(isset($_POST['Submit'])){
-		$newImage = $_FILES['photo']['name'];
+	// if(isset($_POST['Submit'])){
+	// 	$newImage = $_FILES['photo']['name'];
 
-		if($newImage != ''){
-			$updateFileName = $newImage;
-			if(file_exists("assets/images/avatars".$_FILES['photo']['name'])){
-				$filename = $_FILES['photo']['name'];
-				echo $filename. "Already Exist";
-			}
-		}
+	// 	if($newImage != ''){
+	// 		$updateFileName = $newImage;
+	// 		if(file_exists("assets/images/avatars".$_FILES['photo']['name'])){
+	// 			$filename = $_FILES['photo']['name'];
+	// 			echo $filename. "Already Exist";
+	// 		}
+	// 	}
 		
+	// }
+	if (isset($_POST['Submit'])) {
+		$newImage = $_FILES['photo']['name'];
+		$uploadDirectory = "assets/images/avatars/";
+	
+		if ($newImage != '') {
+			$updateFileName =  $_POST['firstname'] . $_POST['lastname'] ."-". uniqid() . '.' . pathinfo($newImage, PATHINFO_EXTENSION);
+			$uploadPath = $uploadDirectory . $updateFileName;
+			if (file_exists($uploadPath)) {
+				echo $updateFileName . " already exists. Please choose a different filename or image.";
+				exit;
+			}
+		} else {
+			// If no new image is uploaded, use the existing image name from the database
+			$updateFileName = $_POST['existing_photo'];
+		}
 	}
+
+
 
     $insertUserQuery = "INSERT INTO users24 
 	(photo,position, fname, lname, mname, gender, guardianname, guardianemail, guardianphone, tf, status, lrn, prevsch, prevschcountry, nationality, grade, section, house, uniqid) 

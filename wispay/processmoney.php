@@ -24,14 +24,15 @@ $student = $getstudent->fetch(PDO::FETCH_OBJ);
         
         // Insert transaction into the database
         $statement = $DB_con->prepare(
-            'INSERT INTO wispay ( credit, rfid, empid, refcode, transdate, processedby)
-            VALUES ( :credit, :rfid, :empid, :refcode, :transdate, :processedby)'
+            'INSERT INTO wispay ( credit, rfid, empid, username, refcode, transdate, processedby)
+            VALUES ( :credit, :rfid, :empid, :name, :refcode, :transdate, :processedby)'
         );
 
         $statement->execute([
             'credit' => $_POST['amount'],
             'rfid' => $_POST['rfid'],
-            'empid' => $firstname. " ". $lastname,
+            'empid' => $student->username,
+            'name' => $firstname. " ". $lastname,
             'refcode' => $refcode,
             'transdate' => date('Y-m-d H:i:s'),
             'processedby' => $_SESSION['fname'] . " " . $_SESSION['lname']

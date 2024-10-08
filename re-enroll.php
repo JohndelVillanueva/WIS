@@ -13,7 +13,7 @@ session_start();
         }
     </style>
     <div class="app">
-        < class="layout">
+        <class="layout">
             <?php include_once "includes/heading.php"; ?>
             <?php include_once "includes/sidemenu.php"; ?>
             <?php
@@ -49,7 +49,7 @@ session_start();
                                                         <?php
                                                         if (empty($row["photo"])) {
                                                         ?>
-                                                            <label for="photo"><img class="rounded" style="max-width: 128px!important;" src="assets/images/avatars/avatar-upload.jpg"></label>
+                                                            <label for="photo"><img class="rounded" style="max-width: 128px!important;" src="assets/images/avatars/default-image.png"></label>
                                                             <input type="file" id="photo" name="photo" hidden>
                                                         <?php
                                                         } else {

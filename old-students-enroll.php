@@ -47,7 +47,7 @@ if (!isset($_SESSION['username'])) {
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $pdo_statement = $DB_con->prepare("SELECT * FROM user WHERE position = :position ORDER BY username ASC");
+                                                $pdo_statement = $DB_con->prepare("SELECT * FROM user WHERE position = :position");
                                                 $pdo_statement->execute([":position" => "Student"]);
                                                 $result = $pdo_statement->fetchAll();
                                                 foreach ($result as $row) {

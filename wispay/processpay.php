@@ -15,7 +15,7 @@ if (isset($_POST['submit']) && !empty($_POST['rfid']) && !empty($_POST['product'
 
     // Get user details
     try {
-        $user_details = $DB_con->prepare('SELECT fname, lname FROM user WHERE rfid = :rfid');
+        $user_details = $DB_con->prepare('SELECT fname, lname, username FROM user WHERE rfid = :rfid');
         $user_details->execute([':rfid' => $_POST['rfid']]);
         $user = $user_details->fetch(PDO::FETCH_OBJ);
 
@@ -43,8 +43,8 @@ if (isset($_POST['submit']) && !empty($_POST['rfid']) && !empty($_POST['product'
                 // Check if the new balance would be -1000 or higher
                 if ($remainingBalance - $totalAmount >= 0 ) {
                     // Insert each product and amount into the database
-                    $pay = "INSERT INTO wispay (product_name, quantity, product_type, debit, rfid, refcode, empid, transdate, processedby) 
-                            VALUES (:product, :qty, :product_type, :debit, :rfid, :refcode, :empid, NOW(), :processedby)";
+                    $pay = "INSERT INTO wispay (product_name, quantity, product_type, debit, rfid, refcode, empid, username, transdate, processedby) 
+                            VALUES (:product, :qty, :product_type, :debit, :rfid, :refcode, :empid, :username, NOW(), :processedby)";
                     $pay_statement = $DB_con->prepare($pay);
 
                     for ($i = 0; $i < count($_POST['product']); $i++) {
@@ -55,7 +55,8 @@ if (isset($_POST['submit']) && !empty($_POST['rfid']) && !empty($_POST['product'
                             ':debit' => $_POST['amount'][$i],
                             ':rfid' => $_POST['rfid'],
                             ':refcode' => $refcode,
-                            ':empid' => $firstname . " " . $lastname,
+                            ':empid' => $user->username,
+                            ':username' => $firstname . " " . $lastname,
                             ':processedby' => $processedby
                         ]);
                     }
