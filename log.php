@@ -21,13 +21,14 @@
             'registration_fee' => 'Registration Fee',
             'special_permit' => 'Special Permit',
             'international_fee_old' => 'International Fee OLD',
-            'international_fee_new' => 'International Fee NEW'
+            'international_fee_new' => 'International Fee NEW',
+            'pta' => 'PTA'
         ];
 
         $allNotNull = true;
 
         foreach ($fees as $key => $label):
-            if ($theNullValue[$key] == NULL):
+            if ($theNullValue[$key] !== NULL):
         ?>
                 <label>• <?php echo htmlspecialchars($label); ?></label><br>
         <?php

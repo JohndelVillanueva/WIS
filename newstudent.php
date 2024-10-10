@@ -102,51 +102,73 @@ session_start(); ?>
 									$mail = new PHPMailer(true);
 
 									try {
-										// Server settings
+										// Load environment variables
 										$dotenv = Dotenv::createImmutable(__DIR__);
 										$dotenv->load();
 
 										$mail->isSMTP();
-										$mail->Host = $_ENV['SMTP_HOST'];  // smtp.gmail.com
+										$mail->Host = $_ENV['SMTP_HOST'];  // SMTP host
 										$mail->SMTPAuth = true;
 										$mail->Username = $_ENV['SMTP_USERNAME']; 
 										$mail->Password = $_ENV['SMTP_PASSWORD'];
 										$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; 
-										$mail->Port = $_ENV['SMTP_PORT'];  // 587 for TLS, or 465 for SSL
+										$mail->Port = $_ENV['SMTP_PORT'];  // SMTP port
 
-										// var_dump(["HOST" => $_ENV['SMTP_HOST']]);
-										// die();
-										$registrar = $_ENV['REGISTRAR'];
+										// Recipients data (2 different recipients)
+										$recipients = [
+											[
+												'email' => $_POST['guardianemail'],
+												'name' => 'Guardian',
+												'message' => "
+													<center>
+														<img src='assets/images/logo/logo.png'>
+														<h1>Congratulations!</h1>
+														<h2>Your child's application has been received!</h2><br>
+														<hr>
+													</center>
+													<p style='font-size:1.2em;'>
+														Here are the details of your application:
+														<br><br>
+														Reference Number: <strong>" . $uniqid . "</strong><br>
+														Name: <strong>" . strtoupper($_POST['lastname'] . ', ' . $_POST['firstname'] . ' ' . $_POST['middlename']) . "</strong><br>
+														<h4>Your Westfields Portal Account Details</h4>
+														Username: <strong style='color:black;'>" . str_replace(' ', '', strtolower($_POST['lastname'] . $_POST['firstname'])) . "</strong><br>
+														Password: <strong style='color:black;'>" . $uniqid . "</strong>
+													</p>
+												"
+											],
+											[
+												'email' => $_ENV['REGISTRAR'],
+												'name' => 'Registrar',
+												'message' => "
+													<center>
+														<img src='assets/images/logo/logo.png'>
+														<h1>New Application Received!</h1>
+														<h2>Details for the new student:</h2><br>
+														<hr>
+													</center>
+													<p style='font-size:1.2em;'>
+														Student Name: <strong>" . strtoupper($_POST['lastname'] . ', ' . $_POST['firstname'] . ' ' . $_POST['middlename']) . "</strong><br>
+														Reference Number: <strong>" . $uniqid . "</strong><br>
+														Status: <strong>Pending</strong>
+													</p>
+												"
+											]
+										];
 
-										// Recipients
-										$mail->setFrom('no-reply@westfields.edu.ph', 'Westfields International School'); // From email address and name
-										$mail->addAddress($registrar, $_POST['guardianemail']); // Add recipient
+										// Send emails to each recipient with their respective message
+										foreach ($recipients as $recipient) {
+											$mail->clearAddresses(); // Clear any previous recipient
+											$mail->setFrom('no-reply@westfields.edu.ph', 'Westfields International School');
+											$mail->addAddress($recipient['email'], $recipient['name']); // Add current recipient
 
-										// Content
-										$mail->isHTML(true); // Set email format to HTML
-										$mail->Subject = 'Thankyou for choosing Westfields!';
+											$mail->isHTML(true);
+											$mail->Subject = 'Application Status';
+											$mail->Body = $recipient['message'];
 
-										$message = "
-										<center>
-											<img src='assets/images/logo/logo.png'>
-											<h1>Congratulations!</h1>
-											<h2>Your child's application has been received!</h2><br>
-											<hr>
-										</center>
-										<p style='font-size:1.2em;'>
-											Here are the details of your application:
-											<br><br>
-											Reference Number: <strong>" . $uniqid . "</strong><br>
-											Name: <strong>" . strtoupper($_POST['lastname'] . ', ' . $_POST['firstname'] . ' ' . $_POST['middlename']) . "</strong><br>
-											<h4>Your Westfields Portal Account Details</h4>
-											Username: <strong style='color:black;'>" . str_replace(' ', '', strtolower($_POST['lastname'] . $_POST['firstname'])) . "</strong><br>
-											Password: <strong style='color:black;'>" . $uniqid . "</strong>
-										</p>
-									";
-										$mail->Body = $message;
-
-										// Send email
-										$mail->send();
+											// Send email
+											$mail->send();
+										}
 										// echo 'Email sent successfully.';
 									} catch (Exception $e) {
 										echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";

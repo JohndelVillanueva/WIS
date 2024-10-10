@@ -17,27 +17,32 @@ $getstudent->execute(['rfid' => $_POST["rfid"]]);
 $student = $getstudent->fetch(PDO::FETCH_OBJ);
 
 
-    if($student){
-        // Get user details
-        $firstname = $student->fname;
-        $lastname = $student->lname;
-        
-        // Insert transaction into the database
-        $statement = $DB_con->prepare(
-            'INSERT INTO wispay ( credit, rfid, empid, username, refcode, transdate, processedby)
-            VALUES ( :credit, :rfid, :empid, :name, :refcode, :transdate, :processedby)'
-        );
+if($student && $student->rfid != 0){
+    // Get user details
+    $firstname = $student->fname;
+    $lastname = $student->lname;
+    
+    // Insert transaction into the database
+    $statement = $DB_con->prepare(
+        'INSERT INTO wispay ( credit, rfid, empid, username, refcode, transdate, processedby)
+        VALUES ( :credit, :rfid, :empid, :name, :refcode, :transdate, :processedby)'
+    );
 
-        $statement->execute([
-            'credit' => $_POST['amount'],
-            'rfid' => $_POST['rfid'],
-            'empid' => $student->username,
-            'name' => $firstname. " ". $lastname,
-            'refcode' => $refcode,
-            'transdate' => date('Y-m-d H:i:s'),
-            'processedby' => $_SESSION['fname'] . " " . $_SESSION['lname']
-        ]);
-    }
+    $statement->execute([
+        'credit' => $_POST['amount'],
+        'rfid' => $_POST['rfid'],
+        'empid' => $student->username,
+        'name' => $firstname. " ". $lastname,
+        'refcode' => $refcode,
+        'transdate' => date('Y-m-d H:i:s'),
+        'processedby' => $_SESSION['fname'] . " " . $_SESSION['lname']
+    ]);
+} else {
+    // Redirect to the dashboard with a message parameter
+    $message = urlencode("Transaction not processed. Please get your ID from the IT Department.");
+    echo "<script>window.location.href = 'dashboard.php?message=$message';</script>";
+    die();
+}
 
 
 

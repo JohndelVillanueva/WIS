@@ -82,6 +82,23 @@ include_once ("headers.php");
         <?php include_once ("footer.php");?>
     </div>
 </div>
+<script>
+// Function to get query parameters from the URL
+function getQueryParam(param) {
+    let urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
+
+// Check if there is a message in the query parameter
+let message = getQueryParam('message');
+if (message) {
+    // Display the message to the user, for example, using an alert or a custom notification
+    alert(decodeURIComponent(message));
+
+    // Optionally, remove the query parameter from the URL to prevent the message from being shown again on reload
+    window.history.replaceState({}, document.title, window.location.pathname);
+}
+</script>
 
 <?php include_once ("scripts.php");?>
 </body>

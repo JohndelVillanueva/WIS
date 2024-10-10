@@ -63,8 +63,8 @@ include_once ("headers.php");
                                                 }
                                                 ?></td>
                                             <td>
-                                                <a type="button" href="addmoney.php?rfid=<?php echo $row['rfid']; ?>" class="btn btn-outline-success shadow-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Money">Reload</a>
-                                                <a type="button" href="showhistory.php?rfid=<?= $row['rfid'] ?>&username=<?= $row['username']?>" class="btn btn-outline-primary shadow-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Show History">History</a>
+                                                <a type="button" href="addmoney.php?id=<?php echo $row['id']; ?>&rfid=<?= $row['rfid']?>" class="btn btn-outline-success shadow-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Money">Reload</a>
+                                                <a type="button" href="showhistory.php?rfid=<?= $row['rfid'] ?>&username=<?= $row['username']?>&id=<?= $row['id']?>" class="btn btn-outline-primary shadow-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Show History">History</a>
                                             </td>
                                         </tr>
                                         <?php

@@ -21,8 +21,8 @@ include_once("headers.php");
                 <div class="container-fluid p-0">
                     <?php
 
-                    $pdo_statement = $DB_con->prepare("SELECT * FROM user WHERE rfid = :rfid");
-                    $pdo_statement->execute([':rfid' => $_GET['rfid']]);
+                    $pdo_statement = $DB_con->prepare("SELECT * FROM user WHERE id = :id");
+                    $pdo_statement->execute([':id' => $_GET['id']]);
                     $result = $pdo_statement->fetchAll();
                     foreach ($result as $row) {
                     ?>

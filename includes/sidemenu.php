@@ -204,6 +204,20 @@
                 <?php
             }
             ?>
+            <?php
+            if ($_SESSION['level'] == 5 OR $_SESSION['level'] == 9) {
+                ?>
+                <li class="nav-item dropdown">
+                    <a class="dropdown-toggle" href="houses.php">
+                        <span class="icon-holder">
+                        <i class="bi bi-house-gear"></i>
+                        </span>
+                        <span class="title">Houses</span>
+                    </a>
+                </li>
+                <?php
+            }
+            ?>
             <li class="nav-item dropdown">
                 <a class="dropdown-toggle" href="javascript:void(0);">
                     <span class="icon-holder">
