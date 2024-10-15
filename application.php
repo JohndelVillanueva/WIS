@@ -94,7 +94,7 @@ if (!isset($_SESSION['username'])) {
 
 
                                             ?>
-                                            <div class="col-lg-2">
+                                            <div class="col-lg-1">
                                                 <label for="oldschoolctry">Country</label>
                                                 <select id="countryName" name="countryName" class="form-control">
                                                     <option value="">-- select one --</option>
@@ -114,8 +114,23 @@ if (!isset($_SESSION['username'])) {
                                             ?>
 
                                             <div class="col-lg-1">
-                                                <label for="nationality">Nationality</label>
+                                                <label for="nationality">Nationality 1</label>
                                                 <select class="custom-select" id="nationalityName" name="nationalityName">
+
+                                                    <option value="">-- select one --</option>
+                                                    <?php
+                                                    foreach ($nationalities as $nationality) {
+                                                    ?>
+                                                        <option value="<?= $nationality->nationalityName ?>"><?= $nationality->nationalityName ?></option>
+                                                    <?php
+                                                    }
+                                                    ?>
+
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-1">
+                                                <label for="nationality">Nationality 2</label>
+                                                <select class="custom-select" id="nationalityName2" name="nationalityName2">
 
                                                     <option value="">-- select one --</option>
                                                     <?php
@@ -509,6 +524,14 @@ if (!isset($_SESSION['username'])) {
             }
 
             $('#nationalityName').change(function(e) {
+                if ($(this).val() == "Philippines") {
+                    $('#visa').prop('hidden', true);
+                    $('#visalbl').prop('hidden', true);
+                } else {
+                    $('#visa').prop('hidden', false);
+                }
+            });
+            $('#nationalityName2').change(function(e) {
                 if ($(this).val() == "Philippines") {
                     $('#visa').prop('hidden', true);
                     $('#visalbl').prop('hidden', true);

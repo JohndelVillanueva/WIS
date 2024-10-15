@@ -67,7 +67,7 @@ session_start(); ?>
 									// die();
 
 									$uniqid = uniqid('WNS-');
-									$newstudent = "INSERT INTO users24 ( position, empno, sy, gender, username, password, apptype, lname, fname, mname, grade, dob, lrn, prevsch, prevschcountry, uniqid, status, strand, nationality, guardianname, guardianemail, guardianphone, referral, visa ) VALUES ( :position, :empno, :sy, :gender, :username, :password, :apptype, :lname, :fname, :mname, :grade, :dob, :lrn, :prevsch, :prevschcountry, :uniqid, :status, :strand, :nationality, :guardianname, :guardianemail, :guardianphone, :referral, :visa )";
+									$newstudent = "INSERT INTO users24 ( position, empno, sy, gender, username, password, apptype, lname, fname, mname, grade, dob, lrn, prevsch, prevschcountry, uniqid, status, strand, nationality, nationalities, guardianname, guardianemail, guardianphone, referral, visa ) VALUES ( :position, :empno, :sy, :gender, :username, :password, :apptype, :lname, :fname, :mname, :grade, :dob, :lrn, :prevsch, :prevschcountry, :uniqid, :status, :strand, :nationality, :nationalities, :guardianname, :guardianemail, :guardianphone, :referral, :visa )";
 									$studqry = $DB_con->prepare($newstudent);
 									//  tos, earlybird, modelrelease, feepolicy, refund , :tos, :earlybird, :modelrelease, :feepolicy, :refund
 									$studqry->execute(array(
@@ -91,6 +91,7 @@ session_start(); ?>
 										':status' => 1,
 										':strand' => ucwords(strtolower($_POST['strand'])),
 										':nationality' => ucwords(strtolower($_POST['nationalityName'])),
+										':nationalities' => ucwords(strtolower($_POST['nationalityName2'])),
 										':guardianname' => ucwords(strtolower($_POST['guardian'])),
 										':guardianemail' => $_POST['guardianemail'],
 										':guardianphone' => $_POST['guardianphone'],
