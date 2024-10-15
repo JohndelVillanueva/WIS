@@ -179,7 +179,7 @@ if (!isset($_SESSION['username'])) {
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-lg-3">
+                                            <div class="col-lg-2">
                                                 <label for="guardian">Guardian's Name</label>
                                                 <input type="text" class="form-control" id="guardian" name="guardian" placeholder="Guardian's Name" required>
                                             </div>
@@ -203,6 +203,10 @@ if (!isset($_SESSION['username'])) {
                                                     <option value="Friends/Relatives">Friends/Relatives</option>
                                                     <option value="Others">Others</option>
                                                 </select>
+                                            </div>
+                                            <div class="col-lg-1">
+                                                <label for="religion">Religion</label>
+                                                <input type="text" class="form-control" id="religion" name="religion" placeholder="Christianity" required>
                                             </div>
                                             <div class="col-lg-3">
                                                 <label for="visa" id="visalbl">Visa Status</label>
