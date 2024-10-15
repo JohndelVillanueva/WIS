@@ -59,9 +59,9 @@ session_start(); ?>
 									$checkStudent->execute(["position" => "Student"]);
 									$existingUser = $checkStudent->fetch(PDO::FETCH_OBJ);
 
-									$removeCharacter = explode("S24", $existingUser->username);
+									$removeCharacter = explode("S25", $existingUser->username);
 									$nStudent = str_pad(str_pad(intval($removeCharacter[1]) + 1, 5, 0, STR_PAD_LEFT), 5, "0", STR_PAD_LEFT);
-									$insertNewStudent = "S24" . $nStudent;
+									$insertNewStudent = "S25" . $nStudent;
 
 									// echo $nStudent;
 									// die();

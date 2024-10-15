@@ -52,8 +52,8 @@ if (!isset($_SESSION['username'])) {
                                                     <th scope="col">Grade Level</th>
                                                     <th scope="col">Exam Date</th>
                                                     <th scope="col">Interview Date</th>
-                                                    <th scope="col">Notes</th>
                                                     <th scope="col">Recommendations</th>
+                                                    <th scope="col">Notes</th>
                                                     <th scope="col">Approval</th>
                                                 </tr>
                                             </thead>
@@ -93,11 +93,11 @@ if (!isset($_SESSION['username'])) {
                                                                 ?>
                                                             </td>
                                                             <td><input class="form-control" type="datetime-local" id="esched" name="esched" required></td>
-                                                            <td><input type="checkbox" id="esl" name="esl" value="">
+                                                            <td><input type="checkbox" id="esl" name="esl" value="1">
                                                                 <label for="ESL">ESL</label><br>
-                                                                <input type="checkbox" id="star" name="star" value="">
+                                                                <input type="checkbox" id="star" name="star" value="1">
                                                                 <label for="STAR">STAR</label><br>
-                                                                <input type="checkbox" id="completion" name="completion" value="">
+                                                                <input type="checkbox" id="completion" name="completion" value="1">
                                                                 <label for="COMPLETION">COMPLETION</label><br></td>
                                                             <td>
                                                                 <input class="form-control" type="text" id="notes" name="notes" placeholder="Type notes here">
@@ -155,7 +155,7 @@ if (!isset($_SESSION['username'])) {
                                                 <th scope="col">Recommendation(s)</th>
                                                 <th scope="col">Previous School</th>
                                                 <th scope="col">Country</th>
-                                                <th scope="col">Notes</th>
+                                                <!-- <th scope="col">Notes</th> -->
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -216,7 +216,7 @@ if (!isset($_SESSION['username'])) {
                                                         <td><?php echo $row["prevsch"]; ?></td>
                                                         <td><?php echo $row["prevschcountry"]; ?></td>
                                                         <td>
-                                                            <input class="form-control" type="text" id="notes" name="notes" placeholder="Type notes here">
+                                                            <!-- <input class="form-control" type="text" id="notes" name="notes" placeholder="Type notes here"> -->
                                                             <input type="hidden" name="stage" id="stage" value="6">
                                                             <input type="hidden" name="sname" id="sname" value="<?php echo $row['fname'] . " " . $row['lname']; ?>">
                                                             <input type="hidden" name="ern" id="ern" value="<?php echo $row["uniqid"]; ?>">

@@ -68,7 +68,7 @@ if(!isset($_SESSION['username']))
                                                 <tr>
                                                     <form id="myForm" method="post" action="process.php">
                                                         <th scope="row">
-                                                            <div class="col-lg-12">
+                                                            <div class="col-lg-6">
                                                             <p><a class="btn btn-primary" data-toggle="collapse" href="#collapseExample<?php echo $row['uniqid'];?>" role="button" aria-expanded="false" aria-controls="collapseExample<?php echo $row['uniqid'];?>"><?php echo $row["uniqid"];?></a></p>
                                                             <?php
                                                             $logs = $DB_con->prepare("SELECT * FROM logs_enroll WHERE ern = :ern");
