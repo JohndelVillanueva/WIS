@@ -160,24 +160,44 @@ if ($_POST['stage'] <= 9) {
         // Send email to guidance
 
         try {
-
             $mail = configureMailer();
-            $guidance = $_ENV['GUIDANCE']; // Ensure this is set correctly
-
+            $guidance = $_ENV['GUIDANCE']; // Admin email
+            $parentEmail = $student->guardianemail; // Parent email from the form
+        
+            // Fetch admin's display name if needed
             $displayName = $DB_con->prepare("SELECT * FROM user WHERE email = :email");
             $displayName->execute([':email' => $guidance]);
             $user = $displayName->fetch(PDO::FETCH_OBJ);
-
-            $message = "
+        
+            // Message for the admin (guidance)
+            $adminMessage = "
                 <center>
                     <img src='assets/images/logo/logo.png'>
                     <h1>Stage 4: Examination</h1>
-                    <p>Student Examination</p>
-                    <p>Name: <strong>" . strtoupper($studentFname . ', ' . $studentLname) . "</strong></p>
+                    <p>Student Examination for <strong>" . strtoupper($studentFname . ', ' . $studentLname) . "</strong></p>
+                    <p>Please ensure the examination is conducted on time.</p>
+                    <strong>Examination Date: " . $_POST['esched'] . "</strong>
                 </center>
             ";
-
-            sendEmail($mail, $guidance, 'Stage 3 Completed', $message);
+        
+            // Message for the parents
+            $parentMessage = "
+                <center>
+                    <img src='assets/images/logo/logo.png'>
+                    <h1>Stage 4: Examination Notification</h1>
+                    <p>Dear Parent/Guardian,</p>
+                    <p>We would like to inform you that your child <strong>" . strtoupper($studentFname . ', ' . $studentLname) . "</strong> will undergo the Stage 4 examination.</p>
+                    <p>Please ensure your child is prepared for the examination.</p>
+                    <strong>Examination Date: " . $_POST['esched'] . "</strong>
+                </center>
+            ";
+        
+            // Send to admin (guidance)
+            sendEmail($mail, $guidance, 'Stage 4 Examination Notification', $adminMessage);
+        
+            // Send to parent
+            sendEmail($mail, $parentEmail, 'Stage 4 Examination Notification', $parentMessage);
+        
         } catch (Exception $e) {
             echo "Mailer Error: {$mail->ErrorInfo}";
         }

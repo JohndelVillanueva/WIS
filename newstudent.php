@@ -67,15 +67,15 @@ session_start(); ?>
 									// die();
 
 									$uniqid = uniqid('WNS-');
-									$newstudent = "INSERT INTO users24 ( position, empno, sy, gender, username, password, apptype, lname, fname, mname, grade, dob, lrn, prevsch, prevschcountry, uniqid, status, strand, nationality, nationalities, guardianname, guardianemail, guardianphone, referral, visa, religion ) VALUES ( :position, :empno, :sy, :gender, :username, :password, :apptype, :lname, :fname, :mname, :grade, :dob, :lrn, :prevsch, :prevschcountry, :uniqid, :status, :strand, :nationality, :nationalities, :guardianname, :guardianemail, :guardianphone, :referral, :visa, :religion )";
+									$newstudent = "INSERT INTO users24 (position, empno, sy, gender, username, password, apptype, lname, fname, mname, grade, dob, lrn, prevsch, prevschcountry, uniqid, status, strand, nationality, nationalities, guardianname, guardianemail, guardianphone, referral, visa, religion) 
+									VALUES (:position, :empno, :sy, :gender, :username, :password, :apptype, :lname, :fname, :mname, :grade, :dob, :lrn, :prevsch, :prevschcountry, :uniqid, :status, :strand, :nationality, :nationalities, :guardianname, :guardianemail, :guardianphone, :referral, :visa, :religion)";
+
 									$studqry = $DB_con->prepare($newstudent);
-									//  tos, earlybird, modelrelease, feepolicy, refund , :tos, :earlybird, :modelrelease, :feepolicy, :refund
 									$studqry->execute(array(
 										':position' => $_POST['applicationtype'],
 										':empno' => $insertNewStudent,
 										':sy' => '2024-25',
 										':gender' => ucwords(strtolower($_POST['gender'])),
-										// str_replace(' ', '', strtolower($_POST['lastname'] . $_POST['firstname']))
 										':username' => $insertNewStudent,
 										':password' => password_hash($uniqid, PASSWORD_DEFAULT),
 										':apptype' => ucwords(strtolower($_POST['applicationtype'])),
@@ -93,8 +93,8 @@ session_start(); ?>
 										':nationality' => ucwords(strtolower($_POST['nationalityName'])),
 										':nationalities' => ucwords(strtolower($_POST['nationalityName2'])),
 										':guardianname' => ucwords(strtolower($_POST['guardian'])),
-										':guardianemail' => $_POST['guardianemail'],
-										':guardianphone' => $_POST['guardianphone'],
+										':guardianemail' => isset($_POST['guardianemail']) ? $_POST['guardianemail'] : null, // Check if guardian email exists
+										':guardianphone' => isset($_POST['guardianphone']) ? $_POST['guardianphone'] : null, // Check if guardian phone exists
 										':referral' => ucwords(strtolower($_POST['referral'])),
 										':visa' => $_POST['visa'],
 										':religion' => $_POST['religion']

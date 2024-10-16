@@ -175,8 +175,9 @@ if (!isset($_SESSION['username'])) {
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-lg-6">
-                            <select class="custom-select" id="gradelevel" name="gradelevel" required="">
+                        <div class="col-lg-3">
+                        <label for="Grade">Grade</label>
+                            <select class="custom-select" id="gradelevel" name="gradelevel" >
                                 <option value="">-- select one --</option>
                                 <option value="Nursery">Nursery</option>
                                 <option value="Toddler">Toddler</option>
@@ -197,12 +198,31 @@ if (!isset($_SESSION['username'])) {
                                 <option value="CAIE">CAIE</option>
                             </select>
                         </div>
-                        <div class="col-lg-6">
-                            <select class="custom-select" id="section" name="section" required="">
+                        <div class="col-lg-3">
+                            <label for="Section">Section</label>
+                            <select class="custom-select" id="section" name="section" >
                                 <option value="">-- select one --</option>
                                 <option value="A">A</option>
                                 <option value="B">B</option>
                                 <option value="C">C</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3">
+                            <label for="gender">Gender</label>
+                            <select class="custom-select" id="gender" name="gender" >
+                                <option value="">-- select one --</option>
+                                <option value="M">Male</option>
+                                <option value="F">Female</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3">
+                            <label for="gender">House</label>
+                            <select class="custom-select" id="house" name="house" >
+                                <option value="">-- select one --</option>
+                                <option value="Owls">Owls</option>
+                                <option value="Orcas">Orcas</option>
+                                <option value="Bulls">Bulls</option>
+                                <option value="Wolves">Wolves</option>
                             </select>
                         </div>
                     </div>

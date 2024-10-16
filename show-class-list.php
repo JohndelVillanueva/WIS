@@ -4,10 +4,55 @@ session_start();
 if (!isset($_SESSION['username'])) {
     header("location: login.php");
 }
+
+$gradelevel = $_POST["gradelevel"];
+$section = $_POST["section"];
+$gender = $_POST["gender"];
+$house = $_POST["house"];
+
+// Start the SQL query
+$sql = "SELECT * FROM users24 WHERE 1=1 and status = 9"; // Always true, allowing us to append conditions
+
+// Add filters based on selected options
+if (!empty($gradelevel)) {
+    $sql .= " AND grade = :grade";
+}
+if (!empty($section)) {
+    $sql .= " AND section = :section";
+}
+if (!empty($gender)) {
+    $sql .= " AND gender = :gender";
+}
+if (!empty($house)) {
+    $sql .= " AND house = :house";
+}
+
+$sql .= " ORDER BY gender DESC, lname ASC";
+
+// Prepare the statement
+$pdo_statement = $DB_con->prepare($sql);
+
+// Bind the parameters
+if (!empty($gradelevel)) {
+    $pdo_statement->bindParam(':grade', $gradelevel);
+}
+if (!empty($section)) {
+    $pdo_statement->bindParam(':section', $section);
+}
+if (!empty($gender)) {
+    $pdo_statement->bindParam(':gender', $gender);
+}
+if (!empty($house)) {
+    $pdo_statement->bindParam(':house', $house);
+}
+
+// Execute the query
+$pdo_statement->execute();
+$result = $pdo_statement->fetchAll();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <?php include_once "includes/css.php"; ?>
 
 <body>
@@ -26,33 +71,20 @@ if (!isset($_SESSION['username'])) {
                                         <span class="icon-holder">
                                             <i class="anticon anticon-idcard"></i>
                                         </span>
-                                        Class List - <?php echo $_POST["gradelevel"]." - ".$_POST["section"]; ?>
+                                        Class List - <?php echo $_POST["gradelevel"] . " - " . $_POST["section"]; ?>
                                     </h4>
                                 </div>
                                 <div class="card-body">
-                                    <?php
-                                    if (isset($_GET['ern'])) {
-                                    ?>
-                                        <div class="row" id="alertmsg">
-                                            <div class="col-lg-12">
-                                                <div class="alert alert-success" role="alert">
-                                                    Successfully processed ERN <?php echo $_GET['ern']; ?>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <?php
-                                    }
-                                    ?>
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <form action="export.php" method="post" name="upload_excel" enctype="multipart/form-data">
                                                         <input type="hidden" name="gradelevel" value="<?php echo $_POST["gradelevel"]; ?>">
+                                                        <input type="hidden" name="gender" value="<?php echo $_POST["gender"]; ?>">
                                                         <input type="hidden" name="section" value="<?php echo $_POST["section"]; ?>">
-                                                    <button type="submit" name="Export" class="btn btn-primary float-right">
-                                                        Export
-                                                    </button>
+                                                        <input type="hidden" name="house" value="<?php echo $_POST["house"]; ?>">
+                                                        <button type="submit" name="Export" class="btn btn-primary float-right">Export</button>
                                                     </form>
                                                 </div>
                                             </div>
@@ -75,9 +107,6 @@ if (!isset($_SESSION['username'])) {
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $pdo_statement = $DB_con->prepare("SELECT * FROM users24 WHERE grade = :grade AND section = :section ORDER BY gender DESC, lname ASC");
-                                                $pdo_statement->execute(array(":grade"=>$_POST["gradelevel"], ":section"=>$_POST["section"]));
-                                                $result = $pdo_statement->fetchAll();
                                                 foreach ($result as $row) {
                                                 ?>
                                                     <tr>
@@ -110,5 +139,4 @@ if (!isset($_SESSION['username'])) {
         </div>
     </div>
 </body>
-
 </html>
