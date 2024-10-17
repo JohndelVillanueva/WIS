@@ -59,7 +59,7 @@ if (!isset($_SESSION['username'])) {
                                             <tbody>
                                             <?php
                                             $pdo_statement = $DB_con->prepare("SELECT * FROM users24 INNER JOIN s_recommendations ON users24.username = s_recommendations.user_id  WHERE users24.position = :position AND users24.status = :status AND s_recommendations.esl = 1 ORDER BY users24.id DESC");
-                                            $pdo_statement->execute([":position" => "Student" , ":status" => 8]);
+                                            $pdo_statement->execute([":position" => "Student" , ":status" => 9]);
                                             $result = $pdo_statement->fetchAll();
                                             foreach ($result as $row) {
                                                 ?>

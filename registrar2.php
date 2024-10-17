@@ -81,7 +81,7 @@ if (!isset($_SESSION['username'])) {
                                                             <td><?php echo $row["gender"]; ?></td>
                                                             <td><?php echo $row["prevsch"]; ?></td>
                                                             <td>
-                                                                <input class="form-control" type="text" id="notes" name="notes" placeholder="Type notes here">
+                                                                <input class="form-control" type="text" id="notes" name="notes" placeholder="Type notes here" required>
                                                                 <input type="hidden" name="stage" id="stage" value="9">
                                                                 <input type="hidden" name="ern" id="ern" value="<?php echo $row["uniqid"]; ?>">
                                                             </td>

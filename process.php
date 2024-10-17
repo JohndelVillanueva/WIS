@@ -123,12 +123,11 @@ if ($_POST['stage'] <= 9) {
                 <center>
                     <img src='assets/images/logo/logo.png'>
                     <h1>Stage 2: Cashier</h1>
-                    <p> {$fname}  {$lname}  </p>
                     <h2>Time for payment!</h2><br>
                     <hr>
                 </center>
                 <p style='font-size:1.2em;'>
-                    Name: <strong>" . strtolower($studentFname . ", " . $studentLname) . "</strong><br>
+                    Name: <strong>" . strtoupper($studentLname . ", " . $studentFname) . "</strong><br>
                 </p>
             ";
 
@@ -174,7 +173,7 @@ if ($_POST['stage'] <= 9) {
                 <center>
                     <img src='assets/images/logo/logo.png'>
                     <h1>Stage 4: Examination</h1>
-                    <p>Student Examination for <strong>" . strtoupper($studentFname . ', ' . $studentLname) . "</strong></p>
+                    <p>Student Examination for <strong>" . strtoupper($studentLname . ', ' . $studentFname) . "</strong></p>
                     <p>Please ensure the examination is conducted on time.</p>
                     <strong>Examination Date: " . $_POST['esched'] . "</strong>
                 </center>
@@ -228,7 +227,7 @@ if ($_POST['stage'] <= 9) {
                             <center>
                                 <img src='assets/images/logo/logo.png'>
                                 <h1>Stage 5: Time for Interview </h1>
-                                <p>Name: <strong>" . strtoupper($studentFname . ', ' . $studentLname) . "</strong></p>
+                                <p>Name: <strong>" . strtoupper($studentLname . ', ' . $studentFname) . "</strong></p>
                             </center>
                         ";
 
@@ -260,7 +259,7 @@ if ($_POST['stage'] <= 9) {
             <center>
                 <img src='assets/images/logo/logo.png'>
                 <h1>Stage 6: Checking Documents </h1>
-                <p>Name: <strong>" . strtoupper($studentFname . ', ' . $studentLname) . "</strong></p>
+                <p>Name: <strong>" . strtoupper($studentLname . ', ' . $studentFname) . "</strong></p>
             </center>
         ";
 
@@ -293,7 +292,7 @@ if ($_POST['stage'] <= 9) {
             <center>
                 <img src='assets/images/logo/logo.png'>
                 <h1>Stage 7: Payments </h1>
-                <p>Name: <strong>" . strtoupper($studentFname . ', ' . $studentLname) . "</strong></p>
+                <p>Name: <strong>" . strtoupper($studentLname . ', ' . $studentFname) . "</strong></p>
             </center>
         ";
             sendEmail($mail, $cashier, 'Stage 6 Completed', $message);
@@ -323,7 +322,7 @@ if ($_POST['stage'] <= 9) {
             <center>
                 <img src='assets/images/logo/logo.png'>
                 <h1>Stage 8: Checking Documents </h1>
-                <p>Name: <strong>" . strtoupper($studentFname . ', ' . $studentLname) . "</strong></p>
+                <p>Name: <strong>" . strtoupper($studentLname . ', ' . $studentFname) . "</strong></p>
             </center>
         ";
             sendEmail($mail, $registrar, 'Stage 7 Completed', $message);
@@ -366,7 +365,7 @@ if ($_POST['stage'] <= 9) {
             $message = "
             <center>
                 <img src='assets/images/logo/logo.png'>
-                <p>Name: <strong>" . strtoupper($studentFname . ', ' . $studentLname) . "</strong></p>
+                <p>Name: <strong>" . strtoupper($studentLname . ', ' . $studentFname) . "</strong></p>
                 <h1> is Finally Enrolled </h1>
             </center>
         ";

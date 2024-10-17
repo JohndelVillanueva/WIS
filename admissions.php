@@ -84,7 +84,7 @@ if (!isset($_SESSION['username'])) {
                                                             <td><?php echo $row["lname"] . ", " . $row["fname"] . " " . $row["mname"]; ?></td>
                                                             <td><input class="form-control" type="datetime-local" id="esched" name="esched" required></td>
                                                             <td>
-                                                                <input class="form-control" type="text" id="notes" name="notes" placeholder="Type notes here">
+                                                                <input class="form-control" type="text" id="notes" name="notes" placeholder="Type notes here" required>
                                                                 <input type="hidden" name="stage" id="stage" value="4">
                                                                 <input type="hidden" name="sname" id="sname" value="<?php echo $row['fname'] . " " . $row['lname']; ?>">
                                                                 <input type="hidden" name="ern" id="ern" value="<?php echo $row["uniqid"]; ?>" required>

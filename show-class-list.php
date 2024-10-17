@@ -7,7 +7,7 @@ if (!isset($_SESSION['username'])) {
 
 $gradelevel = $_POST["gradelevel"];
 $section = $_POST["section"];
-$gender = $_POST["gender"];
+$type = $_POST["type"];
 $house = $_POST["house"];
 
 // Start the SQL query
@@ -20,8 +20,8 @@ if (!empty($gradelevel)) {
 if (!empty($section)) {
     $sql .= " AND section = :section";
 }
-if (!empty($gender)) {
-    $sql .= " AND gender = :gender";
+if (!empty($type)) {
+    $sql .= " AND type = :type";
 }
 if (!empty($house)) {
     $sql .= " AND house = :house";
@@ -39,8 +39,8 @@ if (!empty($gradelevel)) {
 if (!empty($section)) {
     $pdo_statement->bindParam(':section', $section);
 }
-if (!empty($gender)) {
-    $pdo_statement->bindParam(':gender', $gender);
+if (!empty($type)) {
+    $pdo_statement->bindParam(':type', $type);
 }
 if (!empty($house)) {
     $pdo_statement->bindParam(':house', $house);
@@ -54,6 +54,17 @@ $result = $pdo_statement->fetchAll();
 <!DOCTYPE html>
 <html lang="en">
 <?php include_once "includes/css.php"; ?>
+<!-- DataTables CSS and JS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css">
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+<!-- Buttons Extension for Export and Print -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
 
 <body>
     <div class="app">
@@ -71,7 +82,7 @@ $result = $pdo_statement->fetchAll();
                                         <span class="icon-holder">
                                             <i class="anticon anticon-idcard"></i>
                                         </span>
-                                        Class List - <?php echo $_POST["gradelevel"] . " - " . $_POST["section"]; ?>
+                                        Class List - <?php echo $_POST["gradelevel"] . " - " . $_POST["section"] . " - " . $_POST["type"]; ?>
                                     </h4>
                                 </div>
                                 <div class="card-body">
@@ -81,9 +92,9 @@ $result = $pdo_statement->fetchAll();
                                                 <div class="col-lg-12">
                                                     <form action="export.php" method="post" name="upload_excel" enctype="multipart/form-data">
                                                         <input type="hidden" name="gradelevel" value="<?php echo $_POST["gradelevel"]; ?>">
-                                                        <input type="hidden" name="gender" value="<?php echo $_POST["gender"]; ?>">
                                                         <input type="hidden" name="section" value="<?php echo $_POST["section"]; ?>">
                                                         <input type="hidden" name="house" value="<?php echo $_POST["house"]; ?>">
+                                                        <input type="hidden" name="type" value="<?php echo $_POST["type"]; ?>">
                                                         <button type="submit" name="Export" class="btn btn-primary float-right">Export</button>
                                                     </form>
                                                 </div>
@@ -91,7 +102,7 @@ $result = $pdo_statement->fetchAll();
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <table class="table table-hover">
+                                        <table id="classListTable" class="table table-hover">
                                             <thead>
                                                 <tr>
                                                     <th scope="col">Last Name</th>
@@ -102,13 +113,12 @@ $result = $pdo_statement->fetchAll();
                                                     <th scope="col">LRN</th>
                                                     <th scope="col">Previous School</th>
                                                     <th scope="col">Nationality</th>
+                                                    <th scope="col">Status</th>
                                                     <th scope="col">House</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php
-                                                foreach ($result as $row) {
-                                                ?>
+                                                <?php foreach ($result as $row) { ?>
                                                     <tr>
                                                         <td><?php echo $row["lname"]; ?></td>
                                                         <td><?php echo $row["fname"]; ?></td>
@@ -118,11 +128,10 @@ $result = $pdo_statement->fetchAll();
                                                         <td><?php echo $row["lrn"]; ?></td>
                                                         <td><?php echo $row["prevsch"]; ?></td>
                                                         <td><?php echo $row["nationality"]; ?></td>
+                                                        <td><?php echo $row["type"]; ?></td>
                                                         <td><?php echo $row["house"]; ?></td>
                                                     </tr>
-                                                <?php
-                                                }
-                                                ?>
+                                                <?php } ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -138,5 +147,15 @@ $result = $pdo_statement->fetchAll();
             <?php include_once "includes/scripts.php"; ?>
         </div>
     </div>
+    <script>
+    $(document).ready(function() {
+        $('#classListTable').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+    });
+    </script>
 </body>
 </html>

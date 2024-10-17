@@ -35,10 +35,10 @@ if (!isset($_SESSION['username'])) {
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-lg-1">
-                                                <label for="applicationtype">Type</label>
+                                                <label for="applicationtype">Status</label>
                                                 <select class="custom-select" id="applicationtype" name="applicationtype" required autofocus>
                                                     <option value="Student">New Student</option>
-                                                    <option value="Old Student">Old Student</option>
+                                                    <!-- <option value="Old Student">Old Student</option> -->
                                                     <option value="visiting">Visiting Student</option>
                                                     <option value="non-credit">Non-credit</option>
                                                     <option value="alp">ALP</option>
@@ -48,6 +48,13 @@ if (!isset($_SESSION['username'])) {
                                                 <label for="syear">SY</label>
                                                 <input type="text" class="form-control" id="syear" name="syear" value="2024-25" required disabled>
                                             </div>
+                                            <div class="col-lg-1">
+                                                <label for="type">Type</label>
+                                                <select class="custom-select" id="type" name="type" required autofocus>
+                                                    <option value="New Student">New Student</option>
+                                                    <option value="Old Student">Old Student</option>
+                                                </select>
+                                            </div>
                                             <div class="col-lg-3">
                                                 <label for="lastname">Last Name</label>
                                                 <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last Name" required>
@@ -56,7 +63,7 @@ if (!isset($_SESSION['username'])) {
                                                 <label for="firstname">First Name</label>
                                                 <input type="text" class="form-control" id="firstname" name="firstname" placeholder="First Name" required>
                                             </div>
-                                            <div class="col-lg-3">
+                                            <div class="col-lg-2">
                                                 <label for="middlename">Middle Name</label>
                                                 <input type="text" class="form-control" id="middlename" name="middlename" placeholder="Middle Name">
                                             </div>

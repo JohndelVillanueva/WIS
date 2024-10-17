@@ -208,11 +208,11 @@ if (!isset($_SESSION['username'])) {
                             </select>
                         </div>
                         <div class="col-lg-3">
-                            <label for="gender">Gender</label>
-                            <select class="custom-select" id="gender" name="gender" >
+                            <label for="type">Status</label>
+                            <select class="custom-select" id="type" name="type" >
                                 <option value="">-- select one --</option>
-                                <option value="M">Male</option>
-                                <option value="F">Female</option>
+                                <option value="New Student">New Student</option>
+                                <option value="Old Student">Old Student</option>
                             </select>
                         </div>
                         <div class="col-lg-3">
@@ -225,6 +225,16 @@ if (!isset($_SESSION['username'])) {
                                 <option value="Wolves">Wolves</option>
                             </select>
                         </div>
+                        <!-- <div class="col-lg-2">
+                            <label for="gender">House</label>
+                            <select class="custom-select" id="house" name="house" >
+                                <option value="">-- select one --</option>
+                                <option value="Owls">Owls</option>
+                                <option value="Orcas">Orcas</option>
+                                <option value="Bulls">Bulls</option>
+                                <option value="Wolves">Wolves</option>
+                            </select>
+                        </div> -->
                     </div>
                 </div>
                 <div class="modal-footer">

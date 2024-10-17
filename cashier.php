@@ -166,7 +166,7 @@ if (!isset($_SESSION['username'])) {
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                <input class="form-control" type="text" id="notes" name="notes" placeholder="Type notes here">
+                                                                <input class="form-control" type="text" id="notes" name="notes" placeholder="Type notes here" required>
                                                                 <input type="hidden" name="stage" id="stage" value="3">
                                                                 <input type="hidden" name="ern" id="ern" value="<?php echo $row["uniqid"]; ?>">
                                                             </td>
