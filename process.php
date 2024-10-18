@@ -185,7 +185,7 @@ if ($_POST['stage'] <= 9) {
                     <img src='assets/images/logo/logo.png'>
                     <h1>Stage 4: Examination Notification</h1>
                     <p>Dear Parent/Guardian,</p>
-                    <p>We would like to inform you that your child <strong>" . strtoupper($studentFname . ', ' . $studentLname) . "</strong> will undergo the Stage 4 examination.</p>
+                    <p>We would like to inform you that your child <strong>" . strtoupper($studentLname . ', ' . $studentFname) . "</strong> will undergo the Stage 4 examination.</p>
                     <p>Please ensure your child is prepared for the examination.</p>
                     <strong>Examination Date: " . $_POST['esched'] . "</strong>
                 </center>

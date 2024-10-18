@@ -167,10 +167,17 @@ if (!isset($_SESSION['username'])) {
                                                             </td>
                                                             <td>
                                                                 <input class="form-control" type="text" id="notes" name="notes" placeholder="Type notes here" required>
-                                                                <input type="hidden" name="stage" id="stage" value="3">
+                                                                <input type="hidden" name="stage" id="stage" value="<?php echo $row['status']?>">
                                                                 <input type="hidden" name="ern" id="ern" value="<?php echo $row["uniqid"]; ?>">
                                                             </td>
-                                                            <td><button type="submit" class="btn btn-success rounded" onclick="return confirmSubmission()"><span class="icon-holder"><i class="anticon anticon-check"></i></span></button></td>
+                                                            <td>
+                                                                <button type="submit" class="btn btn-success rounded" name="approve" value="approve" onclick="return confirmSubmission()">
+                                                                    <span class="icon-holder"><i class="anticon anticon-check"></i></span>
+                                                                </button>
+                                                                <button type="submit" class="btn btn-danger rounded" name="downgrade" value="downgrade" onclick="return confirmDowngrade()">
+                                                                    <span class="icon-holder"><i class="anticon anticon-minus"></i></span>
+                                                                </button>
+                                                            </td>
                                                         </form>
                                                     </tr>
                                                 <?php
@@ -192,6 +199,9 @@ if (!isset($_SESSION['username'])) {
                                     return false
                                 }
                             }
+                            function confirmDowngrade() {
+    return confirm('Are you sure you want to downgrade this student\'s status?');
+}
                         </script>
                     </div>
                     <!-- form ends !-->
