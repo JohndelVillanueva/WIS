@@ -2,7 +2,7 @@
     <div class="alert alert-warning" role="alert">
         <h4 class="alert-heading">User : <?php echo htmlspecialchars($log['usertouch']); ?></h4>
 		<hr>
-        <p>Need to pay : </p>
+        <p>To be follow payment : </p>
 			<?php 
                 $selectTheNullValue = $DB_con->prepare("SELECT * FROM s_payables WHERE user_id = :user_id");
                 $selectTheNullValue->execute([
