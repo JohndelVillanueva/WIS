@@ -27,23 +27,23 @@ if(!isset($_SESSION['username']))
                                 <h3 class="pt-2"><span class="icon-holder"><i class="anticon anticon-book"></i></span> UPDATE RFID</h3>
                             </div>
                              <div class="card-body">
-                                 <form method="post" action="update-rfid-process.php">
-                                 <div class="row">
-                                         <div class="col-lg-5">
-                                             <div class="form-group">
-                                                 <input type="oldRFID" class="form-control" name="oldRFID" aria-describedby="oldRFID" placeholder="OLD RFID">
-                                             </div>
-                                         </div>
-                                         <div class="col-lg-5">
-                                             <div class="form-group">
-                                                 <input type="newRFID" class="form-control" name="newRFID" aria-describedby="newRFID" placeholder="NEW RFID">
-                                             </div>
-                                         </div>
-                                         <div class="col-lg-2">
-                                             <button type="submit" class="btn btn-block btn-success">Submit Changes</button>
-                                         </div>
-                                 </div>
-                                 </form>
+                             <form method="post" action="update-rfid-process.php">
+                                <div class="row">
+                                    <div class="col-lg-5">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="oldRFID" placeholder="OLD RFID" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="newRFID" placeholder="NEW RFID" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <button type="submit" class="btn btn-block btn-success">Submit Changes</button>
+                                    </div>
+                                </div>
+                            </form>
                             </div>
                         </div>
                     </div>
