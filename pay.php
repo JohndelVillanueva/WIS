@@ -24,17 +24,24 @@ if ($_POST['stage'] <= 9) {
         $newStatus = max(1, $_POST['stage'] - 1); // Decrement status, ensure it's at least 1
     }
     
+    // Update the user's status
     $process = "UPDATE users24 SET status = :status WHERE uniqid = :uniqid";
     $process_statement = $DB_con->prepare($process);
     $process_statement->execute(array(':status' => $newStatus, ':uniqid' => $_POST['ern']));
     
-    // Log the status change
-    $log = "INSERT INTO logs_enroll ( ern, stage, usertouch, touch, notes ) VALUES ( :ern, :stage, :user, NOW(), :notes )";
-    $logstmt = $DB_con->prepare($log);
-    $logstmt->execute(array(':ern' => $_POST['ern'], ':stage' => $newStatus, ':user' => $_SESSION['fname'] . " " . $_SESSION['lname'], ':notes' => $_POST['notes']));
-    
-    // Send an email if stage is incremented
+    // Proceed with logging and sending emails ONLY if approved (status increment)
     if (isset($_POST['approve'])) {
+        // Log the status change
+        $log = "INSERT INTO logs_enroll ( ern, stage, usertouch, touch, notes ) VALUES ( :ern, :stage, :user, NOW(), :notes )";
+        $logstmt = $DB_con->prepare($log);
+        $logstmt->execute(array(
+            ':ern' => $_POST['ern'], 
+            ':stage' => $newStatus, 
+            ':user' => $_SESSION['fname'] . " " . $_SESSION['lname'], 
+            ':notes' => $_POST['notes']
+        ));
+    
+        // Send an email only when status is incremented
         $mail = new PHPMailer(true);
     
         try {

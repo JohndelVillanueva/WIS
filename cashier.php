@@ -174,9 +174,9 @@ if (!isset($_SESSION['username'])) {
                                                                 <button type="submit" class="btn btn-success rounded" name="approve" value="approve" onclick="return confirmSubmission()">
                                                                     <span class="icon-holder"><i class="anticon anticon-check"></i></span>
                                                                 </button>
-                                                                <button type="submit" class="btn btn-danger rounded" name="downgrade" value="downgrade" onclick="return confirmDowngrade()">
+                                                                <!-- <button type="submit" class="btn btn-danger rounded" name="downgrade" value="downgrade" onclick="return confirmDowngrade()">
                                                                     <span class="icon-holder"><i class="anticon anticon-minus"></i></span>
-                                                                </button>
+                                                                </button> -->
                                                             </td>
                                                         </form>
                                                     </tr>
@@ -200,8 +200,8 @@ if (!isset($_SESSION['username'])) {
                                 }
                             }
                             function confirmDowngrade() {
-    return confirm('Are you sure you want to downgrade this student\'s status?');
-}
+                                return confirm('Are you sure you want to downgrade this student\'s status?');
+                            }
                         </script>
                     </div>
                     <!-- form ends !-->
