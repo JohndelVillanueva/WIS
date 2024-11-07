@@ -105,7 +105,7 @@ if (isset($_REQUEST['submit'])) {
                                 <p class="text-white font-size-16 lh-2 w-80 opacity-08">We don't limit their challenges, we challenge their limits! Unlock your potential at Westfields International School.</p>
                             </div>
                             <div class="d-flex justify-content-between">
-                                <span class="text-white">© 2023 WIS ICT</span>
+                                <span class="text-white">© 2024 WIS ICT</span>
                                 <ul class="list-inline">
                                     <li class="list-inline-item">
                                         <a class="text-white text-link" href="https://fb.me/WestfieldsInternationalSchool">Facebook</a>

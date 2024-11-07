@@ -37,7 +37,8 @@ if (!isset($_SESSION['username'])) {
                                             <div class="col-lg-1">
                                                 <label for="applicationtype">Status</label>
                                                 <select class="custom-select" id="applicationtype" name="applicationtype" required autofocus>
-                                                    <option value="Student">New Student</option>
+                                                    <option value="Regular">New Applicant</option>
+                                                    <option value="Early Bird">Early Bird</option>
                                                     <!-- <option value="Old Student">Old Student</option> -->
                                                     <option value="visiting">Visiting Student</option>
                                                     <option value="non-credit">Non-credit</option>
@@ -46,7 +47,11 @@ if (!isset($_SESSION['username'])) {
                                             </div>
                                             <div class="col-lg-1">
                                                 <label for="syear">SY</label>
-                                                <input type="text" class="form-control" id="syear" name="syear" value="2024-25" required disabled>
+                                                <select class="form-control" id="syear" name="syear" required>
+                                                    <option value="2024-25" selected>2024-25</option>
+                                                    <option value="2025-26">2025-26</option>
+                                                    <option value="2026-27">2026-27</option>
+                                                </select>
                                             </div>
                                             <div class="col-lg-1">
                                                 <label for="type">Type</label>

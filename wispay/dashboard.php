@@ -2,14 +2,27 @@
 require_once("config/config.php");
 session_start();
 
-$id = $_SESSION['username'];
-
-if(!isset($_SESSION['username']))
-{
+if (!isset($_SESSION['username'])) {
     header("location: index.php");
+    exit;
 }
 
-include_once ("headers.php");
+$id = $_SESSION['username'];
+
+if (isset($_GET['password_changed']) && $_GET['password_changed'] === 'success') {
+    echo "<div id='successMessage' style='color: green; padding: 10px; border: 1px solid green; margin: 10px 0;'>
+            Password changed successfully!
+          </div>";
+}
+
+if (isset($_SESSION['success_message'])) {
+    echo "<div id='successMessage' style='color: green; padding: 10px; border: 1px solid green; margin: 10px 0;'>
+            " . $_SESSION['success_message'] . "
+          </div>";
+    unset($_SESSION['success_message']);
+}
+
+include_once("headers.php");
 
 ?>
 
@@ -83,21 +96,30 @@ include_once ("headers.php");
     </div>
 </div>
 <script>
-// Function to get query parameters from the URL
-function getQueryParam(param) {
-    let urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(param);
-}
+    // Function to get query parameters from the URL
+    function getQueryParam(param) {
+        let urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
 
-// Check if there is a message in the query parameter
-let message = getQueryParam('message');
-if (message) {
-    // Display the message to the user, for example, using an alert or a custom notification
-    alert(decodeURIComponent(message));
+    // Check if there is a message in the query parameter
+    let message = getQueryParam('message');
+    if (message) {
+        // Display the message to the user, for example, using an alert or a custom notification
+        alert(decodeURIComponent(message));
 
-    // Optionally, remove the query parameter from the URL to prevent the message from being shown again on reload
-    window.history.replaceState({}, document.title, window.location.pathname);
-}
+        // Optionally, remove the query parameter from the URL to prevent the message from being shown again on reload
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+        // Hide success message after 5 seconds
+        var successMessage = document.getElementById('successMessage');
+        if (successMessage) {
+            setTimeout(function() {
+                successMessage.style.display = 'none';
+            }, 5000); // 5000 milliseconds = 5 seconds
+        }
+});
 </script>
 
 <?php include_once ("scripts.php");?>

@@ -81,7 +81,14 @@ if (!isset($_SESSION['username'])) {
                                                                     ?>
                                                                 </div>
                                                             </th>
-                                                            <td><?php echo $row["lname"] . ", " . $row["fname"] . " " . $row["mname"]; ?></td>
+                                                            <td>
+                                                                <?php 
+                                                                    if ($row['is_situation'] == "Early Bird") {
+                                                                        echo '<i class="anticon anticon-star" style="color: gold; font-size: 0.9em; margin-right: 4px;"></i>';
+                                                                    }
+                                                                    echo $row["lname"].", ".$row["fname"]." ".$row["mname"];
+                                                                ?>
+                                                            </td>
                                                             <td><input class="form-control" type="datetime-local" id="esched" name="esched" required></td>
                                                             <td>
                                                                 <input class="form-control" type="text" id="notes" name="notes" placeholder="Type notes here" required>

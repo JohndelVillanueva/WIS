@@ -26,6 +26,7 @@ if (isset($_REQUEST['submit'])) {
             if ($select_stmt->rowCount() > 0) {
                 if ($username == $row["username"] or $email == $row["email"]) {
                     if (password_verify($password, $row["password"])) {
+                        $_SESSION['id'] = $row["id"];
                         $_SESSION["username"] = $row["username"];
                         $_SESSION["fname"] = $row["fname"];
                         $_SESSION["lname"] = $row["lname"];

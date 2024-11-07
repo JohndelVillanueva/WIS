@@ -67,12 +67,13 @@ session_start(); ?>
 									// die();
 
 									$uniqid = uniqid('WNS-');
-									$newstudent = "INSERT INTO users24 (position, empno, sy, type, gender, username, password, apptype, lname, fname, mname, grade, dob, lrn, prevsch, prevschcountry, uniqid, status, strand, nationality, nationalities, guardianname, guardianemail, guardianphone, referral, visa, religion) 
-									VALUES (:position, :empno, :sy, :type, :gender, :username, :password, :apptype, :lname, :fname, :mname, :grade, :dob, :lrn, :prevsch, :prevschcountry, :uniqid, :status, :strand, :nationality, :nationalities, :guardianname, :guardianemail, :guardianphone, :referral, :visa, :religion)";
+									$newstudent = "INSERT INTO users24 (position, is_situation, empno, sy, type, gender, username, password, apptype, lname, fname, mname, grade, dob, lrn, prevsch, prevschcountry, uniqid, status, strand, nationality, nationalities, guardianname, guardianemail, guardianphone, referral, visa, religion) 
+									VALUES (:position, :is_situation, :empno, :sy, :type, :gender, :username, :password, :apptype, :lname, :fname, :mname, :grade, :dob, :lrn, :prevsch, :prevschcountry, :uniqid, :status, :strand, :nationality, :nationalities, :guardianname, :guardianemail, :guardianphone, :referral, :visa, :religion)";
 
 									$studqry = $DB_con->prepare($newstudent);
 									$studqry->execute(array(
-										':position' => $_POST['applicationtype'],
+										':position' => "Student",
+										':is_situation' => $_POST['applicationtype'],
 										':empno' => $insertNewStudent,
 										':sy' => '2024-25',
 										':type' => $_POST['type'],

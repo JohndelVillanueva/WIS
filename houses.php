@@ -89,7 +89,14 @@ if (!isset($_SESSION['username'])) {
                                                                     ?>
                                                                 </div>
                                                             </th>
-                                                            <td><strong><?php echo $row["lname"] . ", " . $row["fname"] . " " . $row["mname"]; ?>
+                                                            <td>
+                                                                <?php 
+                                                                    if ($row['is_situation'] == "Early Bird") {
+                                                                        echo '<i class="anticon anticon-star" style="color: gold; font-size: 0.9em; margin-right: 4px;"></i>';
+                                                                    }
+                                                                    echo $row["lname"].", ".$row["fname"]." ".$row["mname"];
+                                                                ?>
+                                                            </td>
                                                             &nbsp;
                                                                 <?php
                                                                     if($row["isofficial"] == 0) {
