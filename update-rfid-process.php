@@ -2,48 +2,37 @@
 include_once "includes/config.php";
 session_start();
 
-if(!isset($_SESSION['username'])) {
+if (!isset($_SESSION['username'])) {
     header("location: login.php");
     exit;
 }
 
 // Ensure RFID fields are filled
-if(empty($_POST['oldRFID']) || empty($_POST['newRFID'])) {
-    echo "Both old and new RFID must be provided.";
-    ?>
-    <script>
-        window.location.replace("update-rfid.php?success=0");
-    </script>
-    <?php
+$oldRFID = filter_input(INPUT_POST, 'oldRFID', FILTER_SANITIZE_STRING);
+$newRFID = filter_input(INPUT_POST, 'newRFID', FILTER_SANITIZE_STRING);
+
+if (empty($oldRFID) || empty($newRFID)) {
+    header("location: update-rfid.php?success=0&message=" . urlencode("Both old and new RFID must be provided."));
     exit;
 }
 
-// Sanitize inputs to prevent SQL injection
-$oldRFID = htmlspecialchars(trim($_POST['oldRFID']));
-$newRFID = htmlspecialchars(trim($_POST['newRFID']));
-
+// Check if the old RFID exists in the database
 $checkuser = $DB_con->prepare("SELECT rfid FROM user WHERE rfid = :rfid");
-$checkuser->execute(array(":rfid" => $oldRFID));
-if($checkuser->rowCount() != 0) {
+$checkuser->execute([':rfid' => $oldRFID]);
+
+if ($checkuser->rowCount() != 0) {
     // Update RFID in 'user' table
     $updateuserdb = $DB_con->prepare("UPDATE user SET rfid = :newrfid WHERE rfid = :oldrfid");
-    $updateuserdb->execute(array(":newrfid" => $newRFID, ":oldrfid" => $oldRFID));
+    $updateuserdb->execute([':newrfid' => $newRFID, ':oldrfid' => $oldRFID]);
 
     // Update RFID in 'wispay' table
     $updateWISPay = $DB_con->prepare("UPDATE wispay SET rfid = :newrfid WHERE rfid = :oldrfid");
-    $updateWISPay->execute(array(":newrfid" => $newRFID, ":oldrfid" => $oldRFID));
+    $updateWISPay->execute([':newrfid' => $newRFID, ':oldrfid' => $oldRFID]);
 
-    ?>
-    <script>
-        window.location.replace("update-rfid.php?success=1&rfid=<?php echo $newRFID; ?>");
-    </script>
-    <?php
+    header("location: update-rfid.php?success=1&rfid=" . urlencode($newRFID));
+    exit;
 } else {
-    echo "No user found with that RFID.";
-    ?>
-    <script>
-        window.location.replace("update-rfid.php?success=0&rfid=<?php echo $oldRFID; ?>");
-    </script>
-    <?php
+    header("location: update-rfid.php?success=0&message=" . urlencode("No user found with that RFID."));
+    exit;
 }
 ?>
