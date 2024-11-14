@@ -53,15 +53,15 @@ if(!isset($_SESSION['username']))
                                                     <td><?php echo $students["mname"]; ?></td>
                                                     <td>
                                                         <?php
-                                                            $checkattendance = $DB_con->prepare("SELECT * FROM afterschool_records WHERE asid = :asid AND sid = :sid AND attend = CURDATE()");
+                                                            $checkattendance = $DB_con->prepare("SELECT * FROM afterschool_records WHERE asid = :asid AND sid = :sid");
                                                             $checkattendance->execute(array(
-                                                                ":asid"=>$students["asid"],
-                                                                ":sid"=>$students["id"],
+                                                                ":asid"=> $students["asid"],
+                                                                ":sid"=> $students["id"],
                                                             ));
                                                             $attendee = $checkattendance->fetchAll();
                                                             if($checkattendance->rowCount()==0) {
                                                                 ?>
-                                                                <a href="mark-other.php?sid=<?php echo $students["id"]; ?>&asid=<?php echo $students["asid"]; ?>" class="btn btn-primary btn-lg"><span class="icon-holder"><i class="anticon anticon-check"></i></span></a>
+                                                                <a href="mark-other.php?sid=<?php echo $students["id"]; ?>&asid=<?php echo $students["asid"]; ?>&activity=<?php echo $_GET['activity']; ?>" class="btn btn-primary btn-lg"><span class="icon-holder"><i class="anticon anticon-check"></i></span></a>
                                                                 <?php
                                                             } else {
                                                                 ?><span class="icon-holder"><i class="anticon anticon-check text-success"></i></span><?php

@@ -7,33 +7,53 @@ if(!isset($_SESSION['username']))
 
 }
 
-if(isset($_GET["asid"])) {
-
-    $addstudent = $DB_con->prepare("INSERT INTO afterschool_students (fname, mname, lname) VALUES (:fname, :mname, :lname)");
-    $addstudent->execute(array(
-        ":fname"=>$_GET["fname"],
-        ":mname"=>$_GET["mname"],
-        ":lname"=>$_GET["lname"],
-    ));
-
-    $checkid = $DB_con->query("SELECT LAST_INSERT_ID()");
-    $lastId = $checkid->fetchColumn();
-
-    $enrollstudent = $DB_con->prepare("INSERT INTO afterschool_enrolled (sid, asid, enrolldate) VALUES (:sid, :asid, NOW())");
-    $enrollstudent->execute(array(
-        ":sid"=>$lastId,
-        ":asid"=>$_GET["asid"]
-    ));
-
-    header("location: show-others.php?id=".$_GET["asid"]);
+if (isset($_GET["asid"], $_GET["fname"], $_GET["mname"], $_GET["lname"])) {
+    
+    // Begin a transaction to ensure both inserts succeed or fail together
+    $DB_con->beginTransaction();
+    
+    try {
+        // Insert student details
+        $addstudent = $DB_con->prepare("INSERT INTO afterschool_students (fname, mname, lname) VALUES (:fname, :mname, :lname)");
+        $addstudent->execute(array(
+            ":fname" => $_GET["fname"],
+            ":mname" => $_GET["mname"],
+            ":lname" => $_GET["lname"],
+        ));
+        
+        // Retrieve last inserted ID directly from the PDO object
+        $lastId = $DB_con->lastInsertId();
+        
+        // Insert into enrollment table
+        $enrollstudent = $DB_con->prepare("INSERT INTO afterschool_enrolled (sid, asid, student_name, enrolldate) VALUES (:sid, :asid,:student_name, NOW())");
+        $enrollstudent->execute(array(
+            ":sid" => $lastId,
+            ":asid" => $_GET["asid"],
+            ":student_name" => $_GET["fname"]. " ". $_GET["lname"]
+        ));
+        
+        // Commit the transaction
+        $DB_con->commit();
+        
+        // Redirect to the specified page
+        header("location: show-others.php?id=" . $_GET["asid"]);
+        exit();
+        
+    } catch (PDOException $e) {
+        // Roll back the transaction if any query fails
+        $DB_con->rollBack();
+        echo "Error: " . $e->getMessage();
+    }
+} else {
+    echo "Required data is missing.";
 }
-?><!DOCTYPE html>
+
+?>
+<!DOCTYPE html>
 <html lang="en">
 
 <?php include_once "includes/css.php"; ?>
 	
-<form>
-
 <div class="app is-folded">
     <div class="layout">
         <?php include_once "includes/heading.php"; ?>
@@ -64,19 +84,18 @@ if(isset($_GET["asid"])) {
                                              </button>
                                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                  <a class="dropdown-item" type="button" data-toggle="modal" data-target="#addStudent"><span class="icon-holder"><i class="anticon anticon-user-add"></i></span> Add Student</a>
-                                                 <a class="dropdown-item" href="other-attendance.php?id=<?php echo $_GET["id"];?>"><span class="icon-holder"><i class="anticon anticon-usergroup-add"></i></span> Check Attendance</a>
+                                                 <a class="dropdown-item" href="other-attendance.php?id=<?php echo $_GET["id"];?>&activity=<?php echo $_GET["activity"];?>"><span class="icon-holder"><i class="anticon anticon-usergroup-add"></i></span> Check Attendance</a>
                                              </div>
                                          </div>
                                      </div>
                                  </div>
                                  <div class="row pt-2">
                                     <table class="table table-hover table-bordered text-center">
-                                        <thead class="thead-dark">
+                                        <thead class="thead-purple">
                                             <tr>
                                                 <th>ID</th>
                                                 <th>Last Name</th>
                                                 <th>First Name</th>
-                                                <th>Middle Name</th>
                                                 <th>Enroll Date</th>
                                                 <th>Sessions</th>
                                             </tr>
@@ -94,7 +113,6 @@ if(isset($_GET["asid"])) {
                                                 <td><?php echo $rec["id"]; ?></td>
                                                 <td><?php echo $rec["lname"]; ?></td>
                                                 <td><?php echo $rec["fname"]; ?></td>
-                                                <td><?php echo $rec["mname"]; ?></td>
                                                 <td><?php echo $rec["enrolldate"]; ?></td>
                                                 <td style="width: 8.33%">
                                                     <?php

@@ -208,34 +208,63 @@ if ($_POST['stage'] <= 9) {
         $process_statement = $DB_con->prepare($process);
         $process_statement->execute([':status' => $_POST['stage'], ':uniqid' => $_POST['ern']]);
 
+    
+        // Format the interview time
         $date = date("Y-m-d H:i:s", strtotime($_POST["esched"]));
+        $formattedDate = date("F j, Y, g:i A", strtotime($_POST["esched"])); // e.g., January 1, 2024, 2:00 PM
+    
+        // Update schedule with the interview information
         $sched = "UPDATE schedule SET start = ?, end = ?, title = ? WHERE title LIKE ?";
         $sched_process = $DB_con->prepare($sched);
         $sched_process->execute([$date, $date, $_POST["sname"] . " - INTERVIEW", "%" . $_POST["sname"] . "%"]);
-
+    
         // Send email to registrar
-
         try {
             $mail = configureMailer();
-            $interview = $_ENV['INTERVIEW'];
-
+            $reciever = explode(',', $_ENV['INTERVIEW']); // Assuming recipients are comma-separated
+            $parentEmail = $student->guardianemail;
+        
             $displayName = $DB_con->prepare("SELECT * FROM user WHERE email = :email");
             $displayName->execute([':email' => $interview]);
             $user = $displayName->fetch(PDO::FETCH_OBJ);
 
+
+        
+            // Include formatted interview time in the email
             $message = "
                             <center>
                                 <img src='assets/images/logo/logo.png'>
-                                <h1>Stage 5: Time for Interview </h1>
+                                <h1>Stage 5: Time for Interview</h1>
                                 <p>Name: <strong>" . strtoupper($studentLname . ', ' . $studentFname) . "</strong></p>
+                                <p>Interview Time: <strong>" . $formattedDate . "</strong></p>
                             </center>
                         ";
 
-            sendEmail($mail, $interview, 'Stage 4 Completed', $message);
+            foreach($reciever as $recieve){
+                sendEmail($mail,$recieve, 'Stage 5 Interview Scheduled', $message);
+            }
+
+            $parentMessage = "
+                        <center>
+                            <img src='assets/images/logo/logo.png'>
+                            <h1>Interview Scheduled for Your Child</h1>
+                            <p>Dear Parent,</p>
+                            <p>We would like to inform you that an interview has been scheduled for your child.</p>
+                            <p>Child's Name: <strong>" . strtoupper($studentLname . ', ' . $studentFname) . "</strong></p>
+                            <p>Interview Time: <strong>" . $formattedDate . "</strong></p>
+                            <p>Please ensure that they are prepared for this important step.</p>
+                            <p>Thank you,</p>
+                            <h3>Westfields International School <h3>
+                        </center>
+                    ";
+        
+            sendEmail($mail, $parentEmail, 'Stage 5 Interview Scheduled', $parentMessage);
+
         } catch (Exception $e) {
             echo "Mailer Error: {$mail->ErrorInfo}";
         }
     }
+    
 
     if ($_POST['stage'] == '6') {
         $process = "UPDATE users24 SET status = :status WHERE uniqid = :uniqid";
