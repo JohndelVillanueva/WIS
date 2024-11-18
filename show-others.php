@@ -128,7 +128,7 @@ if (isset($_GET["asid"], $_GET["fname"], $_GET["mname"], $_GET["lname"])) {
                                                             <?php
                                                             if($getsessions->rowCount()!=0) {
                                                             foreach($sessions as $srow) {
-                                                                echo "&check; ".$srow["attend"]."<br>";
+                                                                echo " ".$srow["attend"]." ". $_SESSION['fname']. "<br>";
                                                             } } else {
                                                                 ?>
                                                                 <div class="alert alert-warning" role="alert">
