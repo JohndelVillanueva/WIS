@@ -14,18 +14,20 @@ if (!isset($_SESSION['username'])) {
     <style>
         .modal-content-custom {
             background-color: #f8f9fa;
-            border-radius: 10px;
+            border-radius: 20px;
         }
+
         .modal-dialog-custom {
             max-width: 80%;
         }
-        .form-control-custom {
-            background-color: #fff;
-            border-radius: 5px;
-            border: 1px solid #ced4da;
-            padding: 10px;
+
+        .form-control-custom:focus {
+            box-shadow: 0px 0px 10px rgba(0, 123, 255, 0.5);
+            border-color: #007bff;
         }
-        .table th, .table td {
+
+        .table th,
+        .table td {
             vertical-align: middle;
         }
     </style>
@@ -66,32 +68,56 @@ if (!isset($_SESSION['username'])) {
                                                         <table class="table text-center">
                                                             <thead>
                                                                 <tr>
-                                                                    <th><h3>Fullname</h3></th>
-                                                                    <th><h3>Grade And Section</h3></th>
-                                                                    <th><h3>Complaint</h3></th>
-                                                                    <th><h3>Diagnose</h3></th>
-                                                                    <th><h3>Treatment</h3></th>
-                                                                    <th><h3>Vital Signs</h3></th>
-                                                                    <th><h3>Time-in</h3></th>
-                                                                    <th><h3>Time-out</h3></th>
-                                                                    <th><h3>Remarks</h3></th>
+                                                                    <th>
+                                                                        <h3>Fullname</h3>
+                                                                    </th>
+                                                                    <th>
+                                                                        <h3>Grade And Section</h3>
+                                                                    </th>
+                                                                    <th>
+                                                                        <h3>Complaint</h3>
+                                                                    </th>
+                                                                    <th>
+                                                                        <h3>Diagnosis</h3>
+                                                                    </th>
+                                                                    <th>
+                                                                        <h3>Treatment</h3>
+                                                                    </th>
+                                                                    <th>
+                                                                        <h3>Vital Signs</h3>
+                                                                    </th>
+                                                                    <th>
+                                                                        <h3>Time-in</h3>
+                                                                    </th>
+                                                                    <th>
+                                                                        <h3>Time-out</h3>
+                                                                    </th>
+                                                                    <th>
+                                                                        <h3>Date</h3>
+                                                                    </th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 <tr>
-                                                                    <td><input type="text" class="form-control border-dark form-control-custom" name="name" required></td>
-                                                                    <td><input type="text" class="form-control border-dark form-control-custom" name="grade" required></td>
-                                                                    <td><input type="text" class="form-control border-dark form-control-custom" name="complaint" required></td>
-                                                                    <td><input type="text" class="form-control border-dark form-control-custom" name="diagnose" required></td>
-                                                                    <td><input type="text" class="form-control border-dark form-control-custom" name="treatment" required></td>
-                                                                    <td><input type="text" class="form-control border-dark form-control-custom" name="vital_signs" required></td>
-                                                                    <td><input type="time" class="form-control border-dark form-control-custom" name="time_in" required></td>
-                                                                    <td><input type="time" class="form-control border-dark form-control-custom" name="time_out" required></td>
-                                                                    <td><input type="text" class="form-control border-dark form-control-custom" name="remark" required></td>
-                                                                    <td><input type="hidden" class="form-control border-dark form-control-custom" name="date"></td>
+                                                                    <td><input type="text" class="form-control border-dark form-control-custom" name="name" placeholder="Juan Tamad" required></td>
+                                                                    <td><input type="text" class="form-control border-dark form-control-custom" name="grade" placeholder="13 - Mabuti" required></td>
+                                                                    <td><input type="text" class="form-control border-dark form-control-custom" name="complaint" placeholder="Headache" required></td>
+                                                                    <td><input type="text" class="form-control border-dark form-control-custom" name="diagnose" placeholder="N/a" required></td>
+                                                                    <td><input type="text" class="form-control border-dark form-control-custom" name="treatment" placeholder="Example" required></td>
+                                                                    <td><input type="text" class="form-control border-dark form-control-custom" name="vital_signs" placeholder="Example" required></td>
+                                                                    <td><input type="time" class="form-control border-dark form-control-custom" name="time_in" placeholder="Example" required></td>
+                                                                    <td><input type="time" class="form-control border-dark form-control-custom" name="time_out" placeholder="Example" required></td>
+                                                                    <td><input type="date" class="form-control border-dark form-control-custom" name="date"></td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
+                                                        <!-- Remarks input moved outside the table -->
+                                                        <div class="form-group mt-3">
+                                                            <label for="remark" class="text-center d-block">
+                                                                <h3>Remarks</h3>
+                                                            </label>
+                                                            <input type="text" class="form-control border-dark form-control-custom" name="remark" required>
+                                                        </div>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="submit" class="btn btn-success">Save changes</button>
@@ -102,6 +128,7 @@ if (!isset($_SESSION['username'])) {
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <button type="button" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-primary float-right">Add New</button><br><br><br>
@@ -130,23 +157,23 @@ if (!isset($_SESSION['username'])) {
                                                 </tr>
                                             </thead>
                                             <tbody class="text-center fs-1">
-                                                <?php 
-                                                foreach ($students as $student): 
+                                                <?php
+                                                foreach ($students as $student):
                                                 ?>
                                                     <tr style="padding-top:10px!important; padding-bottom:10px!important;">
                                                         <td><?= $student->name ?></td>
                                                         <td><?= $student->grade ?></td>
                                                         <td><?= $student->complaint ?></td>
                                                         <td><?= $student->diagnose ?></td>
-                                                        <td><?= $student->treatment?></td>
+                                                        <td><?= $student->treatment ?></td>
                                                         <td><?= $student->vital_signs ?></td>
                                                         <td><?= $student->time_in ?></td>
                                                         <td><?= $student->time_out ?></td>
                                                         <td><?= $student->date ?></td>
                                                         <td><?= $student->remarks ?></td>
                                                     </tr>
-                                                <?php 
-                                                endforeach; 
+                                                <?php
+                                                endforeach;
                                                 ?>
                                             </tbody>
                                         </table>

@@ -89,7 +89,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // var_dump($_POST);
 // die();
 
+
+
+
 if ($_POST['stage'] <= 9) {
+
+    $image = "https://westfields.edu.ph/wp-content/uploads/2023/08/LOGO-1.png";
+
+    // $imagePath = 'assets/images/logo/logo.png';
+    // $imageData = file_get_contents($imagePath);
+    // $base64Image = base64_encode($imageData);
+    // $base64ImageSrc = 'data:image/png;base64,' . $base64Image;
+
+    // if (!file_exists($imagePath)) {
+    //     echo "Image not found at $imagePath";
+    // }
 
     $getSpecificUser = $DB_con->prepare("SELECT * FROM users24 WHERE uniqid = :uniqid");
     $getSpecificUser->execute([':uniqid' => $_POST['ern']]);
@@ -121,7 +135,7 @@ if ($_POST['stage'] <= 9) {
 
             $message = "
                 <center>
-                    <img src='assets/images/logo/logo.png'>
+                    <img src='$image'>
                     <h1>Stage 2: Cashier</h1>
                     <h2>Time for payment!</h2><br>
                     <hr>
@@ -171,7 +185,7 @@ if ($_POST['stage'] <= 9) {
             // Message for the admin (guidance)
             $adminMessage = "
                 <center>
-                    <img src='assets/images/logo/logo.png'>
+                    <img src='$image'>
                     <h1>Stage 4: Examination</h1>
                     <p>Student Examination for <strong>" . strtoupper($studentLname . ', ' . $studentFname) . "</strong></p>
                     <p>Please ensure the examination is conducted on time.</p>
@@ -182,7 +196,7 @@ if ($_POST['stage'] <= 9) {
             // Message for the parents
             $parentMessage = "
                 <center>
-                    <img src='assets/images/logo/logo.png'>
+                    <img src='$image'>
                     <h1>Stage 4: Examination Notification</h1>
                     <p>Dear Parent/Guardian,</p>
                     <p>We would like to inform you that your child <strong>" . strtoupper($studentLname . ', ' . $studentFname) . "</strong> will undergo the Stage 4 examination.</p>
@@ -201,6 +215,7 @@ if ($_POST['stage'] <= 9) {
             echo "Mailer Error: {$mail->ErrorInfo}";
         }
     }
+    
 
     // Stage 5: Update status and reschedule interview
     if ($_POST['stage'] == '5') {
@@ -233,7 +248,7 @@ if ($_POST['stage'] <= 9) {
             // Include formatted interview time in the email
             $message = "
                             <center>
-                                <img src='assets/images/logo/logo.png'>
+                                <img src='$image'>
                                 <h1>Stage 5: Time for Interview</h1>
                                 <p>Name: <strong>" . strtoupper($studentLname . ', ' . $studentFname) . "</strong></p>
                                 <p>Interview Time: <strong>" . $formattedDate . "</strong></p>
@@ -246,7 +261,7 @@ if ($_POST['stage'] <= 9) {
 
             $parentMessage = "
                         <center>
-                            <img src='assets/images/logo/logo.png'>
+                            <img src='$image'>
                             <h1>Interview Scheduled for Your Child</h1>
                             <p>Dear Parent,</p>
                             <p>We would like to inform you that an interview has been scheduled for your child.</p>
@@ -286,7 +301,7 @@ if ($_POST['stage'] <= 9) {
 
             $message = "
             <center>
-                <img src='assets/images/logo/logo.png'>
+                <img src='$image'>
                 <h1>Stage 6: Checking Documents </h1>
                 <p>Name: <strong>" . strtoupper($studentLname . ', ' . $studentFname) . "</strong></p>
             </center>
@@ -319,7 +334,7 @@ if ($_POST['stage'] <= 9) {
 
             $message = "
             <center>
-                <img src='assets/images/logo/logo.png'>
+                <img src='$image'>
                 <h1>Stage 7: Payments </h1>
                 <p>Name: <strong>" . strtoupper($studentLname . ', ' . $studentFname) . "</strong></p>
             </center>
@@ -349,7 +364,7 @@ if ($_POST['stage'] <= 9) {
 
             $message = "
             <center>
-                <img src='assets/images/logo/logo.png'>
+                <img src='$image'>
                 <h1>Stage 8: Checking Documents </h1>
                 <p>Name: <strong>" . strtoupper($studentLname . ', ' . $studentFname) . "</strong></p>
             </center>
@@ -364,52 +379,69 @@ if ($_POST['stage'] <= 9) {
         $process = "UPDATE users24 SET status = :status WHERE uniqid = :uniqid";
         $process_statement = $DB_con->prepare($process);
         $process_statement->execute(array(':status' => $_POST['stage'], ':uniqid' => $_POST['ern']));
-
-        // echo "Update Successfully";
-
+    
         $getstudentdetails = $DB_con->prepare("SELECT * FROM users24 WHERE uniqid = :uniqid");
         $getstudentdetails->execute(array(':uniqid' => $_POST['ern']));
-        $result = $getstudentdetails->fetchAll();
-
+        $student = $getstudentdetails->fetch(PDO::FETCH_OBJ);
+    
         try {
-            // Load environment variables
             $mail = configureMailer();
-
+    
             // Sender and recipient
             $mail->setFrom('no-reply@westfields.edu.ph', 'Westfields International School');
+            
+            // Get enrolled recipients from environment variable and add them to the email
             $enrolled = explode(',', $_ENV['ENROLLED']);
-
             foreach ($enrolled as $enroll) {
                 $mail->addAddress($enroll);
             }
-            // var_dump($enrolled);
-            // die();
-
-            // Fetch student details
-            $displayName = $DB_con->prepare("SELECT * FROM user WHERE email = :email");
-            $displayName->execute([':email' => $enrolled]);
-            $user = $displayName->fetch(PDO::FETCH_OBJ);
-
+    
+            // Add parent's email address using $student->guardianemail
+            if (!empty($student->guardianemail)) {
+                $mail->addAddress($student->guardianemail);
+            }
+    
             // Construct email content
             $message = "
             <center>
-                <img src='assets/images/logo/logo.png'>
-                <p>Name: <strong>" . strtoupper($studentLname . ', ' . $studentFname) . "</strong></p>
-                <h1> is Finally Enrolled </h1>
-            </center>
-        ";
+                <img src='$image' alt='Logo' style='width:170px; height:auto; margin-bottom:10px;'>
 
+                <p style='font-size:16px; color:#333;'>
+                    <strong style='text-transform:uppercase;'>" . htmlspecialchars($student->lname) . ", " . htmlspecialchars($student->fname) . "</strong>
+                </p>
+
+                <h1 style='font-size:24px; color:#4CAF50; margin-top:20px;'>
+                    Official Enrollment Confirmation
+                </h1>
+
+                <p style='font-size:16px; color:#333; line-height:1.6;'>
+                    Dear Staff and Parents,<br><br>
+                    We are pleased to inform you that <strong>" . htmlspecialchars($student->fname) . " " . htmlspecialchars($student->lname) . "</strong> has successfully completed the enrollment process and is now officially enrolled in our program.
+                </p>
+
+                <p style='font-size:16px; color:#333;'>
+                    Best regards,<br>
+                    Westfields International School
+                </p>
+            </center>
+            ";
+    
+            
             // Email content settings
             $mail->isHTML(true);
             $mail->Subject = 'Stage 8 Completed';
             $mail->Body = $message;
-
+    
             // Send the email
             $mail->send();
+            // print_r($imagePath);
+            // var_dump($base64ImageSrc);
+            // die();
         } catch (Exception $e) {
             echo "Mailer Error: {$mail->ErrorInfo}";
         }
-    } else {
+    }
+     else {
         $process = "UPDATE users24 SET status = :status WHERE uniqid = :uniqid";
         $process_statement = $DB_con->prepare($process);
         $process_statement->execute(array(':status' => $_POST['stage'], ':uniqid' => $_POST['ern']));
