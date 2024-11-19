@@ -50,6 +50,58 @@ if (isset($_GET["asid"], $_GET["fname"], $_GET["mname"], $_GET["lname"])) {
 
 ?>
 <!DOCTYPE html>
+<style>
+    body {
+            background-image: url('assets/images/others/bg.jpg'); /* You'll need to add your background image to this path */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        /* Add a semi-transparent overlay to improve content readability */
+        .app {
+            background-color: rgba(255, 255, 255, 0.9);
+            min-height: 100vh;
+        }
+
+        /* Center buttons in the Actions column */
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        /* Make cards slightly transparent to show background */
+        .card {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            border: none;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Style the card header */
+        .card-header.bg-warning {
+            background-color: rgba(255, 193, 7, 0.9) !important;
+            border-bottom: none;
+        }
+
+        /* Style the table */
+        .table {
+            background-color: rgba(255, 255, 255, 0.95);
+        }
+
+        .thead-purple {
+            background-color: rgba(102, 51, 153, 0.9);
+            color: white;
+        }
+
+        /* Style the modals */
+        .modal-content {
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+        }
+</style>
 <html lang="en">
 
 <?php include_once "includes/css.php"; ?>
@@ -128,7 +180,7 @@ if (isset($_GET["asid"], $_GET["fname"], $_GET["mname"], $_GET["lname"])) {
                                                             <?php
                                                             if($getsessions->rowCount()!=0) {
                                                             foreach($sessions as $srow) {
-                                                                echo " ".$srow["attend"]." ". $_SESSION['fname']. "<br>";
+                                                                echo " ".$srow["attend"]." ". $_SESSION['fname'] ." - " . $srow['payment_status'] .  "<br>";
                                                             } } else {
                                                                 ?>
                                                                 <div class="alert alert-warning" role="alert">
