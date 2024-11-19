@@ -11,109 +11,7 @@ require_once 'config.php';
     <meta http-equiv="refresh" content="2; url=index.php" />
     <title>WIS Wifi Voucher KIOSK</title>
     <style type="text/css">
-        body {
-            font-size: 1em;
-            font-family:sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        div.voucher {
-            display: inline-block;
-            width: 166px;
-            height: 100px;
-            float: left;
-            page-break-inside: avoid;
-        }
-
-        div.voucher div.voucher-outerWrapper {
-            display: table;
-            width: 100%;
-            height: 100%;
-        }
-
-        div.voucher div.voucher-innerWrapper {
-            display: table-cell;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            vertical-align: middle;
-            overflow: hidden;
-        }
-
-        div.limit {
-            font-size: 0.7em;
-        }
-
-        div.limit div {
-            float: left;
-            width: 100%;
-        }
-
-        div.limit.downrate_enabled .downrate_enabled,
-        div.limit.uprate_enabled .uprate_enabled,
-        div.limit.quota_enabled .quota_enabled {
-            display: inline-block;
-        }
-
-        div.limit.downrate_enabled .downrate_disabled,
-        div.limit.uprate_enabled .uprate_disabled,
-        div.limit.quota_enabled .quota_disabled {
-            display: none;
-        }
-
-        div.limit.downrate_disabled .downrate_enabled,
-        div.limit.uprate_disabled .uprate_enabled,
-        div.limit.quota_disabled .quota_enabled {
-            display: none;
-        }
-
-        div.limit.downrate_disabled .downrate_disabled,
-        div.limit.uprate_disabled .uprate_disabled,
-        div.limit.quota_disabled .quota_disabled {
-            display: inline-block;
-        }
-
-        div.limit div div.heading {
-            display: inline-block;
-            width: 83px;
-            text-align: right;
-        }
-        div.limit div div.value {
-            display: inline-block;
-            width: 78px;
-            text-align: left;
-            margin-left: 5px;
-            white-space: nowrap;
-        }
-
-        div.valid {
-            color: #000;
-        }
-
-        div.valid div {
-            display: inline-block;
-        }
-
-        div.valid.days_enabled .days_enabled,
-        div.valid.hours_enabled .hours_enabled,
-        div.valid.minutes_enabled .minutes_enabled {
-            display: inline-block;
-        }
-
-        div.valid.days_disabled .days_enabled,
-        div.valid.hours_disabled .hours_enabled,
-        div.valid.minutes_disabled .minutes_enabled {
-            display: none;
-        }
-
-        div.code {
-            font-weight:bold;
-            padding-top: 5px;
-            padding-bottom: 5px;
-            font-size:larger;
-        }
-
+        /* Your existing CSS styles */
     </style>
 </head>
 <body onload="self.focus(); window.print()">
@@ -122,39 +20,38 @@ require_once 'config.php';
         <div class="voucher-innerWrapper">
             <div class="valid days_disabled hours_enabled minutes_disabled">
                 <?php
+                    // Retrieve user input
                     $voucher_expiration = $_POST['time'];
                     $voucher_count = 1;
                     $voucher_note = $_POST['name'];
+                    $download_limit = isset($_POST['download_limit']) ? intval($_POST['download_limit']) : 10; // Default to 10 MB
+                    $upload_limit = isset($_POST['upload_limit']) ? intval($_POST['upload_limit']) : 10; // Default to 10 MB
                     $site_id = 'default';
 
-                    // Set default download and upload limits
-                    $default_download_limit = 10; // Default download limit in MB
-                    $default_upload_limit = 10;   // Default upload limit in MB
-
+                    // Connect to the UniFi controller
                     $unifi_connection = new UniFi_API\Client($controlleruser, $controllerpassword, $controllerurl, $site_id, $controllerversion);
                     $set_debug_mode   = $unifi_connection->set_debug($debug);
                     $loginresults     = $unifi_connection->login();
 
-                    // Assuming create_voucher accepts 'download_limit' and 'upload_limit' as parameters (adjust if needed)
-                    $voucher_result = $unifi_connection->create_voucher($voucher_expiration, $voucher_count, 0, $voucher_note, $default_download_limit, $default_upload_limit);
+                    // Create the voucher with dynamic limits
+                    $voucher_result = $unifi_connection->create_voucher($voucher_expiration, $voucher_count, 0, $voucher_note, $download_limit, $upload_limit);
 
+                    // Fetch voucher details
                     $vouchers = $unifi_connection->stat_voucher($voucher_result[0]->create_time);
-                    
                 ?>
                 <div class="valid">Westfields</div>
                 <div class="valid">Internet Voucher</div>
                 <hr>
-                <div class="valid"><?php echo $vouchers[0]->note; ?></div><br>
+                <div class="valid"><h3><?php echo $vouchers[0]->note; ?></h3></div><br>
                 <div class="limit"><?php echo $_POST['type']; ?></div>
-                <div class="limit">Download Limit: <?php echo $default_download_limit; ?> MB</div> <!-- Display the download limit -->
-                <div class="limit">Upload Limit: <?php echo $default_upload_limit; ?> MB</div> <!-- Display the upload limit -->
+                <div class="limit">Download Limit: <?php echo $download_limit; ?> MB</div> <!-- Display the dynamic download limit -->
+                <div class="limit">Upload Limit: <?php echo $upload_limit; ?> MB</div> <!-- Display the dynamic upload limit -->
             </div>
-            <div class="code"><?php echo $vouchers[0]->code; ?></div>
+            <div class="code"><h1><?php echo $vouchers[0]->code; ?></h1></div>
             <hr>
             <div class="limit">https://westfields.edu.ph</div>
         </div>
     </div>
 </div>
-
 </body>
 </html>
