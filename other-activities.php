@@ -196,51 +196,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["activity"])) {
                                         </div>
                                     </div>
                                     <div class="table-responsive">
-                                        <table id="activitiesTable" class="table table-hover table-bordered text-center">
-                                            <thead class="thead-purple">
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>Activity</th>
-                                                    <th>Coach</th>
-                                                    <th>Sessions</th>
-                                                    <th>Rate</th>
-                                                    <th style="width:10%">Actions</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php
-                                                $getactivities = $DB_con->prepare("SELECT * FROM afterschool_activities");
-                                                $getactivities->execute();
-                                                $result = $getactivities->fetchAll();
-                                                foreach ($result as $row) {
-                                                ?>
-                                                    <tr>
-                                                        <td><?php echo $row["id"]; ?></td>
-                                                        <td><?php echo $row["activity"]; ?></td>
-                                                        <td><?php echo $row["coach"]; ?></td>
-                                                        <td><?php echo $row["max"]; ?></td>
-                                                        <td>P <?php echo $row["rate"]; ?></td>
-                                                        <td class="action-buttons">
-                                                            <button class="btn btn-success" data-toggle="modal" data-target="#editActivityModal<?php echo $row['id']; ?>">
-                                                                <i class="anticon anticon-edit"></i> Edit
-                                                            </button>
-                                                            <a  class="btn btn-primary" href="show-others.php?id=<?php echo $row['id']; ?>&activity=<?php echo $row['activity']; ?>">
-                                                                <i class="anticon anticon-eye"></i> Show Students
-                                                            </a>
-                                                            
-                                                            <!-- <div id="loadingAnimation" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-                                                                <div class="spinner"></div>
-                                                                <p>Redirecting...</p>
-                                                            </div> -->
-                                                            <a class="btn btn-danger" href="delete-other.php?id=<?php echo $row['id']; ?>" 
-   onclick="return confirm('Are you sure you want to delete this item?');">
-    <i class="anticon anticon-delete"></i> Remove
-</a>
-                                                        </td>
-                                                    </tr>
-                                                <?php } ?>
-                                            </tbody>
-                                        </table>
+                                    <table id="activitiesTable" class="table table-hover table-bordered text-center">
+    <thead class="thead-purple">
+        <tr>
+            <th>ID</th>
+            <th>Activity</th>
+            <th>Coach</th>
+            <th>Sessions</th>
+            <th>Rate</th>
+            <th style="width:10%">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        $getactivities = $DB_con->prepare("SELECT * FROM afterschool_activities");
+        $getactivities->execute();
+        $result = $getactivities->fetchAll();
+
+        if (count($result) > 0) {
+            foreach ($result as $row) {
+        ?>
+            <tr>
+                <td><?php echo $row["id"]; ?></td>
+                <td><?php echo $row["activity"]; ?></td>
+                <td><?php echo $row["coach"]; ?></td>
+                <td><?php echo $row["max"]; ?></td>
+                <td>P <?php echo $row["rate"]; ?></td>
+                <td class="action-buttons">
+                    <button class="btn btn-success" data-toggle="modal" data-target="#editActivityModal<?php echo $row['id']; ?>">
+                        <i class="anticon anticon-edit"></i> Edit
+                    </button>
+                    <a class="btn btn-primary" href="show-others.php?id=<?php echo $row['id']; ?>&activity=<?php echo $row['activity']; ?>">
+                        <i class="anticon anticon-eye"></i> Show Students
+                    </a>
+                    <a class="btn btn-danger" href="delete-other.php?id=<?php echo $row['id']; ?>" 
+                       onclick="return confirm('Are you sure you want to delete this item?');">
+                        <i class="anticon anticon-delete"></i> Remove
+                    </a>
+                </td>
+            </tr>
+        <?php 
+            }
+        } else { 
+        ?>
+            <tr>
+                <td colspan="6">No record yet</td>
+            </tr>
+        <?php 
+        } 
+        ?>
+    </tbody>
+</table>
+
                                     </div>
                                 </div>
                             </div>
