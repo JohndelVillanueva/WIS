@@ -27,7 +27,7 @@ if (!in_array($payment_status, ['Paid', 'Unpaid'])) {
 }
 
 // Debug: Print sanitized inputs
-var_dump($sid, $asid, $activity, $payment_status);
+// var_dump($sid, $asid, $activity, $payment_status);
 
 // Check student information
 $getStudentInformation = $DB_con->prepare("SELECT fname, lname FROM afterschool_students WHERE id = :sid");
@@ -39,7 +39,7 @@ if (!$getInformation) {
 }
 
 // Debug: Check student data
-var_dump($getInformation);
+// var_dump($getInformation);
 
 // Insert attendance record with payment status
 $process_by = $_SESSION['lname'] . " " . $_SESSION['fname'];
@@ -51,7 +51,7 @@ $attendance = $DB_con->prepare("
 $success = $attendance->execute([
     ":sid" => $sid,
     ":asid" => $asid,
-    ":s_name" => $getInformation->lname . " " . $getInformation->fname,
+    ":s_name" => $getInformation->fname . " " . $getInformation->lname,
     ":as_name" => $activity,
     ":process_by" => $process_by,
     ":payment_status" => $payment_status

@@ -26,8 +26,89 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["activity"])) {
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <style>
+        .modal-content {
+            border: none;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-header {
+            border-bottom: none;
+            padding: 1.5rem;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            border-top: none;
+            padding: 1.5rem;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            color: #444;
+        }
+
+        .input-group-text {
+            background-color: #f8f9fa;
+            border-right: none;
+        }
+
+        .form-control {
+            border-left: none;
+        }
+
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #ced4da;
+        }
+
+        .input-group:focus-within .input-group-text,
+        .input-group:focus-within .form-control {
+            border-color: rgba(102, 51, 153, 0.5);
+        }
+
+        .required::after {
+            content: " *";
+            color: red;
+        }
+
+        .btn-primary {
+            background-color: rgba(102, 51, 153, 0.9);
+            border-color: rgba(102, 51, 153, 0.9);
+        }
+
+        .btn-primary:hover {
+            background-color: rgba(102, 51, 153, 1);
+            border-color: rgba(102, 51, 153, 1);
+        }
+
+        .form-control.is-valid,
+        .was-validated .form-control:valid {
+            border-color: #28a745;
+            background-image: none;
+        }
+
+        .form-control.is-invalid,
+        .was-validated .form-control:invalid {
+            border-color: #dc3545;
+            background-image: none;
+        }
+
+        /* Animation for modal */
+        .modal.fade .modal-dialog {
+            transform: scale(0.8);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .modal.show .modal-dialog {
+            transform: scale(1);
+        }
+
         body {
-            background-image: url('assets/images/others/bg.jpg'); /* You'll need to add your background image to this path */
+            background-image: url('assets/images/others/bg.jpg');
+            /* You'll need to add your background image to this path */
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -70,12 +151,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["activity"])) {
             background-color: rgba(102, 51, 153, 0.9);
             color: white;
         }
+        /* Spinner styles */
+.spinner {
+    border: 5px solid #f3f3f3; /* Light grey */
+    border-top: 5px solid #007bff; /* Blue */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
 
-        /* Style the modals */
-        .modal-content {
-            background-color: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
-        }
+/* Keyframe for spinning */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
     </style>
 </head>
 
@@ -129,12 +224,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["activity"])) {
                                                             <button class="btn btn-success" data-toggle="modal" data-target="#editActivityModal<?php echo $row['id']; ?>">
                                                                 <i class="anticon anticon-edit"></i> Edit
                                                             </button>
-                                                            <a class="btn btn-primary" href="show-others.php?id=<?php echo $row["id"]; ?>&activity=<?php echo $row["activity"]; ?>">
+                                                            <a  class="btn btn-primary" href="show-others.php?id=<?php echo $row['id']; ?>&activity=<?php echo $row['activity']; ?>">
                                                                 <i class="anticon anticon-eye"></i> Show Students
                                                             </a>
-                                                            <a class="btn btn-danger" href="delete-other.php?id=<?php echo $row["id"]; ?>">
-                                                                <i class="anticon anticon-delete"></i> Remove
-                                                            </a>
+                                                            
+                                                            <!-- <div id="loadingAnimation" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                                                                <div class="spinner"></div>
+                                                                <p>Redirecting...</p>
+                                                            </div> -->
+                                                            <a class="btn btn-danger" href="delete-other.php?id=<?php echo $row['id']; ?>" 
+   onclick="return confirm('Are you sure you want to delete this item?');">
+    <i class="anticon anticon-delete"></i> Remove
+</a>
                                                         </td>
                                                     </tr>
                                                 <?php } ?>
@@ -150,44 +251,148 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["activity"])) {
             </div>
         </div>
     </div>
-    <!-- Modal For editing the activity -->
     <?php foreach ($result as $row) { ?>
         <div class="modal fade" id="editActivityModal<?php echo $row['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="editActivityModalLabel<?php echo $row['id']; ?>" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <form action="edit-activity.php" method="post">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="editActivityModalLabel<?php echo $row['id']; ?>">
-                                <span class="icon-holder"><i class="anticon anticon-edit"></i></span> Edit Activity
+                    <form id="editActivityForm<?php echo $row['id']; ?>" action="edit-activity.php" method="post" novalidate>
+                        <div class="modal-header bg-purple text-white" style="background-color: rgba(102, 51, 153, 0.9);">
+                            <h5 class="modal-title d-flex align-items-center" id="editActivityModalLabel<?php echo $row['id']; ?>">
+                                <span class="icon-holder mr-2">
+                                    <i class="anticon anticon-edit"></i>
+                                </span>
+                                Edit Activity
                             </h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <!-- Hidden input to pass the activity ID -->
                             <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                            
-                            <div class="form-group">
-                                <label for="editActivityName<?php echo $row['id']; ?>">Activity Name</label>
-                                <input type="text" name="activity" class="form-control" id="editActivityName<?php echo $row['id']; ?>" value="<?php echo $row['activity']; ?>" required>
+
+                            <!-- Activity Name Field -->
+                            <div class="form-group mb-4">
+                                <label for="editActivityName<?php echo $row['id']; ?>" class="font-weight-semibold required">
+                                    Activity Name
+                                </label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="anticon anticon-flag"></i>
+                                        </span>
+                                    </div>
+                                    <input
+                                        type="text"
+                                        name="activity"
+                                        class="form-control"
+                                        id="editActivityName<?php echo $row['id']; ?>"
+                                        value="<?php echo htmlspecialchars($row['activity']); ?>"
+                                        required
+                                        minlength="3"
+                                        pattern="[A-Za-z0-9\s-]+"
+                                        placeholder="Enter activity name">
+                                    <div class="invalid-feedback">
+                                        Please enter a valid activity name (minimum 3 characters)
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="editCoachName<?php echo $row['id']; ?>">Coach Name</label>
-                                <input type="text" name="coach" class="form-control" id="editCoachName<?php echo $row['id']; ?>" value="<?php echo $row['coach']; ?>" required>
+
+                            <!-- Coach Name Field -->
+                            <div class="form-group mb-4">
+                                <label for="editCoachName<?php echo $row['id']; ?>" class="font-weight-semibold required">
+                                    Coach Name
+                                </label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="anticon anticon-user"></i>
+                                        </span>
+                                    </div>
+                                    <input
+                                        type="text"
+                                        name="coach"
+                                        class="form-control"
+                                        id="editCoachName<?php echo $row['id']; ?>"
+                                        value="<?php echo htmlspecialchars($row['coach']); ?>"
+                                        required
+                                        pattern="[A-Za-z\s.]+"
+                                        minlength="2"
+                                        placeholder="Enter coach name">
+                                    <div class="invalid-feedback">
+                                        Please enter a valid coach name
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="editSessions<?php echo $row['id']; ?>">Sessions</label>
-                                <input type="number" name="sessions" class="form-control" id="editSessions<?php echo $row['id']; ?>" value="<?php echo $row['max']; ?>" required>
+
+                            <!-- Sessions Field -->
+                            <div class="form-group mb-4">
+                                <label for="editSessions<?php echo $row['id']; ?>" class="font-weight-semibold required">
+                                    Number of Sessions
+                                </label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="anticon anticon-calendar"></i>
+                                        </span>
+                                    </div>
+                                    <input
+                                        type="number"
+                                        name="sessions"
+                                        class="form-control"
+                                        id="editSessions<?php echo $row['id']; ?>"
+                                        value="<?php echo $row['max']; ?>"
+                                        required
+                                        min="1"
+                                        max="100"
+                                        placeholder="Enter number of sessions">
+                                    <div class="invalid-feedback">
+                                        Please enter a valid number of sessions (1-100)
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="editRate<?php echo $row['id']; ?>">Rate</label>
-                                <input type="number" name="rate" class="form-control" id="editRate<?php echo $row['id']; ?>" value="<?php echo $row['rate']; ?>" required>
+
+                            <!-- Rate Field -->
+                            <div class="form-group mb-4">
+                                <label for="editRate<?php echo $row['id']; ?>" class="font-weight-semibold required">
+                                    Rate
+                                </label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="anticon anticon-dollar"></i>
+                                        </span>
+                                    </div>
+                                    <input
+                                        type="number"
+                                        name="rate"
+                                        class="form-control"
+                                        id="editRate<?php echo $row['id']; ?>"
+                                        value="<?php echo $row['rate']; ?>"
+                                        required
+                                        min="0"
+                                        step="0.01"
+                                        placeholder="Enter rate amount">
+                                    <div class="invalid-feedback">
+                                        Please enter a valid rate
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Alert for validation messages -->
+                            <div class="alert alert-danger d-none" id="formErrors<?php echo $row['id']; ?>" role="alert">
+                                Please correct the errors before submitting.
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save Changes</button>
+
+                        <div class="modal-footer bg-light">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                <i class="anticon anticon-close mr-2"></i>
+                                Cancel
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="anticon anticon-save mr-2"></i>
+                                Save Changes
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -247,6 +452,59 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["activity"])) {
                 "info": true
             });
         });
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('editActivityForm<?php echo $row['id']; ?>');
+            const errorAlert = document.getElementById('formErrors<?php echo $row['id']; ?>');
+
+            form.addEventListener('submit', function(event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    errorAlert.classList.remove('d-none');
+                } else {
+                    errorAlert.classList.add('d-none');
+                }
+                form.classList.add('was-validated');
+            });
+
+            // Real-time validation
+            const inputs = form.querySelectorAll('input[required]');
+            inputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    if (this.checkValidity()) {
+                        this.classList.remove('is-invalid');
+                        this.classList.add('is-valid');
+                    } else {
+                        this.classList.remove('is-valid');
+                        this.classList.add('is-invalid');
+                    }
+                });
+            });
+
+            // Clear validation states when modal is hidden
+            $(`#editActivityModal<?php echo $row['id']; ?>`).on('hidden.bs.modal', function() {
+                form.classList.remove('was-validated');
+                errorAlert.classList.add('d-none');
+                inputs.forEach(input => {
+                    input.classList.remove('is-invalid', 'is-valid');
+                });
+            });
+        });
+        document.getElementById('showStudentsBtn').addEventListener('click', function (e) {
+    e.preventDefault(); // Prevent default anchor behavior
+
+    // Display the loading animation
+    const animation = document.getElementById('loadingAnimation');
+    animation.style.display = 'block';
+
+    // URL for redirection
+    const targetUrl = "";
+
+    // Delay and then redirect
+    setTimeout(() => {
+        window.location.href = targetUrl;
+    }, 2000); // Adjust the delay as needed
+});
     </script>
 </body>
 

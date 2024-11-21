@@ -86,7 +86,7 @@
             <?php
             }
 
-            if ($_SESSION['level'] == 6 or $_SESSION['level'] == 9 or $_SESSION['level'] == 2) {
+            if ($_SESSION['level'] == 9 or $_SESSION['level'] == 2) {
             ?>
                 <li class="nav-item dropdown">
                     <a class="dropdown-toggle" href="interview.php">
@@ -150,6 +150,18 @@
                 </li>
             <?php
             }
+            if ($_SESSION['level'] == 8) {
+                ?>
+                    <li class="nav-item dropdown">
+                        <a class="dropdown-toggle" href="clinic-dashboard.php">
+                            <span class="icon-holder">
+                                <i class="anticon anticon-dashboard"></i>
+                            </span>
+                            <span class="title">Dashboard</span>
+                        </a>
+                    </li>
+                <?php
+                }
 
             if ($_SESSION['level'] == 9) {
             ?>
@@ -301,7 +313,7 @@
                 </a>
             </li>
             <?php
-            if ($_SESSION['level'] == 3 or $_SESSION['level'] == 9) {
+            if ($_SESSION['level'] == 6 or $_SESSION['level'] == 9) {
             ?>
 
             <li class="nav-item dropdown">
@@ -314,6 +326,19 @@
             </li>
             <?php
             }
+            if ($_SESSION['level'] == 6 or $_SESSION['level'] == 9) {
+                ?>
+    
+                <li class="nav-item dropdown">
+                    <a class="dropdown-toggle" href="other-activities-history.php">
+                        <span class="icon-holder">
+                            <i class="anticon anticon-calendar"></i>
+                        </span>
+                        <span class="title">Other Activities History</span>
+                    </a>
+                </li>
+                <?php
+                }
             ?>
             <li class="nav-item dropdown">
                 <a class="dropdown-toggle" href="logout.php">

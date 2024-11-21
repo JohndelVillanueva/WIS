@@ -174,20 +174,20 @@ if (isset($_GET['action'])) {
                                                 <tbody>
                                                     <?php
                                                     $getenrolled = $DB_con->prepare("
-                SELECT 
-                    a.*, 
-                    b.*,
-                    r.payment_status,
-                    r.attend,
-                    (SELECT COUNT(*) FROM afterschool_records 
-                    WHERE sid = a.id AND asid = b.asid) as attendance_count
-                FROM afterschool_students AS a 
-                INNER JOIN afterschool_enrolled AS b ON a.id = b.sid
-                LEFT JOIN afterschool_records AS r ON a.id = r.sid 
-                    AND b.asid = r.asid 
-                    AND DATE(r.attend) = CURRENT_DATE()
-                WHERE b.asid = :id
-            ");
+                                                            SELECT 
+                                                                a.*, 
+                                                                b.*,
+                                                                r.payment_status,
+                                                                r.attend,
+                                                                (SELECT COUNT(*) FROM afterschool_records 
+                                                                WHERE sid = a.id AND asid = b.asid) as attendance_count
+                                                            FROM afterschool_students AS a 
+                                                            INNER JOIN afterschool_enrolled AS b ON a.id = b.sid
+                                                            LEFT JOIN afterschool_records AS r ON a.id = r.sid 
+                                                                AND b.asid = r.asid 
+                                                                AND DATE(r.attend) = CURRENT_DATE()
+                                                            WHERE b.asid = :id
+                                                        ");
                                                     $getenrolled->execute(array(":id" => $_GET["id"]));
                                                     $enrolled = $getenrolled->fetchAll();
 
