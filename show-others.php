@@ -438,6 +438,8 @@ if (isset($_GET["asid"], $_GET["fname"], $_GET["mname"], $_GET["lname"])) {
                         </div>
 
                         <input type="hidden" name="asid" value="<?php echo $_GET["id"];?>">
+                        <input type="hidden" name="activity" value="<?php echo $_GET["activity"];?>">
+
 
                         <!-- Alert for validation messages -->
                         <div class="col-12">
