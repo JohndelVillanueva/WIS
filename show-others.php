@@ -36,7 +36,7 @@ if (isset($_GET["asid"], $_GET["fname"], $_GET["mname"], $_GET["lname"])) {
         $DB_con->commit();
         
         // Redirect to the specified page
-        // header("location: show-others.php?id=" . $_GET["asid"]);
+        header("location: show-others.php?id=" . $_GET["asid"]. "&activity=" . $_GET["activity"]);
         exit();
         
     } catch (PDOException $e) {
@@ -464,80 +464,24 @@ if (isset($_GET["asid"], $_GET["fname"], $_GET["mname"], $_GET["lname"])) {
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('studentEnrollForm');
-    const errorAlert = document.getElementById('formErrors');
-
-    // Function to validate name fields
-    function isValidName(name) {
-        return /^[A-Za-z\s-']+$/.test(name.trim());
-    }
-
-    // Form submission handler
-    form.addEventListener('submit', function(event) {
-        event.preventDefault();
-        
-        let isValid = true;
-        const lname = form.querySelector('#lname');
-        const fname = form.querySelector('#fname');
-        const mname = form.querySelector('#mname');
-
-        // Reset previous validation states
-        errorAlert.classList.add('d-none');
-        form.classList.remove('was-validated');
-
-        // Validate last name
-        if (!lname.value.trim() || !isValidName(lname.value) || lname.value.length < 2) {
-            isValid = false;
-            lname.classList.add('is-invalid');
-        } else {
-            lname.classList.remove('is-invalid');
-            lname.classList.add('is-valid');
-        }
-
-        // Validate first name
-        if (!fname.value.trim() || !isValidName(fname.value) || fname.value.length < 2) {
-            isValid = false;
-            fname.classList.add('is-invalid');
-        } else {
-            fname.classList.remove('is-invalid');
-            fname.classList.add('is-valid');
-        }
-
-        // Validate middle name if provided
-        if (mname.value.trim() && !isValidName(mname.value)) {
-            isValid = false;
-            mname.classList.add('is-invalid');
-        } else {
-            mname.classList.remove('is-invalid');
-            if (mname.value.trim()) {
-                mname.classList.add('is-valid');
-            }
-        }
-
-        if (!isValid) {
-            errorAlert.classList.remove('d-none');
-            return false;
-        }
-
-        // If valid, submit the form
-        const formData = new FormData(form);
-        // Add your form submission logic here
-        window.location.href = `?id=${formData.get('asid')}&activity=${"<?php echo $_GET['activity']; ?>"}`;
-
-    });
-
-    // Clear validation states when modal is hidden
-    $('#addStudent').on('hidden.bs.modal', function () {
-        form.reset();
-        form.classList.remove('was-validated');
-        errorAlert.classList.add('d-none');
-        const inputs = form.querySelectorAll('input');
-        inputs.forEach(input => {
-            input.classList.remove('is-invalid', 'is-valid');
-        });
-    });
-});
+// fetch('your-backend-script.php', {
+//   method: 'POST',
+//   body: formData,
+// })
+// .then(response => response.json())  // Assuming the backend returns JSON
+// .then(data => {
+//   if (data.success) {
+//     window.location.href = `?id=${formData.get('asid')}&activity=${"<?php echo $_GET['activity']; ?>"}`;
+//   } else {
+//     // Handle error
+//     errorAlert.classList.remove('d-none');
+//   }
+// })
+// .catch(error => {
+//   console.error('Error:', error);
+//   errorAlert.classList.remove('d-none');
+// });
+// });
 </script>
 
 </body>

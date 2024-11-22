@@ -300,7 +300,7 @@ if (isset($_GET['action'])) {
     }
 
     // Function to mark attendance with payment status
-    function markAttendance(sid, asid, activity) {
+    function markAttendance(sid, asid, activity, coach) {
         // Get the payment status from the checkbox
         var paidCheckbox = document.getElementById('paid_' + sid);
         var unpaidCheckbox = document.getElementById('unpaid_' + sid);
@@ -316,7 +316,7 @@ if (isset($_GET['action'])) {
         }
 
         if (confirm('Are you sure you want to mark this Student?')) {
-            window.location.href = `mark-other.php?sid=${sid}&asid=${asid}&activity=${activity}&payment_status=${paymentStatus}&action=success`;
+            window.location.href = `mark-other.php?sid=${sid}&asid=${asid}&coach=${coach}&activity=${activity}&payment_status=${paymentStatus}&action=success`;
         }
         return false;
     }

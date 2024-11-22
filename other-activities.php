@@ -151,26 +151,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["activity"])) {
             background-color: rgba(102, 51, 153, 0.9);
             color: white;
         }
+
         /* Spinner styles */
-.spinner {
-    border: 5px solid #f3f3f3; /* Light grey */
-    border-top: 5px solid #007bff; /* Blue */
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-}
+        .spinner {
+            border: 5px solid #f3f3f3;
+            /* Light grey */
+            border-top: 5px solid #007bff;
+            /* Blue */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
 
-/* Keyframe for spinning */
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
+        /* Keyframe for spinning */
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
 
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 
@@ -196,57 +199,61 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["activity"])) {
                                         </div>
                                     </div>
                                     <div class="table-responsive">
-                                    <table id="activitiesTable" class="table table-hover table-bordered text-center">
-    <thead class="thead-purple">
-        <tr>
-            <th>ID</th>
-            <th>Activity</th>
-            <th>Coach</th>
-            <th>Sessions</th>
-            <th>Rate</th>
-            <th style="width:10%">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-        $getactivities = $DB_con->prepare("SELECT * FROM afterschool_activities");
-        $getactivities->execute();
-        $result = $getactivities->fetchAll();
+                                        <table id="activitiesTable" class="table table-hover table-bordered text-center">
+                                            <thead class="thead-purple">
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Activity</th>
+                                                    <th>Coach</th>
+                                                    <th>Sessions</th>
+                                                    <th>Rate</th>
+                                                    <th style="width:10%">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $getactivities = $DB_con->prepare("SELECT * FROM afterschool_activities");
+                                                $getactivities->execute();
+                                                $result = $getactivities->fetchAll();
 
-        if (count($result) > 0) {
-            foreach ($result as $row) {
-        ?>
-            <tr>
-                <td><?php echo $row["id"]; ?></td>
-                <td><?php echo $row["activity"]; ?></td>
-                <td><?php echo $row["coach"]; ?></td>
-                <td><?php echo $row["max"]; ?></td>
-                <td>P <?php echo $row["rate"]; ?></td>
-                <td class="action-buttons">
-                    <button class="btn btn-success" data-toggle="modal" data-target="#editActivityModal<?php echo $row['id']; ?>">
-                        <i class="anticon anticon-edit"></i> Edit
-                    </button>
-                    <a class="btn btn-primary" href="show-others.php?id=<?php echo $row['id']; ?>&activity=<?php echo $row['activity']; ?>">
-                        <i class="anticon anticon-eye"></i> Show Students
-                    </a>
-                    <a class="btn btn-danger" href="delete-other.php?id=<?php echo $row['id']; ?>" 
-                       onclick="return confirm('Are you sure you want to delete this item?');">
-                        <i class="anticon anticon-delete"></i> Remove
-                    </a>
-                </td>
-            </tr>
-        <?php 
-            }
-        } else { 
-        ?>
-            <tr>
-                <td colspan="6">No record yet</td>
-            </tr>
-        <?php 
-        } 
-        ?>
-    </tbody>
-</table>
+                                                if (count($result) > 0) {
+                                                    foreach ($result as $row) {
+                                                ?>
+                                                        <tr>
+                                                            <td><?php echo $row["id"]; ?></td>
+                                                            <td><?php echo $row["activity"]; ?></td>
+                                                            <td><?php echo $row["coach"]; ?></td>
+                                                            <td><?php echo $row["max"]; ?></td>
+                                                            <td>P <?php echo $row["rate"]; ?></td>
+                                                            <td class="action-buttons">
+                                                                <button class="btn btn-success" data-toggle="modal" data-target="#editActivityModal<?php echo $row['id']; ?>">
+                                                                    <i class="anticon anticon-edit"></i> Edit
+                                                                </button>
+                                                                <a class="btn btn-primary" href="show-others.php?id=<?php echo $row['id']; ?>&activity=<?php echo $row['activity']; ?>">
+                                                                <!-- &coach=<?php echo $row['coach']; ?> -->
+                                                                    <i class="anticon anticon-eye"></i> Show Students
+                                                                </a>
+                                                                <a class="btn btn-danger" href="delete-other.php?id=<?php echo $row['id']; ?>"
+                                                                    onclick="return confirm('Are you sure you want to delete this item?');">
+                                                                    <i class="anticon anticon-delete"></i> Remove
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    <?php
+                                                    }
+                                                } else {
+                                                    ?>
+                                                    <tr>
+                                                        <td colspan="6" class="text-muted font-italic" style="font-size: 18px; padding: 20px;">
+                                                            No records yet. Add a new activity to get started.
+                                                        </td>
+                                                    </tr>
+                                                <?php
+                                                }
+                                                ?>
+                                            </tbody>
+                                        </table>
+
 
                                     </div>
                                 </div>
@@ -497,21 +504,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["activity"])) {
                 });
             });
         });
-        document.getElementById('showStudentsBtn').addEventListener('click', function (e) {
-    e.preventDefault(); // Prevent default anchor behavior
+        document.getElementById('showStudentsBtn').addEventListener('click', function(e) {
+            e.preventDefault(); // Prevent default anchor behavior
 
-    // Display the loading animation
-    const animation = document.getElementById('loadingAnimation');
-    animation.style.display = 'block';
+            // Display the loading animation
+            const animation = document.getElementById('loadingAnimation');
+            animation.style.display = 'block';
 
-    // URL for redirection
-    const targetUrl = "";
+            // URL for redirection
+            const targetUrl = "";
 
-    // Delay and then redirect
-    setTimeout(() => {
-        window.location.href = targetUrl;
-    }, 2000); // Adjust the delay as needed
-});
+            // Delay and then redirect
+            setTimeout(() => {
+                window.location.href = targetUrl;
+            }, 2000); // Adjust the delay as needed
+        });
     </script>
 </body>
 

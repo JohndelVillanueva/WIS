@@ -1,49 +1,69 @@
-<?php
+<?php 
 include_once "includes/config.php";
 session_start();
-if(!isset($_SESSION['username']))
-{
-    header("location: login.php");
 
+// Check if the user is logged in
+if (!isset($_SESSION['username'])) {
+    header("location: login.php");
+    exit;
 }
 
-if (isset($_GET["asid"], $_GET["fname"], $_GET["mname"], $_GET["lname"])) {
-    
-    // Begin a transaction to ensure both inserts succeed or fail together
-    $DB_con->beginTransaction();
-    
+// Check if the request is POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Validate and sanitize inputs
+    $lastName = filter_input(INPUT_POST, 'lname', FILTER_SANITIZE_STRING);
+    $firstName = filter_input(INPUT_POST, 'fname', FILTER_SANITIZE_STRING);
+    $middleName = filter_input(INPUT_POST, 'mname', FILTER_SANITIZE_STRING);
+    $asid = filter_input(INPUT_POST, 'asid', FILTER_SANITIZE_NUMBER_INT);
+
+    // Check for required fields
+    if (empty($lastName) || empty($firstName) || empty($asid)|| empty($middleName)) {
+        echo json_encode(['status' => 'error', 'message' => 'Please fill all required fields.']);
+        exit;
+    }
+
     try {
-        // Insert student details
-        $addstudent = $DB_con->prepare("INSERT INTO afterschool_students (fname, mname, lname) VALUES (:fname, :mname, :lname)");
-        $addstudent->execute(array(
-            ":fname" => $_GET["fname"],
-            ":mname" => $_GET["mname"],
-            ":lname" => $_GET["lname"],
-        ));
-        
-        // Retrieve last inserted ID directly from the PDO object
+        // Start a transaction
+        $DB_con->beginTransaction();
+
+        // Insert into the afterschool_students table
+        $stmt = $DB_con->prepare("
+            INSERT INTO afterschool_students (lname, fname, mname) 
+            VALUES (:lname, :fname, :mname)
+        ");
+        $stmt->execute([
+            ':lname' => $lastName,
+            ':fname' => $firstName,
+            ':mname' => $middleName
+        ]);
+
+        // Get the last inserted ID
         $lastId = $DB_con->lastInsertId();
-        
-        // Insert into enrollment table
-        $enrollstudent = $DB_con->prepare("INSERT INTO afterschool_enrolled (sid, asid, student_name, enrolldate) VALUES (:sid, :asid,:student_name, NOW())");
-        $enrollstudent->execute(array(
-            ":sid" => $lastId,
-            ":asid" => $_GET["asid"],
-            ":student_name" => $_GET["fname"]. " ". $_GET["lname"]
-        ));
-        
+
+        // Insert into the afterschool_enrolled table
+        $enrollStudent = $DB_con->prepare("
+            INSERT INTO afterschool_enrolled (sid, asid, student_name, enrolldate) 
+            VALUES (:sid, :asid, :student_name, NOW())
+        ");
+        $enrollStudent->execute([
+            ':sid' => $lastId,
+            ':asid' => $asid,
+            ':student_name' => $firstName . ' ' . $lastName
+        ]);
+
         // Commit the transaction
         $DB_con->commit();
-        
-        // Redirect to the specified page
-        header("location: show-others.php?id=" . $_GET["asid"]. "&activity=". $_GET["activity"]);
-        exit();
-        
-    } catch (PDOException $e) {
-        // Roll back the transaction if any query fails
+
+        // Redirect after successful enrollment
+        header("Location: show-others.php?id=" . $_GET['id'] . "&activity=" . $_GET['Activity']);
+        exit;
+
+    } catch (Exception $e) {
+        // Rollback the transaction in case of error
         $DB_con->rollBack();
-        echo "Error: " . $e->getMessage();
+        echo json_encode(['status' => 'error', 'message' => 'An error occurred: ' . $e->getMessage()]);
     }
 } else {
-    echo "Required data is missing.";
+    echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
 }
+?>

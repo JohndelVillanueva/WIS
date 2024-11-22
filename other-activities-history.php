@@ -66,10 +66,10 @@ if (!isset($_SESSION['username'])) {
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table id="activitiesTable" class="table table-hover table-bordered text-center">
-                                            <thead class="thead-purple">
+                                            <thead class="thead-purple text-center">
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Name</th>
+                                                    <th>Student Name</th>
                                                     <th>Activity</th>
                                                     <th>Coach</th>
                                                     <th>Sessions</th>
