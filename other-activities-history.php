@@ -106,6 +106,8 @@ if (!isset($_SESSION['username'])) {
 
                                                 // Loop through the results
                                                 foreach ($result as $row) {
+                                                    // Format the Attend date
+                                                    $attendDate = !empty($row["attend"]) ? date("F j, Y", strtotime($row["attend"])) : "N/A";
                                                 ?>
                                                     <tr>
                                                         <td><?= $row["id"]; ?></td>
@@ -114,7 +116,7 @@ if (!isset($_SESSION['username'])) {
                                                         <td><?= $row["coach"]; ?></td>
                                                         <td><?= $row["sessions"]; ?></td>
                                                         <td><?= $row["payment_status"]; ?></td>
-                                                        <td><?= $row["attend"]; ?></td>
+                                                        <td><?= $attendDate; ?></td>
                                                         <td><?= $row["process_by"]; ?></td>
                                                     </tr>
                                                 <?php

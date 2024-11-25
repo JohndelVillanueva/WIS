@@ -94,7 +94,6 @@ if (isset($_GET['action'])) {
     }
 
     /* Modal styles */
-    /* Modal styles */
     .modal {
         display: none;
         /* Hidden by default */
@@ -115,7 +114,6 @@ if (isset($_GET['action'])) {
         padding: 10px;
         border-radius: 10px;
     }
-
     /* Modal content styling */
     .modal-content {
         background-color: white;
@@ -157,9 +155,9 @@ if (isset($_GET['action'])) {
                                         </div>
                                         <div class="card-body">
                                             <div class="mb-3">
-                                                <a href="show-others.php?id=<?php echo $_GET['id']; ?>&activity=<?php echo urlencode($_GET['activity']); ?>" class="btn btn-light">
-                                                    <span class="icon-holder"><i class="bi bi-arrow-left"></i></span>
-                                                </a>
+                                            <a href="other-activities.php" class="btn btn-secondary back-button" style="background-color: purple; border-color: purple;">
+                                                <i class="anticon anticon-arrow-left"></i> Back
+                                            </a>
                                             </div>
                                             <table id="studentsTable" class="table table-hover table-bordered text-center">
                                                 <thead class="thead-purple">
@@ -273,11 +271,11 @@ if (isset($_GET['action'])) {
                         </div>
                     </div>
                     <!-- Modal -->
-                    <div id="myModal" class="modal">
+                    <!-- <div id="myModal" class="modal">
                         <div class="modal-content <?php echo $dialogClass; ?>">
                             <p><?php echo $message; ?></p>
                         </div>
-                    </div>
+                    </div> -->
 
                     <?php include_once "includes/footer.php"; ?>
                 </div>
