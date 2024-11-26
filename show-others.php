@@ -264,12 +264,13 @@ if (isset($_GET["asid"], $_GET["fname"], $_GET["mname"], $_GET["lname"])) {
 
                                                 if($getstudents->rowCount()!=0) {
                                                 foreach($students as $rec) {
+                                                    $attendDate = !empty($rec["enrolldate"]) ? date("F j, Y", strtotime($rec["enrolldate"])) : "N/A";
                                             ?>
                                             <tr>
                                                 <td><?php echo $rec["id"]; ?></td>
                                                 <td><?php echo $rec["lname"]; ?></td>
                                                 <td><?php echo $rec["fname"]; ?></td>
-                                                <td><?php echo $rec["enrolldate"]; ?></td>
+                                                <td><?php echo $attendDate ?></td>
                                                 <td style="width: 8.33%">
                                                     <?php
                                                         $getsessions = $DB_con->prepare("SELECT * FROM afterschool_records WHERE sid = :sid AND asid = :asid");

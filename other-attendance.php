@@ -114,6 +114,7 @@ if (isset($_GET['action'])) {
         padding: 10px;
         border-radius: 10px;
     }
+
     /* Modal content styling */
     .modal-content {
         background-color: white;
@@ -155,9 +156,12 @@ if (isset($_GET['action'])) {
                                         </div>
                                         <div class="card-body">
                                             <div class="mb-3">
-                                            <a href="other-activities.php" class="btn btn-secondary back-button" style="background-color: purple; border-color: purple;">
-                                                <i class="anticon anticon-arrow-left"></i> Back
-                                            </a>
+                                                <a href="other-activities.php" class="btn btn-secondary back-button" style="background-color: purple; border-color: purple;">
+                                                    <i class="anticon anticon-arrow-left"></i> Back
+                                                </a>
+                                                <p class="text-center mt-2" style="font-size: 28px; color: gray;">
+                                                    <?php echo date('F j, Y'); ?>
+                                                </p>
                                             </div>
                                             <table id="studentsTable" class="table table-hover table-bordered text-center">
                                                 <thead class="thead-purple">
@@ -172,31 +176,29 @@ if (isset($_GET['action'])) {
                                                 <tbody>
                                                     <?php
                                                     $getenrolled = $DB_con->prepare("
-                                                            SELECT 
-                                                                a.*, 
-                                                                b.*,
-                                                                r.payment_status,
-                                                                r.attend,
-                                                                (SELECT COUNT(*) FROM afterschool_records 
-                                                                WHERE sid = a.id AND asid = b.asid) as attendance_count
-                                                            FROM afterschool_students AS a 
-                                                            INNER JOIN afterschool_enrolled AS b ON a.id = b.sid
-                                                            LEFT JOIN afterschool_records AS r ON a.id = r.sid 
-                                                                AND b.asid = r.asid 
-                                                                AND DATE(r.attend) = CURRENT_DATE()
-                                                            WHERE b.asid = :id
-                                                        ");
+                                                        SELECT 
+                                                            a.*, 
+                                                            b.*,
+                                                            r.payment_status,
+                                                            r.attend,
+                                                            (SELECT COUNT(*) FROM afterschool_records 
+                                                            WHERE sid = a.id AND asid = b.asid) as attendance_count
+                                                        FROM afterschool_students AS a 
+                                                        INNER JOIN afterschool_enrolled AS b ON a.id = b.sid
+                                                        LEFT JOIN afterschool_records AS r ON a.id = r.sid 
+                                                            AND b.asid = r.asid 
+                                                            AND DATE(r.attend) = CURRENT_DATE()
+                                                        WHERE b.asid = :id
+                                                    ");
                                                     $getenrolled->execute(array(":id" => $_GET["id"]));
                                                     $enrolled = $getenrolled->fetchAll();
 
                                                     foreach ($enrolled as $students) {
-                                                        // Get total sessions for the activity
                                                         $getTotalSessions = $DB_con->prepare("SELECT max FROM afterschool_activities WHERE id = :asid");
                                                         $getTotalSessions->execute([":asid" => $students["asid"]]);
                                                         $activity = $getTotalSessions->fetch(PDO::FETCH_OBJ);
                                                         $totalSessions = $activity ? (int)$activity->max : 0;
 
-                                                        // Check if student has reached max sessions
                                                         $isFinished = $students['attendance_count'] >= $totalSessions;
                                                     ?>
                                                         <tr>
@@ -238,8 +240,8 @@ if (isset($_GET['action'])) {
                                                                     ?>
                                                                         <a href="#" class="btn btn-primary btn-lg"
                                                                             onclick="return markAttendance('<?php echo $students["id"]; ?>', 
-                               '<?php echo $students["asid"]; ?>', 
-                               '<?php echo urlencode($_GET['activity']); ?>');">
+                                   '<?php echo $students["asid"]; ?>', 
+                                   '<?php echo urlencode($_GET['activity']); ?>');">
                                                                             <span class="icon-holder"><i class="anticon anticon-check"></i></span>
                                                                         </a>
                                                                     <?php
@@ -263,19 +265,19 @@ if (isset($_GET['action'])) {
                                                     ?>
                                                 </tbody>
                                             </table>
-
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- Modal -->
-                    <!-- <div id="myModal" class="modal">
+                    <div id="myModal" class="modal">
                         <div class="modal-content <?php echo $dialogClass; ?>">
                             <p><?php echo $message; ?></p>
                         </div>
-                    </div> -->
+                    </div>
 
                     <?php include_once "includes/footer.php"; ?>
                 </div>
