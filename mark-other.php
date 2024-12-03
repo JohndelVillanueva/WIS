@@ -1,6 +1,39 @@
 <?php
 include_once "includes/config.php";
+require 'vendor/autoload.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use Dotenv\Dotenv;
+
 session_start();
+
+function configureMailer()
+{
+    $dotenv = Dotenv::createImmutable(__DIR__);
+    $dotenv->load();
+
+    $mail = new PHPMailer(true);
+    $mail->isSMTP();
+    $mail->Host = $_ENV['SMTP_HOST'];
+    $mail->SMTPAuth = true;
+    $mail->Username = $_ENV['SMTP_USERNAME'];
+    $mail->Password = $_ENV['SMTP_PASSWORD'];
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->Port = $_ENV['SMTP_PORT'];
+
+    return $mail;
+}
+
+function sendEmail($mail, $to, $subject, $body)
+{
+    $mail->setFrom('no-reply@westfields.edu.ph', 'Westfields International School');
+    $mail->addAddress($to);
+    $mail->isHTML(true);
+    $mail->Subject = $subject;
+    $mail->Body = $body;
+    $mail->send();
+}
 
 // Debug: Check session values
 if (!isset($_SESSION['username'])) {
@@ -26,20 +59,34 @@ if (!in_array($payment_status, ['Paid', 'Unpaid'])) {
     die("Error: Invalid payment status.");
 }
 
-// Debug: Print sanitized inputs
-// var_dump($sid, $asid, $activity, $payment_status);
-
 // Check student information
-$getStudentInformation = $DB_con->prepare("SELECT fname, lname FROM afterschool_students WHERE id = :sid");
+$getStudentInformation = $DB_con->prepare("
+    SELECT 
+        s.fname, 
+        s.lname, 
+        s.email,
+        a.activity,
+        r.payment_status,
+        a.max AS session,
+        (SELECT count(r2.attend) 
+         FROM afterschool_records r2 
+         WHERE r2.sid = s.id) AS totalAttendance -- Subquery to count attendance
+    FROM 
+        afterschool_students s
+    LEFT JOIN 
+        afterschool_records r ON s.id = r.sid
+    LEFT JOIN 
+        afterschool_activities a ON r.asid = a.id
+    WHERE 
+        s.id = :sid
+");
 $getStudentInformation->execute([':sid' => $sid]);
 $getInformation = $getStudentInformation->fetch(PDO::FETCH_OBJ);
+
 
 if (!$getInformation) {
     die("Error: Student not found in the database.");
 }
-
-// Debug: Check student data
-// var_dump($getInformation);
 
 // Insert attendance record with payment status
 $process_by = $_SESSION['lname'] . " " . $_SESSION['fname'];
@@ -60,6 +107,24 @@ $success = $attendance->execute([
 if (!$success) {
     $errorInfo = $attendance->errorInfo();
     die("Error recording attendance: " . $errorInfo[2]);
+}
+
+// Send email notification
+try {
+    $mail = configureMailer();
+    $to = $getInformation->email;
+    $subject = "Attendance Recorded for Activity: $activity";
+    $body = "
+        <p>Hello {$getInformation->fname} {$getInformation->lname},</p>
+        <p>Your child attendance for the activity '<strong>$activity</strong>' has been recorded successfully.</p>
+        <p><strong>Payment Status:</strong> $payment_status</p>
+        <p><strong>Processed By:</strong> $process_by</p>
+        <p><strong>Attendance:</strong> $getInformation->totalAttendance</p>
+        <p>Thank you.</p>
+    ";
+    sendEmail($mail, $to, $subject, $body);
+} catch (Exception $e) {
+    die("Error sending email notification: " . $mail->ErrorInfo);
 }
 
 // Redirect with success message

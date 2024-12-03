@@ -166,6 +166,7 @@ if (isset($_GET['action'])) {
                                             <table id="studentsTable" class="table table-hover table-bordered text-center">
                                                 <thead class="thead-purple">
                                                     <tr>
+                                                        <th>Id</th>
                                                         <th>Last Name</th>
                                                         <th>First Name</th>
                                                         <th>Middle Name</th>
@@ -202,6 +203,7 @@ if (isset($_GET['action'])) {
                                                         $isFinished = $students['attendance_count'] >= $totalSessions;
                                                     ?>
                                                         <tr>
+                                                            <td><?php echo $students["id"]; ?></td>
                                                             <td><?php echo $students["lname"]; ?></td>
                                                             <td><?php echo $students["fname"]; ?></td>
                                                             <td><?php echo $students["mname"]; ?></td>
@@ -240,8 +242,8 @@ if (isset($_GET['action'])) {
                                                                     ?>
                                                                         <a href="#" class="btn btn-primary btn-lg"
                                                                             onclick="return markAttendance('<?php echo $students["id"]; ?>', 
-                                   '<?php echo $students["asid"]; ?>', 
-                                   '<?php echo urlencode($_GET['activity']); ?>');">
+                                                                            '<?php echo $students["asid"]; ?>', 
+                                                                            '<?php echo urlencode($_GET['activity']); ?>');">
                                                                             <span class="icon-holder"><i class="anticon anticon-check"></i></span>
                                                                         </a>
                                                                     <?php
