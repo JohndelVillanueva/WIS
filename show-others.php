@@ -46,6 +46,8 @@ if (isset($_GET["asid"], $_GET["fname"], $_GET["mname"], $_GET["lname"], $_GET["
     echo "Required data is missing.";
 }
 
+
+
 ?>
 <!DOCTYPE html>
 <style>
@@ -207,142 +209,184 @@ if (isset($_GET["asid"], $_GET["fname"], $_GET["mname"], $_GET["lname"], $_GET["
         color: white;
     }
 </style>
-<html lang="en">
 
+<html lang="en">
 <?php include_once "includes/css.php"; ?>
 
-<div class="app is-folded">
-    <div class="layout">
-        <?php include_once "includes/heading.php"; ?>
-        <?php include_once "includes/sidemenu.php"; ?>
-        <div class="page-container">
-            <div class="main-content">
-                <?php
-                $getactivity = $DB_con->prepare("SELECT * FROM afterschool_activities WHERE id = :id");
-                $getactivity->execute(array(":id" => $_GET["id"]));
-                $result = $getactivity->fetchAll();
+<head>
 
-                foreach ($result as $row) {
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <!-- DataTables Responsive CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css">
 
-                ?>
-                    <!-- form starts !-->
-                    <div class="row flex-nowrap overflow-auto">
-                        <div class="col-lg-12">
-                            <div class="card">
-                                <div class="card-header bg-warning">
-                                    <h3 class="pt-2"><span class="icon-holder"><i class="anticon anticon-calendar"></i></span> Enrolled Students - <?php echo $row['activity']; ?> - Coach <?php echo $row['coach']; ?></h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="dropdown float-right">
-                                                <a href="other-activities.php" class="btn btn-secondary back-button">
-                                                    <i class="anticon anticon-arrow-left"></i> Back
-                                                </a>
-                                                <button class="btn btn-lg btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <span class="icon-holder"><i class="anticon anticon-contacts"></i></span> Actions
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <a class="dropdown-item" type="button" data-toggle="modal" data-target="#addStudent">
-                                                        <span class="icon-holder"><i class="anticon anticon-user-add"></i></span> Add Student
+    <!-- DataTables Responsive JS -->
+    <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+
+</head>
+
+<body>
+
+    <div class="app is-folded">
+        <div class="layout">
+            <?php include_once "includes/heading.php"; ?>
+            <?php include_once "includes/sidemenu.php"; ?>
+            <div class="page-container">
+                <div class="main-content">
+                    <?php
+                    $getactivity = $DB_con->prepare("SELECT * FROM afterschool_activities WHERE id = :id");
+                    $getactivity->execute(array(":id" => $_GET["id"]));
+                    $result = $getactivity->fetchAll();
+
+                    foreach ($result as $row) {
+
+                    ?>
+                        <!-- form starts !-->
+                        <div class="row flex-nowrap overflow-auto">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-header bg-warning">
+                                        <h3 class="pt-2"><span class="icon-holder"><i class="anticon anticon-calendar"></i></span> Enrolled Students - <?php echo $row['activity']; ?> - Coach <?php echo $row['coach']; ?></h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="dropdown float-right">
+                                                    <a href="other-activities.php" class="btn btn-secondary back-button">
+                                                        <i class="anticon anticon-arrow-left"></i> Back
                                                     </a>
-                                                    <a class="dropdown-item" href="other-attendance.php?id=<?php echo $_GET["id"]; ?>&activity=<?php echo $_GET["activity"]; ?>">
-                                                        <span class="icon-holder"><i class="anticon anticon-usergroup-add"></i></span> Check Attendance
-                                                    </a>
+                                                    <button class="btn btn-lg btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <span class="icon-holder"><i class="anticon anticon-contacts"></i></span> Actions
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" type="button" data-toggle="modal" data-target="#addStudent">
+                                                            <span class="icon-holder"><i class="anticon anticon-user-add"></i></span> Add Student
+                                                        </a>
+                                                        <a class="dropdown-item" href="other-attendance.php?id=<?php echo $_GET["id"]; ?>&activity=<?php echo $_GET["activity"]; ?>">
+                                                            <span class="icon-holder"><i class="anticon anticon-usergroup-add"></i></span> Check Attendance
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <table class="table table-hover table-bordered text-center">
-                                            <thead class="thead-purple">
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>Last Name</th>
-                                                    <th>First Name</th>
-                                                    <th>Enroll Date</th>
-                                                    <th>Sessions</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php
-                                                $getstudents = $DB_con->prepare("SELECT * FROM afterschool_students AS a INNER JOIN afterschool_enrolled AS b ON a.id = b.sid WHERE b.asid = :asid");
-                                                $getstudents->execute(array(":asid" => $_GET["id"]));
-                                                $students = $getstudents->fetchAll();
+                                        <div class="row pt-2" >
+                                            <div class="col-lg-12">
+                                            <table id="listOfStudent" class="table table-hover table-bordered text-center">
+                                                <thead class="thead-purple">
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Last Name</th>
+                                                        <th>First Name</th>
+                                                        <th>Enroll Date</th>
+                                                        <th>Sessions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    $getstudents = $DB_con->prepare("SELECT * FROM afterschool_students AS a INNER JOIN afterschool_enrolled AS b ON a.id = b.sid WHERE b.asid = :asid");
+                                                    $getstudents->execute(array(":asid" => $_GET["id"]));
+                                                    $students = $getstudents->fetchAll();
 
-                                                if ($getstudents->rowCount() != 0) {
-                                                    foreach ($students as $rec) {
-                                                        $attendDate = !empty($rec["enrolldate"]) ? date("F j, Y", strtotime($rec["enrolldate"])) : "N/A";
-                                                ?>
-                                                        <tr>
-                                                            <td><?php echo $rec["id"]; ?></td>
-                                                            <td><?php echo $rec["lname"]; ?></td>
-                                                            <td><?php echo $rec["fname"]; ?></td>
-                                                            <td><?php echo $attendDate ?></td>
-                                                            <td style="width: 8.33%">
-                                                                <?php
-                                                                $getsessions = $DB_con->prepare("SELECT * FROM afterschool_records WHERE sid = :sid AND asid = :asid");
-                                                                $getsessions->execute(array(":sid" => $rec["id"], ":asid" => $row["id"]));
-                                                                $sessions = $getsessions->fetchAll();
-                                                                ?>
-                                                                <button class="btn btn-sm btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample<?php echo $rec["id"]; ?>" aria-expanded="false" aria-controls="collapseExample">
-                                                                    <?php echo $getsessions->rowCount() . " / " . $row["max"]; ?> <span class="icon-holder"><i class="anticon anticon-caret-down"></i></span>
-                                                                </button>
-                                                                <div class="collapse" id="collapseExample<?php echo $rec['id']; ?>">
-                                                                    <div class="card card-body">
-                                                                        <?php if ($getsessions->rowCount() != 0) { ?>
-                                                                            <?php foreach ($sessions as $srow) { ?>
-                                                                                <p>
-                                                                                    <span class="fw-bold"><?php echo htmlspecialchars($srow['attend']); ?></span>
-                                                                                    <?php echo htmlspecialchars($_SESSION['fname']); ?>
-                                                                                    <span class="text-muted">(<?php echo htmlspecialchars($srow['payment_status']); ?>)</span>
-                                                                                </p>
+                                                    if ($getstudents->rowCount() != 0) {
+                                                        foreach ($students as $rec) {
+                                                            $attendDate = !empty($rec["enrolldate"]) ? date("F j, Y", strtotime($rec["enrolldate"])) : "N/A";
+                                                    ?>
+                                                            <tr>
+                                                                <td><?php echo $rec["id"]; ?></td>
+                                                                <td><?php echo $rec["lname"]; ?></td>
+                                                                <td><?php echo $rec["fname"]; ?></td>
+                                                                <td><?php echo $attendDate ?></td>
+                                                                <td style="width: 8.33%">
+                                                                    <?php
+                                                                    $getsessions = $DB_con->prepare("SELECT * FROM afterschool_records WHERE sid = :sid AND asid = :asid");
+                                                                    $getsessions->execute(array(":sid" => $rec["id"], ":asid" => $row["id"]));
+                                                                    $sessions = $getsessions->fetchAll();
+                                                                    ?>
+                                                                    <button class="btn btn-sm btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample<?php echo $rec["id"]; ?>" aria-expanded="false" aria-controls="collapseExample">
+                                                                        <?php echo $getsessions->rowCount() . " / " . $row["max"]; ?> <span class="icon-holder"><i class="anticon anticon-caret-down"></i></span>
+                                                                    </button>
+                                                                    <div class="collapse" id="collapseExample<?php echo $rec['id']; ?>">
+                                                                        <div class="card card-body">
+                                                                            <?php if ($getsessions->rowCount() != 0) { ?>
+                                                                                <?php foreach ($sessions as $srow) { ?>
+                                                                                    <p>
+                                                                                        <span class="fw-bold"><?php echo htmlspecialchars($srow['attend']); ?></span>
+                                                                                        <?php echo htmlspecialchars($_SESSION['fname']); ?>
+                                                                                        <span class="text-muted">(<?php echo htmlspecialchars($srow['payment_status']); ?>)</span>
+                                                                                    </p>
+                                                                                <?php } ?>
+                                                                            <?php } else { ?>
+                                                                                <div class="alert alert-warning" role="alert">
+                                                                                    No Record
+                                                                                </div>
                                                                             <?php } ?>
-                                                                        <?php } else { ?>
-                                                                            <div class="alert alert-warning" role="alert">
-                                                                                No Record
-                                                                            </div>
-                                                                        <?php } ?>
+                                                                        </div>
                                                                     </div>
+                                                                </td>
+                                                            </tr>
+                                                        <?php
+                                                        }
+                                                    } else {
+                                                        ?>
+                                                        <tr>
+                                                            <td colspan="6">
+                                                                <div class="alert alert-warning" role="alert">
+                                                                    No Students Enrolled.
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                     <?php
                                                     }
-                                                } else {
                                                     ?>
-                                                    <tr>
-                                                        <td colspan="6">
-                                                            <div class="alert alert-warning" role="alert">
-                                                                No Students Enrolled.
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                <?php
-                                                }
-                                                ?>
-                                            </tbody>
-                                        </table>
+                                                </tbody>
+                                            </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <!-- form ends !-->
+                        <?php } ?>
                         </div>
-                        <!-- form ends !-->
-                    <?php } ?>
-                    </div>
-                    <?php include_once "includes/footer.php"; ?>
+                        <?php include_once "includes/footer.php"; ?>
+                </div>
+                <?php include_once "includes/scripts.php"; ?>
             </div>
-            <?php include_once "includes/scripts.php"; ?>
-            <script>
-                $(document).ready(function() {
-                    $('[data-toggle="popover"]').popover();
-                });
-            </script>
         </div>
     </div>
-</div>
 
-<!-- Modal -->
+    <!-- Modal -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#listOfStudent').DataTable({
+                "paging": true,
+                "pageLength": 50, // Increase the number of rows per page
+                "lengthMenu": [
+                    [10, 25, 50, 100, -1],
+                    [10, 25, 50, 100, "All"]
+                ], // Add length menu options
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "responsive": true,
+                "language": {
+                    "lengthMenu": "Show _MENU_ entries",
+                    "zeroRecords": "No matching records found",
+                    "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+                    "infoEmpty": "No entries available",
+                    "infoFiltered": "(filtered from _MAX_ total entries)"
+                }
+            });
+        });
+        $(document).ready(function() {
+            $('[data-toggle="popover"]').popover();
+        });
+    </script>
+
+</body>
 <div class="modal fade" id="addStudent" tabindex="-1" role="dialog" aria-labelledby="addStudentTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -381,7 +425,7 @@ if (isset($_GET["asid"], $_GET["fname"], $_GET["mname"], $_GET["lname"], $_GET["
                                         class="form-control"
                                         required
                                         pattern="[A-Za-z\s-']+"
-                                        minlength="2"
+                                        minlength="1"
                                         placeholder="Enter student's last name">
                                     <div class="invalid-feedback">
                                         Please enter a valid last name (minimum 2 characters)
@@ -498,59 +542,5 @@ if (isset($_GET["asid"], $_GET["fname"], $_GET["mname"], $_GET["lname"], $_GET["
         </div>
     </div>
 </div>
-
-<script>
-    // Function to display confirmation dialog
-    function confirmSubmission() {
-        return confirm("Are you sure you want to submit this form?");
-    }
-    function validateForm() {
-        let isValid = true; // Track the overall form validity
-        const form = document.getElementById('studentEnrollForm');
-        const inputs = form.querySelectorAll('input');
-
-        inputs.forEach(input => {
-            // Reset the input's validation state
-            input.classList.remove('is-invalid');
-            const errorDiv = input.nextElementSibling;
-
-            // Check required fields
-            if (input.hasAttribute('required') && !input.value.trim()) {
-                isValid = false;
-                input.classList.add('is-invalid');
-                if (errorDiv) errorDiv.textContent = 'This field is required.';
-            }
-
-            // Check patterns
-            const pattern = input.getAttribute('pattern');
-            if (pattern && input.value.trim() && !new RegExp(pattern).test(input.value)) {
-                isValid = false;
-                input.classList.add('is-invalid');
-                if (errorDiv) errorDiv.textContent = 'Please match the requested format.';
-            }
-
-            // Check minlength
-            const minLength = input.getAttribute('minlength');
-            if (minLength && input.value.trim().length < minLength) {
-                isValid = false;
-                input.classList.add('is-invalid');
-                if (errorDiv) errorDiv.textContent = `Minimum ${minLength} characters required.`;
-            }
-        });
-
-        // If any errors are found, display an alert and prevent form submission
-        const formErrors = document.getElementById('formErrors');
-        if (!isValid) {
-            formErrors.classList.remove('d-none');
-            formErrors.textContent = 'Please correct the errors in the form.';
-        } else {
-            formErrors.classList.add('d-none');
-        }
-
-        return isValid; // Return false to prevent submission if invalid
-    }
-</script>
-
-</body>
 
 </html>

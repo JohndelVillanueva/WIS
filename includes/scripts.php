@@ -82,4 +82,52 @@
         ordering: false,
     });
     });
+    function confirmSubmission() {
+        return confirm("Are you sure you want to submit this form?");
+    }
+    function validateForm() {
+        let isValid = true; // Track the overall form validity
+        const form = document.getElementById('studentEnrollForm');
+        const inputs = form.querySelectorAll('input');
+
+        inputs.forEach(input => {
+            // Reset the input's validation state
+            input.classList.remove('is-invalid');
+            const errorDiv = input.nextElementSibling;
+
+            // Check required fields
+            if (input.hasAttribute('required') && !input.value.trim()) {
+                isValid = false;
+                input.classList.add('is-invalid');
+                if (errorDiv) errorDiv.textContent = 'This field is required.';
+            }
+
+            // Check patterns
+            const pattern = input.getAttribute('pattern');
+            if (pattern && input.value.trim() && !new RegExp(pattern).test(input.value)) {
+                isValid = false;
+                input.classList.add('is-invalid');
+                if (errorDiv) errorDiv.textContent = 'Please match the requested format.';
+            }
+
+            // Check minlength
+            const minLength = input.getAttribute('minlength');
+            if (minLength && input.value.trim().length < minLength) {
+                isValid = false;
+                input.classList.add('is-invalid');
+                if (errorDiv) errorDiv.textContent = `Minimum ${minLength} characters required.`;
+            }
+        });
+
+        // If any errors are found, display an alert and prevent form submission
+        const formErrors = document.getElementById('formErrors');
+        if (!isValid) {
+            formErrors.classList.remove('d-none');
+            formErrors.textContent = 'Please correct the errors in the form.';
+        } else {
+            formErrors.classList.add('d-none');
+        }
+
+        return isValid; // Return false to prevent submission if invalid
+    }
 </script>
