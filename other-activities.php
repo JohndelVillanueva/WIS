@@ -416,43 +416,152 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["activity"])) {
 
     <!-- Modal for Adding Activity -->
     <div class="modal fade" id="addActivity" tabindex="-1" role="dialog" aria-labelledby="addActivityTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <form action="other-activities.php" method="post">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addActivityTitle">
-                            <span class="icon-holder"><i class="anticon anticon-file-add"></i></span> Add New Activity
-                        </h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form action="other-activities.php" method="post" novalidate onsubmit="return validateActivityForm();">
+                <!-- Styled Header -->
+                <div class="modal-header bg-purple text-white" style="background-color: rgba(102, 51, 153, 0.9);">
+                    <h5 class="modal-title d-flex align-items-center" id="addActivityTitle">
+                        <span class="icon-holder mr-2">
+                            <i class="anticon anticon-file-add"></i>
+                        </span>
+                        Add New Activity
+                    </h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- Activity Name -->
+                        <div class="col-12 mb-3">
+                            <div class="form-group">
+                                <label for="activityName" class="font-weight-semibold required">
+                                    Activity Name
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="anticon anticon-edit"></i>
+                                        </span>
+                                    </div>
+                                    <input 
+                                        type="text" 
+                                        name="activity" 
+                                        class="form-control" 
+                                        id="activityName" 
+                                        placeholder="Activity Name or Description" 
+                                        required>
+                                    <div class="invalid-feedback">
+                                        Please provide the activity name.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Coach Name -->
+                        <div class="col-12 mb-3">
+                            <div class="form-group">
+                                <label for="coachName" class="font-weight-semibold required">
+                                    Coach Name
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="anticon anticon-user"></i>
+                                        </span>
+                                    </div>
+                                    <input 
+                                        type="text" 
+                                        name="coach" 
+                                        class="form-control" 
+                                        id="coachName" 
+                                        placeholder="Coach Name (Put TBA if no coach yet)" 
+                                        required>
+                                    <div class="invalid-feedback">
+                                        Please provide the coach name or TBA if not applicable.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Sessions -->
+                        <div class="col-12 mb-3">
+                            <div class="form-group">
+                                <label for="maxSession" class="font-weight-semibold required">
+                                    Sessions
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="anticon anticon-calendar"></i>
+                                        </span>
+                                    </div>
+                                    <input 
+                                        type="number" 
+                                        name="sessions" 
+                                        class="form-control" 
+                                        id="maxSession" 
+                                        placeholder="Max Sessions" 
+                                        required>
+                                    <div class="invalid-feedback">
+                                        Please provide the number of sessions.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Rate -->
+                        <div class="col-12 mb-3">
+                            <div class="form-group">
+                                <label for="sessionRate" class="font-weight-semibold required">
+                                    Rate
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="anticon anticon-dollar"></i>
+                                        </span>
+                                    </div>
+                                    <input 
+                                        type="number" 
+                                        name="rate" 
+                                        class="form-control" 
+                                        id="sessionRate" 
+                                        placeholder="Rate" 
+                                        required>
+                                    <div class="invalid-feedback">
+                                        Please provide a valid rate.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Alert for validation -->
+                        <div class="col-12">
+                            <div class="alert alert-danger d-none" id="activityFormErrors" role="alert">
+                                Please correct the errors before submitting.
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="activityName">Activity Name</label>
-                            <input type="text" name="activity" class="form-control" id="activityName" placeholder="Activity Name or Description" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="coachName">Coach Name</label>
-                            <input type="text" name="coach" class="form-control" id="coachName" placeholder="Coach Name (Put TBA if no coach yet)" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="maxSession">Sessions</label>
-                            <input type="number" name="sessions" class="form-control" id="maxSession" placeholder="Max Sessions" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="sessionRate">Rate</label>
-                            <input type="number" name="rate" class="form-control" id="sessionRate" placeholder="Rate" required>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save Activity</button>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <!-- Footer -->
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        <i class="anticon anticon-close mr-2"></i>
+                        Close
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="anticon anticon-save mr-2"></i>
+                        Save Activity
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
+
 
     <?php include_once "includes/scripts.php"; ?>
     <!-- DataTables JS -->
