@@ -4,9 +4,40 @@ session_start();
 if (!isset($_SESSION['username'])) {
     header("location: login.php");
 }
+require 'vendor/autoload.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use Dotenv\Dotenv;
+
+function configureMailer()
+{
+    $dotenv = Dotenv::createImmutable(__DIR__);
+    $dotenv->load();
+
+    $mail = new PHPMailer(true);
+    $mail->isSMTP();
+    $mail->Host = $_ENV['SMTP_HOST'];
+    $mail->SMTPAuth = true;
+    $mail->Username = $_ENV['SMTP_USERNAME'];
+    $mail->Password = $_ENV['SMTP_PASSWORD'];
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->Port = $_ENV['SMTP_PORT'];
+
+    return $mail;
+}
+
+function sendEmail($mail, $to, $subject, $body)
+{
+    $mail->setFrom('no-reply@westfields.edu.ph', 'Westfields International School');
+    $mail->addAddress($to);
+    $mail->isHTML(true);
+    $mail->Subject = $subject;
+    $mail->Body = $body;
+    $mail->send();
+}
 
 if (isset($_GET["asid"], $_GET["fname"], $_GET["mname"], $_GET["lname"], $_GET["email"])) {
-
     // Begin a transaction to ensure both inserts succeed or fail together
     $DB_con->beginTransaction();
 
@@ -24,7 +55,7 @@ if (isset($_GET["asid"], $_GET["fname"], $_GET["mname"], $_GET["lname"], $_GET["
         $lastId = $DB_con->lastInsertId();
 
         // Insert into enrollment table
-        $enrollstudent = $DB_con->prepare("INSERT INTO afterschool_enrolled (sid, asid, student_name, enrolldate) VALUES (:sid, :asid,:student_name, NOW())");
+        $enrollstudent = $DB_con->prepare("INSERT INTO afterschool_enrolled (sid, asid, student_name, enrolldate) VALUES (:sid, :asid, :student_name, NOW())");
         $enrollstudent->execute(array(
             ":sid" => $lastId,
             ":asid" => $_GET["asid"],
@@ -34,17 +65,50 @@ if (isset($_GET["asid"], $_GET["fname"], $_GET["mname"], $_GET["lname"], $_GET["
         // Commit the transaction
         $DB_con->commit();
 
+        // Email Notification
+        $mail = configureMailer();
+
+
+
+        // Email to Student
+        $studentEmail = $_GET["email"];
+        $studentSubject = "Enrollment Confirmation";
+        $studentBody = "
+            <p>Dear Sir/Ma'am,</p>
+            <p>Congratulations! Your child has been successfully enrolled in our afterschool program.</p>
+            <p>Best regards,<br>Westfields International School</p>
+        ";
+        sendEmail($mail, $studentEmail, $studentSubject, $studentBody);
+
+        // Load teacher's email from environment variables
+        $teacherEmail = $_ENV['AFTERSCHOOL'];
+
+        // Email to Teacher
+
+        $teacherSubject = "New Student Enrolled";
+        $teacherBody = "
+            <p>Dear Teacher,</p>
+            <p>A new student, {$_GET['fname']} {$_GET['lname']}, has been successfully enrolled in your program.</p>
+            <p>Best regards,<br>Westfields International School</p>
+        ";
+        sendEmail($mail, $teacherEmail, $teacherSubject, $teacherBody);
+
         // Redirect to the specified page
         header("location: show-others.php?id=" . $_GET["asid"] . "&activity=" . $_GET["activity"]);
         exit();
     } catch (PDOException $e) {
         // Roll back the transaction if any query fails
         $DB_con->rollBack();
-        echo "Error: " . $e->getMessage();
+        echo "Database Error: " . $e->getMessage();
+    } catch (Exception $e) {
+        // Handle email sending errors
+        echo "Email Error: " . $e->getMessage();
     }
 } else {
     echo "Required data is missing.";
 }
+
+
 
 
 
