@@ -23,22 +23,11 @@ session_start(); ?>
 					<form action="registrardocs.php" method="post">
 						<div class="row">
 							<div class="col-lg-12">
-								<?php
+								<!-- <?php
 								$checkrecord = "SELECT * FROM users24 WHERE fname LIKE ? AND lname LIKE ?";
 								$params = array($_POST['firstname'], $_POST['lastname']);
 								$stmt = $DB_con->prepare($checkrecord);
 								$stmt->execute($params);
-								if ($stmt->rowCount() != 0) {
-									$uniqid = uniqid('WNS-');
-									$oldstudent = "UPDATE users24 SET sy = :sy, uniqid = :uniqid, status = :status WHERE fname LIKE :fname AND lname LIKE :lname";
-									$studqry = $DB_con->prepare($oldstudent);
-									$studqry->execute(array(
-										':sy' => "2024-25",
-										':uniqid' => $uniqid,
-										':status' => "7",
-										':fname' => $_POST['firstname'],
-										':lname' => $_POST['lastname'],
-									));
 								?>
 									<div class="card">
 										<div class="card-header bg-primary rounded-top pt-2">
@@ -52,30 +41,30 @@ session_start(); ?>
 											</div>
 										</div>
 										<div class="card-footer text-center"><span class="icon-holder"><i class="anticon anticon-loading"></i></span> Redirecting in 5 seconds...</div>
-									</div>
+									</div> -->
 								<?php
-								} else {
-									$checkStudent = $DB_con->prepare("SELECT * FROM users24 WHERE position = :position  ORDER BY id DESC");
-									$checkStudent->execute(["position" => "Student"]);
-									$existingUser = $checkStudent->fetch(PDO::FETCH_OBJ);
-
-									$removeCharacter = explode("S25", $existingUser->username);
+								
+								if ($_POST['syear'] == '2024-25'){
+									$checkStudentQuery = $DB_con->prepare("SELECT * FROM user WHERE position = :position ORDER BY id DESC");
+									$checkStudentQuery->execute(["position" => "Student"]);
+									$existingUsers = $checkStudent->fetch(PDO::FETCH_OBJ);
+									
+									$removeCharacter = explode("S24", $existingUsers->username);
 									$nStudent = str_pad(str_pad(intval($removeCharacter[1]) + 1, 5, 0, STR_PAD_LEFT), 5, "0", STR_PAD_LEFT);
-									$insertNewStudent = "S25" . $nStudent;
+									$insertNewStudent = "S24" . $nStudent;
 
-									// echo $nStudent;
-									// die();
+									//  If School year is 2024-25 this query will return
 
 									$uniqid = uniqid('WNS-');
-									$newstudent = "INSERT INTO users24 (position, is_situation, empno, sy, type, gender, username, password, apptype, lname, fname, mname, grade, dob, lrn, prevsch, prevschcountry, uniqid, status, strand, nationality, nationalities, guardianname, guardianemail, guardianphone, referral, visa, religion) 
+									$lateEnrolled = "INSERT INTO user (position, is_situation, empno, sy, type, gender, username, password, apptype, lname, fname, mname, grade, dob, lrn, prevsch, prevschcountry, uniqid, status, strand, nationality, nationalities, guardianname, guardianemail, guardianphone, referral, visa, religion)
 									VALUES (:position, :is_situation, :empno, :sy, :type, :gender, :username, :password, :apptype, :lname, :fname, :mname, :grade, :dob, :lrn, :prevsch, :prevschcountry, :uniqid, :status, :strand, :nationality, :nationalities, :guardianname, :guardianemail, :guardianphone, :referral, :visa, :religion)";
 
-									$studqry = $DB_con->prepare($newstudent);
-									$studqry->execute(array(
+									$lateEnrolledQuery = $DB_con->prepare($lateEnrolled);
+									$lateEnrolledQuery->execute([
 										':position' => "Student",
 										':is_situation' => $_POST['applicationtype'],
 										':empno' => $insertNewStudent,
-										':sy' => '2024-25',
+										':sy' => $_POST['syear'],
 										':type' => $_POST['type'],
 										':gender' => ucwords(strtolower($_POST['gender'])),
 										':username' => $insertNewStudent,
@@ -90,7 +79,55 @@ session_start(); ?>
 										':prevsch' => ucwords(strtolower($_POST['oldschool'])),
 										':prevschcountry' => ucwords(strtolower($_POST['countryName'])),
 										':uniqid' => $uniqid,
-										':status' => 1,
+										':status' => 1, // Status is set based on type
+										':strand' => ucwords(strtolower($_POST['strand'])),
+										':nationality' => ucwords(strtolower($_POST['nationalityName'])),
+										':nationalities' => ucwords(strtolower($_POST['nationalityName2'])),
+										':guardianname' => ucwords(strtolower($_POST['guardian'])),
+										':guardianemail' => isset($_POST['guardianemail']) ? $_POST['guardianemail'] : null, // Check if guardian email exists
+										':guardianphone' => isset($_POST['guardianphone']) ? $_POST['guardianphone'] : null, // Check if guardian phone exists
+										':referral' => ucwords(strtolower($_POST['referral'])),
+										':visa' => $_POST['visa'],
+										':religion' => $_POST['religion']
+									]);
+									
+								} else {
+									$checkStudent = $DB_con->prepare("SELECT * FROM users24 WHERE position = :position ORDER BY id DESC");
+									$checkStudent->execute(["position" => "Student"]);
+									$existingUser = $checkStudent->fetch(PDO::FETCH_OBJ);
+									
+									$removeCharacter = explode("S25", $existingUser->username);
+									$nStudent = str_pad(str_pad(intval($removeCharacter[1]) + 1, 5, 0, STR_PAD_LEFT), 5, "0", STR_PAD_LEFT);
+									$insertNewStudent = "S25" . $nStudent;
+									
+									// Check if type is 'Old Student', and set status to 6
+									$status = ($_POST['type'] == "Old Student") ? 6 : 1;
+									
+									$uniqid = uniqid('WNS-');
+									$newstudent = "INSERT INTO users24 (position, is_situation, empno, sy, type, gender, username, password, apptype, lname, fname, mname, grade, dob, lrn, prevsch, prevschcountry, uniqid, status, strand, nationality, nationalities, guardianname, guardianemail, guardianphone, referral, visa, religion) 
+									VALUES (:position, :is_situation, :empno, :sy, :type, :gender, :username, :password, :apptype, :lname, :fname, :mname, :grade, :dob, :lrn, :prevsch, :prevschcountry, :uniqid, :status, :strand, :nationality, :nationalities, :guardianname, :guardianemail, :guardianphone, :referral, :visa, :religion)";
+									
+									$studqry = $DB_con->prepare($newstudent);
+									$studqry->execute(array(
+										':position' => "Student",
+										':is_situation' => $_POST['applicationtype'],
+										':empno' => $insertNewStudent,
+										':sy' => $_POST['syear'],
+										':type' => $_POST['type'],
+										':gender' => ucwords(strtolower($_POST['gender'])),
+										':username' => $insertNewStudent,
+										':password' => password_hash($uniqid, PASSWORD_DEFAULT),
+										':apptype' => ucwords(strtolower($_POST['applicationtype'])),
+										':lname' => ucwords(strtolower($_POST['lastname'])),
+										':fname' => ucwords(strtolower($_POST['firstname'])),
+										':mname' => ucwords(strtolower($_POST['middlename'])),
+										':grade' => $_POST['gradelevel'],
+										':dob' => $_POST['dob'],
+										':lrn' => $_POST['lrn'],
+										':prevsch' => ucwords(strtolower($_POST['oldschool'])),
+										':prevschcountry' => ucwords(strtolower($_POST['countryName'])),
+										':uniqid' => $uniqid,
+										':status' => $status, // Status is set based on type
 										':strand' => ucwords(strtolower($_POST['strand'])),
 										':nationality' => ucwords(strtolower($_POST['nationalityName'])),
 										':nationalities' => ucwords(strtolower($_POST['nationalityName2'])),
@@ -101,6 +138,7 @@ session_start(); ?>
 										':visa' => $_POST['visa'],
 										':religion' => $_POST['religion']
 									));
+								}
 
 									// Create a new PHPMailer instance
 									$mail = new PHPMailer(true);
@@ -237,10 +275,6 @@ session_start(); ?>
 											</div>
 										<div class="card-footer text-center"><span class="icon-holder"><i class="anticon anticon-loading"></i></span> Redirecting in 5 seconds...</div>
 									</div>
-								<?php
-								}
-
-								?>
 								<script>
 									function pageRedirect() {
 										var delay = 5000;

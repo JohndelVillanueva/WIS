@@ -47,7 +47,7 @@ if (!isset($_SESSION['username'])) {
                                             </div>
                                             <div class="col-lg-1">
                                                 <label for="syear">SY</label>
-                                                <select class="form-control" id="syear" name="syear" required>
+                                                <select class="custom-select" id="syear" name="syear" required>
                                                     <option value="2024-25" selected>2024-25</option>
                                                     <option value="2025-26">2025-26</option>
                                                     <option value="2026-27">2026-27</option>
@@ -108,7 +108,7 @@ if (!isset($_SESSION['username'])) {
                                             ?>
                                             <div class="col-lg-1">
                                                 <label for="oldschoolctry">Country</label>
-                                                <select id="countryName" name="countryName" class="form-control">
+                                                <select id="countryName" name="countryName" class="form-control custom-select">
                                                     <option value="">-- select one --</option>
                                                     <?php
                                                     foreach ($countries as $country) {

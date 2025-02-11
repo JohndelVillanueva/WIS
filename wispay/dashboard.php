@@ -58,30 +58,46 @@ include_once("headers.php");
                                     </thead>
                                     <tbody>
                                     <?php
-                                    $pdo_statement = $DB_con->prepare("SELECT wispay.*, user.fname AS fname, user.lname AS lname FROM wispay INNER JOIN user ON wispay.rfid = user.rfid  ORDER by wispay.id DESC LIMIT 50");
-                                    $pdo_statement->execute();
-                                    $result = $pdo_statement->fetchAll();
-                                    foreach($result as $row) {
-                                        if($row['transdate']!="0000-00-00 00:00:00") {
-                                            $phpdate = strtotime($row['transdate']);
-                                            $mysqldate = date('M d, Y H:i:s A', $phpdate);
-                                        } else {
-                                            $mysqldate = "Carry Over from 2022-2023";
+                                        // Prepare the SQL query with aliases for better readability
+                                        $sql = "
+                                            SELECT 
+                                                w.*, 
+                                                u.fname AS fname, 
+                                                u.lname AS lname 
+                                            FROM 
+                                                wispay w
+                                            INNER JOIN 
+                                                user u 
+                                            ON 
+                                                w.rfid = u.rfid  
+                                            ORDER BY 
+                                                w.id DESC 
+                                            LIMIT 50
+                                        ";
+
+                                        $pdo_statement = $DB_con->prepare($sql);
+                                        $pdo_statement->execute();
+                                        $result = $pdo_statement->fetchAll(PDO::FETCH_ASSOC);
+
+                                        foreach ($result as $row) {
+                                            // Format the date using a ternary operator
+                                            $mysqldate = ($row['transdate'] != "0000-00-00 00:00:00") 
+                                                ? date('M d, Y H:i:s A', strtotime($row['transdate'])) 
+                                                : "Carry Over from 2022-2023";
+                                            ?>
+                                            <tr>
+                                                <td><?php echo htmlspecialchars($row['fname'] . " " . $row['lname'] . " (" . $row['rfid'] . ")"); ?></td>
+                                                <td><?php echo htmlspecialchars($row['refcode']); ?></td>
+                                                <td><?php echo htmlspecialchars($row['product_name']); ?></td>
+                                                <td><?php echo htmlspecialchars($row['quantity']); ?></td>
+                                                <td><span class="text-success"><?php echo $row['credit'] == 0 ? "" : htmlspecialchars($row['credit']); ?></span></td>
+                                                <td><span class="text-danger"><?php echo $row['debit'] == 0 ? "" : htmlspecialchars($row['debit']); ?></span></td>
+                                                <td><?php echo htmlspecialchars($mysqldate); ?></td>
+                                                <td><?php echo htmlspecialchars($row['processedby']); ?></td>
+                                            </tr>
+                                            <?php
                                         }
                                         ?>
-                                        <tr>
-                                            <td><?php echo $row['fname']." ".$row['lname']." (".$row['rfid'].")"; ?></td>
-                                            <td><?php echo $row['refcode']; ?></td>
-                                            <td><?= $row['product_name']?></td>
-                                            <td><?= $row['quantity']?></td>
-                                            <td><span class="text-success"><?php echo $credit = $row['credit']==0 ? "" : $row['credit']; ?></span></td>
-                                            <td><span class="text-danger"><?php echo $debit = $row['debit']==0 ? "" : $row['debit']; ?></span></td>
-                                            <td><?php echo $mysqldate; ?></td>
-                                            <td><?= $row['processedby']; ?></td>
-                                        </tr>
-                                        <?php
-                                    }
-                                    ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -98,28 +114,43 @@ include_once("headers.php");
 <script>
     // Function to get query parameters from the URL
     function getQueryParam(param) {
-        let urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get(param);
-    }
-
-    // Check if there is a message in the query parameter
-    let message = getQueryParam('message');
-    if (message) {
-        // Display the message to the user, for example, using an alert or a custom notification
-        alert(decodeURIComponent(message));
-
-        // Optionally, remove the query parameter from the URL to prevent the message from being shown again on reload
-        window.history.replaceState({}, document.title, window.location.pathname);
-    }
-    document.addEventListener("DOMContentLoaded", function() {
-        // Hide success message after 5 seconds
-        var successMessage = document.getElementById('successMessage');
-        if (successMessage) {
-            setTimeout(function() {
-                successMessage.style.display = 'none';
-            }, 5000); // 5000 milliseconds = 5 seconds
+        try {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        } catch (error) {
+            console.error('Error retrieving query parameter:', error);
+            return null;
         }
-});
+    }
+
+    // Function to display a message to the user
+    function displayMessage(message) {
+        if (message) {
+            alert(decodeURIComponent(message));
+
+            // Optionally, remove the query parameter from the URL to prevent the message from being shown again on reload
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    }
+
+    // Function to hide an element after a specified delay
+    function hideElementAfterDelay(elementId, delay) {
+        const element = document.getElementById(elementId);
+        if (element) {
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, delay);
+        }
+    }
+
+    // Main function to handle the logic when the DOM is fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        const message = getQueryParam('message');
+        displayMessage(message);
+
+        // Hide success message after 5 seconds
+        hideElementAfterDelay('successMessage', 5000); // 5000 milliseconds = 5 seconds
+    });
 </script>
 
 <?php include_once ("scripts.php");?>
