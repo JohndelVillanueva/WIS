@@ -5,6 +5,10 @@ session_start();
 if (isset($_SESSION["username"])) {
     header("location: dashboard.php");
 }
+if (isset($_SESSION['signup_success'])) {
+    echo '<div class="alert alert-success">Registration successful!</div>';
+    unset($_SESSION['signup_success']); // Clear the flag
+}
 
 if (isset($_REQUEST['submit'])) {
     $username = strip_tags($_REQUEST["username"]);
@@ -58,10 +62,8 @@ if (isset($_REQUEST['submit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>WIS ERP - Sign In</title>
-
     <!-- Font Icon -->
     <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
-
     <!-- Main css -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/custom.css">
@@ -69,7 +71,6 @@ if (isset($_REQUEST['submit'])) {
 <body class="login">
 
 <div class="main">
-
     <form action="" method="post">
         <section class="sign-in">
             <div class="container">
@@ -79,7 +80,7 @@ if (isset($_REQUEST['submit'])) {
                     </div>
 
                     <div class="signin-form">
-                        <h2 class="form-title wisfont">Sign In</h2>
+                        <h2 class="form-title wisfont">Log In</h2>
                         <form method="POST" class="register-form" id="login-form">
                             <div class="form-group">
                                 <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
@@ -94,6 +95,9 @@ if (isset($_REQUEST['submit'])) {
                             <div class="form-group form-button">
                                 <input type="submit" name="submit" id="submit" class="form-submit wisfont"
                                        value="Log in"/>
+                            </div>
+                            <div class="form-group signup-link">
+                                <p class="wisfont">Don't have an account? <a href="signup.php" class="signup">Sign Up</a></p>
                             </div>
                         </form>
                         <?php
